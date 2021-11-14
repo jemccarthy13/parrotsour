@@ -13,7 +13,7 @@ interface Props extends SwitchProps {
 export const IOSSwitch = withStyles(() =>
   createStyles({
     root: {
-      width: 42,
+      width: 46,
       height: 26,
       padding: 0,
       marginLeft: 16,
@@ -22,28 +22,20 @@ export const IOSSwitch = withStyles(() =>
     },
     switchBase: {
       padding: 1,
-      "&$checked": {
-        transform: "translateX(16px)",
-        color: "white",
-        "& + $track": {
-          backgroundColor: "#52d869",
-          opacity: 1,
-          border: "none",
-        },
-      },
-      "&$focusVisible $thumb": {
-        color: "#52d869",
-        border: "6px solid #fff",
-      },
+      backgroundColor: "#52d869",
     },
     thumb: {
+      backgroundColor: "#52d869",
       width: 24,
       height: 24,
     },
     track: {
-      borderRadius: 26 / 2,
-      backgroundColor: "grey",
-      opacity: 1,
+      backgroundColor: "dimgrey !important",
+      borderRadius: 24 / 2,
+      opacity: "1 !important",
+    },
+    checked: {
+      backgroundColor: "#52d869",
     },
   })
 )(({ classes, ...props }: Props) => {
