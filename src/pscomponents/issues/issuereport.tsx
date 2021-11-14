@@ -1,12 +1,5 @@
 import React, { ReactElement } from "react"
 
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  TextField,
-} from "@material-ui/core"
 import IssueSelector from "./issueselector"
 
 import Snackbar from "../alert/psalert"
@@ -14,6 +7,13 @@ import Snackbar from "../alert/psalert"
 import { PictureAnswer } from "../../canvas/canvastypes"
 
 import "../../css/collapsible.css"
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  TextField,
+} from "@mui/material"
 
 type IRState = {
   showIssueForm: boolean

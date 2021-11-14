@@ -1,6 +1,5 @@
+import { DialogContent, DialogContentText } from "@mui/material"
 import React, { ReactElement } from "react"
-
-import { DialogContent, DialogContentText } from "@material-ui/core"
 
 /**
  * This Component contains the dialog for ALSA help text
@@ -9,7 +8,8 @@ export const AlsaHelp = (): ReactElement => {
   return (
     <DialogContent>
       <DialogContentText>
-        ACC is a new (Jan 2020) comm format from the ALSA joint publications.
+        <br />
+        ACC is a new (Fall 2021) comm format from the ALSA joint publications.
         The intent behind the standard is to provide a common standard between
         Navy and Air Force previous standards. This guide is intended to help
         3-1/3-3 controllers rapidly transition to ACC with difference training,

@@ -1,13 +1,13 @@
 import React, { ChangeEvent, ReactElement } from "react"
 
-import {
-  Dialog,
-  DialogContent,
-  DialogContentText,
-  FormControlLabel,
-} from "@material-ui/core"
 import { IOSSwitch } from "./iosswitch"
 import PSCookies from "../utils/pscookies"
+import {
+  FormControlLabel,
+  DialogContent,
+  DialogContentText,
+  Dialog,
+} from "@mui/material"
 
 export interface PSCProps {
   handleSliderChange: { (val: number): void }

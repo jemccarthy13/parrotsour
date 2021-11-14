@@ -1,4 +1,4 @@
-import React, { ChangeEvent, lazy, ReactElement, Suspense } from "react"
+import React, { lazy, ReactElement, Suspense } from "react"
 
 import "../../css/select.css"
 import "../../css/slider.css"
@@ -15,6 +15,7 @@ import { SensorType } from "../../classes/aircraft/datatrail/sensortype"
 import { FORMAT } from "../../classes/supportedformats"
 import PSCookies from "../../utils/pscookies"
 import ContactSelector from "./contactselector"
+import { SelectChangeEvent } from "@mui/material"
 
 const PicTypeSelector = lazy(() => import("./picoptionsbar"))
 const StandardSelector = lazy(() => import("./standardselector"))
@@ -202,9 +203,7 @@ export default class ParrotSourIntercept extends React.PureComponent<
    * Called when the picture type selector changes values
    * @param e - ChangeEvent for the Select element
    */
-  onChangePicType = (
-    e: ChangeEvent<{ name?: string | undefined; value: unknown }>
-  ): void => {
+  onChangePicType = (e: SelectChangeEvent<string>): void => {
     if (typeof e.target.value === "string")
       this.setState({ picType: e.target.value })
   }

@@ -1,8 +1,8 @@
 import React, { CSSProperties, ReactElement } from "react"
 
 import IssueReport from "./issues/issuereport"
-import { Dialog } from "@material-ui/core"
 import { PictureAnswer } from "canvas/canvastypes"
+import { Dialog } from "@mui/material"
 
 interface PSHeaderProps {
   comp?: ReactElement

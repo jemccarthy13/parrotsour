@@ -1,9 +1,14 @@
 /* eslint-disable react/forbid-component-props */
 import React, { useEffect } from "react"
-import Accordion from "@material-ui/core/Accordion"
-import { AccordionSummary, List, ListItem, Typography } from "@material-ui/core"
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
 import { useStyles } from "./changelogstyles"
+import {
+  Accordion,
+  AccordionSummary,
+  List,
+  ListItem,
+  Typography,
+} from "@mui/material"
 
 /**
  * @returns Pretty formatted accordion of version history, with

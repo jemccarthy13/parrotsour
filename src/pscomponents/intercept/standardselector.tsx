@@ -1,11 +1,11 @@
 /* eslint-disable react/forbid-component-props */
+import React, { ReactElement } from "react"
 import {
   Dialog,
   DialogContentText,
   DialogTitle,
   IconButton,
-} from "@material-ui/core"
-import React, { ReactElement } from "react"
+} from "@mui/material"
 import { FORMAT } from "../../classes/supportedformats"
 import { AlsaHelp } from "../quicktips/alsahelp"
 
@@ -80,10 +80,11 @@ export default class StandardSelector extends React.PureComponent<
 
         <Dialog open={showAlsaQT} onClose={this.handleToggleAlsaQT}>
           <DialogTitle
-            disableTypography
             style={{ paddingBottom: "5px", borderBottom: "1px solid black" }}
           >
-            <h2>ALSA</h2>
+            ALSA
+            <br />
+            <br />
             <IconButton
               onClick={this.handleToggleAlsaQT}
               style={{
@@ -100,6 +101,8 @@ export default class StandardSelector extends React.PureComponent<
               <a target="_window" href="https://www.alsa.mil/MTTPs/ACC/">
                 here!
               </a>
+              <br />
+              <br />
             </DialogContentText>
           </DialogTitle>
           <AlsaHelp />

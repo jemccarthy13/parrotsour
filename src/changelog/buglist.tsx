@@ -1,9 +1,8 @@
 /* eslint-disable react/forbid-component-props */
 import React from "react"
-import Accordion from "@material-ui/core/Accordion"
-import { AccordionSummary, List, ListItem } from "@material-ui/core"
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
 import { useStyles } from "./changelogstyles"
+import { Accordion, AccordionSummary, List, ListItem } from "@mui/material"
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
 
 /**
  * TODO -- convert this to use a fetch to retrieve the 'images' directory on

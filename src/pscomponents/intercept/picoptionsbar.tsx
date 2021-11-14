@@ -1,12 +1,10 @@
-import { MenuItem, Select } from "@material-ui/core"
-import React, { ChangeEvent } from "react"
+import { MenuItem, Select, SelectChangeEvent } from "@mui/material"
+import React from "react"
 import { Cookies } from "react-cookie-consent"
 
 export type POBSelProps = {
   picType: string
-  handleChangePicType: (
-    e: ChangeEvent<{ name?: string | undefined; value: unknown }>
-  ) => void
+  handleChangePicType: (e: SelectChangeEvent<string>) => void
   handleToggleMeasurements: () => void
   handleToggleHardMode: () => void
   handleNewPic: () => void

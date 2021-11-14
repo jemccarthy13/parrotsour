@@ -1,7 +1,5 @@
-/* eslint-disable react/jsx-no-bind */
-/* eslint-disable react/forbid-component-props */
-import { Tooltip } from "@material-ui/core"
 import React, { useState } from "react"
+import { Tooltip } from "@mui/material"
 
 interface CSProps {
   updateCount: (count: number) => void
@@ -17,6 +15,12 @@ export default function ContactSelector(props: CSProps): JSX.Element {
     }
     setCount(val)
     updateCount(val)
+  }
+
+  function contactConterChange() {
+    return (event: React.ChangeEvent<HTMLInputElement>) => {
+      updateCount(parseInt(event.target.value))
+    }
   }
 
   return (
@@ -37,9 +41,7 @@ export default function ContactSelector(props: CSProps): JSX.Element {
         type="number"
         name="clicks"
         value={count}
-        onChange={(event) => {
-          updateCount(parseInt(event.target.value))
-        }}
+        onChange={contactConterChange}
       />
 
       <Tooltip title="# of red contacts; 0 = random">

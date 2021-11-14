@@ -1,12 +1,6 @@
 import React from "react"
-import {
-  createStyles,
-  Switch,
-  SwitchClassKey,
-  SwitchProps,
-  Theme,
-  withStyles,
-} from "@material-ui/core"
+import { Switch, SwitchClassKey, SwitchProps } from "@mui/material"
+import { createStyles, withStyles } from "@mui/styles"
 
 interface Styles extends Partial<Record<SwitchClassKey, string>> {
   focusVisible?: string
@@ -16,7 +10,7 @@ interface Props extends SwitchProps {
   classes: Styles
 }
 
-export const IOSSwitch = withStyles((theme: Theme) =>
+export const IOSSwitch = withStyles(() =>
   createStyles({
     root: {
       width: 42,
@@ -30,7 +24,7 @@ export const IOSSwitch = withStyles((theme: Theme) =>
       padding: 1,
       "&$checked": {
         transform: "translateX(16px)",
-        color: theme.palette.common.white,
+        color: "white",
         "& + $track": {
           backgroundColor: "#52d869",
           opacity: 1,
@@ -51,8 +45,6 @@ export const IOSSwitch = withStyles((theme: Theme) =>
       backgroundColor: "grey",
       opacity: 1,
     },
-    checked: {},
-    focusVisible: {},
   })
 )(({ classes, ...props }: Props) => {
   return (

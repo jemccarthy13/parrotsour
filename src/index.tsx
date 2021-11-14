@@ -1,5 +1,4 @@
-/* eslint-disable react/forbid-component-props */
-/* eslint-disable react/jsx-no-bind */
+/* eslint-disable react/forbid-component-props, react/jsx-no-bind */
 import ReactDOM from "react-dom"
 import React, { Suspense } from "react"
 import Home from "./Home"
@@ -9,7 +8,7 @@ import GlobalSnackbarProvider from "./pscomponents/alert/globalalertprovider"
 import CookieConsent, { Cookies } from "react-cookie-consent"
 
 import snackActions from "./pscomponents/alert/psalert"
-import { Button } from "@material-ui/core"
+import { Button } from "@mui/material"
 
 export default ReactDOM.render(
   <React.StrictMode>

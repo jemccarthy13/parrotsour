@@ -1,6 +1,7 @@
+/* eslint-disable react/no-children-prop */
 import React, { Suspense, lazy } from "react"
 
-import { Route } from "react-router"
+import { Route, Routes } from "react-router"
 import { HashRouter } from "react-router-dom"
 
 import "./css/snackbar.css"
@@ -52,17 +53,19 @@ export default class Home extends React.PureComponent {
         <div className="body-content" style={{ width: "100%" }}>
           <HashRouter>
             <Suspense fallback={<div>Loading...</div>}>
-              <Route exact path="/" component={this.getPSI} />
-              <Route path="/changelog.html" component={ChangeLog} />
-              <Route path="/changelog" component={ChangeLog} />
-              <Route path="/parrotsour.html" render={this.getPS} />
-              <Route path="/parrotsour" render={this.getPS} />
-              <Route path="/intercept.html" render={this.getPSI} />
-              <Route path="/intercept" render={this.getPSI} />
-              <Route path="/close.html" render={this.getPSC} />
-              <Route path="/close" render={this.getPSC} />
-              <Route path="/procedural.html" render={this.getPSP} />
-              <Route path="/procedural" render={this.getPSP} />
+              <Routes>
+                <Route path="/" element={this.getPSI()} />
+                <Route path="/changelog.html" element={<ChangeLog />} />
+                <Route path="/changelog" element={<ChangeLog />} />
+                <Route path="/parrotsour.html" element={this.getPS()} />
+                <Route path="/parrotsour" element={this.getPS()} />
+                <Route path="/intercept.html" element={this.getPSI()} />
+                <Route path="/intercept" element={this.getPSI()} />
+                <Route path="/close.html" element={this.getPSC()} />
+                <Route path="/close" element={this.getPSC()} />
+                <Route path="/procedural.html" element={this.getPSP()} />
+                <Route path="/procedural" element={this.getPSP()} />
+              </Routes>
             </Suspense>
           </HashRouter>
         </div>

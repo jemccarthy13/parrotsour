@@ -1,9 +1,8 @@
 /* eslint-disable react/forbid-component-props */
 import React from "react"
-import Accordion from "@material-ui/core/Accordion"
-import { AccordionSummary, List, ListItem } from "@material-ui/core"
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
 import { useStyles } from "./changelogstyles"
+import { Accordion, AccordionSummary, List, ListItem } from "@mui/material"
 
 /**
  * Returns a pretty list of scheduled features.
