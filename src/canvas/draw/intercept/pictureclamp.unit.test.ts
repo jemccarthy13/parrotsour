@@ -209,11 +209,20 @@ describe("getRestrictedStartPos", () => {
         wide: TEN_NM,
       }
     )
+
+    const pos = new Point(blueAir.getStartPos().x, startPos.y)
     expect(
-      startPos.getBR(blueAir.getCenterOfMass(SensorType.ARROW)).range
-    ).toBeGreaterThan(45)
+      pos.getBR(blueAir.getCenterOfMass(SensorType.ARROW)).range
+    ).toBeGreaterThanOrEqual(45)
     expect(
-      startPos.getBR(blueAir.getCenterOfMass(SensorType.ARROW)).range
-    ).toBeLessThan(50)
+      pos.getBR(blueAir.getCenterOfMass(SensorType.ARROW)).range
+    ).toBeLessThanOrEqual(50)
   })
+
+  // TODO -- NS orientation
+  // TODO -- pInfo.start is provided
+  // TODO -- start.y provided
+  // TODO -- start.x provided
+  // TODO -- wide not provided
+  // TODO -- getStartPos
 })
