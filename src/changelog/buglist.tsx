@@ -7,7 +7,7 @@ import {
   List,
   ListItem,
 } from "../utils/muiadapter"
-import { ExpandMoreIcon } from "../utils/muiadapter"
+import { ExpandMoreIcon } from "../utils/muiiconadapter"
 
 /**
  * TODO -- convert this to use a fetch to retrieve the 'images' directory on

@@ -21,10 +21,6 @@ jest.mock("../alert/psalert", () => {
     toast: jest.fn(),
   }
 })
-// eslint-disable-next-line @typescript-eslint/no-var-requires,@typescript-eslint/no-unused-vars
-const PSAlert = require("../alert/psalert")
-
-//const PSAlert = require("../alert/psalert")
 
 beforeAll(() => {
   console.warn(
@@ -71,7 +67,8 @@ describe("IssueReport_Component", () => {
       return wrap.text().trim() === "Cancel" && wrap.is(Button)
     })
     expect(cancelWrap).toHaveLength(1)
-    cancelWrap.simulate("click")
+    const cancel = cancelWrap.find("button")
+    cancel.simulate("click")
 
     wrapper.update()
     expect(wrapper.find(Dialog).props().open).toEqual(false)
@@ -88,19 +85,15 @@ describe("IssueReport_Component", () => {
     wrapper.update()
     const prev = wrapper.debug({ verbose: true })
     expect(prev).toBeDefined()
-    // TODO -- TESTING -- Figure out how to verify escape / clickaway dismisses dialog
-    wrapper.find(".MuiModal-root").forEach((root) => {
-      root.simulate("keydown", {
-        keyCode: 27,
-        key: "Escape",
-        charCode: 27,
-        code: "Escape",
-      })
+    const dialogBtnRoot = wrapper.find("#cancelIssueReport")
+    dialogBtnRoot.at(4).simulate("keydown", {
+      keyCode: 27,
+      key: "Escape",
+      charCode: 27,
+      code: "Escape",
     })
     wrapper.update()
-    console.warn("unable to verify backdropClick/Escape key pressed logic.")
-    //expect(wrapper.debug({ verbose: true })).not.toEqual(prev)
-    //expect(wrapper.find(IssueReport).find(Dialog).props()).toEqual(true)
+    expect(wrapper.debug({ verbose: true })).not.toEqual(prev)
   })
 
   it("handles_email_field_changes", () => {
