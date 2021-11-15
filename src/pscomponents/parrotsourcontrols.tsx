@@ -238,20 +238,6 @@ export default class ParrotSourControls extends React.PureComponent<
             >
               ?
             </button>
-            <Dialog
-              id="dispFirstHelpDialog"
-              open={showHelpText}
-              onClose={this.handleToggleHelp}
-            >
-              <DialogContent>
-                <DialogContentText>
-                  The BULL/BRAA toggle will change the order of the bullseye and
-                  braa measurements on screen.
-                </DialogContentText>
-                <DialogContentText>BULL = ALT, BULL, BRAA</DialogContentText>
-                <DialogContentText>BRAA = ALT, BRAA, BULL</DialogContentText>
-              </DialogContent>
-            </Dialog>
           </div>
           <div style={{ display: "inline-flex", marginLeft: "50px" }}>
             <FormControlLabel
@@ -285,20 +271,34 @@ export default class ParrotSourControls extends React.PureComponent<
             >
               ?
             </button>
-            <Dialog
-              id="datatrailHelpDialog"
-              open={showHelpArrowText}
-              onClose={this.handleToggleArrowHelp}
-            >
-              <DialogContent>
-                <DialogContentText>
-                  The ARROW/RADAR toggle changes the picture from arrows to
-                  radar trails.
-                </DialogContentText>
-              </DialogContent>
-            </Dialog>
           </div>
         </div>
+        <Dialog
+          id="dispFirstHelpDialog"
+          open={showHelpText}
+          onClose={this.handleToggleHelp}
+        >
+          <DialogContent>
+            <DialogContentText>
+              The BULL/BRAA toggle will change the order of the bullseye and
+              braa measurements on screen.
+            </DialogContentText>
+            <DialogContentText>BULL = ALT, BULL, BRAA</DialogContentText>
+            <DialogContentText>BRAA = ALT, BRAA, BULL</DialogContentText>
+          </DialogContent>
+        </Dialog>
+        <Dialog
+          id="datatrailHelpDialog"
+          open={showHelpArrowText}
+          onClose={this.handleToggleArrowHelp}
+        >
+          <DialogContent>
+            <DialogContentText>
+              The ARROW/RADAR toggle changes the picture from arrows to radar
+              trails.
+            </DialogContentText>
+          </DialogContent>
+        </Dialog>
       </div>
     )
   }

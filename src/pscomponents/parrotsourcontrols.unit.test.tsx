@@ -63,7 +63,7 @@ describe("ParrotSourControls", () => {
 
   it("displays_help_for_disp_first_toggle", () => {
     console.warn(
-      "05/07/2021- Surpressing external usage of console.error\r\n" +
+      "11/15/2021- Surpressing external usage of console.error\r\n" +
         "Use '(test command) --silent' to turn off all console messages."
     )
     jest.spyOn(console, "error").mockImplementation()
@@ -78,11 +78,6 @@ describe("ParrotSourControls", () => {
   })
 
   it("displays_help_for_datatrail_toggle", () => {
-    console.warn(
-      "05/07/2021- Surpressing external usage of console.error\r\n" +
-        "Use '(test command) --silent' to turn off all console messages."
-    )
-    jest.spyOn(console, "error").mockImplementation()
     const disFirstHelpBtn = wrapper.find("#btnDisplayDatatrailHelp")
     expect(disFirstHelpBtn).toHaveLength(1)
     let helpDialog = wrapper.find("#datatrailHelpDialog").get(0)
@@ -92,4 +87,7 @@ describe("ParrotSourControls", () => {
     helpDialog = wrapper.find("#datatrailHelpDialog").get(0)
     expect(helpDialog.props.open).toEqual(true)
   })
+
+  // TODO -- handleslidermouseup
+  // TODO -- handleorientationchange
 })

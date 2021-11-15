@@ -17,7 +17,6 @@ describe("Home", () => {
   })
 
   it("should_render_default", () => {
-    console.warn("This test assumes default is intercept -- should it be?")
     const home = shallow(<Home />)
     expect(home.find(ParrotSour)).toBeDefined()
     expect(home.find(ParrotSourIntercept)).toBeDefined()
