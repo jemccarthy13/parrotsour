@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export default function toMatchCanvasSnapshotFactory(
   fs: any,
   path: any,
@@ -50,6 +52,7 @@ export default function toMatchCanvasSnapshotFactory(
     )
 
     const snapshotRoot = document.createElement("div")
+    // eslint-disable-next-line no-unsanitized/property
     snapshotRoot.innerHTML = persistedSnapshotWithoutLineBreak
     return format(snapshotRoot.querySelector("canvas"))
   }

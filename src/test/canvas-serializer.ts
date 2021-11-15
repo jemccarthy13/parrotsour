@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import createCanvasSnapshotSerializer from "./canvasSnapshotSerializer"
 
 const fs = require("fs")
