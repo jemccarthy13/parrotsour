@@ -16,7 +16,7 @@ type CBState = {
   sender: string
 }
 
-type CBProps = {
+export type CBProps = {
   answer: PictureAnswer
 }
 
@@ -75,7 +75,7 @@ export default class ChatBox extends React.PureComponent<CBProps, CBState> {
     } else {
       const msg = new SpeechSynthesisUtterance()
       msg.text = message
-      window.speechSynthesis.speak(msg)
+      if (window.speechSynthesis) window.speechSynthesis.speak(msg)
     }
   }
 
@@ -119,6 +119,8 @@ export default class ChatBox extends React.PureComponent<CBProps, CBState> {
             "*** RPA01 app 89AG FL 240\n" +
             "----------------------------------------\r\n"
         )
+      } else {
+        this.sendSystemMsg("*** Unknown command")
       }
     } else {
       const { sender } = this.state
