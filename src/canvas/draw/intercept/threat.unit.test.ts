@@ -9,9 +9,8 @@ import { PictureInfo } from "./pictureclamp"
 
 import DrawThreat from "./threat"
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const canvasSerializer = require("jest-canvas-snapshot-serializer")
-expect.addSnapshotSerializer(canvasSerializer)
+import CanvasSerializer from "../../../test/canvas-serializer"
+expect.addSnapshotSerializer(CanvasSerializer)
 
 describe("DrawThreat", () => {
   let dThreat: DrawThreat

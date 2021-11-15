@@ -3,9 +3,8 @@ import { Point } from "../../point"
 import { IDMatrix } from "../id"
 import { IFFDataTrail } from "./iffdatatrail"
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-unused-vars
-const canvasSerializer = require("jest-canvas-snapshot-serializer")
-expect.addSnapshotSerializer(canvasSerializer)
+import CanvasSerializer from "../../../test/canvas-serializer"
+expect.addSnapshotSerializer(CanvasSerializer)
 
 const canvas = document.createElement("canvas")
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
