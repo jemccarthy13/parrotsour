@@ -31,6 +31,7 @@ describe("DrawThreat", () => {
     jest.restoreAllMocks()
 
     PaintBrush.use(ctx)
+    PaintBrush.clearCanvas()
 
     dThreat = new DrawThreat()
 
