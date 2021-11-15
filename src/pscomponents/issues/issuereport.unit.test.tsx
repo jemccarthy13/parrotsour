@@ -1,7 +1,12 @@
 import React from "react"
 import { mount, ReactWrapper } from "enzyme"
 import IssueReport from "./issuereport"
-import { Button, Dialog, DialogContent, TextField } from "@material-ui/core"
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  TextField,
+} from "../../utils/muiadapter"
 
 // Mocked for standalone (unittest) coverage
 jest.mock("./issueselector", () => {

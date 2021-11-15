@@ -1,6 +1,11 @@
 /* eslint-disable react/forbid-component-props */
 import React, { ReactElement } from "react"
-import { DialogContent, DialogContentText, List, ListItem } from "@mui/material"
+import {
+  DialogContent,
+  DialogContentText,
+  List,
+  ListItem,
+} from "../../utils/muiadapter"
 
 export const InterceptQT = (): ReactElement => {
   return (

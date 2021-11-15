@@ -15,7 +15,7 @@ import { SensorType } from "../../classes/aircraft/datatrail/sensortype"
 import { FORMAT } from "../../classes/supportedformats"
 import PSCookies from "../../utils/pscookies"
 import ContactSelector from "./contactselector"
-import { SelectChangeEvent } from "@mui/material"
+import { SelectChangeEvent } from "../../utils/muiadapter"
 
 const PicTypeSelector = lazy(() => import("./picoptionsbar"))
 const StandardSelector = lazy(() => import("./standardselector"))

@@ -7,7 +7,7 @@ import {
   DialogContent,
   DialogContentText,
   Dialog,
-} from "@mui/material"
+} from "../utils/muiadapter"
 
 export interface PSCProps {
   handleSliderChange: { (val: number): void }

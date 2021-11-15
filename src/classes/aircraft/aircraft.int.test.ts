@@ -4,9 +4,9 @@ import { SensorType } from "./datatrail/sensortype"
 import { IDMatrix } from "./id"
 import Tasking from "../taskings/tasking"
 import { PaintBrush } from "../../canvas/draw/paintbrush"
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const canvasSerializer = require("jest-canvas-snapshot-serializer")
-expect.addSnapshotSerializer(canvasSerializer)
+
+import CanvasSerializer from "../../test/canvas-serializer"
+expect.addSnapshotSerializer(CanvasSerializer)
 
 /**
  * Integration tests for Aircraft.

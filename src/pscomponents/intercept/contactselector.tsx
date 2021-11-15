@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Tooltip } from "@mui/material"
+import { Tooltip } from "../../utils/muiadapter"
 
 interface CSProps {
   updateCount: (count: number) => void

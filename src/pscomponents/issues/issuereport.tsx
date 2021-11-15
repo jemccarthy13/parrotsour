@@ -13,7 +13,7 @@ import {
   DialogActions,
   DialogContent,
   TextField,
-} from "@mui/material"
+} from "../../utils/muiadapter"
 
 type IRState = {
   showIssueForm: boolean

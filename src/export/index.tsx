@@ -40,7 +40,7 @@ export {
 }
 
 import snackActions from "../pscomponents/alert/psalert"
-import { Button } from "@mui/material"
+import { Button } from "../utils/muiadapter"
 
 export default ReactDOM.render(
   <React.StrictMode>

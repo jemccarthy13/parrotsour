@@ -3,10 +3,8 @@ import { PIXELS_TO_NM } from "../utils/psmath"
 import { Braaseye } from "./braaseye"
 import { Point } from "./point"
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const canvasSerializer = require("jest-canvas-snapshot-serializer")
-
-expect.addSnapshotSerializer(canvasSerializer)
+import CanvasSerializer from "../test/canvas-serializer"
+expect.addSnapshotSerializer(CanvasSerializer)
 
 describe("Braaseye", () => {
   const canvas = document.createElement("canvas")

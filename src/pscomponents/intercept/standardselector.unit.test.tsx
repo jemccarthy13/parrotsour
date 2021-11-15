@@ -2,7 +2,7 @@ import React from "react"
 import { mount, ReactWrapper } from "enzyme"
 import StandardSelector, { StdSelectorProps } from "./standardselector"
 import { FORMAT } from "../../classes/supportedformats"
-import { Dialog } from "@material-ui/core"
+import { Dialog } from "../../utils/muiadapter"
 
 describe("StandardSelector", () => {
   const mockSelChg = jest.fn()

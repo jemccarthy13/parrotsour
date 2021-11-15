@@ -1,7 +1,7 @@
 import React from "react"
 import { mount } from "enzyme"
 import { InterceptQT } from "./interceptQT"
-import { DialogContent } from "@material-ui/core"
+import { DialogContent } from "../../utils/muiadapter"
 
 /**
  * All it has to do is show up (render) with some text.

@@ -1,6 +1,6 @@
 /* eslint-disable react/forbid-component-props */
 import React, { useEffect } from "react"
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
+import { ExpandMoreIcon } from "../utils/muiiconadapter"
 import { useStyles } from "./changelogstyles"
 import {
   Accordion,
@@ -8,7 +8,7 @@ import {
   List,
   ListItem,
   Typography,
-} from "@mui/material"
+} from "../utils/muiadapter"
 
 /**
  * @returns Pretty formatted accordion of version history, with

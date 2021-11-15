@@ -1,4 +1,4 @@
-import { DialogContent, DialogContentText } from "@mui/material"
+import { DialogContent, DialogContentText } from "../../utils/muiadapter"
 import React, { ReactElement } from "react"
 
 /**

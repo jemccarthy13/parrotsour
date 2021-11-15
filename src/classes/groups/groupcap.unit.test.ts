@@ -3,9 +3,8 @@ import { IDMatrix } from "../aircraft/id"
 import { AircraftGroup } from "./group"
 import { drawGroupCap } from "./groupcap"
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const canvasSerializer = require("jest-canvas-snapshot-serializer")
-expect.addSnapshotSerializer(canvasSerializer)
+import CanvasSerializer from "../../test/canvas-serializer"
+expect.addSnapshotSerializer(CanvasSerializer)
 
 describe("draw_group_cap", () => {
   const canvas = document.createElement("canvas")

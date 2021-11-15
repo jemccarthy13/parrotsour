@@ -1,6 +1,6 @@
 import React from "react"
-import { Switch, SwitchClassKey, SwitchProps } from "@mui/material"
-import { createStyles, withStyles } from "@mui/styles"
+import { Switch, SwitchClassKey, SwitchProps } from "../utils/muiadapter"
+import { createStyles, withStyles } from "../utils/muistylesadapter"
 
 interface Styles extends Partial<Record<SwitchClassKey, string>> {
   focusVisible?: string

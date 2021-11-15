@@ -2,7 +2,7 @@ import React, { CSSProperties, ReactElement } from "react"
 
 import IssueReport from "./issues/issuereport"
 import { PictureAnswer } from "canvas/canvastypes"
-import { Dialog } from "@mui/material"
+import { Dialog } from "../utils/muiadapter"
 
 interface PSHeaderProps {
   comp?: ReactElement

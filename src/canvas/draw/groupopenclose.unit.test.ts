@@ -3,9 +3,8 @@ import { AircraftGroup } from "../../classes/groups/group"
 import { getOpenCloseAzimuth } from "./formatutils"
 import { PaintBrush } from "./paintbrush"
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const canvasSerializer = require("jest-canvas-snapshot-serializer")
-expect.addSnapshotSerializer(canvasSerializer)
+import CanvasSerializer from "../../test/canvas-serializer"
+expect.addSnapshotSerializer(CanvasSerializer)
 
 describe("FormatUtils", () => {
   const canvas = document.createElement("canvas")

@@ -1,10 +1,8 @@
 import { PaintBrush } from "../canvas/draw/paintbrush"
 import { BRAA } from "./braa"
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const canvasSerializer = require("jest-canvas-snapshot-serializer")
-
-expect.addSnapshotSerializer(canvasSerializer)
+import CanvasSerializer from "../test/canvas-serializer"
+expect.addSnapshotSerializer(CanvasSerializer)
 
 describe("BRAA", () => {
   let canvas: HTMLCanvasElement
@@ -44,7 +42,7 @@ describe("BRAA", () => {
 
   it("draws_only_when_showmeasure_true", () => {
     const br = new BRAA(90, 20)
-    br.draw(10, 10, "black", false)
+    br.draw(10, 10, "green", false)
     expect(canvas).toMatchSnapshot()
   })
 })

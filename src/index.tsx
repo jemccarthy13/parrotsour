@@ -8,7 +8,7 @@ import GlobalSnackbarProvider from "./pscomponents/alert/globalalertprovider"
 import CookieConsent, { Cookies } from "react-cookie-consent"
 
 import snackActions from "./pscomponents/alert/psalert"
-import { Button } from "@mui/material"
+import { Button } from "./utils/muiadapter"
 
 export default ReactDOM.render(
   <React.StrictMode>

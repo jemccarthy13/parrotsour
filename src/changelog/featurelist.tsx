@@ -1,8 +1,13 @@
 /* eslint-disable react/forbid-component-props */
 import React from "react"
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
 import { useStyles } from "./changelogstyles"
-import { Accordion, AccordionSummary, List, ListItem } from "@mui/material"
+import {
+  Accordion,
+  AccordionSummary,
+  List,
+  ListItem,
+} from "../utils/muiadapter"
+import { ExpandMoreIcon } from "../utils/muiiconadapter"
 
 /**
  * Returns a pretty list of scheduled features.

@@ -1,4 +1,4 @@
-import { ToggleButton, ToggleButtonGroup } from "@mui/material"
+import { ToggleButton, ToggleButtonGroup } from "../../utils/muiadapter"
 import React, { ReactElement } from "react"
 
 type DSState = {

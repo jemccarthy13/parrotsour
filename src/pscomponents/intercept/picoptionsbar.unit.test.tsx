@@ -1,5 +1,5 @@
 import React from "react"
-import { Select } from "@material-ui/core"
+import { Select } from "../../utils/muiadapter"
 import { mount, ReactWrapper } from "enzyme"
 import PicOptionsBar, { POBSelProps } from "./picoptionsbar"
 

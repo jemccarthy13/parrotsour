@@ -2,7 +2,7 @@
 
 exports[`BRAA draws_correctly 1`] = `
 <canvas
-  data-snapshot-image="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAUCAYAAADPym6aAAAABmJLR0QA/wD/AP+gvaeTAAAB4ElEQVRIie2VQctpURSG177nHHSQiRIDGUj5F4oJGVLmfoKJgRFlJnPMlH9gYIyZksyFEUknGRg+d3Bz+nRzuPdTVzdP7cnufdfab3uvtgKQ/4Af//oAr+LpIN1uV9xutyilxOv1SqvVEhGR4XAoPp9PlFISiURks9k46kVEJpOJGIYhvV5PTNMUpZSYpin9fv+h9y48STgcplAosNvtSKfThEIhAPx+P5VKBcuyqNfrJJNJRz1AuVwmHo/jcrmo1WpYlkWpVMLj8Tz03uPpIJqmsV6vAZjNZhiG8auACLvdDoD9fo+maY56gHg8Trlcvql/OBxQSj30fjuIiHC5XAA4nU52U9M0aTQaWJZFsVjkesn39AC6rjMej2/qN5tN+zadvN8OopTidDoBYFmWXXwwGODxeFBKkclk7P17+vF4jK7rN7UXiwXBYJDtduvofUkQwzBYLpcAzOdz3G73b5rRaGS/83v663xcmc/nRKNRptPpH/X66yCxWIx8Ps/xeCSXyxEOh+2m1WqV1WpFNpsllUo56r/OR6PRIBAI2Id+1OslQdrtNpqmISK4XC46nY69bxgGSikSiQTn89lR/3U+dF1HRG6Wk9cJBZ+f/a34BHk3PkHejU+Qd+MT5N34CXAvYcJf4ALbAAAAAElFTkSuQmCC"
+  data-snapshot-image="a141d41fea32befee62a43cc023fe83850e304f8275128cb418d7c8363232cfef48a340e166ef9623d7eff41c2df20d6e7d1ec1e7d9b2a55cbb65e2b5a3ea5a8"
   height="20"
   width="50"
 />
@@ -10,7 +10,7 @@ exports[`BRAA draws_correctly 1`] = `
 
 exports[`BRAA draws_only_when_showmeasure_true 1`] = `
 <canvas
-  data-snapshot-image="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAUCAYAAADPym6aAAAABmJLR0QA/wD/AP+gvaeTAAAANklEQVRIie3PgQkAMAjEwNr9d36XEAySmyCpJHkH/O2AKY7QOELjCI0jNI7QOELjCI0jNI7QNNSvBCS3oAPJAAAAAElFTkSuQmCC"
+  data-snapshot-image="b1d8cbcb5a6ffd8ce5a2c09313915fc32fc4a6a58051261790b714fd68d45183b4257742c1ffdc3d24f52aeb7a34a50d5b5e0e68c3b66f96c49a28e4e42433bc"
   height="20"
   width="50"
 />

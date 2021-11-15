@@ -1,5 +1,5 @@
 import React from "react"
-import { Accordion } from "@material-ui/core"
+import { Accordion } from "../utils/muiadapter"
 import { mount } from "enzyme"
 import ChangeLog from "./changelog"
 

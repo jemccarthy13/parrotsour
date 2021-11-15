@@ -1,8 +1,13 @@
 /* eslint-disable react/forbid-component-props */
 import React from "react"
 import { useStyles } from "./changelogstyles"
-import { Accordion, AccordionSummary, List, ListItem } from "@mui/material"
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
+import {
+  Accordion,
+  AccordionSummary,
+  List,
+  ListItem,
+} from "../utils/muiadapter"
+import { ExpandMoreIcon } from "../utils/muiadapter"
 
 /**
  * TODO -- convert this to use a fetch to retrieve the 'images' directory on

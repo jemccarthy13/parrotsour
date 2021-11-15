@@ -5,7 +5,7 @@ import {
   DialogContentText,
   DialogTitle,
   IconButton,
-} from "@mui/material"
+} from "../../utils/muiadapter"
 import { FORMAT } from "../../classes/supportedformats"
 import { AlsaHelp } from "../quicktips/alsahelp"
 

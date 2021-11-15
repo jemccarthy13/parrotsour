@@ -1,4 +1,4 @@
-import { MenuItem, Select, SelectChangeEvent } from "@mui/material"
+import { MenuItem, Select, SelectChangeEvent } from "../../utils/muiadapter"
 import React from "react"
 import { Cookies } from "react-cookie-consent"
 
