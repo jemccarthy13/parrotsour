@@ -1,5 +1,5 @@
-import React, { useRef } from "react"
-import { mount, shallow, ShallowWrapper } from "enzyme"
+import React from "react"
+import { shallow, ShallowWrapper } from "enzyme"
 
 import ChatBox, { CBProps } from "./chatbox"
 import { AircraftGroup } from "../../classes/groups/group"
