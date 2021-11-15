@@ -1,4 +1,5 @@
 /* eslint-disable react/forbid-component-props, react/jsx-no-bind */
+/* istanbul ignore file */
 import ReactDOM from "react-dom"
 import React, { Suspense } from "react"
 import Home from "./Home"
@@ -34,7 +35,7 @@ export default ReactDOM.render(
 /**
  *
  */
-const version = "4.0.6"
+export const version = "4.0.6"
 const cookieIsNotSet =
   Cookies.get(version + "Notify") === undefined ||
   Cookies.get(version + "Notify") === "false"

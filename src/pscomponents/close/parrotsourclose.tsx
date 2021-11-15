@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import React, { lazy, ReactElement, Suspense } from "react"
 
 import "../../css/select.css"

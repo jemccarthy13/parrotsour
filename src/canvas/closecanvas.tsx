@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 // Components
 import ParrotSourCanvas from "./parrotsourcanvas"
 

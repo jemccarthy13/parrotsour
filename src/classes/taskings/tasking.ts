@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { Point } from "../point"
 
 export type TaskingParams = {

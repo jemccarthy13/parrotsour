@@ -1,7 +1,8 @@
+/* istanbul ignore file */
 import { AircraftGroup } from "../../classes/groups/group"
 import { Point } from "../../classes/point"
 import { AIProcessor } from "./nlprocessor"
-import { convertToNATOPhonetic } from "./toNATOphonetic"
+import { toNATOPhonetic } from "./toNATOphonetic"
 
 /**
  * Given some message text, extract a move command that fits
@@ -69,7 +70,7 @@ export function processMoveLayer(
         cpy = "copy"
         FL = "flight level"
         fl = fl?.split("").join(" ")
-        cgrsReply = convertToNATOPhonetic(cgrsReply)
+        cgrsReply = toNATOPhonetic(cgrsReply)
       }
       sendResponse(
         callsign,

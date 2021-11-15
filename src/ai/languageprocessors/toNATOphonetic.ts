@@ -9,7 +9,7 @@
  * @param text string to convert - will convert all letters of the string to phonetic
  * @returns new string in phonetic spelling
  */
-export function convertToNATOPhonetic(text: string): string {
+export function toNATOPhonetic(text: string): string {
   const m = new Map()
   m.set("A", "alpha")
   m.set("B", "bravo")

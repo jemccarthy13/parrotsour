@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import React, { ReactElement } from "react"
 
 import DrawingCanvas from "../../drawingcanvas"

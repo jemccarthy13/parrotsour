@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { ACType } from "../../classes/aircraft/aircraft"
 import { SensorType } from "../../classes/aircraft/datatrail/sensortype"
 import { AircraftGroup } from "../../classes/groups/group"

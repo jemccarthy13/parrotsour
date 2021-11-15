@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import nlp from "compromise"
 
 import sentences from "compromise-sentences"

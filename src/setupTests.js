@@ -2,7 +2,7 @@ import { JSDOM } from 'jsdom-canvas-2';
 
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 
-const jsdom = new JSDOM('<!doctype html><html><body></body></html>');
+const jsdom = new JSDOM('<!doctype html><html><body><root></root></body></html>');
 const { window } = jsdom;
 
 import { configure } from 'enzyme'

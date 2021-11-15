@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 export class Airspace {
   // temporary. TODO -- flush out how airspaces work
 }
@@ -5,9 +6,9 @@ export class Airspace {
 //temporary
 // TODO -- figure out how AS requests should behave
 export class AirspaceRequest {
-    location: string|undefined 
-    alt: number|undefined = 0
+  location: string | undefined
+  alt: number | undefined = 0
 
-    goodLoc = false
-    goodAlt = false
+  goodLoc = false
+  goodAlt = false
 }

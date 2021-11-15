@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import React, { ReactElement, KeyboardEvent } from "react"
 
 import SpeechTextControls from "../../ai/speechtext"

@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 /* eslint-disable react/forbid-component-props */
 /* eslint-disable react/jsx-no-bind */
 import DrawingCanvas from "../canvas/drawingcanvas"

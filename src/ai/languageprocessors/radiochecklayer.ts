@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { AircraftGroup } from "../../classes/groups/group"
 
 export function processRadioCheckLayer(

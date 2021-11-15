@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 // Interfaces
 import { AircraftGroup } from "../../../classes/groups/group"
 import {

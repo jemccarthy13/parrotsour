@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 /**
  * This file contains libraries used for compilation.
  *
