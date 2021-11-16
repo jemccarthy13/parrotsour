@@ -24,8 +24,8 @@ export default class DrawChampagne extends DrawPic {
   getPictureInfo(start?: Point): PictureInfo {
     const picture = {
       start,
-      wide: randomNumber(7 * PIXELS_TO_NM, 30 * PIXELS_TO_NM),
-      deep: randomNumber(7 * PIXELS_TO_NM, 30 * PIXELS_TO_NM),
+      wide: randomNumber(7 * PIXELS_TO_NM, 35 * PIXELS_TO_NM),
+      deep: randomNumber(7 * PIXELS_TO_NM, 35 * PIXELS_TO_NM),
     }
 
     const startPos = getRestrictedStartPos(

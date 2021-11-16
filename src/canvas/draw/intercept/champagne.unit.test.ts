@@ -1,10 +1,12 @@
 import { SensorType } from "../../../classes/aircraft/datatrail/sensortype"
 import { AircraftGroup, GroupParams } from "../../../classes/groups/group"
 import { Point } from "../../../classes/point"
+import { PIXELS_TO_NM } from "../../../utils/psmath"
 import { BlueInThe, PictureCanvasState } from "../../canvastypes"
 import { PaintBrush } from "../paintbrush"
 import DrawChampange from "./champagne"
 import { testProps } from "./mockutils.unit.test"
+import { PictureInfo } from "./pictureclamp"
 
 let testState: PictureCanvasState
 let p: Partial<GroupParams>
@@ -41,6 +43,10 @@ describe("DrawChamp", () => {
     testProps.orientation.orient = BlueInThe.EAST
     champ = new DrawChampange()
     champ.initialize(testProps, testState)
+  })
+
+  beforeAll(() => {
+    testProps.orientation.orient = BlueInThe.EAST
   })
 
   it("hot_champ", () => {
@@ -147,5 +153,50 @@ describe("DrawChamp", () => {
         "NORTH LEAD GROUP BULLSEYE 317/64, 20k HOSTILE HEAVY 4 CONTACTS " +
         "TRAIL GROUP 15k HOSTILE HEAVY 4 CONTACTS"
     )
+  })
+
+  it("tests_simple_functions", () => {
+    champ.create() // empty
+    expect(champ.groups.length).toEqual(0)
+    champ.chooseNumGroups()
+    expect(champ.numGroupsToCreate).toEqual(3)
+
+    const pt = new Point(100, 100)
+    const pInfo: PictureInfo = champ.getPictureInfo(pt)
+
+    expect(pInfo.start).toEqual(pt)
+    expect(pInfo.deep).toBeGreaterThanOrEqual(7 * PIXELS_TO_NM)
+    expect(pInfo.deep).toBeLessThanOrEqual(35 * PIXELS_TO_NM)
+    expect(pInfo.wide).toBeGreaterThanOrEqual(7 * PIXELS_TO_NM)
+    expect(pInfo.wide).toBeLessThanOrEqual(35 * PIXELS_TO_NM)
+  })
+
+  it("creates_groups", () => {
+    const updatedProps = { ...testProps, isHardMode: true }
+    champ.initialize(updatedProps, testState)
+    const pt = new Point(100, 100)
+    const grps = champ.createGroups(pt, [1, 1, 1])
+    expect(grps.length).toEqual(3)
+    expect(grps[0].getStrength()).toEqual(1)
+    expect(grps[1].getStrength()).toEqual(1)
+    expect(grps[2].getStrength()).toEqual(1)
+    expect(grps[0].getLabel()).toEqual("TRAIL GROUP")
+    expect(grps[1].getLabel()).toEqual("NORTH LEAD GROUP")
+    expect(grps[2].getLabel()).toEqual("SOUTH LEAD GROUP")
+  })
+
+  it("creates_groups_NS", () => {
+    testProps.orientation.orient = BlueInThe.NORTH
+    const updatedProps = { ...testProps }
+    champ.initialize(updatedProps, testState)
+    const pt = new Point(100, 100)
+    const grps = champ.createGroups(pt, [1, 1, 1])
+    expect(grps.length).toEqual(3)
+    expect(grps[0].getStrength()).toEqual(1)
+    expect(grps[1].getStrength()).toEqual(1)
+    expect(grps[2].getStrength()).toEqual(1)
+    expect(grps[0].getLabel()).toEqual("TRAIL GROUP")
+    expect(grps[1].getLabel()).toEqual("WEST LEAD GROUP")
+    expect(grps[2].getLabel()).toEqual("EAST LEAD GROUP")
   })
 })

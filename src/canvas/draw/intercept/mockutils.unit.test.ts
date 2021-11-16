@@ -29,8 +29,8 @@ export const testProps: PictureCanvasProps = {
   animateCallback: jest.fn(),
 }
 
-describe("must_have_test", () => {
-  it("one_test", () => {
+describe("mock_utils_dummy_test", () => {
+  it("mocked", () => {
     expect(true).toEqual(true)
   })
 })
