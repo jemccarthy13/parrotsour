@@ -1,6 +1,9 @@
 import { SensorType } from "../../../classes/aircraft/datatrail/sensortype"
+import { BRAA } from "../../../classes/braa"
+import { Braaseye } from "../../../classes/braaseye"
 import { AircraftGroup, GroupParams } from "../../../classes/groups/group"
 import { Point } from "../../../classes/point"
+import * as PSMath from "../../../utils/psmath"
 import { PictureCanvasState } from "../../canvastypes"
 import { PaintBrush } from "../paintbrush"
 import DrawEA from "./ea"
@@ -13,11 +16,6 @@ describe("DrawEA", () => {
   let draw: DrawEA
 
   beforeAll(() => {
-    console.warn(
-      "11/09/2021- Surpressing external usage of console.error\r\n" +
-        "Use '(test command) --silent' to turn off all console messages."
-    )
-    jest.spyOn(console, "warn").mockImplementation()
     const canvas = document.createElement("canvas")
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const ctx = canvas.getContext("2d")!
@@ -25,6 +23,9 @@ describe("DrawEA", () => {
     canvas.height = 500
 
     PaintBrush.use(ctx)
+  })
+
+  beforeEach(() => {
     const startX = 200
     const startY = 200
     p = {
@@ -57,7 +58,33 @@ describe("DrawEA", () => {
     jest.restoreAllMocks()
   })
 
-  it("bogey_dope", () => {
+  it("getsPicInfo", () => {
+    const initPt = new Point(100, 100)
+    const pInfo = draw.getPictureInfo(initPt)
+    expect(pInfo.start).toEqual(initPt)
+    expect(pInfo.deep).toEqual(-1) // draw.eaInfo isn't set
+    expect(pInfo.wide).toEqual(-1)
+  })
+
+  it("music_singlegroup_singlecontact", () => {
+    const sg = new AircraftGroup({ ...p, hdg: 5, alts: [10], nContacts: 1 })
+    sg.setBraaseye(
+      new Braaseye(new Point(50, 50), new Point(50, 50), new Point(100, 50))
+    )
+    sg.setLabel("SINGLE GROUP")
+    draw.groups = [sg]
+    draw.eaInfo = {
+      grp: sg,
+      strBR: new BRAA(100, 10),
+      query: "hi",
+    }
+    draw.requestType = 0
+    expect(draw.getAnswer()).toEqual(
+      "SINGLE GROUP BULLSEYE 270/12, 10k TRACK NORTH HOSTILE"
+    )
+  })
+
+  it("bogey_dope_hot", () => {
     draw.getPictureInfo()
     draw.requestType = 1
     draw.getAnswer()
@@ -66,9 +93,105 @@ describe("DrawEA", () => {
     )
   })
 
-  // TODO -- write test for strobe
-  // TODO -- write test for music
+  it("bogey_dope_oth_aspect", () => {
+    const sg = new AircraftGroup({ ...p, hdg: 150 })
+    draw.groups = [sg]
+    draw.getPictureInfo()
+    draw.requestType = 1
+    draw.getAnswer()
+    expect(draw.getAnswer()).toEqual(
+      "GROUP BRAA 289/99 20k, FLANK SOUTHEAST HOSTILE HEAVY 4 CONTACTS"
+    )
+  })
 
+  it("music_singlegroup_multicontact", () => {
+    const sg = new AircraftGroup({ ...p, hdg: 5, alts: [10, 15], nContacts: 2 })
+    sg.setBraaseye(
+      new Braaseye(new Point(50, 50), new Point(50, 50), new Point(100, 50))
+    )
+    sg.setLabel("SINGLE GROUP")
+    draw.groups = [sg]
+    draw.eaInfo = {
+      grp: sg,
+      strBR: new BRAA(100, 10),
+      query: "hi",
+    }
+    draw.requestType = 0
+    expect(draw.getAnswer()).toEqual(
+      "SINGLE GROUP BULLSEYE 270/12, 15k TRACK NORTH " +
+        "HOSTILE 2 CONTACTS LINE ABREAST 3"
+    )
+  })
+
+  it("bogey_dope_hot", () => {
+    draw.getPictureInfo()
+    draw.requestType = 1
+    draw.getAnswer()
+    expect(draw.getAnswer()).toEqual(
+      "GROUP BRAA 297/98 20k, HOT HOSTILE HEAVY 4 CONTACTS"
+    )
+  })
+
+  it("bogey_dope_oth_aspect", () => {
+    const sg = new AircraftGroup({ ...p, hdg: 150 })
+    draw.groups = [sg]
+    draw.getPictureInfo()
+    draw.requestType = 1
+    expect(draw.getAnswer()).toEqual(
+      "GROUP BRAA 289/99 20k, FLANK SOUTHEAST HOSTILE HEAVY 4 CONTACTS"
+    )
+  })
+
+  it("bogey_dope_multi_group", () => {
+    const ng = new AircraftGroup({ ...p, hdg: 150, sx: 50, sy: 400 })
+    const sg = new AircraftGroup({
+      ...p,
+      hdg: 90,
+      sx: 400,
+      sy: 400,
+      nContacts: 1,
+      alts: [5],
+    })
+    ng.setLabel("EAST GROUP")
+    sg.setLabel("WEST GROUP")
+    draw.groups = [ng, sg]
+    draw.getPictureInfo()
+    draw.requestType = 1
+    expect(draw.getAnswer()).toEqual("WEST GROUP BRAA 265/38 05k, HOT HOSTILE")
+    draw.groups = [sg, ng]
+    expect(draw.getAnswer()).toEqual("WEST GROUP BRAA 265/38 05k, HOT HOSTILE")
+  })
   // TODO -- write test for edge cases
   // TODO -- write test for drawInfo
+
+  it("has_drawpic_functions", () => {
+    expect(draw.formatPicTitle()).toEqual("")
+    expect(draw.formatDimensions()).toEqual("")
+    expect(draw.formatWeighted()).toEqual("")
+
+    const warn = jest.spyOn(console, "warn").mockImplementation()
+    draw.applyLabels()
+    expect(warn).toHaveBeenCalledTimes(1)
+    jest.restoreAllMocks()
+  })
+
+  it("selects_strobe_query", () => {
+    const sg = new AircraftGroup({ ...p, hdg: 150 })
+    draw.groups = [sg]
+    jest
+      .spyOn(PSMath, "randomNumber")
+      .mockReturnValueOnce(0)
+      .mockReturnValueOnce(7)
+      .mockReturnValueOnce(1)
+    draw.drawInfo()
+    expect(draw.eaInfo.query).toEqual(sg.getLabel())
+
+    jest
+      .spyOn(PSMath, "randomNumber")
+      .mockReturnValueOnce(0)
+      .mockReturnValueOnce(65)
+      .mockReturnValueOnce(1)
+    draw.drawInfo()
+    expect(draw.eaInfo.query).toEqual("289")
+  })
 })

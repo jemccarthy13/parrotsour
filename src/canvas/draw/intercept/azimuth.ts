@@ -34,6 +34,7 @@ export default class DrawAzimuth extends DrawPic {
         this.props.orientation.orient,
         this.props.dataStyle,
         {
+          deep: 7 * PIXELS_TO_NM,
           wide: drawDistance,
           start,
         }

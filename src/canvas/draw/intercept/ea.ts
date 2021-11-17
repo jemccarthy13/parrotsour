@@ -22,7 +22,7 @@ interface EAInfo {
 
 export default class DrawEA extends DrawPic {
   private eaPic!: DrawPic
-  private eaInfo!: EAInfo
+  public eaInfo!: EAInfo
   public requestType = 0 // 0 = music, 1 = STR, 2 = BD
 
   create(): DrawPic {
@@ -43,8 +43,6 @@ export default class DrawEA extends DrawPic {
         randomNumber(ctx.canvas.width * 0.6, ctx.canvas.width * 0.65),
         randomNumber(ctx.canvas.width * 0.2, ctx.canvas.height * 0.8)
       )
-    } else if (start.x === undefined) {
-      start.x = randomNumber(ctx.canvas.width * 0.6, ctx.canvas.width * 0.65)
     }
 
     const picInfo = this.eaPic.getPictureInfo(start)
@@ -74,7 +72,7 @@ export default class DrawEA extends DrawPic {
       const tmpBraa = this.state.blueAir
         .getCenterOfMass(this.props.dataStyle)
         .getBR(this.groups[x].getCenterOfMass(this.props.dataStyle))
-      if (braa.range < closestRng) {
+      if (tmpBraa.range < closestRng) {
         braa = tmpBraa
         closestRng = braa.range
         closestGrp = this.groups[x]
@@ -185,7 +183,7 @@ export default class DrawEA extends DrawPic {
 
     const aspectH = this.state.blueAir.getAspect(cGrp, this.props.dataStyle)
 
-    let aspect = aspectH.toString()
+    let aspect = aspectH.toString() + " "
     aspect += aspectH !== Aspect.HOT ? toCardinal(cGrp.getHeading()) : ""
     let response: string = cGrp.getLabel()
     response += " BRAA " + braa.toString() + " "
@@ -195,7 +193,7 @@ export default class DrawEA extends DrawPic {
     response += cGrp.formatNumContacts()
 
     response += altStack.fillIns
-    return response
+    return response.replace(/\s+/g, " ").trim()
   }
 
   applyLabels(): void {
@@ -213,13 +211,17 @@ export default class DrawEA extends DrawPic {
 
   getAnswer(): string {
     let answer = ""
-    if (this.requestType === 0) {
-      answer = this.formatMusic()
-    } else if (this.requestType === 1) {
-      answer = this.formatBRAA()
-    } else if (this.requestType === 2) {
-      answer = this.formatStrobe()
+    switch (this.requestType) {
+      case 0:
+        answer = this.formatMusic()
+        break
+      case 1:
+        answer = this.formatBRAA()
+        break
+      default:
+        answer = this.formatStrobe()
+        break
     }
-    return answer
+    return answer.replace(/\s+/g, " ").trim()
   }
 }
