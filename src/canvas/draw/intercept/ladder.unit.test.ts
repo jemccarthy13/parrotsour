@@ -1,10 +1,12 @@
 import { SensorType } from "../../../classes/aircraft/datatrail/sensortype"
 import { AircraftGroup, GroupParams } from "../../../classes/groups/group"
 import { Point } from "../../../classes/point"
+import { FORMAT } from "../../../classes/supportedformats"
 import { BlueInThe, PictureCanvasState } from "../../canvastypes"
 import { PaintBrush } from "../paintbrush"
 import DrawLadder from "./ladder"
 import { testProps } from "./mockutils.unit.test"
+import * as PSMath from "../../../utils/psmath"
 
 let testState: PictureCanvasState
 let p: Partial<GroupParams>
@@ -43,6 +45,33 @@ describe("DrawChamp", () => {
     ladder.initialize(testProps, testState)
   })
 
+  it("simple_functions", () => {
+    ladder.create()
+    expect(ladder.deep).toEqual(0)
+    expect(ladder.wide).toEqual(0)
+    expect(ladder.groups.length).toEqual(0)
+
+    expect(ladder.formatWeighted()).toEqual("")
+  })
+
+  it("chooses_grps_for_n_contacts", () => {
+    jest
+      .spyOn(PSMath, "randomNumber")
+      .mockReturnValueOnce(3)
+      .mockReturnValueOnce(4)
+      .mockReturnValueOnce(5)
+      .mockReturnValueOnce(5)
+
+    ladder.chooseNumGroups(1)
+    expect(ladder.numGroupsToCreate).toEqual(3)
+    ladder.chooseNumGroups(4)
+    expect(ladder.numGroupsToCreate).toEqual(4)
+    ladder.chooseNumGroups(6)
+    expect(ladder.numGroupsToCreate).toEqual(5)
+    ladder.chooseNumGroups(0)
+    expect(ladder.numGroupsToCreate).toEqual(5)
+  })
+
   it("hot_ladder", () => {
     const lg = new AircraftGroup(p)
     const mg = new AircraftGroup({ ...p, sx: 180, alts: [15, 15, 15, 15] })
@@ -59,6 +88,29 @@ describe("DrawChamp", () => {
       "3 GROUP LADDER 12 DEEP, " +
         "LEAD GROUP BULLSEYE 305/68, 15k HOSTILE HEAVY 4 CONTACTS " +
         "MIDDLE GROUP SEPARATION 9 15k HOSTILE HEAVY 4 CONTACTS " +
+        "TRAIL GROUP 20k HOSTILE HEAVY 4 CONTACTS"
+    )
+  })
+
+  it("hot_ladder_ipe", () => {
+    const lg = new AircraftGroup(p)
+    const mg = new AircraftGroup({ ...p, sx: 180, alts: [15, 15, 15, 15] })
+    const tg = new AircraftGroup({
+      ...p,
+      sx: 150,
+      alts: [15, 15, 15, 15],
+    })
+
+    ladder.groups = [lg, mg, tg]
+    ladder.drawInfo()
+
+    const updatedProps = { ...testProps, format: FORMAT.IPE }
+    ladder.initialize(updatedProps, testState)
+
+    expect(ladder.getAnswer()).toEqual(
+      "3 GROUP LADDER 12 DEEP, " +
+        "LEAD GROUP BULLSEYE 305/68, 15k HOSTILE HEAVY 4 CONTACTS " +
+        "MIDDLE GROUP RANGE 9 15k HOSTILE HEAVY 4 CONTACTS " +
         "TRAIL GROUP 20k HOSTILE HEAVY 4 CONTACTS"
     )
   })
@@ -169,6 +221,7 @@ describe("DrawChamp", () => {
     )
   })
 
-  // TODO -- write create/chooseNumGroups for all DrawPic classes
-  // TODO -- write echelon tests
+  // TODO -- write echelon tests for TDD
+  // TODO -- getPictureInfo
+  // TODO -- createGroups
 })
