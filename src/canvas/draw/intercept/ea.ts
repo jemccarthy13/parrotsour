@@ -164,7 +164,8 @@ export default class DrawEA extends DrawPic {
       this.eaInfo.strBR.range +
       ", " +
       altStack.stack +
-      (aspectH !== "HOT" ? " " + aspectH + " " + trackDir : aspectH) +
+      " " +
+      (aspectH !== "HOT" ? aspectH + " " + trackDir : aspectH) +
       ", HOSTILE, " +
       grp.getLabel()
     )

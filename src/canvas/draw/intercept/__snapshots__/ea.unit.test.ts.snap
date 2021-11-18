@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DrawEA draws_request 1`] = `
+<canvas
+  height="500"
+  width="800"
+/>
+`;
+
+exports[`DrawEA draws_request 2`] = `
+<canvas
+  height="500"
+  width="800"
+/>
+`;
+
+exports[`DrawEA draws_request 3`] = `
+<canvas
+  height="500"
+  width="800"
+/>
+`;

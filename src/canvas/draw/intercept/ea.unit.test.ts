@@ -14,16 +14,12 @@ describe("DrawEA", () => {
   let testState: PictureCanvasState
   let p: Partial<GroupParams>
   let draw: DrawEA
-
-  beforeAll(() => {
-    const canvas = document.createElement("canvas")
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const ctx = canvas.getContext("2d")!
-    canvas.width = 800
-    canvas.height = 500
-
-    PaintBrush.use(ctx)
-  })
+  const canvas = document.createElement("canvas")
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const ctx = canvas.getContext("2d")!
+  canvas.width = 800
+  canvas.height = 500
+  PaintBrush.use(ctx)
 
   beforeEach(() => {
     const startX = 200
@@ -53,9 +49,27 @@ describe("DrawEA", () => {
     draw.groups = [sg]
   })
 
+  afterEach(() => {
+    jest.restoreAllMocks()
+  })
+
   afterAll(() => {
     jest.resetAllMocks()
     jest.restoreAllMocks()
+  })
+
+  it("draws_request", () => {
+    jest
+      .spyOn(PSMath, "randomNumber")
+      .mockReturnValueOnce(0)
+      .mockReturnValueOnce(1)
+      .mockReturnValueOnce(2)
+    draw.drawInfo() // first time request type = 0
+    expect(canvas).toMatchSnapshot()
+    draw.drawInfo() // 2nd time request type = 1
+    expect(canvas).toMatchSnapshot()
+    draw.drawInfo() // 3d time request type = 2
+    expect(canvas).toMatchSnapshot()
   })
 
   it("getsPicInfo", () => {
@@ -161,8 +175,6 @@ describe("DrawEA", () => {
     draw.groups = [sg, ng]
     expect(draw.getAnswer()).toEqual("WEST GROUP BRAA 265/38 05k, HOT HOSTILE")
   })
-  // TODO -- write test for edge cases
-  // TODO -- write test for drawInfo
 
   it("has_drawpic_functions", () => {
     expect(draw.formatPicTitle()).toEqual("")
@@ -172,7 +184,6 @@ describe("DrawEA", () => {
     const warn = jest.spyOn(console, "warn").mockImplementation()
     draw.applyLabels()
     expect(warn).toHaveBeenCalledTimes(1)
-    jest.restoreAllMocks()
   })
 
   it("selects_strobe_query", () => {
@@ -193,5 +204,47 @@ describe("DrawEA", () => {
       .mockReturnValueOnce(1)
     draw.drawInfo()
     expect(draw.eaInfo.query).toEqual("289")
+  })
+
+  it("formats_strobe_not_hot", () => {
+    const sg = new AircraftGroup({
+      ...p,
+      sx: 100,
+      sy: 400,
+      hdg: 150,
+      alts: [10],
+      nContacts: 1,
+    })
+    sg.setLabel("STROBE GROUP")
+    draw.groups = [sg]
+    draw.eaInfo.grp = sg
+    draw.drawInfo()
+    draw.requestType = 2
+
+    expect(draw.eaInfo.strBR.range).toEqual(116)
+    expect(draw.getAnswer()).toEqual(
+      "EAGLE01 STROBE RANGE 116, 10k BEAM SOUTHEAST, HOSTILE, STROBE GROUP"
+    )
+  })
+
+  it("formats_strobe_hot", () => {
+    const sg = new AircraftGroup({
+      ...p,
+      sx: 100,
+      sy: 400,
+      hdg: 90,
+      alts: [10],
+      nContacts: 1,
+    })
+    sg.setLabel("STROBE GROUP")
+    draw.groups = [sg]
+    draw.eaInfo.grp = sg
+    draw.drawInfo()
+    draw.requestType = 2
+
+    expect(draw.eaInfo.strBR.range).toEqual(113)
+    expect(draw.getAnswer()).toEqual(
+      "EAGLE01 STROBE RANGE 113, 10k HOT, HOSTILE, STROBE GROUP"
+    )
   })
 })
