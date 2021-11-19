@@ -27,7 +27,7 @@ export default class DrawAzimuth extends DrawPic {
     const drawDistance = randomNumber(7, 40) * PIXELS_TO_NM
 
     return {
-      deep: -1,
+      deep: 7 * PIXELS_TO_NM,
       wide: drawDistance,
       start: getStartPos(
         this.state.blueAir,

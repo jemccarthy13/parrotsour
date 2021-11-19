@@ -6,6 +6,8 @@ import { PaintBrush } from "../paintbrush"
 import DrawAzimuth from "./azimuth"
 import { testProps } from "./mockutils.unit.test"
 
+import * as PSMath from "../../../utils/psmath"
+
 let testState: PictureCanvasState
 let p: Partial<GroupParams>
 let azimuth: DrawAzimuth
@@ -206,5 +208,32 @@ describe("DrawAzimuth", () => {
         "EAST GROUP BULLSEYE 326/67, 36k HOSTILE " +
         "WEST GROUP STACK 46k 35k AND 25k HOSTILE HEAVY 4 CONTACTS 2 HIGH 1 MEDIUM 1 LOW"
     )
+  })
+
+  it("simple_functions", () => {
+    expect(azimuth.formatWeighted()).toEqual("")
+    azimuth.chooseNumGroups()
+    expect(azimuth.numGroupsToCreate).toEqual(2)
+
+    jest.spyOn(PSMath, "randomNumber").mockReturnValue(10)
+    const pInfo = azimuth.getPictureInfo()
+    expect(pInfo.deep).toEqual(7 * PSMath.PIXELS_TO_NM)
+    expect(pInfo.wide).toEqual(10 * PSMath.PIXELS_TO_NM)
+
+    const az = azimuth.create()
+    expect(az.groups.length).toEqual(0)
+    expect(az.deep).toEqual(0)
+    expect(az.wide).toEqual(0)
+  })
+
+  it("creates_groups_ns", () => {
+    const updatedProps = { ...testProps }
+    updatedProps.orientation.orient = BlueInThe.NORTH
+    const startPos = new Point(100, 100)
+    azimuth.wide = 40
+    const groups = azimuth.createGroups(startPos, [1, 1])
+
+    expect(groups[0].getStartPos()).toEqual(new Point(100, 100))
+    expect(groups[1].getStartPos()).toEqual(new Point(140, 100))
   })
 })
