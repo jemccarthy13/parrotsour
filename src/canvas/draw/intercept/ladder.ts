@@ -33,13 +33,14 @@ export default class DrawLadder extends DrawPic {
 
   getPictureInfo(start?: Point): PictureInfo {
     let depth = 0
-    for (let x = 1; x < this.groups.length; x++) {
+    for (let x = 1; x < this.numGroupsToCreate; x++) {
       const nextSep = randomNumber(7 * PIXELS_TO_NM, 15 * PIXELS_TO_NM)
       this.seps.push(nextSep)
       depth += nextSep
     }
     this.deep = depth
     const wide = 5 * PIXELS_TO_NM // ensures group is clamped visible in canvas
+    this.wide = wide
 
     const pInfo = {
       start,

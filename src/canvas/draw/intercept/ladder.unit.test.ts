@@ -2,7 +2,11 @@ import { SensorType } from "../../../classes/aircraft/datatrail/sensortype"
 import { AircraftGroup, GroupParams } from "../../../classes/groups/group"
 import { Point } from "../../../classes/point"
 import { FORMAT } from "../../../classes/supportedformats"
-import { BlueInThe, PictureCanvasState } from "../../canvastypes"
+import {
+  BlueInThe,
+  PictureCanvasProps,
+  PictureCanvasState,
+} from "../../canvastypes"
 import { PaintBrush } from "../paintbrush"
 import DrawLadder from "./ladder"
 import { testProps } from "./mockutils.unit.test"
@@ -11,6 +15,10 @@ import * as PSMath from "../../../utils/psmath"
 let testState: PictureCanvasState
 let p: Partial<GroupParams>
 let ladder: DrawLadder
+
+jest.mock("./cap", () => {
+  //nothing
+})
 
 /**
  * Test the azimuth picture drawer
@@ -43,6 +51,8 @@ describe("DrawChamp", () => {
     testProps.orientation.orient = BlueInThe.EAST
     ladder = new DrawLadder()
     ladder.initialize(testProps, testState)
+
+    jest.restoreAllMocks()
   })
 
   it("simple_functions", () => {
@@ -70,6 +80,7 @@ describe("DrawChamp", () => {
     expect(ladder.numGroupsToCreate).toEqual(5)
     ladder.chooseNumGroups(0)
     expect(ladder.numGroupsToCreate).toEqual(5)
+    jest.restoreAllMocks()
   })
 
   it("hot_ladder", () => {
@@ -221,7 +232,73 @@ describe("DrawChamp", () => {
     )
   })
 
+  it("gets_picture_info", () => {
+    ladder.numGroupsToCreate = 3
+    const pInfo = ladder.getPictureInfo()
+    expect(pInfo.deep).toBeLessThan(45 * PSMath.PIXELS_TO_NM)
+    expect(ladder.deep).toBeLessThan(45 * PSMath.PIXELS_TO_NM)
+    expect(ladder.wide).toEqual(5 * PSMath.PIXELS_TO_NM)
+  })
+
+  it("creates_groups_vanilla", () => {
+    jest.spyOn(PSMath, "randomHeading").mockReturnValue(90)
+    jest.spyOn(PSMath, "randomNumber").mockReturnValue(1)
+    ladder.numGroupsToCreate = 3
+    ladder.seps = [40, 40, 40]
+    const startPos = new Point(100, 100)
+    const groups = ladder.createGroups(startPos, [1, 1, 1]) // three single contact groups
+    expect(groups[0].getHeading()).toEqual(91)
+    expect(groups[1].getHeading()).toEqual(91)
+    expect(groups[2].getHeading()).toEqual(91)
+    expect(groups[0].getStartPos()).toEqual(new Point(140, 100))
+    expect(groups[1].getStartPos()).toEqual(new Point(180, 100))
+    expect(groups[2].getStartPos()).toEqual(new Point(220, 100))
+  })
+
+  it("creates_groups_hardMode", () => {
+    jest
+      .spyOn(PSMath, "randomHeading")
+      .mockReturnValueOnce(90)
+      .mockReturnValueOnce(120)
+      .mockReturnValueOnce(80)
+      .mockReturnValueOnce(135)
+      .mockReturnValueOnce(15)
+      .mockReturnValueOnce(150)
+    jest.spyOn(PSMath, "randomNumber").mockReturnValue(1)
+
+    const updatedProps: PictureCanvasProps = { ...testProps, isHardMode: true }
+    ladder.initialize(updatedProps, testState)
+    ladder.numGroupsToCreate = 3
+    ladder.seps = [40, 40, 40]
+    const startPos = new Point(100, 100)
+    const groups = ladder.createGroups(startPos, [1, 1, 1]) // three single contact groups
+    expect(groups[0].getHeading()).toEqual(121)
+    expect(groups[1].getHeading()).toEqual(81)
+    expect(groups[2].getHeading()).toEqual(136)
+    expect(groups[0].getStartPos()).toEqual(new Point(140, 100))
+    expect(groups[1].getStartPos()).toEqual(new Point(180, 100))
+    expect(groups[2].getStartPos()).toEqual(new Point(220, 100))
+  })
+
+  it("creates_groups_NS", () => {
+    jest.spyOn(PSMath, "randomHeading").mockReturnValue(90)
+    jest.spyOn(PSMath, "randomNumber").mockReturnValue(1)
+
+    const updatedProps: PictureCanvasProps = { ...testProps }
+    updatedProps.orientation.orient = BlueInThe.NORTH
+
+    ladder.initialize(updatedProps, testState)
+    ladder.numGroupsToCreate = 3
+    ladder.seps = [40, 40, 40]
+    const startPos = new Point(100, 100)
+    const groups = ladder.createGroups(startPos, [1, 1, 1]) // three single contact groups
+    expect(groups[0].getHeading()).toEqual(91)
+    expect(groups[1].getHeading()).toEqual(91)
+    expect(groups[2].getHeading()).toEqual(91)
+    expect(groups[0].getStartPos()).toEqual(new Point(100, 140))
+    expect(groups[1].getStartPos()).toEqual(new Point(100, 180))
+    expect(groups[2].getStartPos()).toEqual(new Point(100, 220))
+  })
+
   // TODO -- write echelon tests for TDD
-  // TODO -- getPictureInfo
-  // TODO -- createGroups
 })
