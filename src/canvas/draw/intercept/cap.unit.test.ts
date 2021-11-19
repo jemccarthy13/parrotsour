@@ -1,5 +1,6 @@
 import { SensorType } from "../../../classes/aircraft/datatrail/sensortype"
 import { AircraftGroup, GroupParams } from "../../../classes/groups/group"
+import TestCanvas from "../../../testutils/testcanvas"
 import { PaintBrush } from "../paintbrush"
 import { checkCaps } from "./cap"
 
@@ -16,12 +17,7 @@ describe("cap_util", () => {
   }
 
   beforeAll(() => {
-    const canvas = document.createElement("canvas")
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const ctx = canvas.getContext("2d")!
-    canvas.width = 800
-    canvas.height = 500
-    PaintBrush.use(ctx)
+    PaintBrush.use(TestCanvas.getContext(800, 500))
 
     const ng = new AircraftGroup(p)
     grps = [ng]

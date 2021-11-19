@@ -22,21 +22,22 @@ export default class DrawVic extends DrawPic {
   }
 
   getPictureInfo(start?: Point): PictureInfo {
-    const picture = {
-      start,
-      wide: randomNumber(7 * PIXELS_TO_NM, 30 * PIXELS_TO_NM),
-      deep: randomNumber(7 * PIXELS_TO_NM, 30 * PIXELS_TO_NM),
-    }
+    const wide = randomNumber(7 * PIXELS_TO_NM, 30 * PIXELS_TO_NM)
+    const deep = randomNumber(7 * PIXELS_TO_NM, 30 * PIXELS_TO_NM)
     const startPos = getRestrictedStartPos(
       this.state.blueAir,
       this.props.orientation.orient,
       this.props.dataStyle,
-      45 + picture.deep,
+      45 + deep,
       100,
-      picture
+      { start, wide, deep }
     )
-    picture.start = startPos
-    return picture
+
+    return {
+      start: startPos,
+      wide,
+      deep,
+    }
   }
 
   createGroups = (startPos: Point, contactList: number[]): AircraftGroup[] => {
@@ -58,9 +59,9 @@ export default class DrawVic extends DrawPic {
     if (isHardMode) heading = randomHeading(format, blueAir.getHeading())
 
     if (isNS) {
-      sx = startPos.x + this.wide
+      sx = startPos.x + this.dimensions.wide
     } else {
-      sy = startPos.y + this.wide
+      sy = startPos.y + this.dimensions.wide
     }
     const stg = new AircraftGroup({
       sx,
@@ -71,11 +72,11 @@ export default class DrawVic extends DrawPic {
 
     if (isHardMode) heading = randomHeading(format, blueAir.getHeading())
     if (isNS) {
-      sx = startPos.x + this.wide / 2
-      sy = startPos.y - this.deep
+      sx = startPos.x + this.dimensions.wide / 2
+      sy = startPos.y - this.dimensions.deep
     } else {
-      sx = startPos.x + this.deep
-      sy = startPos.y + this.wide / 2
+      sx = startPos.x + this.dimensions.deep
+      sy = startPos.y + this.dimensions.wide / 2
     }
     const lg = new AircraftGroup({
       sx,
@@ -112,8 +113,8 @@ export default class DrawVic extends DrawPic {
 
     const realDepth = dPt.getBR(lgPos).range
     const realWidth = wPt.getBR(stgPos).range
-    this.deep = realDepth
-    this.wide = realWidth
+    this.dimensions.deep = realDepth
+    this.dimensions.wide = realWidth
     PaintBrush.drawMeasurement(lgPos, dPt, realDepth, showMeasurements)
     PaintBrush.drawMeasurement(stgPos, wPt, realWidth, showMeasurements)
 
@@ -135,7 +136,7 @@ export default class DrawVic extends DrawPic {
   }
 
   formatDimensions(): string {
-    return this.deep + " DEEP, " + this.wide + " WIDE"
+    return this.dimensions.deep + " DEEP, " + this.dimensions.wide + " WIDE"
   }
 
   formatWeighted(): string {
@@ -146,14 +147,17 @@ export default class DrawVic extends DrawPic {
     const ntgPos = this.groups[1].getCenterOfMass(dataStyle)
     const stgPos = this.groups[2].getCenterOfMass(dataStyle)
 
-    if (new Point(lgPos.x, ntgPos.y).getBR(lgPos).range < this.wide / 3) {
+    if (
+      new Point(lgPos.x, ntgPos.y).getBR(lgPos).range <
+      this.dimensions.wide / 3
+    ) {
       answer +=
         " WEIGHTED " +
         this.groups[1].getLabel().replace("TRAIL GROUP", "") +
         ", "
     } else if (
       new Point(lgPos.x, stgPos.y).getBR(lgPos).range <
-      this.wide / 3
+      this.dimensions.wide / 3
     ) {
       answer +=
         " WEIGHTED " +

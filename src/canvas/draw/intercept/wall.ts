@@ -37,24 +37,19 @@ export default class DrawWall extends DrawPic {
       this.seps.push(nextSep)
       width += nextSep
     }
-    this.wide = width
+    const wide = width
     const deep = 20 * PIXELS_TO_NM // to ensure measurements can be drawn behind wall
 
-    const pInfo = {
-      start,
-      wide: this.wide,
-      deep,
-    }
-    const startPos = getRestrictedStartPos(
+    const startPos: Point = getRestrictedStartPos(
       this.state.blueAir,
       this.props.orientation.orient,
       this.props.dataStyle,
       45,
       200,
-      pInfo
+      { start, wide, deep }
     )
-    pInfo.start = startPos
-    return pInfo
+
+    return { start: startPos, wide, deep }
   }
 
   createGroups = (startPos: Point, contactList: number[]): AircraftGroup[] => {
@@ -132,7 +127,7 @@ export default class DrawWall extends DrawPic {
       toPt = new Point(prevGpPos.x, gpPos.y - 25)
     }
     PaintBrush.drawMeasurement(fromPt, toPt, widthNM, showMeasurements)
-    this.wide = widthNM
+    this.dimensions.wide = widthNM
   }
 
   applyLabels(): void {
@@ -172,12 +167,12 @@ export default class DrawWall extends DrawPic {
   }
 
   formatDimensions(): string {
-    return this.wide + " WIDE"
+    return this.dimensions.wide + " WIDE"
   }
 
   formatWeighted(): string {
     console.warn("Check weighted for wall")
-    const split = this.wide / this.groups.length
+    const split = this.dimensions.wide / this.groups.length
     this.seps.forEach((sep) => {
       if (sep > split) {
         console.log("weighted")

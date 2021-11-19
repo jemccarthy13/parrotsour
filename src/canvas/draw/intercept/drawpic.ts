@@ -33,9 +33,7 @@ export abstract class DrawPic {
   answer = ""
   props!: PictureCanvasProps
   state!: PictureCanvasState
-  pInfo!: PictureInfo
-  deep = 0
-  wide = 0
+  dimensions: PictureInfo = { wide: 0, deep: 0, start: new Point(-1, -1) }
 
   getNumGroups(): number {
     return this.groups.length
@@ -58,16 +56,9 @@ export abstract class DrawPic {
       desiredNumContacts
     )
 
-    this.pInfo = this.getPictureInfo(start)
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    this.deep = this.pInfo.deep!
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    this.wide = this.pInfo.wide!
+    this.dimensions = this.getPictureInfo(start)
 
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const startPos = this.pInfo.start!
-
-    this.groups = this.createGroups(startPos, contactList)
+    this.groups = this.createGroups(this.dimensions.start, contactList)
 
     checkCaps(hasCaps, this.groups)
 
@@ -209,6 +200,6 @@ export abstract class DrawPic {
   }
 
   isAnchorOutriggers(): boolean {
-    return this.wide >= 10 && this.props.format !== FORMAT.IPE
+    return this.dimensions.wide >= 10 && this.props.format !== FORMAT.IPE
   }
 }

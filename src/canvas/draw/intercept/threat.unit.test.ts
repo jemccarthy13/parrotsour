@@ -10,15 +10,13 @@ import { PictureInfo } from "./pictureclamp"
 import DrawThreat from "./threat"
 
 import CanvasSerializer from "../../../test/canvas-serializer"
+import TestCanvas from "../../../testutils/testcanvas"
 expect.addSnapshotSerializer(CanvasSerializer)
 
 describe("DrawThreat", () => {
   let dThreat: DrawThreat
-  const canvas = document.createElement("canvas")
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const ctx = canvas.getContext("2d")!
-  canvas.width = 800
-  canvas.height = 500
+
+  PaintBrush.use(TestCanvas.getContext(800, 500))
 
   let testState: PictureCanvasState = {
     bullseye: new Point(400, 400),
@@ -30,7 +28,6 @@ describe("DrawThreat", () => {
   beforeEach(() => {
     jest.restoreAllMocks()
 
-    PaintBrush.use(ctx)
     PaintBrush.clearCanvas()
 
     dThreat = new DrawThreat()
@@ -60,7 +57,7 @@ describe("DrawThreat", () => {
 
     dThreat.drawInfo()
 
-    expect(canvas).toMatchSnapshot()
+    expect(TestCanvas.getCanvas()).toMatchSnapshot()
   })
 
   it("hot_threat_answer", () => {

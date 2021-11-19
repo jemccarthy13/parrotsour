@@ -32,3 +32,5 @@ export default {
     return snackbarRef.enqueueSnackbar(msg, options)
   },
 }
+
+export type { SnackbarKey }

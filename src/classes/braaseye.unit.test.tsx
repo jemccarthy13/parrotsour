@@ -4,21 +4,15 @@ import { Braaseye } from "./braaseye"
 import { Point } from "./point"
 
 import CanvasSerializer from "../test/canvas-serializer"
+import TestCanvas from "../testutils/testcanvas"
 expect.addSnapshotSerializer(CanvasSerializer)
 
 describe("Braaseye", () => {
-  const canvas = document.createElement("canvas")
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const ctx = canvas.getContext("2d")!
-  canvas.height = 50
-  canvas.width = 100
-  PaintBrush.use(ctx)
+  PaintBrush.use(TestCanvas.getContext(100, 50))
 
   afterEach(() => {
-    canvas.height = 50
-    canvas.width = 100
-    PaintBrush.getContext().fillStyle = "white"
-    PaintBrush.getContext().fillRect(0, 0, canvas.width, canvas.height)
+    TestCanvas.setDimensions(100, 50)
+    PaintBrush.clearCanvas()
   })
 
   const bluePos = new Point(10, 10)
@@ -37,18 +31,18 @@ describe("Braaseye", () => {
   it("draws_correctly_noOffset", () => {
     const braaseye = new Braaseye(toPoint, bluePos, bullseye)
     braaseye.draw(true, true)
-    expect(canvas).toMatchSnapshot()
+    expect(TestCanvas.getCanvas()).toMatchSnapshot()
   })
 
   it("draws_correctly_withOffset", () => {
     const braaseye = new Braaseye(toPoint, bluePos, bullseye)
     braaseye.draw(true, true, -10, 10)
-    expect(canvas).toMatchSnapshot()
+    expect(TestCanvas.getCanvas()).toMatchSnapshot()
   })
 
   it("draws_correctly_braaFirst", () => {
     const braaseye = new Braaseye(toPoint, bluePos, bullseye)
     braaseye.draw(true, false, -10, 10)
-    expect(canvas).toMatchSnapshot()
+    expect(TestCanvas.getCanvas()).toMatchSnapshot()
   })
 })

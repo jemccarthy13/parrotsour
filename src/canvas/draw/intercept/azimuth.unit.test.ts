@@ -7,18 +7,14 @@ import DrawAzimuth from "./azimuth"
 import { testProps } from "./mockutils.unit.test"
 
 import * as PSMath from "../../../utils/psmath"
+import TestCanvas from "../../../testutils/testcanvas"
 
 let testState: PictureCanvasState
 let p: Partial<GroupParams>
 let azimuth: DrawAzimuth
 
 beforeAll(() => {
-  const canvas = document.createElement("canvas")
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const ctx = canvas.getContext("2d")!
-  canvas.width = 800
-  canvas.height = 500
-  PaintBrush.use(ctx)
+  PaintBrush.use(TestCanvas.getContext(800, 500))
 
   testState = {
     bullseye: new Point(400, 400),
@@ -222,15 +218,15 @@ describe("DrawAzimuth", () => {
 
     const az = azimuth.create()
     expect(az.groups.length).toEqual(0)
-    expect(az.deep).toEqual(0)
-    expect(az.wide).toEqual(0)
+    expect(az.dimensions.deep).toEqual(0)
+    expect(az.dimensions.wide).toEqual(0)
   })
 
   it("creates_groups_ns", () => {
     const updatedProps = { ...testProps }
     updatedProps.orientation.orient = BlueInThe.NORTH
     const startPos = new Point(100, 100)
-    azimuth.wide = 40
+    azimuth.dimensions.wide = 40
     const groups = azimuth.createGroups(startPos, [1, 1])
 
     expect(groups[0].getStartPos()).toEqual(new Point(100, 100))

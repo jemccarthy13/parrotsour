@@ -3,6 +3,7 @@ import { BRAA } from "../../../classes/braa"
 import { Braaseye } from "../../../classes/braaseye"
 import { AircraftGroup, GroupParams } from "../../../classes/groups/group"
 import { Point } from "../../../classes/point"
+import TestCanvas from "../../../testutils/testcanvas"
 import * as PSMath from "../../../utils/psmath"
 import { PictureCanvasState } from "../../canvastypes"
 import { PaintBrush } from "../paintbrush"
@@ -14,12 +15,8 @@ describe("DrawEA", () => {
   let testState: PictureCanvasState
   let p: Partial<GroupParams>
   let draw: DrawEA
-  const canvas = document.createElement("canvas")
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const ctx = canvas.getContext("2d")!
-  canvas.width = 800
-  canvas.height = 500
-  PaintBrush.use(ctx)
+
+  PaintBrush.use(TestCanvas.getContext(800, 500))
 
   beforeEach(() => {
     const startX = 200
@@ -65,11 +62,11 @@ describe("DrawEA", () => {
       .mockReturnValueOnce(1)
       .mockReturnValueOnce(2)
     draw.drawInfo() // first time request type = 0
-    expect(canvas).toMatchSnapshot()
+    expect(TestCanvas.getCanvas()).toMatchSnapshot()
     draw.drawInfo() // 2nd time request type = 1
-    expect(canvas).toMatchSnapshot()
+    expect(TestCanvas.getCanvas()).toMatchSnapshot()
     draw.drawInfo() // 3d time request type = 2
-    expect(canvas).toMatchSnapshot()
+    expect(TestCanvas.getCanvas()).toMatchSnapshot()
   })
 
   it("getsPicInfo", () => {

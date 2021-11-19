@@ -1,5 +1,6 @@
 import { AircraftGroup } from "../../../classes/groups/group"
 import { Point } from "../../../classes/point"
+import TestCanvas from "../../../testutils/testcanvas"
 import { PictureCanvasState } from "../../canvastypes"
 import { PaintBrush } from "../paintbrush"
 import DrawAzimuth from "./azimuth"
@@ -25,12 +26,15 @@ describe("DrawPic", () => {
   }
 
   beforeAll(() => {
-    const canvas = document.createElement("canvas")
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const ctx = canvas.getContext("2d")!
-    canvas.width = 800
-    canvas.height = 500
-    PaintBrush.use(ctx)
+    PaintBrush.use(TestCanvas.getContext(800, 500))
+  })
+
+  it("simple_functions", () => {
+    expect(draw.getNumGroups()).toEqual(0)
+    jest.mock("../../../classes/groups/group")
+    draw.groups = [new AircraftGroup()]
+    expect(draw.getNumGroups()).toEqual(1)
+    jest.restoreAllMocks()
   })
 
   it("assigns_contacts_too_few_contacts", () => {

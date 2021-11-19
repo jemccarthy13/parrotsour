@@ -46,18 +46,10 @@ export default class DrawLeadEdge extends DrawPic {
       { start }
     )
     const leadInfo = this.leadEdge.getPictureInfo(pic1StartPos)
-    this.leadEdge.pInfo = leadInfo
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    this.leadEdge.deep = leadInfo.deep!
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    this.leadEdge.wide = leadInfo.wide!
+    this.leadEdge.dimensions = leadInfo
 
     const followInfo = this.followOn.getPictureInfo(pic1StartPos)
-    this.followOn.pInfo = followInfo
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    this.followOn.deep = followInfo.deep!
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    this.followOn.wide = followInfo.wide!
+    this.followOn.dimensions = followInfo
 
     return {
       deep: 0,
@@ -98,7 +90,7 @@ export default class DrawLeadEdge extends DrawPic {
       25,
       40
     )
-    this.followOn.pInfo.start = pic2StartPos
+    this.followOn.dimensions.start = pic2StartPos
 
     const followGrps = this.followOn.createGroups(
       pic2StartPos,

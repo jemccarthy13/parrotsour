@@ -81,17 +81,15 @@ export default class DrawPackage extends DrawPic {
 
     this.pictures.forEach((pic, idx) => {
       const info = pic.getPictureInfo(starts[idx])
-      pic.pInfo = info
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      pic.deep = info.deep!
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      pic.wide = info.wide!
+      pic.dimensions = info
     })
 
     this.start2 = starts[1]
 
     return {
       start: starts[0],
+      wide: -1,
+      deep: -1,
     }
   }
 

@@ -58,10 +58,9 @@ export default class DrawRange extends DrawPic {
       ? randomHeading(this.props.format, this.state.blueAir.getHeading())
       : tg.getHeading() + randomNumber(-10, 10)
 
-    //const tgPos = tg.getCenterOfMass(this.props.dataStyle)
     const lg = new AircraftGroup({
-      sx: isNS ? startPos.x : startPos.x + this.deep,
-      sy: isNS ? startPos.y + this.deep : startPos.y,
+      sx: isNS ? startPos.x : startPos.x + this.dimensions.deep,
+      sy: isNS ? startPos.y + this.dimensions.deep : startPos.y,
       hdg: heading,
       dataTrailType: this.props.dataStyle,
       nContacts: contactList[1],
@@ -93,9 +92,9 @@ export default class DrawRange extends DrawPic {
       offsetX2 = -60
       offsetY2 = 40
     }
-    this.deep = m2.getBR(tPos).range
+    this.dimensions.deep = m2.getBR(tPos).range
 
-    PaintBrush.drawMeasurement(tPos, m2, this.deep, showMeasurements)
+    PaintBrush.drawMeasurement(tPos, m2, this.dimensions.deep, showMeasurements)
 
     PaintBrush.drawAltitudes(lPos, lg.getAltitudes(), offsetX, offsetY)
     PaintBrush.drawAltitudes(tPos, tg.getAltitudes(), offsetX2, offsetY2)
@@ -113,7 +112,7 @@ export default class DrawRange extends DrawPic {
   }
 
   formatDimensions(): string {
-    return this.deep.toString()
+    return this.dimensions.deep.toString()
   }
 
   formatWeighted(): string {

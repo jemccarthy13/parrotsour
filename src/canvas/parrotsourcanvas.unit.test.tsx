@@ -8,6 +8,7 @@ import ParrotSourCanvas from "./parrotsourcanvas"
 import DrawingCanvas from "./drawingcanvas"
 import { PicAnimationHandler } from "../animation/picanimator"
 import { PaintBrush } from "./draw/paintbrush"
+import TestCanvas from "../testutils/testcanvas"
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const picAnimator = jest.mock("../animation/picanimator")
@@ -16,16 +17,13 @@ const animatorPause = jest.spyOn(PicAnimationHandler.prototype, "pauseFight")
 
 const resetFn = jest.fn()
 
-const canvas = document.createElement("canvas")
-canvas.width = 10
-canvas.height = 30
-// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-const ctx: CanvasRenderingContext2D = canvas.getContext("2d")!
-ctx.fillStyle = "white"
-ctx.fillRect(0, 0, 0, 0)
+const ctx = TestCanvas.getContext(10, 30)
 PaintBrush.use(ctx)
 
 describe("ParrotSourCanvas", () => {
+  beforeEach(() => {
+    PaintBrush.clearCanvas()
+  })
   const testProps: PictureCanvasProps = {
     format: FORMAT.ALSA,
     setAnswer: jest.fn(),

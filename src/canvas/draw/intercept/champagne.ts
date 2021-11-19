@@ -22,22 +22,18 @@ export default class DrawChampagne extends DrawPic {
   }
 
   getPictureInfo(start?: Point): PictureInfo {
-    const picture = {
-      start,
-      wide: randomNumber(7 * PIXELS_TO_NM, 35 * PIXELS_TO_NM),
-      deep: randomNumber(7 * PIXELS_TO_NM, 35 * PIXELS_TO_NM),
-    }
-
+    const wide = randomNumber(7 * PIXELS_TO_NM, 35 * PIXELS_TO_NM)
+    const deep = randomNumber(7 * PIXELS_TO_NM, 35 * PIXELS_TO_NM)
     const startPos = getRestrictedStartPos(
       this.state.blueAir,
       this.props.orientation.orient,
       this.props.dataStyle,
-      45 + picture.deep,
+      45 + deep,
       100,
-      picture
+      { wide, deep, start }
     )
-    picture.start = startPos
-    return picture
+
+    return { start: startPos, wide, deep }
   }
 
   createGroups = (startPos: Point, contactList: number[]): AircraftGroup[] => {
@@ -64,15 +60,15 @@ export default class DrawChampagne extends DrawPic {
     let nlg: AircraftGroup
     if (isNS) {
       nlg = new AircraftGroup({
-        sx: startPos.x - this.wide / 2,
-        sy: startPos.y - this.deep,
+        sx: startPos.x - this.dimensions.wide / 2,
+        sy: startPos.y - this.dimensions.deep,
         hdg: heading + randomNumber(-10, 10),
         nContacts: contactList[1],
       })
     } else {
       nlg = new AircraftGroup({
-        sx: startPos.x + this.deep,
-        sy: startPos.y - this.wide / 2,
+        sx: startPos.x + this.dimensions.deep,
+        sy: startPos.y - this.dimensions.wide / 2,
         hdg: heading + randomNumber(-10, 10),
         nContacts: contactList[1],
       })
@@ -87,8 +83,8 @@ export default class DrawChampagne extends DrawPic {
     let slg
     if (isNS) {
       slg = new AircraftGroup({
-        sx: startPos.x + this.wide / 2,
-        sy: startPos.y - this.deep,
+        sx: startPos.x + this.dimensions.wide / 2,
+        sy: startPos.y - this.dimensions.deep,
         hdg: heading + randomNumber(-10, 10),
         nContacts: contactList[2],
       })
@@ -96,8 +92,8 @@ export default class DrawChampagne extends DrawPic {
       slg.setLabel("EAST LEAD GROUP")
     } else {
       slg = new AircraftGroup({
-        sx: startPos.x + this.deep,
-        sy: startPos.y + this.wide / 2,
+        sx: startPos.x + this.dimensions.deep,
+        sy: startPos.y + this.dimensions.wide / 2,
         hdg: heading + randomNumber(-10, 10),
         nContacts: contactList[2],
       })
@@ -128,10 +124,20 @@ export default class DrawChampagne extends DrawPic {
       wPt = new Point(slgPos.x, nlgPos.y)
       dPt = new Point(tgPos.x, nlgPos.y)
     }
-    this.wide = wPt.getBR(nlgPos).range
-    this.deep = dPt.getBR(tgPos).range
-    PaintBrush.drawMeasurement(nlgPos, wPt, this.wide, showMeasurements)
-    PaintBrush.drawMeasurement(tgPos, dPt, this.deep, showMeasurements)
+    this.dimensions.wide = wPt.getBR(nlgPos).range
+    this.dimensions.deep = dPt.getBR(tgPos).range
+    PaintBrush.drawMeasurement(
+      nlgPos,
+      wPt,
+      this.dimensions.wide,
+      showMeasurements
+    )
+    PaintBrush.drawMeasurement(
+      tgPos,
+      dPt,
+      this.dimensions.deep,
+      showMeasurements
+    )
 
     const offsetXTrail = !isNS ? -100 : 0
     const offsetXNL = isNS ? -100 : 0
@@ -187,12 +193,12 @@ export default class DrawChampagne extends DrawPic {
       frmNPt = new Point(grp2Pos.x, grp0Pos.y)
       fromSPt = new Point(grp2Pos.x, grp1Pos.y)
     }
-    if (frmNPt.getBR(grp0Pos).range < this.wide / 3) {
+    if (frmNPt.getBR(grp0Pos).range < this.dimensions.wide / 3) {
       weighted =
         " WEIGHTED " +
         this.groups[0].getLabel().replace(" LEAD GROUP", "") +
         ", "
-    } else if (fromSPt.getBR(grp1Pos).range < this.wide / 3) {
+    } else if (fromSPt.getBR(grp1Pos).range < this.dimensions.wide / 3) {
       weighted =
         " WEIGHTED " +
         this.groups[1].getLabel().replace(" LEAD GROUP", "") +
@@ -207,7 +213,14 @@ export default class DrawChampagne extends DrawPic {
 
   formatDimensions(): string {
     const openClose = getOpenCloseAzimuth(this.groups[1], this.groups[2])
-    return this.wide + " WIDE" + openClose + " " + this.deep + " DEEP, "
+    return (
+      this.dimensions.wide +
+      " WIDE" +
+      openClose +
+      " " +
+      this.dimensions.deep +
+      " DEEP, "
+    )
   }
 
   getAnswer(): string {

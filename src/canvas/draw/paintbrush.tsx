@@ -23,8 +23,8 @@ export class PaintBrush {
 
   public static clearCanvas(): void {
     const ctx = PaintBrush.ctx
-    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
     ctx.fillStyle = "white"
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
     ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height)
   }
 

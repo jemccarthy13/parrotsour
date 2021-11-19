@@ -62,8 +62,8 @@ export default class DrawAzimuth extends DrawPic {
 
     const ngStPos = ng.getStartPos()
     const sg = new AircraftGroup({
-      sx: isNS ? ngStPos.x + this.wide : ngStPos.x,
-      sy: isNS ? ngStPos.y : ngStPos.y + this.wide,
+      sx: isNS ? ngStPos.x + this.dimensions.wide : ngStPos.x,
+      sy: isNS ? ngStPos.y : ngStPos.y + this.dimensions.wide,
       hdg: heading,
       dataTrailType: this.props.dataStyle,
       nContacts: contactList[1],
@@ -99,8 +99,8 @@ export default class DrawAzimuth extends DrawPic {
       m2 = new Point(nPos.x, sPos.y)
     }
 
-    this.wide = m2.getBR(nPos).range
-    PaintBrush.drawMeasurement(nPos, m2, this.wide, showMeasurements)
+    this.dimensions.wide = m2.getBR(nPos).range
+    PaintBrush.drawMeasurement(nPos, m2, this.dimensions.wide, showMeasurements)
     PaintBrush.drawAltitudes(nPos, ng.getAltitudes(), offsetX, offsetY)
     PaintBrush.drawAltitudes(sPos, sg.getAltitudes(), offsetX2, offsetY2)
 
@@ -147,7 +147,7 @@ export default class DrawAzimuth extends DrawPic {
   }
 
   formatDimensions(): string {
-    return this.wide.toString()
+    return this.dimensions.wide.toString()
   }
 
   getAnswer(): string {

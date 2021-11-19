@@ -2,24 +2,16 @@ import { PaintBrush } from "../canvas/draw/paintbrush"
 import { BRAA } from "./braa"
 
 import CanvasSerializer from "../test/canvas-serializer"
+import TestCanvas from "../testutils/testcanvas"
 expect.addSnapshotSerializer(CanvasSerializer)
 
 describe("BRAA", () => {
-  let canvas: HTMLCanvasElement
-  let ctx: CanvasRenderingContext2D
-
   beforeAll(() => {
-    canvas = document.createElement("canvas")
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    ctx = canvas.getContext("2d")!
-    canvas.height = 20
-    canvas.width = 50
-    PaintBrush.use(ctx)
+    PaintBrush.use(TestCanvas.getContext(50, 20))
   })
 
   afterEach(() => {
-    ctx.fillStyle = "white"
-    ctx.fillRect(0, 0, canvas.width, canvas.height)
+    PaintBrush.clearCanvas()
   })
 
   it("constructs_correctly", () => {
@@ -37,12 +29,12 @@ describe("BRAA", () => {
   it("draws_correctly", () => {
     const br = new BRAA(90, 20)
     br.draw(10, 10, "black", true)
-    expect(canvas).toMatchSnapshot()
+    expect(TestCanvas.getCanvas()).toMatchSnapshot()
   })
 
   it("draws_only_when_showmeasure_true", () => {
     const br = new BRAA(90, 20)
     br.draw(10, 10, "green", false)
-    expect(canvas).toMatchSnapshot()
+    expect(TestCanvas.getCanvas()).toMatchSnapshot()
   })
 })

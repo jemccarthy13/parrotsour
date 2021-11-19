@@ -4,23 +4,26 @@ import { IDMatrix } from "../id"
 import { IFFDataTrail } from "./iffdatatrail"
 
 import CanvasSerializer from "../../../test/canvas-serializer"
+import TestCanvas from "../../../testutils/testcanvas"
 expect.addSnapshotSerializer(CanvasSerializer)
 
-const canvas = document.createElement("canvas")
-// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-PaintBrush.use(canvas.getContext("2d")!)
+PaintBrush.use(TestCanvas.getContext())
 
 describe("IFFDataTrail", () => {
+  afterEach(() => {
+    PaintBrush.clearCanvas()
+  })
+
   it("draws_correctly", () => {
     const datatrail = new IFFDataTrail(new Point(50, 50), 90)
     datatrail.draw(90, IDMatrix.FRIEND)
-    expect(canvas).toMatchSnapshot()
+    expect(TestCanvas.getCanvas()).toMatchSnapshot()
   })
 
   it("doesnt_draw_hos_sus", () => {
     const datatrail = new IFFDataTrail(new Point(50, 50), 90)
     datatrail.draw(90, IDMatrix.HOSTILE)
     datatrail.draw(90, IDMatrix.SUSPECT)
-    expect(canvas).toMatchSnapshot()
+    expect(TestCanvas.getCanvas()).toMatchSnapshot()
   })
 })

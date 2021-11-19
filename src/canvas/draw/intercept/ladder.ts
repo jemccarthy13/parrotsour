@@ -38,24 +38,26 @@ export default class DrawLadder extends DrawPic {
       this.seps.push(nextSep)
       depth += nextSep
     }
-    this.deep = depth
-    const wide = 5 * PIXELS_TO_NM // ensures group is clamped visible in canvas
-    this.wide = wide
 
-    const pInfo = {
-      start,
-      deep: this.deep,
-      wide,
-    }
+    // ensures group is clamped visible in canvas
+    const deep = depth
+    const wide = 5 * PIXELS_TO_NM
+
     const startPos = getRestrictedStartPos(
       this.state.blueAir,
       this.props.orientation.orient,
       this.props.dataStyle,
-      45 + this.deep / PIXELS_TO_NM,
+      45 + this.dimensions.deep / PIXELS_TO_NM,
       200,
-      pInfo
+      { start, deep, wide }
     )
-    pInfo.start = startPos
+
+    const pInfo = {
+      start: startPos,
+      deep,
+      wide,
+    }
+
     return pInfo
   }
 
@@ -142,7 +144,7 @@ export default class DrawLadder extends DrawPic {
         showMeasurements
       )
     }
-    this.deep = actualDeep
+    this.dimensions.deep = actualDeep
   }
 
   applyLabels(): void {
@@ -174,7 +176,7 @@ export default class DrawLadder extends DrawPic {
   }
 
   formatDimensions(): string {
-    return this.deep + " DEEP, "
+    return this.dimensions.deep + " DEEP, "
   }
 
   formatWeighted(): string {

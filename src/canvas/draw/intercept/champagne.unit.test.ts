@@ -1,6 +1,7 @@
 import { SensorType } from "../../../classes/aircraft/datatrail/sensortype"
 import { AircraftGroup, GroupParams } from "../../../classes/groups/group"
 import { Point } from "../../../classes/point"
+import TestCanvas from "../../../testutils/testcanvas"
 import { PIXELS_TO_NM } from "../../../utils/psmath"
 import { BlueInThe, PictureCanvasState } from "../../canvastypes"
 import { PaintBrush } from "../paintbrush"
@@ -17,12 +18,7 @@ let champ: DrawChampange
  */
 describe("DrawChamp", () => {
   beforeEach(() => {
-    const canvas = document.createElement("canvas")
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const ctx = canvas.getContext("2d")!
-    canvas.width = 800
-    canvas.height = 500
-    PaintBrush.use(ctx)
+    PaintBrush.use(TestCanvas.getContext(800, 500))
 
     testState = {
       bullseye: new Point(400, 400),

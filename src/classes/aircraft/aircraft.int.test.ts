@@ -6,6 +6,7 @@ import Tasking from "../taskings/tasking"
 import { PaintBrush } from "../../canvas/draw/paintbrush"
 
 import CanvasSerializer from "../../test/canvas-serializer"
+import TestCanvas from "../../testutils/testcanvas"
 expect.addSnapshotSerializer(CanvasSerializer)
 
 /**
@@ -19,14 +20,11 @@ expect.addSnapshotSerializer(CanvasSerializer)
  * there's a high likelihood this test will also fail.
  */
 describe("Aircraft", () => {
-  const canvas = document.createElement("canvas")
-  canvas.width = 10
-  canvas.height = 30
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const ctx: CanvasRenderingContext2D = canvas.getContext("2d")!
-  ctx.fillStyle = "white"
-  ctx.fillRect(0, 0, 0, 0)
-  PaintBrush.use(ctx)
+  PaintBrush.use(TestCanvas.getContext(10, 30))
+
+  beforeEach(() => {
+    PaintBrush.clearCanvas()
+  })
 
   describe("constructors", () => {
     it("constructs_FTR_correctly", () => {
@@ -79,7 +77,7 @@ describe("Aircraft", () => {
         hdg: 180,
       })
       acft.draw(SensorType.ARROW)
-      expect(canvas).toMatchSnapshot()
+      expect(TestCanvas.getCanvas()).toMatchSnapshot()
     })
     it("suspect", () => {
       const bluePos = new Point(5, 5)
@@ -90,7 +88,7 @@ describe("Aircraft", () => {
       })
       acft.setIDMatrix(IDMatrix.SUSPECT)
       acft.draw(SensorType.ARROW)
-      expect(canvas).toMatchSnapshot()
+      expect(TestCanvas.getCanvas()).toMatchSnapshot()
     })
     it("neutral", () => {
       const bluePos = new Point(5, 5)
@@ -101,7 +99,7 @@ describe("Aircraft", () => {
       })
       acft.setIDMatrix(IDMatrix.NEUTRAL)
       acft.draw(SensorType.ARROW)
-      expect(canvas).toMatchSnapshot()
+      expect(TestCanvas.getCanvas()).toMatchSnapshot()
     })
     it("assume_friend", () => {
       const bluePos = new Point(5, 5)
@@ -112,7 +110,7 @@ describe("Aircraft", () => {
       })
       acft.setIDMatrix(IDMatrix.ASSUME_FRIEND)
       acft.draw(SensorType.ARROW)
-      expect(canvas).toMatchSnapshot()
+      expect(TestCanvas.getCanvas()).toMatchSnapshot()
     })
   })
 

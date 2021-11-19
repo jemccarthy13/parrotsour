@@ -16,11 +16,11 @@ export default class DrawPOD extends DrawPic {
     this.numGroupsToCreate = randomNumber(3, 11)
   }
 
-  getPictureInfo(start?: Point): PictureInfo {
+  getPictureInfo(): PictureInfo {
     return {
       deep: 5 * PIXELS_TO_NM,
       wide: 5 * PIXELS_TO_NM,
-      start,
+      start: new Point(-1, -1),
     }
   }
 

@@ -11,6 +11,7 @@ import { PaintBrush } from "../paintbrush"
 import DrawLadder from "./ladder"
 import { testProps } from "./mockutils.unit.test"
 import * as PSMath from "../../../utils/psmath"
+import TestCanvas from "../../../testutils/testcanvas"
 
 let testState: PictureCanvasState
 let p: Partial<GroupParams>
@@ -25,12 +26,7 @@ jest.mock("./cap", () => {
  */
 describe("DrawChamp", () => {
   beforeEach(() => {
-    const canvas = document.createElement("canvas")
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const ctx = canvas.getContext("2d")!
-    canvas.width = 800
-    canvas.height = 500
-    PaintBrush.use(ctx)
+    PaintBrush.use(TestCanvas.getContext(800, 500))
 
     testState = {
       bullseye: new Point(400, 400),
@@ -57,8 +53,8 @@ describe("DrawChamp", () => {
 
   it("simple_functions", () => {
     ladder.create()
-    expect(ladder.deep).toEqual(0)
-    expect(ladder.wide).toEqual(0)
+    expect(ladder.dimensions.deep).toEqual(0)
+    expect(ladder.dimensions.wide).toEqual(0)
     expect(ladder.groups.length).toEqual(0)
 
     expect(ladder.formatWeighted()).toEqual("")
@@ -236,8 +232,8 @@ describe("DrawChamp", () => {
     ladder.numGroupsToCreate = 3
     const pInfo = ladder.getPictureInfo()
     expect(pInfo.deep).toBeLessThan(45 * PSMath.PIXELS_TO_NM)
-    expect(ladder.deep).toBeLessThan(45 * PSMath.PIXELS_TO_NM)
-    expect(ladder.wide).toEqual(5 * PSMath.PIXELS_TO_NM)
+    expect(pInfo.deep).toBeLessThan(45 * PSMath.PIXELS_TO_NM)
+    expect(pInfo.wide).toEqual(5 * PSMath.PIXELS_TO_NM)
   })
 
   it("creates_groups_vanilla", () => {

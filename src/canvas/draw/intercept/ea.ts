@@ -46,12 +46,9 @@ export default class DrawEA extends DrawPic {
     }
 
     const picInfo = this.eaPic.getPictureInfo(start)
-    this.eaPic.pInfo = picInfo
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    this.eaPic.deep = picInfo.deep!
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    this.eaPic.wide = picInfo.wide!
-    return this.eaPic.getPictureInfo(start)
+    this.eaPic.dimensions = picInfo
+
+    return picInfo
   }
 
   createGroups = (startPos: Point, contactList: number[]): AircraftGroup[] => {

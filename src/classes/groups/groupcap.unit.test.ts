@@ -4,13 +4,11 @@ import { AircraftGroup } from "./group"
 import { drawGroupCap } from "./groupcap"
 
 import CanvasSerializer from "../../test/canvas-serializer"
+import TestCanvas from "../../testutils/testcanvas"
 expect.addSnapshotSerializer(CanvasSerializer)
 
 describe("draw_group_cap", () => {
-  const canvas = document.createElement("canvas")
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const ctx = canvas.getContext("2d")!
-  PaintBrush.use(ctx)
+  PaintBrush.use(TestCanvas.getContext())
 
   afterEach(() => {
     PaintBrush.clearCanvas()
@@ -26,7 +24,7 @@ describe("draw_group_cap", () => {
     })
     grp.setCapping(true)
     drawGroupCap(grp)
-    expect(canvas).toMatchSnapshot()
+    expect(TestCanvas.getCanvas()).toMatchSnapshot()
   })
 
   it("draws_singleship_cap", () => {
@@ -39,6 +37,6 @@ describe("draw_group_cap", () => {
     })
     grp.setCapping(true)
     drawGroupCap(grp)
-    expect(canvas).toMatchSnapshot()
+    expect(TestCanvas.getCanvas()).toMatchSnapshot()
   })
 })

@@ -2,7 +2,7 @@
 
 exports[`Aircraft draws_id_matrix assume_friend 1`] = `
 <canvas
-  data-snapshot-image="47f76b1092d225154fa10bbd5ddb4404f1ea96c716d6c01321c3082a4985e1bd754ffa08a1ee31bc4ed50237272f2348e9222e9a8f9397d60bd7ab09915ec8ee"
+  data-snapshot-image="0ded83a754fcef5d6562b59ec6aea31100a9efa9906c6f2e03661d25b4cb49407f55db5d08ceb10b81f9c091ce2d40967780a615d88c5f74b859ee8391153a45"
   height="30"
   width="10"
 />
@@ -10,7 +10,7 @@ exports[`Aircraft draws_id_matrix assume_friend 1`] = `
 
 exports[`Aircraft draws_id_matrix hostile 1`] = `
 <canvas
-  data-snapshot-image="4d18280d8e114be8607904fb76205178d829a326c89aefbe16b91343a0f2bb85a1e3ee54bd7e5e7ee4c1a0f261512c36f0ddf6be1ef5cae8c3444bf843b85058"
+  data-snapshot-image="6520214f0eb039147484158d7326d1508326c20d899dabaeaac0237891a7e9903b9da1de32b59d8bac1164a9877ed1ace4b4d03644349e037d62a284b83f6fb1"
   height="30"
   width="10"
 />
@@ -18,7 +18,7 @@ exports[`Aircraft draws_id_matrix hostile 1`] = `
 
 exports[`Aircraft draws_id_matrix neutral 1`] = `
 <canvas
-  data-snapshot-image="712facdaae6528f8bc951932c758a4f78679d0d98b7f449499f09321fcdac72ddcf8ae9aa2e73b910b79036090fbe38e04fabf4d6779174627b83352987146df"
+  data-snapshot-image="9fc76887b7a6fcb99f802a02eab2335ce42b1b48e3e406b48ce0396a411470db3186c2169c3c30c79ad575bcea5aad0b0daa42eb42f85798c9e9dd4b6b11e357"
   height="30"
   width="10"
 />
@@ -26,7 +26,7 @@ exports[`Aircraft draws_id_matrix neutral 1`] = `
 
 exports[`Aircraft draws_id_matrix suspect 1`] = `
 <canvas
-  data-snapshot-image="a2b36bb0432d9fc7e60fb36fffb1da53e5979cd84d2a6fe5396cb178a9593c4395e5b58273f2621aa58c38dd1258bed70839676609ef0fab2a4652595a1ef1d0"
+  data-snapshot-image="884a6c7d2e58dd5a48c8d5ed3b1da69ab8029d27c61575703db183df080246c5aeea05230edc89f5f0f61f047a4be693ff311974177db5740382099cd87f27a7"
   height="30"
   width="10"
 />

@@ -8,7 +8,7 @@ import GlobalSnackbarProvider from "./pscomponents/alert/globalalertprovider"
 
 import CookieConsent, { Cookies } from "react-cookie-consent"
 
-import snackActions from "./pscomponents/alert/psalert"
+import snackActions, { SnackbarKey } from "./pscomponents/alert/psalert"
 import { Button } from "./utils/muiadapter"
 
 export default ReactDOM.render(
@@ -40,35 +40,37 @@ const cookieIsNotSet =
   Cookies.get(version + "Notify") === undefined ||
   Cookies.get(version + "Notify") === "false"
 
+function createDismiss(key: SnackbarKey) {
+  return (
+    <>
+      <Button
+        onClick={() => {
+          window.location.href = "#/changelog.html#4.0.6"
+          Cookies.set(version + "Notify", true, { expires: 365 })
+          snackActions.closeSnackbar(key)
+        }}
+      >
+        {version}
+      </Button>
+      <Button
+        onClick={() => {
+          Cookies.set(version + "Notify", true, { expires: 365 })
+          snackActions.closeSnackbar(key)
+        }}
+      >
+        Dismiss
+      </Button>
+    </>
+  )
+}
 // remove after confidence most people have seen new release notification
 if (cookieIsNotSet) {
   snackActions.info("Check out the newest release of ParrotSour!", {
     style: { pointerEvents: "all" },
     autoHideDuration: 10000,
     preventDuplicate: true,
-    // eslint-disable-next-line react/display-name
     action: (key) => {
-      return (
-        <>
-          <Button
-            onClick={() => {
-              window.location.href = "#/changelog.html#4.0.6"
-              Cookies.set(version + "Notify", true, { expires: 365 })
-              snackActions.closeSnackbar(key)
-            }}
-          >
-            {version}
-          </Button>
-          <Button
-            onClick={() => {
-              Cookies.set(version + "Notify", true, { expires: 365 })
-              snackActions.closeSnackbar(key)
-            }}
-          >
-            Dismiss
-          </Button>
-        </>
-      )
+      return createDismiss(key)
     },
   })
 }

@@ -13,9 +13,9 @@ export type Bounds = {
 }
 
 export interface PictureInfo {
-  deep?: number
-  wide?: number
-  start?: Point
+  deep: number
+  wide: number
+  start: Point
 }
 
 //
@@ -36,7 +36,7 @@ export const _howFarOut = (x: number, min: number, max: number): number => {
 }
 
 export const _clampPictureInContext = (
-  pInfo: PictureInfo,
+  pInfo: Partial<PictureInfo>,
   orientation: BlueInThe
 ): Point => {
   const ctx = PaintBrush.getContext()
@@ -71,7 +71,7 @@ export const getRestrictedStartPos = (
   dataStyle: SensorType,
   minNMFromBlue: number,
   maxNMFromBlue: number,
-  pInfo?: PictureInfo
+  pInfo?: Partial<PictureInfo>
 ): Point => {
   const ctx = PaintBrush.getContext()
   const blueLoc = blueAir.getCenterOfMass(dataStyle)
@@ -127,7 +127,7 @@ export const getStartPos = (
   blueAir: AircraftGroup,
   orientation: BlueInThe,
   dataStyle: SensorType,
-  pInfo?: PictureInfo
+  pInfo?: Partial<PictureInfo>
 ): Point => {
   const ctx = PaintBrush.getContext()
   let canvasSize = ctx.canvas.width

@@ -8,16 +8,12 @@ import { _howFarOut } from "./pictureclamp"
 import { AircraftGroup } from "../../../classes/groups/group"
 import { SensorType } from "../../../classes/aircraft/datatrail/sensortype"
 import { PaintBrush } from "../paintbrush"
+import TestCanvas from "../../../testutils/testcanvas"
 
 const TEN_NM = PIXELS_TO_NM * 10
 
 beforeAll(() => {
-  const canvas = document.createElement("canvas")
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const ctx = canvas.getContext("2d")!
-  canvas.width = 800
-  canvas.height = 500
-  PaintBrush.use(ctx)
+  PaintBrush.use(TestCanvas.getContext(800, 500))
 })
 
 /**

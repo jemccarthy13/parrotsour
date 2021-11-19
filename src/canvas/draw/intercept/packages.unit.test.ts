@@ -7,6 +7,7 @@ import { testProps } from "./mockutils.unit.test"
 import { PictureFactory } from "./picturefactory"
 import DrawPackage from "./packages"
 import { Package } from "./package"
+import TestCanvas from "../../../testutils/testcanvas"
 
 describe("DrawPackages", () => {
   let testState: PictureCanvasState
@@ -15,12 +16,7 @@ describe("DrawPackages", () => {
 
   beforeEach(() => {
     jest.restoreAllMocks()
-    const canvas = document.createElement("canvas")
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const ctx = canvas.getContext("2d")!
-    canvas.width = 800
-    canvas.height = 500
-    PaintBrush.use(ctx)
+    PaintBrush.use(TestCanvas.getContext(800, 500))
 
     testState = {
       bullseye: new Point(400, 400),

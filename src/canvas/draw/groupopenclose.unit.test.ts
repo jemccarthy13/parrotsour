@@ -4,15 +4,11 @@ import { getOpenCloseAzimuth } from "./formatutils"
 import { PaintBrush } from "./paintbrush"
 
 import CanvasSerializer from "../../test/canvas-serializer"
+import TestCanvas from "../../testutils/testcanvas"
 expect.addSnapshotSerializer(CanvasSerializer)
 
 describe("FormatUtils", () => {
-  const canvas = document.createElement("canvas")
-  canvas.width = 200
-  canvas.height = 200
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const ctx: CanvasRenderingContext2D = canvas.getContext("2d")!
-  PaintBrush.use(ctx)
+  PaintBrush.use(TestCanvas.getContext(200, 200))
   PaintBrush.clearCanvas()
 
   describe("groupOpenClose_BlueInTheEast", () => {
@@ -42,7 +38,7 @@ describe("FormatUtils", () => {
       grp2.setHeading(180)
       grp1.draw(SensorType.ARROW)
       grp2.draw(SensorType.ARROW)
-      expect(canvas).toMatchSnapshot()
+      expect(TestCanvas.getCanvas()).toMatchSnapshot()
       expect(getOpenCloseAzimuth(grp1, grp2)).toEqual(" OPENING ")
     })
 
@@ -51,7 +47,7 @@ describe("FormatUtils", () => {
       grp2.setHeading(135)
       grp1.draw(SensorType.ARROW)
       grp2.draw(SensorType.ARROW)
-      expect(canvas).toMatchSnapshot()
+      expect(TestCanvas.getCanvas()).toMatchSnapshot()
       expect(getOpenCloseAzimuth(grp1, grp2)).toEqual(" OPENING ")
     })
 
@@ -60,7 +56,7 @@ describe("FormatUtils", () => {
       grp2.setHeading(45)
       grp1.draw(SensorType.ARROW)
       grp2.draw(SensorType.ARROW)
-      expect(canvas).toMatchSnapshot()
+      expect(TestCanvas.getCanvas()).toMatchSnapshot()
       expect(getOpenCloseAzimuth(grp1, grp2)).toEqual(" CLOSING ")
     })
 
@@ -69,7 +65,7 @@ describe("FormatUtils", () => {
       grp2.setHeading(90)
       grp1.draw(SensorType.ARROW)
       grp2.draw(SensorType.ARROW)
-      expect(canvas).toMatchSnapshot()
+      expect(TestCanvas.getCanvas()).toMatchSnapshot()
       expect(getOpenCloseAzimuth(grp1, grp2)).toEqual(" CLOSING ")
     })
 
@@ -78,7 +74,7 @@ describe("FormatUtils", () => {
       grp2.setHeading(90)
       grp1.draw(SensorType.ARROW)
       grp2.draw(SensorType.ARROW)
-      expect(canvas).toMatchSnapshot()
+      expect(TestCanvas.getCanvas()).toMatchSnapshot()
       expect(getOpenCloseAzimuth(grp1, grp2)).toEqual(" OPENING ")
     })
 
@@ -87,7 +83,7 @@ describe("FormatUtils", () => {
       grp2.setHeading(45)
       grp1.draw(SensorType.ARROW)
       grp2.draw(SensorType.ARROW)
-      expect(canvas).toMatchSnapshot()
+      expect(TestCanvas.getCanvas()).toMatchSnapshot()
       expect(getOpenCloseAzimuth(grp1, grp2)).toEqual(" CLOSING ")
     })
 
@@ -96,7 +92,7 @@ describe("FormatUtils", () => {
       grp2.setHeading(135)
       grp1.draw(SensorType.ARROW)
       grp2.draw(SensorType.ARROW)
-      expect(canvas).toMatchSnapshot()
+      expect(TestCanvas.getCanvas()).toMatchSnapshot()
       expect(getOpenCloseAzimuth(grp1, grp2)).toEqual(" OPENING ")
     })
 
@@ -105,7 +101,7 @@ describe("FormatUtils", () => {
       grp2.setHeading(45)
       grp1.draw(SensorType.ARROW)
       grp2.draw(SensorType.ARROW)
-      expect(canvas).toMatchSnapshot()
+      expect(TestCanvas.getCanvas()).toMatchSnapshot()
       expect(getOpenCloseAzimuth(grp1, grp2)).toEqual(" CLOSING ")
     })
 
@@ -114,7 +110,7 @@ describe("FormatUtils", () => {
       grp2.setHeading(330)
       grp1.draw(SensorType.ARROW)
       grp2.draw(SensorType.ARROW)
-      expect(canvas).toMatchSnapshot()
+      expect(TestCanvas.getCanvas()).toMatchSnapshot()
       expect(getOpenCloseAzimuth(grp1, grp2)).toEqual(" CLOSING ")
     })
 
@@ -123,7 +119,7 @@ describe("FormatUtils", () => {
       grp2.setHeading(270)
       grp1.draw(SensorType.ARROW)
       grp2.draw(SensorType.ARROW)
-      expect(canvas).toMatchSnapshot()
+      expect(TestCanvas.getCanvas()).toMatchSnapshot()
       expect(getOpenCloseAzimuth(grp1, grp2)).toEqual(" OPENING ")
     })
 
@@ -132,7 +128,7 @@ describe("FormatUtils", () => {
       grp2.setHeading(360)
       grp1.draw(SensorType.ARROW)
       grp2.draw(SensorType.ARROW)
-      expect(canvas).toMatchSnapshot()
+      expect(TestCanvas.getCanvas()).toMatchSnapshot()
       expect(getOpenCloseAzimuth(grp1, grp2)).toEqual(" CLOSING ")
     })
 
@@ -141,7 +137,7 @@ describe("FormatUtils", () => {
       grp2.setHeading(90)
       grp1.draw(SensorType.ARROW)
       grp2.draw(SensorType.ARROW)
-      expect(canvas).toMatchSnapshot()
+      expect(TestCanvas.getCanvas()).toMatchSnapshot()
       expect(getOpenCloseAzimuth(grp1, grp2)).toEqual("")
     })
 
@@ -150,7 +146,7 @@ describe("FormatUtils", () => {
       grp2.setHeading(85)
       grp1.draw(SensorType.ARROW)
       grp2.draw(SensorType.ARROW)
-      expect(canvas).toMatchSnapshot()
+      expect(TestCanvas.getCanvas()).toMatchSnapshot()
       expect(getOpenCloseAzimuth(grp1, grp2)).toEqual("")
     })
 
@@ -159,7 +155,7 @@ describe("FormatUtils", () => {
       grp2.setHeading(280)
       grp1.draw(SensorType.ARROW)
       grp2.draw(SensorType.ARROW)
-      expect(canvas).toMatchSnapshot()
+      expect(TestCanvas.getCanvas()).toMatchSnapshot()
       expect(getOpenCloseAzimuth(grp1, grp2)).toEqual("")
     })
 
@@ -168,7 +164,7 @@ describe("FormatUtils", () => {
       grp2.setHeading(295)
       grp1.draw(SensorType.ARROW)
       grp2.draw(SensorType.ARROW)
-      expect(canvas).toMatchSnapshot()
+      expect(TestCanvas.getCanvas()).toMatchSnapshot()
       expect(getOpenCloseAzimuth(grp1, grp2)).toEqual(" CLOSING ")
     })
 
@@ -177,7 +173,7 @@ describe("FormatUtils", () => {
       grp2.setHeading(45)
       grp1.draw(SensorType.ARROW)
       grp2.draw(SensorType.ARROW)
-      expect(canvas).toMatchSnapshot()
+      expect(TestCanvas.getCanvas()).toMatchSnapshot()
       expect(getOpenCloseAzimuth(grp1, grp2)).toEqual(" CLOSING ")
     })
 
@@ -186,7 +182,7 @@ describe("FormatUtils", () => {
       grp2.setHeading(90)
       grp1.draw(SensorType.ARROW)
       grp2.draw(SensorType.ARROW)
-      expect(canvas).toMatchSnapshot()
+      expect(TestCanvas.getCanvas()).toMatchSnapshot()
       expect(getOpenCloseAzimuth(grp1, grp2)).toEqual("")
     })
 
@@ -195,7 +191,7 @@ describe("FormatUtils", () => {
       grp2.setHeading(271)
       grp1.draw(SensorType.ARROW)
       grp2.draw(SensorType.ARROW)
-      expect(canvas).toMatchSnapshot()
+      expect(TestCanvas.getCanvas()).toMatchSnapshot()
       expect(getOpenCloseAzimuth(grp1, grp2)).toEqual("")
     })
     it("openclose_90_offset", () => {
@@ -203,7 +199,7 @@ describe("FormatUtils", () => {
       grp2.setHeading(90)
       grp1.draw(SensorType.ARROW)
       grp2.draw(SensorType.ARROW)
-      expect(canvas).toMatchSnapshot()
+      expect(TestCanvas.getCanvas()).toMatchSnapshot()
       expect(getOpenCloseAzimuth(grp1, grp2)).toEqual(" OPENING ")
     })
     it("openclose", () => {
@@ -211,7 +207,7 @@ describe("FormatUtils", () => {
       grp2.setHeading(40)
       grp1.draw(SensorType.ARROW)
       grp2.draw(SensorType.ARROW)
-      expect(canvas).toMatchSnapshot()
+      expect(TestCanvas.getCanvas()).toMatchSnapshot()
       expect(getOpenCloseAzimuth(grp1, grp2)).toEqual("")
     })
 
@@ -230,7 +226,7 @@ describe("FormatUtils", () => {
       })
       grp1.draw(SensorType.ARROW)
       grp2.draw(SensorType.ARROW)
-      expect(canvas).toMatchSnapshot()
+      expect(TestCanvas.getCanvas()).toMatchSnapshot()
       expect(getOpenCloseAzimuth(grp1, grp2)).toEqual(" CLOSING ")
     })
   })
@@ -262,7 +258,7 @@ describe("FormatUtils", () => {
       grp2.setHeading(90)
       grp1.draw(SensorType.ARROW)
       grp2.draw(SensorType.ARROW)
-      expect(canvas).toMatchSnapshot()
+      expect(TestCanvas.getCanvas()).toMatchSnapshot()
       expect(getOpenCloseAzimuth(grp1, grp2)).toEqual(" OPENING ")
     })
 
@@ -271,7 +267,7 @@ describe("FormatUtils", () => {
       grp2.setHeading(180)
       grp1.draw(SensorType.ARROW)
       grp2.draw(SensorType.ARROW)
-      expect(canvas).toMatchSnapshot()
+      expect(TestCanvas.getCanvas()).toMatchSnapshot()
       expect(getOpenCloseAzimuth(grp1, grp2)).toEqual("")
     })
 
@@ -280,7 +276,7 @@ describe("FormatUtils", () => {
       grp2.setHeading(135)
       grp1.draw(SensorType.ARROW)
       grp2.draw(SensorType.ARROW)
-      expect(canvas).toMatchSnapshot()
+      expect(TestCanvas.getCanvas()).toMatchSnapshot()
       expect(getOpenCloseAzimuth(grp1, grp2)).toEqual("")
     })
 
@@ -289,7 +285,7 @@ describe("FormatUtils", () => {
       grp2.setHeading(45)
       grp1.draw(SensorType.ARROW)
       grp2.draw(SensorType.ARROW)
-      expect(canvas).toMatchSnapshot()
+      expect(TestCanvas.getCanvas()).toMatchSnapshot()
       expect(getOpenCloseAzimuth(grp1, grp2)).toEqual("")
     })
 
@@ -298,7 +294,7 @@ describe("FormatUtils", () => {
       grp2.setHeading(90)
       grp1.draw(SensorType.ARROW)
       grp2.draw(SensorType.ARROW)
-      expect(canvas).toMatchSnapshot()
+      expect(TestCanvas.getCanvas()).toMatchSnapshot()
       expect(getOpenCloseAzimuth(grp1, grp2)).toEqual("")
     })
 
@@ -307,7 +303,7 @@ describe("FormatUtils", () => {
       grp2.setHeading(90)
       grp1.draw(SensorType.ARROW)
       grp2.draw(SensorType.ARROW)
-      expect(canvas).toMatchSnapshot()
+      expect(TestCanvas.getCanvas()).toMatchSnapshot()
       expect(getOpenCloseAzimuth(grp1, grp2)).toEqual("")
     })
 
@@ -316,7 +312,7 @@ describe("FormatUtils", () => {
       grp2.setHeading(45)
       grp1.draw(SensorType.ARROW)
       grp2.draw(SensorType.ARROW)
-      expect(canvas).toMatchSnapshot()
+      expect(TestCanvas.getCanvas()).toMatchSnapshot()
       expect(getOpenCloseAzimuth(grp1, grp2)).toEqual("")
     })
 
@@ -325,7 +321,7 @@ describe("FormatUtils", () => {
       grp2.setHeading(135)
       grp1.draw(SensorType.ARROW)
       grp2.draw(SensorType.ARROW)
-      expect(canvas).toMatchSnapshot()
+      expect(TestCanvas.getCanvas()).toMatchSnapshot()
       expect(getOpenCloseAzimuth(grp1, grp2)).toEqual("")
     })
 
@@ -334,7 +330,7 @@ describe("FormatUtils", () => {
       grp2.setHeading(45)
       grp1.draw(SensorType.ARROW)
       grp2.draw(SensorType.ARROW)
-      expect(canvas).toMatchSnapshot()
+      expect(TestCanvas.getCanvas()).toMatchSnapshot()
       expect(getOpenCloseAzimuth(grp1, grp2)).toEqual(" OPENING ")
     })
 
@@ -343,7 +339,7 @@ describe("FormatUtils", () => {
       grp2.setHeading(330)
       grp1.draw(SensorType.ARROW)
       grp2.draw(SensorType.ARROW)
-      expect(canvas).toMatchSnapshot()
+      expect(TestCanvas.getCanvas()).toMatchSnapshot()
       expect(getOpenCloseAzimuth(grp1, grp2)).toEqual("")
     })
 
@@ -352,7 +348,7 @@ describe("FormatUtils", () => {
       grp2.setHeading(270)
       grp1.draw(SensorType.ARROW)
       grp2.draw(SensorType.ARROW)
-      expect(canvas).toMatchSnapshot()
+      expect(TestCanvas.getCanvas()).toMatchSnapshot()
       expect(getOpenCloseAzimuth(grp1, grp2)).toEqual("")
     })
 
@@ -361,7 +357,7 @@ describe("FormatUtils", () => {
       grp2.setHeading(360)
       grp1.draw(SensorType.ARROW)
       grp2.draw(SensorType.ARROW)
-      expect(canvas).toMatchSnapshot()
+      expect(TestCanvas.getCanvas()).toMatchSnapshot()
       expect(getOpenCloseAzimuth(grp1, grp2)).toEqual("")
     })
 
@@ -370,7 +366,7 @@ describe("FormatUtils", () => {
       grp2.setHeading(90)
       grp1.draw(SensorType.ARROW)
       grp2.draw(SensorType.ARROW)
-      expect(canvas).toMatchSnapshot()
+      expect(TestCanvas.getCanvas()).toMatchSnapshot()
       expect(getOpenCloseAzimuth(grp1, grp2)).toEqual("")
     })
 
@@ -379,7 +375,7 @@ describe("FormatUtils", () => {
       grp2.setHeading(85)
       grp1.draw(SensorType.ARROW)
       grp2.draw(SensorType.ARROW)
-      expect(canvas).toMatchSnapshot()
+      expect(TestCanvas.getCanvas()).toMatchSnapshot()
       expect(getOpenCloseAzimuth(grp1, grp2)).toEqual("")
     })
 
@@ -388,7 +384,7 @@ describe("FormatUtils", () => {
       grp2.setHeading(280)
       grp1.draw(SensorType.ARROW)
       grp2.draw(SensorType.ARROW)
-      expect(canvas).toMatchSnapshot()
+      expect(TestCanvas.getCanvas()).toMatchSnapshot()
       expect(getOpenCloseAzimuth(grp1, grp2)).toEqual("")
     })
 
@@ -397,7 +393,7 @@ describe("FormatUtils", () => {
       grp2.setHeading(295)
       grp1.draw(SensorType.ARROW)
       grp2.draw(SensorType.ARROW)
-      expect(canvas).toMatchSnapshot()
+      expect(TestCanvas.getCanvas()).toMatchSnapshot()
       expect(getOpenCloseAzimuth(grp1, grp2)).toEqual("")
     })
 
@@ -406,7 +402,7 @@ describe("FormatUtils", () => {
       grp2.setHeading(45)
       grp1.draw(SensorType.ARROW)
       grp2.draw(SensorType.ARROW)
-      expect(canvas).toMatchSnapshot()
+      expect(TestCanvas.getCanvas()).toMatchSnapshot()
       expect(getOpenCloseAzimuth(grp1, grp2)).toEqual(" OPENING ")
     })
 
@@ -415,7 +411,7 @@ describe("FormatUtils", () => {
       grp2.setHeading(90)
       grp1.draw(SensorType.ARROW)
       grp2.draw(SensorType.ARROW)
-      expect(canvas).toMatchSnapshot()
+      expect(TestCanvas.getCanvas()).toMatchSnapshot()
       expect(getOpenCloseAzimuth(grp1, grp2)).toEqual("")
     })
 
@@ -424,7 +420,7 @@ describe("FormatUtils", () => {
       grp2.setHeading(271)
       grp1.draw(SensorType.ARROW)
       grp2.draw(SensorType.ARROW)
-      expect(canvas).toMatchSnapshot()
+      expect(TestCanvas.getCanvas()).toMatchSnapshot()
       expect(getOpenCloseAzimuth(grp1, grp2)).toEqual("")
     })
     it("openclose_90_offset", () => {
@@ -432,7 +428,7 @@ describe("FormatUtils", () => {
       grp2.setHeading(90)
       grp1.draw(SensorType.ARROW)
       grp2.draw(SensorType.ARROW)
-      expect(canvas).toMatchSnapshot()
+      expect(TestCanvas.getCanvas()).toMatchSnapshot()
       expect(getOpenCloseAzimuth(grp1, grp2)).toEqual(" OPENING ")
     })
     it("openclose", () => {
@@ -440,7 +436,7 @@ describe("FormatUtils", () => {
       grp2.setHeading(40)
       grp1.draw(SensorType.ARROW)
       grp2.draw(SensorType.ARROW)
-      expect(canvas).toMatchSnapshot()
+      expect(TestCanvas.getCanvas()).toMatchSnapshot()
       expect(getOpenCloseAzimuth(grp1, grp2)).toEqual(" OPENING ")
     })
 
@@ -459,7 +455,7 @@ describe("FormatUtils", () => {
       })
       grp1.draw(SensorType.ARROW)
       grp2.draw(SensorType.ARROW)
-      expect(canvas).toMatchSnapshot()
+      expect(TestCanvas.getCanvas()).toMatchSnapshot()
       expect(getOpenCloseAzimuth(grp1, grp2)).toEqual(" CLOSING ")
     })
   })
