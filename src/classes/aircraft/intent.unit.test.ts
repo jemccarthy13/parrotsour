@@ -1,20 +1,21 @@
-import { Point } from "../point"
 import { AircraftIntent } from "./intent"
 
 // mock Point to self-contain intent tests
-const mockFn = jest.fn()
-jest.mock("../point", () => {
-  return function (x: number, y: number) {
-    return {
-      x,
-      y,
-      getBR: mockFn,
-      getStraightDistanceNM: mockFn,
-    }
-  }
-})
+// const mockFn = jest.fn()
+// jest.mock("../point", () => {
+//   return jest.fn().mockImplementation((x: number, y: number) => {
+//     return {
+//       x,
+//       y,
+//       getBR: mockFn,
+//       getStraightDistanceNM: mockFn,
+//     }
+//   })
+// })
 
 jest.mock("../../utils/psmath")
+
+import { Point } from "../point"
 
 describe("Intent", () => {
   describe("alt_aspect_speed", () => {
