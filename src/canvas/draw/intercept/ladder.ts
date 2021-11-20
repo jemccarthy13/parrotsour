@@ -190,15 +190,18 @@ export default class DrawLadder extends DrawPic {
     answer += this.formatDimensions() + " "
     answer += this.picTrackDir() + " "
 
+    const nonPriPos = this.groups[1].getCenterOfMass(this.props.dataStyle)
+    const priPos = this.groups[0].getCenterOfMass(this.props.dataStyle)
+
+    const isNS = FightAxis.isNS(this.props.orientation.orient)
+
+    let nonPriPt = new Point(nonPriPos.x, priPos.y)
+    if (isNS) {
+      nonPriPt = new Point(priPos.x, nonPriPos.y)
+    }
     const rangeBack: RangeBack = new RangeBack(
       this.props.format === FORMAT.ALSA ? "SEPARATION" : "RANGE",
-      this.groups[this.groups.length - 2]
-        .getCenterOfMass(this.props.dataStyle)
-        .getBR(
-          this.groups[this.groups.length - 1].getCenterOfMass(
-            this.props.dataStyle
-          )
-        ).range
+      nonPriPt.getBR(priPos).range
     )
 
     this.groups[0].setUseBull(true)
