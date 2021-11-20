@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 import { AircraftGroup } from "../../classes/groups/group"
-import { AIProcessor } from "./nlprocessor"
+import { AIProcessor, ProcessResult } from "./nlprocessor"
 
 /**
  * Look for a command to climb/descend to a particular flight level.
@@ -17,8 +17,7 @@ export function processElevatorLayer(
   asset: AircraftGroup,
   isVoice: boolean
 ): string {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const nl: any = AIProcessor.process(processedText)
+  const nl: ProcessResult = AIProcessor.process(processedText)
   const elevCmd = nl.match("[<cs>#Noun] [<act>#Verb] #Unit [<fl>#Cardinal]")
   const isCommand = elevCmd.found
 

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from "react"
 
 import { mount } from "enzyme"
@@ -6,12 +5,11 @@ import { FORMAT } from "../classes/supportedformats"
 import PictureCanvas from "./picturecanvas"
 import { SensorType } from "../classes/aircraft/datatrail/sensortype"
 import { BlueInThe, PictureCanvasProps } from "./canvastypes"
-import { PaintBrush } from "./draw/paintbrush"
 
 import { PicAnimationHandler } from "../animation/picanimator"
 import { Point } from "../classes/point"
 
-const picAnimator = jest.mock("../animation/picanimator")
+jest.mock("../animation/picanimator")
 const animatorAnimate = jest.spyOn(PicAnimationHandler.prototype, "animate")
 const animatorPause = jest.spyOn(PicAnimationHandler.prototype, "pauseFight")
 

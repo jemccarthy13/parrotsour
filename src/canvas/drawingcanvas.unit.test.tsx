@@ -13,10 +13,7 @@ expect.addSnapshotSerializer(CanvasSerializer)
  * Mock draw function for a drawing canvas
  * @param context the Context to draw in
  */
-const drawMock = async (
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  ctx: CanvasRenderingContext2D | null | undefined
-): Promise<void> => {
+const drawMock = async (): Promise<void> => {
   return new Promise(jest.fn())
 }
 

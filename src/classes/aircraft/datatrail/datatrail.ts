@@ -14,10 +14,7 @@ export abstract class DataTrail {
     return this.startPos
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public move(_heading: number): void {
-    //console.warn("Moving DataTrail in base class. Will have no effect.")
-  }
+  abstract move(heading: number): void
 
   abstract getCenterOfMass(heading: number): Point
 

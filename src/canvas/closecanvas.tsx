@@ -10,7 +10,6 @@ import {
   PictureCanvasProps,
 } from "./canvastypes"
 import { AircraftGroup } from "../classes/groups/group"
-import { Point } from "../classes/point"
 
 import { randomNumber } from "../utils/psmath"
 
@@ -89,12 +88,7 @@ export default class CloseCanvas extends ParrotSourCanvas {
    * @param _forced true iff picture type should be forced as random, !lead edge and !packages
    * @param _start (optional) start position for the picture
    */
-  drawPicture = (
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    _forced?: boolean,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    _start?: Point
-  ): PictureAnswer => {
+  drawPicture = (): PictureAnswer => {
     const context = PaintBrush.getContext()
     let xPos = context.canvas.width - 20
     let yPos = randomNumber(

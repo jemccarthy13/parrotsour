@@ -18,6 +18,10 @@ export class ArrowDataTrail extends DataTrail {
     )
   }
 
+  move(): void {
+    // do nothing
+  }
+
   draw(heading: number, id: IDMatrix): void {
     const ctx = PaintBrush.getContext()
     ctx.lineWidth = 1

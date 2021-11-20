@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 import { AircraftGroup } from "../../classes/groups/group"
-import { AIProcessor } from "./nlprocessor"
+import { AIProcessor, ProcessResult } from "./nlprocessor"
 
 /**
  * Given some message text, extract a close control command
@@ -21,8 +21,7 @@ export function processCloseLayer(
   asset: AircraftGroup
 ): string {
   processedText = processedText.replace(/\s\s+/g, " ")
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const nl: any = AIProcessor.process(processedText)
+  const nl: ProcessResult = AIProcessor.process(processedText)
 
   const callsign = asset.getLabel()
 
@@ -39,8 +38,8 @@ export function processCloseLayer(
     const turnDir = move.groups().dir
 
     const newHeading = move.groups().hdg
-    const turnDirText = turnDir ? turnDir.text() : undefined
-    const newHdgText = newHeading ? newHeading.text() : undefined
+    const turnDirText = turnDir ? turnDir.text() : ""
+    const newHdgText = newHeading ? newHeading.text() : asset.getHeading() + ""
 
     if (turnDir) {
       let fl

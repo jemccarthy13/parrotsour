@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 import { AircraftGroup } from "../../classes/groups/group"
 import { Point } from "../../classes/point"
-import { AIProcessor } from "./nlprocessor"
+import { AIProcessor, ProcessResult } from "./nlprocessor"
 import { toNATOPhonetic } from "./toNATOphonetic"
 
 /**
@@ -26,8 +26,7 @@ export function processMoveLayer(
   isVoice: boolean
 ): string {
   processedText = processedText.replace(/\s\s+/g, " ")
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const nl: any = AIProcessor.process(processedText)
+  const nl: ProcessResult = AIProcessor.process(processedText)
 
   const callsign = asset.getLabel()
 

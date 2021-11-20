@@ -1,4 +1,3 @@
-/* eslint-disable react/forbid-component-props */
 import React from "react"
 import { useStyles } from "./changelogstyles"
 import {
@@ -37,7 +36,7 @@ export default function BugList(): JSX.Element {
   ]
 
   return (
-    <Accordion defaultExpanded className={classes.accordion}>
+    <Accordion defaultExpanded classes={{ root: classes.accordion }}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         Known Bugs
       </AccordionSummary>
@@ -46,7 +45,7 @@ export default function BugList(): JSX.Element {
           return (
             <ListItem
               key={bug.version + Math.random() * 100}
-              className={classes.changeLI}
+              classes={{ root: classes.changeLI }}
             >
               - ({bug.version}) {bug.description}
             </ListItem>

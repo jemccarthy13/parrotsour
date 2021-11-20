@@ -10,8 +10,7 @@ import { PicAnimationHandler } from "../animation/picanimator"
 import { PaintBrush } from "./draw/paintbrush"
 import TestCanvas from "../testutils/testcanvas"
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const picAnimator = jest.mock("../animation/picanimator")
+jest.mock("../animation/picanimator")
 const animatorAnimate = jest.spyOn(PicAnimationHandler.prototype, "animate")
 const animatorPause = jest.spyOn(PicAnimationHandler.prototype, "pauseFight")
 

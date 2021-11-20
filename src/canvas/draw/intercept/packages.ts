@@ -244,8 +244,7 @@ export default class DrawPackage extends DrawPic {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  checkAnchor = (grp1: AircraftGroup, grp2: AircraftGroup): void => {
+  checkAnchor = (): void => {
     // TODO -- anchoring P's for closer package && comment
     const bPos = this.state.blueAir.getCenterOfMass(this.props.dataStyle)
 
@@ -265,7 +264,7 @@ export default class DrawPackage extends DrawPic {
     this.packages[0].setBullseyePt(this._getPicBull(this.pictures[0].groups))
     this.packages[1].setBullseyePt(this._getPicBull(this.pictures[1].groups))
 
-    this.checkAnchor(this.pictures[0].groups[0], this.pictures[1].groups[0])
+    this.checkAnchor()
     this.applyLabels()
 
     let answer = ""

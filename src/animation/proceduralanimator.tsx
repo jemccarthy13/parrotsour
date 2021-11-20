@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 // Classes
 import { PictureCanvasState } from "../canvas/canvastypes"
 import { PaintBrush } from "../canvas/draw/paintbrush"
@@ -19,11 +17,7 @@ export class ProceduralAnimationHandler extends AnimationHandler {
    * @param groups
    * @param dataStyle
    */
-  applyBlueLogic(
-    blueAir: AircraftGroup,
-    groups: AircraftGroup[],
-    dataStyle: SensorType
-  ): void {
+  applyBlueLogic(): void {
     // do nothing
   }
 
@@ -41,8 +35,7 @@ export class ProceduralAnimationHandler extends AnimationHandler {
   applyLogic(
     grp: AircraftGroup,
     state: PictureCanvasState,
-    dataStyle: SensorType,
-    resetCallback?: () => void
+    dataStyle: SensorType
   ): void {
     grp.updateAltitude()
     PaintBrush.drawAltitudes(grp.getCenterOfMass(dataStyle), grp.getAltitudes())

@@ -1,3 +1,4 @@
+import { Point } from "../point"
 import { AircraftIntent } from "./intent"
 
 // mock Point to self-contain intent tests
@@ -12,8 +13,6 @@ jest.mock("../point", () => {
     }
   }
 })
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const Point = require("../point")
 
 jest.mock("../../utils/psmath")
 

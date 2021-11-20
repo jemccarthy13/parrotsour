@@ -1,6 +1,8 @@
-import { Theme, makeStyles } from "../utils/muistylesadapter"
+import { Theme, makeStyles, createTheme } from "../utils/muistylesadapter"
 
-export const useStyles = makeStyles((theme: Theme) => ({
+const theme: Theme = createTheme()
+
+export const useStyles = makeStyles(() => ({
   changeLI: {
     color: "gray",
     borderBottom: "0px solid gray",

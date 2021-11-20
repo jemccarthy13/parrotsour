@@ -6,10 +6,7 @@ import { CanvasOrient, PictureCanvasProps } from "../../canvastypes"
  * Mock draw function for a drawing canvas
  * @param context the Context to draw in
  */
-export const drawMock = async (
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  ctx: CanvasRenderingContext2D | null | undefined
-): Promise<void> => {
+export const drawMock = async (): Promise<void> => {
   return new Promise(jest.fn())
 }
 

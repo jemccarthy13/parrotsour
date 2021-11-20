@@ -1,3 +1,8 @@
+.consent-banner { 
+  background-color: #a0a1a0 !important; 
+  border: 2px solid grey;
+}
+
 /* The snackbar - position it at the bottom and in the middle of the screen */
 #snackbar {
   visibility: hidden; /* Hidden by default. Visible on click */

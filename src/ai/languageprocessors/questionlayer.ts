@@ -3,7 +3,7 @@ import { ACType } from "../../classes/aircraft/aircraft"
 import { SensorType } from "../../classes/aircraft/datatrail/sensortype"
 import { AircraftGroup } from "../../classes/groups/group"
 import { convertToCGRS } from "../../pscomponents/procedural/cgrshelpers"
-import { AIProcessor } from "./nlprocessor"
+import { AIProcessor, ProcessResult } from "./nlprocessor"
 
 /**
  * Handle a question -- anything that ends with a '?'
@@ -21,13 +21,16 @@ export function processQuestionLayer(
   sendResponse: (s1: string, s2: string) => void,
   asset: AircraftGroup
 ): string {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const nl: any = AIProcessor.process(processedText)
+  const nl: ProcessResult = AIProcessor.process(processedText)
   const callsign = asset.getLabel()
 
   const question = nl.match("[<cs>#Noun] * [<thing>#Noun] *")
   const question2 = nl.match("[<cs>#Noun] interrogative [<thing>#Noun] *")
-  const isQuestion = nl.sentences().isQuestion().length > 0
+
+  // Cannot figure out how to get specific types for nl.sentences()
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const sentences = nl.sentences() as any
+  const isQuestion = sentences().isQuestion().length > 0
   const interrogative = question2.found
 
   const questionLocNouns = ["status", "location", "posit", "positive", "cwas"]
@@ -38,18 +41,19 @@ export function processQuestionLayer(
     const q = interrogative ? question2 : question
     const thing = q.groups().thing.text()
     if (questionLocNouns.includes(thing)) {
-      const assetSPos = asset.getCenterOfMass(SensorType.ARROW)
+      const pos = asset.getCenterOfMass(SensorType.ARROW)
       if (asset.isCapping()) {
-        sendResponse(
-          callsign,
-          "working " + convertToCGRS(assetSPos.x, assetSPos.y)
-        )
+        sendResponse(callsign, "working " + convertToCGRS(pos.x, pos.y))
       } else if (asset.getNextRoutingPoint() !== undefined) {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        const rPoint = asset.getNextRoutingPoint()!
-        const current = convertToCGRS(assetSPos.x, assetSPos.y).replace("+", "")
-        const desired = convertToCGRS(rPoint.x, rPoint.y)
-        sendResponse(callsign, "passing " + current + ", enroute to " + desired)
+        const rPoint = asset.getNextRoutingPoint()
+        if (rPoint) {
+          const current = convertToCGRS(pos.x, pos.y).replace("+", "")
+          const desired = convertToCGRS(rPoint.x, rPoint.y)
+          sendResponse(
+            callsign,
+            "passing " + current + ", enroute to " + desired
+          )
+        }
       } else {
         sendResponse(callsign, "standby")
       }

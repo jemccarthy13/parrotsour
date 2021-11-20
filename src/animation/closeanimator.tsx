@@ -44,7 +44,6 @@ export class CloseAnimationHandler extends AnimationHandler {
     grp: AircraftGroup,
     state: PictureCanvasState,
     dataStyle: SensorType,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     resetCallback?: () => void
   ): void {
     // const bluePos = state.blueAir.getCenterOfMass(dataStyle)
@@ -69,6 +68,8 @@ export class CloseAnimationHandler extends AnimationHandler {
       //     desiredHeading: grpPos.getBR(bluePos).bearingNum,
       //   })
       // }
+    } else {
+      if (resetCallback) resetCallback()
     }
   }
 }

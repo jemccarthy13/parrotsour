@@ -13,7 +13,6 @@ const PIXELS_TO_NM = 4
 //     }
 //   }
 // })
-// // // eslint-disable-next-line @typescript-eslint/no-var-requires
 // // import { BRAA } from "./braa"
 // jest.mock("./braa")
 

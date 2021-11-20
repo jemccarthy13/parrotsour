@@ -143,8 +143,6 @@ export default class IssueReport extends React.PureComponent<IRProps, IRState> {
             </DialogContent>
             <TextField
               classes={{ root: "textfull" }}
-              // eslint-disable-next-line
-              style={{ margin: "5px", width: "95%" }}
               required
               id="email"
               label="Email"

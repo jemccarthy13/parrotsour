@@ -8,8 +8,7 @@ nlp.extend(sentences) // add support for isQuestion
  * Extend compromise with 'tac-chat' specific
  * domain knowledge to make it 'smarter'
  */
-// eslint-disable-next-line
-nlp.extend((Doc: any, world: any) => {
+nlp.extend((Doc: nlp.Document, world: nlp.World) => {
   world.addWords({
     transit: "Verb",
     climb: "Verb",
@@ -25,6 +24,9 @@ nlp.extend((Doc: any, world: any) => {
   })
 })
 
+type ProcessResult = nlp.DefaultDocument
+export type { ProcessResult }
+
 /**
  * This class wraps the nlp (compromise) package
  * to provide global (static) access to the ParrotSour extended
@@ -32,7 +34,7 @@ nlp.extend((Doc: any, world: any) => {
  * domain knowledge of procedural commands and jargon.
  */
 export class AIProcessor {
-  public static process(text: string): nlp.DefaultDocument {
+  public static process(text: string): ProcessResult {
     return nlp(text)
   }
 }

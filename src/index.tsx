@@ -1,4 +1,3 @@
-/* eslint-disable react/forbid-component-props, react/jsx-no-bind */
 /* istanbul ignore file */
 import ReactDOM from "react-dom"
 import React, { Suspense } from "react"
@@ -21,10 +20,7 @@ export default ReactDOM.render(
         <Home />
       </GlobalSnackbarProvider>
     </Suspense>
-    <CookieConsent
-      location="top"
-      style={{ backgroundColor: "#a0a1a0", border: "2px solid grey" }}
-    >
+    <CookieConsent location="top" containerClasses="consent-banner">
       This website uses cookies to enhance the user experience. To learn more,
       please see the release notes.
     </CookieConsent>
@@ -41,25 +37,21 @@ const cookieIsNotSet =
   Cookies.get(version + "Notify") === "false"
 
 function createDismiss(key: SnackbarKey) {
+  function handleVersionClick(): void {
+    window.location.href = "#/changelog.html#4.0.6"
+    Cookies.set(version + "Notify", true, { expires: 365 })
+    snackActions.closeSnackbar(key)
+  }
+
+  function handleDismissClick(): void {
+    Cookies.set(version + "Notify", true, { expires: 365 })
+    snackActions.closeSnackbar(key)
+  }
+
   return (
     <>
-      <Button
-        onClick={() => {
-          window.location.href = "#/changelog.html#4.0.6"
-          Cookies.set(version + "Notify", true, { expires: 365 })
-          snackActions.closeSnackbar(key)
-        }}
-      >
-        {version}
-      </Button>
-      <Button
-        onClick={() => {
-          Cookies.set(version + "Notify", true, { expires: 365 })
-          snackActions.closeSnackbar(key)
-        }}
-      >
-        Dismiss
-      </Button>
+      <Button onClick={handleVersionClick}>{version}</Button>
+      <Button onClick={handleDismissClick}>Dismiss</Button>
     </>
   )
 }
