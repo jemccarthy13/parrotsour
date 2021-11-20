@@ -185,17 +185,18 @@ export default class DrawVic extends DrawPic {
     ntg.setLabel(nLbl + " TRAIL GROUP")
     stg.setLabel(sLbl + " TRAIL GROUP")
 
-    if (!ntg.isAnchor) {
+    if (!ntg.isAnchor()) {
       const tmp = this.groups[1]
       this.groups[1] = this.groups[2]
       this.groups[2] = tmp
     }
+
+    this.groups[1].setUseBull(false)
+    this.groups[2].setUseBull(false)
   }
 
   getAnswer(): string {
     const { format } = this.props
-    const ntg = this.groups[1]
-    const stg = this.groups[2]
 
     this.checkAnchor(this.groups[1], this.groups[2])
     this.applyLabels()
@@ -203,7 +204,7 @@ export default class DrawVic extends DrawPic {
     let answer = this.formatPicTitle() + " "
     answer += this.formatDimensions() + " "
 
-    answer += getOpenCloseAzimuth(ntg, stg) + ", "
+    answer += getOpenCloseAzimuth(this.groups[1], this.groups[2]) + ", "
 
     answer += this.formatWeighted() + " "
 

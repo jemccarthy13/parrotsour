@@ -24,7 +24,7 @@ jest.mock("./cap", () => {
 /**
  * Test the azimuth picture drawer
  */
-describe("DrawChamp", () => {
+describe("DrawLadder", () => {
   beforeEach(() => {
     PaintBrush.use(TestCanvas.getContext(800, 500))
 
