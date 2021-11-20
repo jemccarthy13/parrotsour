@@ -43,9 +43,7 @@ export class PictureFactory {
 
     const types = [[], type1, type2, type3, type4]
 
-    if (complexity === 0) {
-      complexity = 4
-    } else if (complexity > 4) {
+    if (complexity <= 0) {
       complexity = 4
     }
     const numType = randomNumber(0, types[complexity].length - 1)
@@ -54,7 +52,7 @@ export class PictureFactory {
   }
 
   public static getPictureDraw(
-    picType: string,
+    picType: string | undefined,
     desiredNumContacts?: number,
     forced?: boolean
   ): DrawPic {
