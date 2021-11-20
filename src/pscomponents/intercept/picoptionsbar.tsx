@@ -52,8 +52,7 @@ class PicOptionsBar extends React.PureComponent<POBSelProps, POBSelState> {
       <div style={{ display: "flex" }}>
         <div className="custom-sel-div">
           <Select
-            // eslint-disable-next-line react/forbid-component-props
-            className="parrotsoursel"
+            classes={{ root: "parrotsoursel" }}
             autoWidth
             labelId="picSelLabel"
             id="pictureType"

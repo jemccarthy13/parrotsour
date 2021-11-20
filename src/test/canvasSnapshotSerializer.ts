@@ -52,8 +52,7 @@ export default function toMatchCanvasSnapshotFactory(
     )
 
     const snapshotRoot = document.createElement("div")
-    // eslint-disable-next-line no-unsanitized/property
-    snapshotRoot.innerHTML = persistedSnapshotWithoutLineBreak
+    snapshotRoot.textContent = persistedSnapshotWithoutLineBreak
     return format(snapshotRoot.querySelector("canvas"))
   }
 

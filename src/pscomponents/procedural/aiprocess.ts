@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 // Classes & Interfaces
 import { PictureAnswer } from "../../canvas/canvastypes"
 import { AircraftGroup } from "../../classes/groups/group"
@@ -89,7 +87,6 @@ function _checkForAsset(
  * @param answer contains data on aircraft location
  * @param sendResponse callback; how to respond to messages
  */
-// eslint-disable-next-line complexity
 export function aiProcess(
   msg: { text: string; voice: boolean },
   answer: PictureAnswer,

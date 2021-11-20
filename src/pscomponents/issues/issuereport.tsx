@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react"
+import React, { MutableRefObject, ReactElement, useRef, useState } from "react"
 
 import IssueSelector from "./issueselector"
 
@@ -15,60 +15,50 @@ import {
   TextField,
 } from "../../utils/muiadapter"
 
-type IRState = {
-  showIssueForm: boolean
-  selection: string
-  email?: string
-  text?: string
-  submitEnabled: boolean
-}
-
 type IRProps = {
   answer?: PictureAnswer
 }
 
-export default class IssueReport extends React.PureComponent<IRProps, IRState> {
-  constructor(props: IRProps) {
-    super(props)
-    this.state = {
-      showIssueForm: false,
-      selection: "picprob",
-      submitEnabled: true,
-    }
-  }
+export default function IssueReport(props: IRProps): ReactElement {
+  const [showIssueForm, setShowIssueForm] = useState(false)
+  const [selection, setSelection] = useState("picprob")
+  const [submitEnabled, setSubmitEnabled] = useState(true)
+  const [email, setEmail] = useState("")
+  const [text, setText] = useState("")
+
+  const formRef: MutableRefObject<HTMLFormElement | null> = useRef(null)
 
   /**
    * Toggle the issue form display when the control button is pressed in the header,
    * or when clickaway happens
    */
-  handleToggleIssueForm = (): void => {
-    this.setState((prevState) => ({ showIssueForm: !prevState.showIssueForm }))
+  function handleToggleIssueForm() {
+    setShowIssueForm(!showIssueForm)
   }
 
-  onIssueSelChanged = (val: string): (() => void) => {
+  function onIssueSelChanged(val: string): () => void {
     return () => {
-      this.setState({ selection: val })
+      setSelection(val)
     }
   }
 
-  handleEmailChange = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
-    this.setState({ email: e.currentTarget.value })
+  function handleEmailChange(e: React.ChangeEvent<HTMLTextAreaElement>): void {
+    setEmail(e.currentTarget.value)
   }
 
-  handleTextChanged = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
-    this.setState({ text: e.currentTarget.value })
+  function handleTextChanged(e: React.ChangeEvent<HTMLTextAreaElement>): void {
+    setText(e.currentTarget.value)
   }
 
-  // eslint-disable-next-line
-  handleSubmit = async (e: any): Promise<void> => {
-    const { email, text } = this.state
-    const goodForm = e.currentTarget.form.reportValidity()
-    e.preventDefault()
+  async function handleSubmit(): Promise<void> {
+    let goodForm = false
+    if (formRef.current) {
+      goodForm = formRef.current.reportValidity()
+    }
 
-    this.setState({ submitEnabled: false })
+    setSubmitEnabled(false)
     if (goodForm) {
-      const { answer } = this.props
-      const { selection } = this.state
+      const { answer } = props
       const canvas: HTMLCanvasElement = document.getElementById(
         "pscanvas"
       ) as HTMLCanvasElement
@@ -95,89 +85,105 @@ export default class IssueReport extends React.PureComponent<IRProps, IRState> {
 
       if (response.ok) {
         Snackbar.success("Submitted!")
-        this.handleToggleIssueForm()
+        handleToggleIssueForm()
       } else {
         Snackbar.error("Issue report failed.\nTry again later.")
       }
     }
 
-    this.setState({ submitEnabled: true })
+    setSubmitEnabled(true)
+  }
+
+  async function handleFormSubmit(
+    evt: React.FormEvent<HTMLFormElement>
+  ): Promise<void> {
+    evt.preventDefault()
+    handleSubmit()
+  }
+
+  async function handleBtnSubmit(
+    evt: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ): Promise<void> {
+    evt.preventDefault()
+    handleSubmit()
   }
 
   /**
    * Handle cancel button click
    * @param event
    */
-  handleCancelClick = (
+  function handleCancelClick(
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ): void => {
+  ): void {
     event.preventDefault()
-    this.setState({ showIssueForm: false })
+    setShowIssueForm(false)
   }
 
-  render(): ReactElement {
-    const { showIssueForm, submitEnabled } = this.state
-    return (
-      <div style={{ width: "25%" }}>
-        <button
-          type="button"
-          style={{ marginLeft: "5%", top: "5px" }}
-          onClick={this.handleToggleIssueForm}
-        >
-          {" "}
-          Report Issue{" "}
-        </button>
-        <Dialog
-          fullScreen={false}
-          open={showIssueForm}
-          onClose={this.handleToggleIssueForm}
-        >
+  return (
+    <div style={{ width: "25%" }}>
+      <button
+        type="button"
+        style={{ marginLeft: "5%", top: "5px" }}
+        onClick={handleToggleIssueForm}
+      >
+        {" "}
+        Report Issue{" "}
+      </button>
+      <Dialog
+        fullScreen={false}
+        open={showIssueForm}
+        onClose={handleToggleIssueForm}
+      >
+        <DialogContent>
+          {/* TODO - ISSUE_REPORTS -- change this to /issues.html and use php to read from reported issues */}
+          See a list of <a href="/#/changelog.html">known issues</a>.
+        </DialogContent>
+
+        <form onSubmit={handleFormSubmit} ref={formRef}>
           <DialogContent>
-            {/* TODO - ISSUE_REPORTS -- change this to /issues.html and use php to read from reported issues */}
-            See a list of <a href="/#/changelog.html">known issues</a>.
+            <IssueSelector selectionChanged={onIssueSelChanged} />
           </DialogContent>
+          <TextField
+            classes={{ root: "textfull" }}
+            required
+            id="email"
+            label="Email"
+            fullWidth
+            type="text"
+            onChange={handleEmailChange}
+          />
+          <TextField
+            classes={{ root: "textfull" }}
+            required
+            id="issue"
+            label="Issue Description"
+            fullWidth
+            type="text"
+            multiline
+            onChange={handleTextChanged}
+          />
+          <button type="button" hidden onClick={handleSubmit} />
+          <DialogActions>
+            <Button
+              id="submitIssueReport"
+              onClick={handleBtnSubmit}
+              disabled={!submitEnabled}
+            >
+              Submit
+            </Button>
+            <Button id="cancelIssueReport" onClick={handleCancelClick}>
+              Cancel
+            </Button>
+          </DialogActions>
+        </form>
+      </Dialog>
+    </div>
+  )
+}
 
-          <form onSubmit={this.handleSubmit}>
-            <DialogContent>
-              <IssueSelector selectionChanged={this.onIssueSelChanged} />
-            </DialogContent>
-            <TextField
-              classes={{ root: "textfull" }}
-              required
-              id="email"
-              label="Email"
-              fullWidth
-              type="text"
-              onChange={this.handleEmailChange}
-            />
-            <TextField
-              classes={{ root: "textfull" }}
-              // eslint-disable-next-line
-              style={{ margin: "5px", width: "95%" }}
-              required
-              id="issue"
-              label="Issue Description"
-              fullWidth
-              type="text"
-              multiline
-              onChange={this.handleTextChanged}
-            />
-            <button type="button" hidden onClick={this.handleSubmit} />
-            <DialogActions>
-              <Button
-                id="submitIssueReport"
-                onClick={this.handleSubmit}
-                disabled={!submitEnabled}
-              >
-                Submit
-              </Button>
-              <Button id="cancelIssueReport" onClick={this.handleCancelClick}>
-                Cancel
-              </Button>
-            </DialogActions>
-          </form>
-        </Dialog>
-      </div>
-    )
-  }
+IssueReport.defaultProps = {
+  answer: {
+    pic: "",
+    groups: [],
+  },
 }
