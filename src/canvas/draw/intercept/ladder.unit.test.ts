@@ -94,7 +94,7 @@ describe("DrawChamp", () => {
     expect(ladder.getAnswer()).toEqual(
       "3 GROUP LADDER 12 DEEP, " +
         "LEAD GROUP BULLSEYE 305/68, 15k HOSTILE HEAVY 4 CONTACTS " +
-        "MIDDLE GROUP SEPARATION 9 15k HOSTILE HEAVY 4 CONTACTS " +
+        "MIDDLE GROUP SEPARATION 7 15k HOSTILE HEAVY 4 CONTACTS " +
         "TRAIL GROUP 20k HOSTILE HEAVY 4 CONTACTS"
     )
   })
@@ -117,7 +117,7 @@ describe("DrawChamp", () => {
     expect(ladder.getAnswer()).toEqual(
       "3 GROUP LADDER 12 DEEP, " +
         "LEAD GROUP BULLSEYE 305/68, 15k HOSTILE HEAVY 4 CONTACTS " +
-        "MIDDLE GROUP RANGE 9 15k HOSTILE HEAVY 4 CONTACTS " +
+        "MIDDLE GROUP RANGE 7 15k HOSTILE HEAVY 4 CONTACTS " +
         "TRAIL GROUP 20k HOSTILE HEAVY 4 CONTACTS"
     )
   })
