@@ -122,6 +122,7 @@ export default function IssueReport(props: IRProps): ReactElement {
   return (
     <div style={{ width: "25%" }}>
       <button
+        id="showFormBtn"
         type="button"
         style={{ marginLeft: "5%", top: "5px" }}
         onClick={handleToggleIssueForm}
