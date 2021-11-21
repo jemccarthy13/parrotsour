@@ -83,6 +83,8 @@
     "**/jsdom": "16.5.3"
   },
   "jest": {
-    "snapshotSerializers": ["./src/testutils/canvas-serializer.ts"]
+    "snapshotSerializers": [
+      "./src/testutils/canvas-serializer.ts"
+    ]
   }
 }
