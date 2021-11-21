@@ -25,6 +25,16 @@ jest.mock("./cap", () => {
  * Test the azimuth picture drawer
  */
 describe("DrawVic", () => {
+  function setBlueInTheNorth() {
+    const updatedProps = { ...testProps }
+    updatedProps.orientation.orient = BlueInThe.NORTH
+    const updatedState = {
+      ...testState,
+      blueAir: new AircraftGroup({ sx: 200, sy: 50, hdg: 180, nContacts: 4 }),
+    }
+    vic.initialize(updatedProps, updatedState)
+  }
+
   beforeEach(() => {
     PaintBrush.use(TestCanvas.getContext(800, 500))
 
@@ -82,7 +92,7 @@ describe("DrawVic", () => {
     vic.drawInfo()
 
     expect(vic.getAnswer()).toEqual(
-      "3 GROUP VIC 12 DEEP, 25 WIDE , " +
+      "3 GROUP VIC 12 DEEP, 25 WIDE, " +
         "LEAD GROUP BULLSEYE 266/44, 20k HOSTILE HEAVY 4 CONTACTS " +
         "NORTH TRAIL GROUP 15k HOSTILE HEAVY 4 CONTACTS " +
         "SOUTH TRAIL GROUP 13k HOSTILE HEAVY 4 CONTACTS"
@@ -111,7 +121,7 @@ describe("DrawVic", () => {
     vic.initialize(updatedProps, testState)
 
     expect(vic.getAnswer()).toEqual(
-      "3 GROUP VIC 12 DEEP, 25 WIDE , " +
+      "3 GROUP VIC 12 DEEP, 25 WIDE, " +
         "LEAD GROUP BULLSEYE 266/44, 20k HOSTILE HEAVY 4 CONTACTS " +
         "NORTH TRAIL GROUP 15k HOSTILE HEAVY 4 CONTACTS " +
         "SOUTH TRAIL GROUP 13k HOSTILE HEAVY 4 CONTACTS"
@@ -119,28 +129,19 @@ describe("DrawVic", () => {
   })
 
   it("vic_labels_EW", () => {
-    const updatedProps = { ...testProps }
-    updatedProps.orientation.orient = BlueInThe.NORTH
-    const updatedState = {
-      ...testState,
-      blueAir: new AircraftGroup({ sx: 200, sy: 50, hdg: 180, nContacts: 4 }),
-    }
-    vic.initialize(updatedProps, updatedState)
-
-    //x:200,y:400
-    const lg = new AircraftGroup({ ...p, hdg: 359 })
+    setBlueInTheNorth()
+    const p2 = { ...p, hdg: 359 }
+    const lg = new AircraftGroup(p2)
     const ntg = new AircraftGroup({
-      ...p,
-      sx: 120,
+      ...p2,
+      sx: 175,
       sy: 450,
-      hdg: 359,
       alts: [15, 15, 15, 15],
     })
     const stg = new AircraftGroup({
-      ...p,
+      ...p2,
       sx: 220,
       sy: 450,
-      hdg: 359,
       alts: [13, 13, 13, 13],
     })
 
@@ -148,20 +149,21 @@ describe("DrawVic", () => {
     vic.drawInfo()
 
     expect(vic.getAnswer()).toEqual(
-      "3 GROUP VIC 12 DEEP, 25 WIDE , " +
+      "3 GROUP VIC 12 DEEP, 11 WIDE, " +
         "LEAD GROUP BULLSEYE 277/47, 20k HOSTILE HEAVY 4 CONTACTS " +
         "WEST TRAIL GROUP 15k HOSTILE HEAVY 4 CONTACTS " +
         "EAST TRAIL GROUP 13k HOSTILE HEAVY 4 CONTACTS"
     )
 
+    stg.setLabel("EAST")
+    ntg.setLabel("WEST")
     vic.groups = [lg, stg, ntg]
-    vic.drawInfo()
 
     expect(vic.getAnswer()).toEqual(
-      "3 GROUP VIC 12 DEEP, 25 WIDE , " +
+      "3 GROUP VIC 12 DEEP, 11 WIDE, " +
         "LEAD GROUP BULLSEYE 277/47, 20k HOSTILE HEAVY 4 CONTACTS " +
-        "WEST TRAIL GROUP 15k HOSTILE HEAVY 4 CONTACTS " +
-        "EAST TRAIL GROUP 13k HOSTILE HEAVY 4 CONTACTS"
+        "EAST TRAIL GROUP 15k HOSTILE HEAVY 4 CONTACTS " +
+        "WEST TRAIL GROUP 13k HOSTILE HEAVY 4 CONTACTS"
     )
   })
 
@@ -233,5 +235,108 @@ describe("DrawVic", () => {
     expect(groups[2].getStartPos()).toEqual(new Point(100, 100))
   })
 
-  // TODO -- write weighted tests for TDD
+  /**
+   *       ->
+   *                        <--
+   *       ->  ->
+   */
+  it("vic_weighted_south", () => {
+    // p = x:200, y:400
+    const lg = new AircraftGroup(p)
+    const ntg = new AircraftGroup({
+      ...p,
+      sx: 150,
+      sy: 200,
+      alts: [15, 15, 15, 15],
+    })
+    const stg = new AircraftGroup({
+      ...p,
+      sx: 150,
+      sy: 400,
+      alts: [13, 13, 13, 13],
+    })
+    vic.groups = [lg, ntg, stg]
+    vic.drawInfo()
+    expect(vic.getAnswer().includes("WEIGHTED SOUTH")).toEqual(true)
+  })
+
+  /**
+   *       ->  ->
+   *                        <--
+   *       ->
+   */
+  it("vic_weighted_north", () => {
+    const lg = new AircraftGroup(p)
+    const ntg = new AircraftGroup({
+      ...p,
+      sx: 150,
+      sy: 400,
+      alts: [15, 15, 15, 15],
+    })
+    const stg = new AircraftGroup({
+      ...p,
+      sx: 150,
+      sy: 500,
+      alts: [13, 13, 13, 13],
+    })
+    vic.groups = [lg, ntg, stg]
+    vic.drawInfo()
+    expect(vic.getAnswer().includes("WEIGHTED NORTH")).toEqual(true)
+  })
+
+  /**
+   *          V
+   *
+   *
+   *         A
+   *
+   *         A     A
+   */
+  it("vic_weighted_west", () => {
+    setBlueInTheNorth()
+    const lg = new AircraftGroup(p)
+    const ntg = new AircraftGroup({
+      ...p,
+      sx: 200,
+      sy: 200,
+      alts: [15, 15, 15, 15],
+    })
+    const stg = new AircraftGroup({
+      ...p,
+      sx: 250,
+      sy: 200,
+      alts: [13, 13, 13, 13],
+    })
+    vic.groups = [lg, ntg, stg]
+    vic.drawInfo()
+    expect(vic.getAnswer().includes("WEIGHTED WEST")).toEqual(true)
+  })
+
+  /**
+   *          V
+   *
+   *
+   *               A
+   *
+   *         A     A
+   */
+  it("vic_weighted_east", () => {
+    setBlueInTheNorth()
+    const lg = new AircraftGroup(p)
+    const ntg = new AircraftGroup({
+      ...p,
+      sx: 150,
+      sy: 200,
+      alts: [15, 15, 15, 15],
+    })
+    const stg = new AircraftGroup({
+      ...p,
+      sx: 200,
+      sy: 200,
+      alts: [13, 13, 13, 13],
+    })
+    vic.groups = [lg, ntg, stg]
+    vic.drawInfo()
+    expect(vic.getAnswer().includes("WEIGHTED EAST")).toEqual(true)
+  })
 })

@@ -136,7 +136,15 @@ export default class DrawVic extends DrawPic {
   }
 
   formatDimensions(): string {
-    return this.dimensions.deep + " DEEP, " + this.dimensions.wide + " WIDE"
+    const openClose = getOpenCloseAzimuth(this.groups[1], this.groups[2])
+    return (
+      this.dimensions.deep +
+      " DEEP, " +
+      this.dimensions.wide +
+      " WIDE" +
+      openClose +
+      ", "
+    )
   }
 
   formatWeighted(): string {
@@ -147,18 +155,20 @@ export default class DrawVic extends DrawPic {
     const ntgPos = this.groups[1].getCenterOfMass(dataStyle)
     const stgPos = this.groups[2].getCenterOfMass(dataStyle)
 
-    if (
-      new Point(lgPos.x, ntgPos.y).getBR(lgPos).range <
-      this.dimensions.wide / 3
-    ) {
+    const isNS = FightAxis.isNS(this.props.orientation.orient)
+
+    const ntgStraightPos = isNS
+      ? new Point(ntgPos.x, lgPos.y)
+      : new Point(lgPos.x, ntgPos.y)
+    const stgStraightPos = isNS
+      ? new Point(stgPos.x, lgPos.y)
+      : new Point(lgPos.x, stgPos.y)
+    if (ntgStraightPos.getBR(lgPos).range < this.dimensions.wide / 3) {
       answer +=
         " WEIGHTED " +
         this.groups[1].getLabel().replace("TRAIL GROUP", "") +
         ", "
-    } else if (
-      new Point(lgPos.x, stgPos.y).getBR(lgPos).range <
-      this.dimensions.wide / 3
-    ) {
+    } else if (stgStraightPos.getBR(lgPos).range < this.dimensions.wide / 3) {
       answer +=
         " WEIGHTED " +
         this.groups[2].getLabel().replace("TRAIL GROUP", "") +
@@ -171,21 +181,17 @@ export default class DrawVic extends DrawPic {
   applyLabels(): void {
     const isNS = FightAxis.isNS(this.props.orientation.orient)
 
-    const lg = this.groups[0]
-    const ntg = this.groups[1]
-    const stg = this.groups[2]
-
     let nLbl = "NORTH"
     let sLbl = "SOUTH"
     if (isNS) {
       nLbl = "WEST"
       sLbl = "EAST"
     }
-    lg.setLabel("LEAD GROUP")
-    ntg.setLabel(nLbl + " TRAIL GROUP")
-    stg.setLabel(sLbl + " TRAIL GROUP")
+    this.groups[0].setLabel("LEAD GROUP")
+    this.groups[1].setLabel(nLbl + " TRAIL GROUP")
+    this.groups[2].setLabel(sLbl + " TRAIL GROUP")
 
-    if (!ntg.isAnchor()) {
+    if (!this.groups[1].isAnchor()) {
       const tmp = this.groups[1]
       this.groups[1] = this.groups[2]
       this.groups[2] = tmp
@@ -203,8 +209,6 @@ export default class DrawVic extends DrawPic {
 
     let answer = this.formatPicTitle() + " "
     answer += this.formatDimensions() + " "
-
-    answer += getOpenCloseAzimuth(this.groups[1], this.groups[2]) + ", "
 
     answer += this.formatWeighted() + " "
 
