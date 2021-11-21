@@ -177,14 +177,16 @@ export default class DrawWall extends DrawPic {
   }
 
   formatWeighted(): string {
-    console.warn("Check weighted for wall")
-    const split = this.dimensions.wide / this.groups.length
+    let retVal = ""
+    const split =
+      (this.dimensions.wide * PIXELS_TO_NM) / (this.groups.length - 1)
     this.seps.forEach((sep) => {
-      if (sep > split) {
-        console.log("weighted")
+      if (sep >= split) {
+        console.log(this.dimensions.wide, sep / PIXELS_TO_NM, split)
+        retVal = "WEIGHTED [dir]"
       }
     })
-    return ""
+    return retVal
   }
 
   getAnswer(): string {
