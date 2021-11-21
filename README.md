@@ -1,10 +1,15 @@
+### Prod Badges
+
 [![build](https://img.shields.io/github/workflow/status/jemccarthy13/parrotsour/Node%20Build?style=for-the-badge)](https://github.com/jemccarthy13/parrotsour/actions/workflows/build.yml)
 [![tests](https://img.shields.io/github/workflow/status/jemccarthy13/parrotsour/AllTests/main?label=Tests&style=for-the-badge)](https://github.com/jemccarthy13/parrotsour/actions/workflows/tests.yml)
+[![codecov](https://codecov.io/gh/jemccarthy13/parrotsour/branch/main/graph/badge.svg?token=QFWAC2CEQT)](https://codecov.io/gh/jemccarthy13/parrotsour)
 [![dependencies](https://img.shields.io/librariesio/github/jemccarthy13/parrotsour?style=for-the-badge)](https://libraries.io/github/jemccarthy13/parrotsour)
 [![repo size](https://img.shields.io/github/repo-size/jemccarthy13/parrotsour?style=for-the-badge)](https://github.com/jemccarthy13/parrotsour)
 [![CodeQL](https://img.shields.io/github/workflow/status/jemccarthy13/parrotsour/CodeQL?label=CodeQL&style=for-the-badge)](https://github.com/jemccarthy13/parrotsour/security/code-scanning)
 
-[![codecov](https://codecov.io/gh/jemccarthy13/parrotsour/branch/main/graph/badge.svg)](https://codecov.io/gh/jemccarthy13/parrotsour)
+### Dev Badges
+[![devtests](https://img.shields.io/github/workflow/status/jemccarthy13/parrotsour/AllTests/ps-dev?label=Devtests&style=for-the-badge)](https://github.com/jemccarthy13/parrotsour/actions/workflows/tests.yml)
+[![devcoverage](https://codecov.io/gh/jemccarthy13/parrotsour/branch/ps-dev/graph/badge.svg?token=QFWAC2CEQT)](https://app.codecov.io/gh/jemccarthy13/parrotsour/branch/ps-dev)
 
 ParrotSour has changed drastically in version 4.
 
