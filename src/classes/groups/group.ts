@@ -203,11 +203,10 @@ export class AircraftGroup extends Array<Aircraft> {
    * @returns true iff one Aircraft in this group is capping
    */
   isCapping(): boolean {
-    return (
-      this.find((ac) => {
-        return !ac.isCapping()
-      }) === undefined
+    const acThatIsCapping: Aircraft | undefined = this.find((ac) =>
+      ac.isCapping()
     )
+    return acThatIsCapping !== undefined
   }
 
   /**
