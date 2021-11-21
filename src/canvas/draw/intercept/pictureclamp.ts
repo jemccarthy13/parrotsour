@@ -98,12 +98,10 @@ export const getRestrictedStartPos = (
     mults = { lowX: 0.2, hiX: 0.8, lowY: lBound, hiY: uBound }
   }
 
-  if (pInfo?.start) {
-    console.warn(
-      "Providing a start point to getRestrictedStartPos will ignore restrictions " +
-        "and result in no change to Point."
-    )
-  }
+  /**
+   * if pInfo?.start is provided, getRestrictedStartPos will ignore restrictions
+   * and result in no change to point
+   */
 
   const startY: number =
     (pInfo?.start && pInfo.start.y) ||

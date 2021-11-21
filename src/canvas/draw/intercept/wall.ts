@@ -182,7 +182,6 @@ export default class DrawWall extends DrawPic {
       (this.dimensions.wide * PIXELS_TO_NM) / (this.groups.length - 1)
     this.seps.forEach((sep) => {
       if (sep >= split) {
-        console.log(this.dimensions.wide, sep / PIXELS_TO_NM, split)
         retVal = "WEIGHTED [dir]"
       }
     })

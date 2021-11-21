@@ -23,8 +23,6 @@ export default class DrawLeadEdge extends DrawPic {
     const nCt = Math.floor(nCts / 2)
     const sCt = nCts - nCt
 
-    console.log("lead edge has " + nCt)
-    console.log("follow on has " + sCt)
     this.leadEdge = PictureFactory.getPictureDraw("random", nCt, true)
     this.followOn = PictureFactory.getPictureDraw("random", sCt, true)
 
@@ -68,7 +66,6 @@ export default class DrawLeadEdge extends DrawPic {
     )
     this.leadEdge.groups = leadGrps
 
-    console.log(this.leadEdge.groups)
     let furthestPic1Group = this.leadEdge.groups[0]
     let furthestRange = 0
     this.leadEdge.groups.forEach((grp) => {

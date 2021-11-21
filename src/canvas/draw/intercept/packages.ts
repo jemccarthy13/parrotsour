@@ -151,11 +151,8 @@ export default class DrawPackage extends DrawPic {
   }
 
   tryAgain(): PictureAnswer {
-    console.log("need to redraw pkgs")
     const nPkgContacts = this.pictures[0].groups
       .map((grp) => {
-        console.log(grp.getLabel())
-        console.log(grp.getStrength())
         return grp.getStrength()
       })
       .reduce((a, b) => a + b)
