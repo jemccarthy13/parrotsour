@@ -1,4 +1,5 @@
-[![dependencies](https://img.shields.io/librariesio/github/jemccarthy13/parrotsour?style=for-the-badge)](http://nodejs.org/download/)
+[![dependencies](https://img.shields.io/librariesio/github/jemccarthy13/parrotsour?style=for-the-badge)](https://libraries.io/github/jemccarthy13/parrotsour)
+[![repo size](https://img.shields.io/github/repo-size/jemccarthy13/parrotsour)]
 
 
 ParrotSour has changed drastically in version 4.
