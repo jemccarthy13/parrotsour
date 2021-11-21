@@ -24,8 +24,6 @@ jobs:
       continue-on-error: true
     - uses: codecov/codecov-action@v2
       with:
-        directory: ./coverage
         flags: unittest
-        name: codecov-parrotsour
         fail_ci_if_error: false 
         verbose: true
