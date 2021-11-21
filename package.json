@@ -2,6 +2,7 @@
   "name": "parrotsour-components",
   "version": "4.0.4",
   "private": false,
+  "license": "MIT",
   "homepage": "http://www.parrotsour.com",
   "main": "dist/index.tsx",
   "files": [
