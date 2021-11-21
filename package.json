@@ -58,7 +58,9 @@
     "clint-fixdr": "eslint src/**/*.{ts,tsx} --fix-dry-run",
     "clint-fix": "eslint src/**/*.{ts,tsx} --fix",
     "coverage": "npm run test -- --coverage --detectOpenHandles",
-    "test": "react-scripts test --watchAll"
+    "test": "react-scripts test --watchAll",
+    "ci-coverage": "npm run ci-test -- --coverage --detectOpenHandles",
+    "ci-test": "react-scripts test"
   },
   "eslintConfig": {
     "extends": [
