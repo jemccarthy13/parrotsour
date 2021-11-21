@@ -27,5 +27,5 @@ jobs:
         files: ./clover.xml
         flags: unittest
         name: codecov-parrotsour
-        fail_ci_if_error: true 
+        fail_ci_if_error: false 
         verbose: true
