@@ -4,7 +4,7 @@ module.exports = {
     testRegex: '/__tests__/.*\\.(test|spec)?\\.(ts|tsx)$',
     moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
     moduleDirectories: ['node_modules', 'src'],
-    setupFiles: ["jest-canvas-mock", "./setupTests.js" ],
+    setupFiles: ["./setupTests.js" ],
     testURL: "http://localhost/",
     verbose:"true"
 };
