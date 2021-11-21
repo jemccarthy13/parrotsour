@@ -1,15 +1,19 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+
+import { plugins } from "pretty-format"
+import { OptionsReceived } from "pretty-format/build/types"
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export default function toMatchCanvasSnapshotFactory(
   fs: any,
   path: any,
   hash: any,
-  prettyFormat: any,
+  prettyFormat: (val: unknown, options?: OptionsReceived) => string,
   getTestState: any
 ) {
   function format(element: any) {
     return prettyFormat(element, {
-      plugins: [prettyFormat.plugins.DOMElement],
+      plugins: [plugins.DOMElement],
     })
   }
 

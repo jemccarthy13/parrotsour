@@ -25,6 +25,7 @@
     "eslint-plugin-prototype-pollution-security-rules": "^1.0.6",
     "hasha": "^5.2.2",
     "notistack": "^2.0.3",
+    "pretty-format": "^27.3.1",
     "react": "^17.0.2",
     "react-cookie-consent": "^6.4.1",
     "react-dom": "^17.0.2",
@@ -35,7 +36,7 @@
   },
   "devDependencies": {
     "@types/enzyme": "^3.10.10",
-    "@types/jest": "^27.0.2",
+    "@types/jest": "^27.0.3",
     "@types/react-dom": "^17.0.11",
     "@types/react-speech-recognition": "^3.6.1",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.5",
@@ -59,8 +60,8 @@
     "clint-fix": "eslint src/**/*.{ts,tsx} --fix",
     "coverage": "npm run test -- --coverage --detectOpenHandles",
     "test": "react-scripts test --watchAll",
-    "ci-coverage": "npm run ci-test -- --coverage --detectOpenHandles",
-    "ci-test": "react-scripts test"
+    "ci-coverage": "npm run ci-test -- --coverage",
+    "ci-test": "react-scripts test --detectOpenHandles --watchAll=false"
   },
   "eslintConfig": {
     "extends": [
