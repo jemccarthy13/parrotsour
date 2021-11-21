@@ -16,8 +16,7 @@ const animatorPause = jest.spyOn(PicAnimationHandler.prototype, "pauseFight")
 
 const resetFn = jest.fn()
 
-const ctx = TestCanvas.getContext(10, 30)
-PaintBrush.use(ctx)
+const ctx = TestCanvas.useContext(10, 30)
 
 describe("ParrotSourCanvas", () => {
   beforeEach(() => {

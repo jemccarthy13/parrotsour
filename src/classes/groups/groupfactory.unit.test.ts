@@ -3,7 +3,6 @@ import {
   PictureCanvasProps,
   PictureCanvasState,
 } from "../../canvas/canvastypes"
-import { PaintBrush } from "../../canvas/draw/paintbrush"
 import TestCanvas from "../../testutils/testcanvas"
 import { SensorType } from "../aircraft/datatrail/sensortype"
 import { Point } from "../point"
@@ -29,7 +28,7 @@ jest.mock("../../canvas/draw/intercept/pictureclamp", () => {
 })
 
 describe("GroupFactory", () => {
-  PaintBrush.use(TestCanvas.getContext())
+  TestCanvas.useContext()
 
   const fakeProps: PictureCanvasProps = {
     format: FORMAT.ALSA,

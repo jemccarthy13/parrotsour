@@ -25,8 +25,12 @@ jest.mock("./cap", () => {
  * Test the azimuth picture drawer
  */
 describe("DrawLadder", () => {
+  afterEach(() => {
+    PaintBrush.clearCanvas()
+  })
+
   beforeEach(() => {
-    PaintBrush.use(TestCanvas.getContext(800, 500))
+    TestCanvas.useContext(800, 500)
 
     testState = {
       bullseye: new Point(400, 400),

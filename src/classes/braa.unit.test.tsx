@@ -1,13 +1,11 @@
 import { PaintBrush } from "../canvas/draw/paintbrush"
 import { BRAA } from "./braa"
 
-import CanvasSerializer from "../test/canvas-serializer"
 import TestCanvas from "../testutils/testcanvas"
-expect.addSnapshotSerializer(CanvasSerializer)
 
 describe("BRAA", () => {
   beforeAll(() => {
-    PaintBrush.use(TestCanvas.getContext(50, 20))
+    TestCanvas.useContext(50, 20)
   })
 
   afterEach(() => {

@@ -13,3 +13,11 @@ export default createCanvasSnapshotSerializer(
   prettyFormat,
   expect.getState
 )
+
+module.exports = createCanvasSnapshotSerializer(
+  fs,
+  path,
+  hasha,
+  prettyFormat,
+  expect.getState
+)

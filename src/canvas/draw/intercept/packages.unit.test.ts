@@ -14,9 +14,13 @@ describe("DrawPackages", () => {
   let p: Partial<GroupParams>
   let pkg: DrawPackage
 
+  afterEach(() => {
+    PaintBrush.clearCanvas()
+  })
+
   beforeEach(() => {
     jest.restoreAllMocks()
-    PaintBrush.use(TestCanvas.getContext(800, 500))
+    TestCanvas.useContext(800, 500)
 
     testState = {
       bullseye: new Point(400, 400),

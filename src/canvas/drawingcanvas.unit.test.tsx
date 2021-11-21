@@ -6,9 +6,6 @@ import { Point } from "../classes/point"
 import { BlueInThe, DrawCanvasProps } from "./canvastypes"
 import { SensorType } from "../classes/aircraft/datatrail/sensortype"
 
-import CanvasSerializer from "../test/canvas-serializer"
-expect.addSnapshotSerializer(CanvasSerializer)
-
 /**
  * Mock draw function for a drawing canvas
  * @param context the Context to draw in

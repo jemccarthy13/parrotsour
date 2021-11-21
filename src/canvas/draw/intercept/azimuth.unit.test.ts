@@ -2,19 +2,19 @@ import { SensorType } from "../../../classes/aircraft/datatrail/sensortype"
 import { AircraftGroup, GroupParams } from "../../../classes/groups/group"
 import { Point } from "../../../classes/point"
 import { BlueInThe, PictureCanvasState } from "../../canvastypes"
-import { PaintBrush } from "../paintbrush"
 import DrawAzimuth from "./azimuth"
 import { testProps } from "./mockutils.unit.test"
 
 import * as PSMath from "../../../utils/psmath"
 import TestCanvas from "../../../testutils/testcanvas"
+import { PaintBrush } from "../paintbrush"
 
 let testState: PictureCanvasState
 let p: Partial<GroupParams>
 let azimuth: DrawAzimuth
 
 beforeAll(() => {
-  PaintBrush.use(TestCanvas.getContext(800, 500))
+  TestCanvas.useContext(800, 500)
 
   testState = {
     bullseye: new Point(400, 400),
@@ -34,6 +34,10 @@ beforeAll(() => {
 
   azimuth = new DrawAzimuth()
   azimuth.initialize(testProps, testState)
+})
+
+beforeEach(() => {
+  PaintBrush.clearCanvas()
 })
 
 /**

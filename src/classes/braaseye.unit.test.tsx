@@ -3,12 +3,10 @@ import { PIXELS_TO_NM } from "../utils/psmath"
 import { Braaseye } from "./braaseye"
 import { Point } from "./point"
 
-import CanvasSerializer from "../test/canvas-serializer"
 import TestCanvas from "../testutils/testcanvas"
-expect.addSnapshotSerializer(CanvasSerializer)
 
 describe("Braaseye", () => {
-  PaintBrush.use(TestCanvas.getContext(100, 50))
+  TestCanvas.useContext(100, 50)
 
   afterEach(() => {
     TestCanvas.setDimensions(100, 50)

@@ -14,7 +14,11 @@ import TestCanvas from "../../testutils/testcanvas"
  * https://luetkemj.github.io/170421/mocking-modules-in-jest
  */
 describe("AircraftGroup", () => {
-  PaintBrush.use(TestCanvas.getContext())
+  TestCanvas.useContext()
+
+  afterEach(() => {
+    PaintBrush.clearCanvas()
+  })
 
   describe("accessor_functions", () => {
     it("constructor_and_aircraft_functions", () => {

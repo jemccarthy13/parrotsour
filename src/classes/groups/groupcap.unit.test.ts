@@ -3,12 +3,10 @@ import { IDMatrix } from "../aircraft/id"
 import { AircraftGroup } from "./group"
 import { drawGroupCap } from "./groupcap"
 
-import CanvasSerializer from "../../test/canvas-serializer"
 import TestCanvas from "../../testutils/testcanvas"
-expect.addSnapshotSerializer(CanvasSerializer)
 
 describe("draw_group_cap", () => {
-  PaintBrush.use(TestCanvas.getContext())
+  TestCanvas.useContext()
 
   afterEach(() => {
     PaintBrush.clearCanvas()

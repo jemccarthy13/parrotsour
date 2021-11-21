@@ -26,7 +26,11 @@ describe("DrawPic", () => {
   }
 
   beforeAll(() => {
-    PaintBrush.use(TestCanvas.getContext(800, 500))
+    TestCanvas.useContext(800, 500)
+  })
+
+  afterEach(() => {
+    PaintBrush.clearCanvas()
   })
 
   it("simple_functions", () => {

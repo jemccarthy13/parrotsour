@@ -5,9 +5,7 @@ import { IDMatrix } from "./id"
 import Tasking from "../taskings/tasking"
 import { PaintBrush } from "../../canvas/draw/paintbrush"
 
-import CanvasSerializer from "../../test/canvas-serializer"
 import TestCanvas from "../../testutils/testcanvas"
-expect.addSnapshotSerializer(CanvasSerializer)
 
 /**
  * Integration tests for Aircraft.
@@ -20,7 +18,7 @@ expect.addSnapshotSerializer(CanvasSerializer)
  * there's a high likelihood this test will also fail.
  */
 describe("Aircraft", () => {
-  PaintBrush.use(TestCanvas.getContext(10, 30))
+  TestCanvas.useContext(10, 30)
 
   beforeEach(() => {
     PaintBrush.clearCanvas()

@@ -9,14 +9,12 @@ import { PictureInfo } from "./pictureclamp"
 
 import DrawThreat from "./threat"
 
-import CanvasSerializer from "../../../test/canvas-serializer"
 import TestCanvas from "../../../testutils/testcanvas"
-expect.addSnapshotSerializer(CanvasSerializer)
 
 describe("DrawThreat", () => {
   let dThreat: DrawThreat
 
-  PaintBrush.use(TestCanvas.getContext(800, 500))
+  TestCanvas.useContext(800, 500)
 
   let testState: PictureCanvasState = {
     bullseye: new Point(400, 400),

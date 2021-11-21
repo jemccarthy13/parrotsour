@@ -17,15 +17,20 @@ export default class DrawWall extends DrawPic {
     return new DrawWall()
   }
 
+  /**
+   * Choose number of groups given a number of contacts.
+   * A wall must have at least 3 and no more than 5 groups.
+   * If given a number of contacts, the number of groups set
+   * inside the numGroupsToCreate member var should fit
+   * the number of contacts
+   * (ie. 3 cts = max 3 grps, 4 = max 4 grps, 5+ = max 5 grps)
+   *
+   * @param nCts The number of total contacts in this picture
+   */
   chooseNumGroups(nCts: number): void {
-    let maxGrps = 5
-    if (nCts < 3) {
-      maxGrps = 3
-    } else if (nCts < 5) {
-      maxGrps = nCts
-    }
-    if (nCts === 0) maxGrps = 5
-    this.numGroupsToCreate = randomNumber(3, maxGrps)
+    let maxGroups = Math.min(Math.max(nCts, 3), 5)
+    if (nCts === 0) maxGroups = 5
+    this.numGroupsToCreate = randomNumber(3, maxGroups)
   }
 
   seps: number[] = [0]
@@ -38,7 +43,8 @@ export default class DrawWall extends DrawPic {
       width += nextSep
     }
     const wide = width
-    const deep = 20 * PIXELS_TO_NM // to ensure measurements can be drawn behind wall
+    // to ensure measurements can be drawn behind wall
+    const deep = 20 * PIXELS_TO_NM
 
     const startPos: Point = getRestrictedStartPos(
       this.state.blueAir,

@@ -3,11 +3,9 @@ import { Point } from "../../point"
 import { IDMatrix } from "../id"
 import { IFFDataTrail } from "./iffdatatrail"
 
-import CanvasSerializer from "../../../test/canvas-serializer"
 import TestCanvas from "../../../testutils/testcanvas"
-expect.addSnapshotSerializer(CanvasSerializer)
 
-PaintBrush.use(TestCanvas.getContext())
+TestCanvas.useContext()
 
 describe("IFFDataTrail", () => {
   afterEach(() => {

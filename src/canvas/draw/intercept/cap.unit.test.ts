@@ -17,13 +17,14 @@ describe("cap_util", () => {
   }
 
   beforeAll(() => {
-    PaintBrush.use(TestCanvas.getContext(800, 500))
+    TestCanvas.useContext(800, 500)
 
     const ng = new AircraftGroup(p)
     grps = [ng]
   })
 
   beforeEach(() => {
+    PaintBrush.clearCanvas()
     grps.forEach((grp) => {
       grp.setCapping(false)
     })

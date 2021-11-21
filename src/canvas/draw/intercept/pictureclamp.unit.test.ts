@@ -13,9 +13,11 @@ import TestCanvas from "../../../testutils/testcanvas"
 const TEN_NM = PIXELS_TO_NM * 10
 
 beforeAll(() => {
-  PaintBrush.use(TestCanvas.getContext(800, 500))
+  TestCanvas.useContext(800, 500)
 })
-
+afterEach(() => {
+  PaintBrush.clearCanvas()
+})
 /**
  * Test the "_howFarOut" function.
  *

@@ -28,6 +28,7 @@ export abstract class DrawPic {
   abstract formatPicTitle(): string
   abstract formatDimensions(): string
 
+  /** Number of groups to generate for this picture */
   public numGroupsToCreate = 0
   groups: AircraftGroup[] = []
   answer = ""

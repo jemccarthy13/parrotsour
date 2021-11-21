@@ -3,13 +3,14 @@ import { AircraftGroup } from "../../classes/groups/group"
 import { getOpenCloseAzimuth } from "./formatutils"
 import { PaintBrush } from "./paintbrush"
 
-import CanvasSerializer from "../../test/canvas-serializer"
 import TestCanvas from "../../testutils/testcanvas"
-expect.addSnapshotSerializer(CanvasSerializer)
 
 describe("FormatUtils", () => {
-  PaintBrush.use(TestCanvas.getContext(200, 200))
-  PaintBrush.clearCanvas()
+  TestCanvas.useContext(200, 200)
+
+  beforeEach(() => {
+    PaintBrush.clearCanvas()
+  })
 
   describe("groupOpenClose_BlueInTheEast", () => {
     let grp1: AircraftGroup

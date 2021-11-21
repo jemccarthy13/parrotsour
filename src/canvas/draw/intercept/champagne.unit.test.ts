@@ -18,7 +18,7 @@ let champ: DrawChampange
  */
 describe("DrawChamp", () => {
   beforeEach(() => {
-    PaintBrush.use(TestCanvas.getContext(800, 500))
+    TestCanvas.useContext(800, 500)
 
     testState = {
       bullseye: new Point(400, 400),
@@ -43,6 +43,10 @@ describe("DrawChamp", () => {
 
   beforeAll(() => {
     testProps.orientation.orient = BlueInThe.EAST
+  })
+
+  beforeEach(() => {
+    PaintBrush.clearCanvas()
   })
 
   it("hot_champ", () => {
