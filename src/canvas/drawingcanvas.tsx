@@ -114,14 +114,15 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
     if (end.y < 20) end.y = 20
     end.x -= 50
 
+    const { braaFirst } = props
     // determine draw locations based on BRAA/bull first setting
     const drawBEPos = {
       x: end.x,
-      y: props.braaFirst ? end.y : end.y - 11,
+      y: braaFirst ? end.y : end.y - 11,
     }
     const drawBRPos = {
       x: end.x,
-      y: props.braaFirst ? end.y - 11 : end.y,
+      y: braaFirst ? end.y - 11 : end.y,
     }
 
     if (mouseCvCtx.current) {
@@ -170,16 +171,13 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
    * @param mousePos Current mouse position in the canvas
    */
   const drawBoot = (mousePos: Point) => {
-    const { answer } = props
+    const { answer, dataStyle } = props
 
     let alts: number[] = []
     answer.groups.forEach((grp) => {
       grp.forEach((ac) => {
-        if (
-          ac
-            .getCenterOfMass(props.dataStyle)
-            .getBR(new Point(mousePos.x + 50, mousePos.y)).range < 5
-        ) {
+        const inRngPt = new Point(mousePos.x + 50, mousePos.y)
+        if (ac.getCenterOfMass(dataStyle).getBR(inRngPt).range < 5) {
           alts.push(ac.getAltitude())
         }
       })
@@ -207,15 +205,13 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
   // Display 'baseball card' in upper left
   //
   const drawCursorInfo = (mousePos: Point) => {
-    const { answer } = props
+    const { answer, dataStyle } = props
     const grps: Aircraft[] = []
+
     answer.groups.forEach((grp) => {
       grp.forEach((ac) => {
-        if (
-          ac
-            .getCenterOfMass(props.dataStyle)
-            .getBR(new Point(mousePos.x + 50, mousePos.y)).range < 1.5
-        ) {
+        const inRngPt = new Point(mousePos.x + 50, mousePos.y)
+        if (ac.getCenterOfMass(dataStyle).getBR(inRngPt).range < 1.5) {
           grps.push(ac)
         }
       })

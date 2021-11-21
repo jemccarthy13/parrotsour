@@ -9,7 +9,8 @@ const IssueSelector = (props: IssueSelectorProps): ReactElement => {
 
   function handleClick(evt: ChangeEvent) {
     if (evt.target.id !== prevSel) {
-      props.selectionChanged(evt.target.id)
+      const { selectionChanged } = props
+      selectionChanged(evt.target.id)
       setPrevSel(evt.target.id)
     }
   }

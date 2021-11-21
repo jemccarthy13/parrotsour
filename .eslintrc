@@ -88,7 +88,10 @@
         "react/jsx-handler-names": "error",
         "react/jsx-key": "error",
         /* "react/jsx-max-props-per-line": "error", */
-        "react/jsx-no-bind": "error",
+        "react/jsx-no-bind": [ "error", {
+            "ignoreDOMComponents":true,
+            "allowFunctions":true
+        }],
         "react/jsx-no-comment-textnodes": "error",
         "react/jsx-no-duplicate-props": "error",
         "react/jsx-no-target-blank": "error",

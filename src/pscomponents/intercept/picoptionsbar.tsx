@@ -52,7 +52,7 @@ class PicOptionsBar extends React.PureComponent<POBSelProps, POBSelState> {
       <div style={{ display: "flex" }}>
         <div className="custom-sel-div">
           <Select
-            classes={{ root: "parrotsoursel" }}
+            classes={{ select: "parrotsoursel" }}
             autoWidth
             labelId="picSelLabel"
             id="pictureType"
