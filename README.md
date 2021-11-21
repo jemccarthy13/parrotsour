@@ -4,6 +4,8 @@
 [![repo size](https://img.shields.io/github/repo-size/jemccarthy13/parrotsour?style=for-the-badge)](https://github.com/jemccarthy13/parrotsour)
 [![CodeQL](https://img.shields.io/github/workflow/status/jemccarthy13/parrotsour/CodeQL?label=CodeQL&style=for-the-badge)](https://github.com/jemccarthy13/parrotsour/security/code-scanning)
 
+[![codecov](https://codecov.io/gh/jemccarthy13/parrotsour/branch/main/graph/badge.svg)](https://codecov.io/gh/jemccarthy13/parrotsour)
+
 ParrotSour has changed drastically in version 4.
 
 Much of the underlying 'core' library (i.e. math computations and drawing)
