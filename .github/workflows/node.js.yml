@@ -1,7 +1,7 @@
 # This workflow will do a clean install of node dependencies, cache/restore them, and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: Node.js CI
+name: AllTests
 
 on:
   push:
@@ -27,4 +27,4 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm install
-    - run: npm run ci-coverage
+    - run: npm run ci-test
