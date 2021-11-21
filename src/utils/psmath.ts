@@ -69,7 +69,7 @@ export function randomHeading(format: FORMAT, blueHeading = -1): number {
   const offset = randomNumber(-bound, bound)
 
   let blueOpp = blueHeading - 180
-  if (blueOpp < 0) blueOpp = 360 - blueOpp
+  if (blueOpp < 0) blueOpp = 360 + blueOpp
 
   let heading: number = blueOpp + offset
   heading = (360 + heading) % 360

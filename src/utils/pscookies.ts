@@ -70,6 +70,7 @@ export default class PSCookies {
 
   public static setSliderValue(newVal: number): void {
     Cookies.set(SliderCookie, newVal)
+    this.profileInstance.speedSlider = newVal
   }
 
   public static getBraaFirst(): boolean {
@@ -78,6 +79,7 @@ export default class PSCookies {
 
   public static setBraaFirst(newVal: boolean): void {
     Cookies.set(BraaFirstCookie, newVal)
+    this.profileInstance.braaFirst = newVal
   }
 
   public static getDataStyleIsRadar(): boolean {
@@ -86,6 +88,7 @@ export default class PSCookies {
 
   public static setDataStyleIsRadar(newVal: boolean): void {
     Cookies.set(DataStyleCookie, newVal)
+    this.profileInstance.dataStyle = newVal
   }
 
   public static getOrientNS(): boolean {
@@ -94,6 +97,7 @@ export default class PSCookies {
 
   public static setOrientNS(newVal: boolean): void {
     Cookies.set(OrientCookie, newVal)
+    this.profileInstance.isOrientNS = newVal
   }
 
   public static getHardMode(): boolean {
@@ -102,6 +106,7 @@ export default class PSCookies {
 
   public static setHardMode(newVal: boolean): void {
     Cookies.set(HardModeCookie, newVal)
+    this.profileInstance.isHardMode = newVal
   }
 
   public static getWantMeasure(): boolean {
@@ -110,5 +115,16 @@ export default class PSCookies {
 
   public static setWantMeasure(newVal: boolean): void {
     Cookies.set(WantMeasureCookie, newVal)
+    this.profileInstance.isWantMeasure = newVal
+  }
+
+  public static setDefault(): void {
+    PSCookies.setBraaFirst(false)
+    PSCookies.setDataStyleIsRadar(false)
+    PSCookies.setHardMode(false)
+    PSCookies.setOrientNS(false)
+    PSCookies.setSliderValue(50)
+    PSCookies.setWantMeasure(false)
+    this.profileInstance = new PSCookies()
   }
 }
