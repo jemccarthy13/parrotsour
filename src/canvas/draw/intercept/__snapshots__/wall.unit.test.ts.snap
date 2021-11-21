@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DrawWall draws 1`] = `
+<canvas
+  data-snapshot-image="a0034dfe27a569e05085f4eedc47666fcbe65fa3932158a1487381562abf5ec138c93c7e95ba6f96a8d074f2cc43b18950c19e51a41ba238e956bd8dc0f425bc"
+  height="500"
+  width="800"
+/>
+`;
+
+exports[`DrawWall draws_info 1`] = `
+<canvas
+  data-snapshot-image="12ad573ed4af88faf33751a75c0376b0d4aca60dff07051c7393f5362216d249fb72726cce64b7503a44ed6ec21f4790c0f6973818497845ecb96eea592da6fc"
+  height="500"
+  width="800"
+/>
+`;
