@@ -25,7 +25,7 @@ jobs:
     - uses: codecov/codecov-action@v2
       with:
         directory: ./coverage
-        files: ./clover.xml
+        files: ./coverage/clover.xml
         flags: unittest
         name: codecov-parrotsour
         fail_ci_if_error: false 
