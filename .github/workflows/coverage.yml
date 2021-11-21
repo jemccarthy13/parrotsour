@@ -1,0 +1,23 @@
+name: "CodecovReport"
+
+on:
+  push:
+    branches: [ main,ps-dev ]
+
+jobs:
+  run: 
+    runs-on: ${{ matrix.os }}
+    strategy: 
+      matrix: 
+        os: [ubuntu-latest,macos-latest,windows-latest]
+
+  steps:
+  - uses: actions/checkout@master
+  - run: npm run ci-coverage
+  - uses: codecov/codecov-action@v2
+    with:
+      files: ./coverage/clover.xml # optional
+      flags: unittest # optional
+      name: codecov-parrotsour # optional
+      fail_ci_if_error: true # optional (default = false)
+      verbose: true # optional (default = false)
