@@ -1,4 +1,4 @@
-name: "CodecovReport"
+name: CodecovReport
 
 on:
   push:
@@ -13,11 +13,20 @@ jobs:
 
   steps:
   - uses: actions/checkout@master
-  - run: npm run ci-coverage
+  - name: Use Node.js ${{ matrix.node-version }}
+    uses: actions/setup-node@v2
+    with:
+      node-version: 14.x
+      cache: 'npm'
+  - name: Install
+    run: npm install
+  - name: Generate coverage report
+    run: npm run ci-coverage
   - uses: codecov/codecov-action@v2
     with:
-      files: ./coverage/clover.xml # optional
-      flags: unittest # optional
-      name: codecov-parrotsour # optional
-      fail_ci_if_error: true # optional (default = false)
-      verbose: true # optional (default = false)
+      directory: ./coverage
+      files: ./clover.xml
+      flags: unittest
+      name: codecov-parrotsour
+      fail_ci_if_error: true 
+      verbose: true
