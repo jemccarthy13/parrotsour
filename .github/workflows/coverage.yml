@@ -21,6 +21,9 @@ jobs:
       run: npm install
     - name: Generate coverage report
       run: npm run ci-coverage
+      with: 
+        continue-on-error: true
+        fail_ci_if_error: false
     - uses: codecov/codecov-action@v2
       with:
         directory: ./coverage
