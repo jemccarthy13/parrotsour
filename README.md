@@ -1,3 +1,6 @@
+[![dependencies](https://img.shields.io/librariesio/github/jemccarthy13/parrotsour?style=for-the-badge)](http://nodejs.org/download/)
+
+
 ParrotSour has changed drastically in version 4.
 
 Much of the underlying 'core' library (i.e. math computations and drawing)
