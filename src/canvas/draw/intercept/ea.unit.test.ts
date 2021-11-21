@@ -18,10 +18,6 @@ describe("DrawEA", () => {
 
   TestCanvas.useContext(800, 500)
 
-  afterEach(() => {
-    PaintBrush.clearCanvas()
-  })
-
   beforeEach(() => {
     const startX = 200
     const startY = 200
@@ -44,13 +40,15 @@ describe("DrawEA", () => {
     draw.initialize(testProps, testState)
     draw.chooseNumGroups(1)
     draw.createGroups(new Point(startX, startY), [1])
-    draw.drawInfo()
 
     const sg = new AircraftGroup(p)
+    draw.eaPic.groups = [sg]
     draw.groups = [sg]
+    draw.drawInfo()
   })
 
   afterEach(() => {
+    PaintBrush.clearCanvas()
     jest.restoreAllMocks()
   })
 
@@ -59,16 +57,31 @@ describe("DrawEA", () => {
     jest.restoreAllMocks()
   })
 
-  it("draws_request", () => {
+  it("draws_request_0", () => {
+    PaintBrush.clearCanvas()
+    jest.spyOn(PSMath, "randomNumber").mockReturnValue(0)
+    draw.drawInfo() // first time request type = 0
+    expect(TestCanvas.getCanvas()).toMatchSnapshot()
+  })
+
+  it("draws_request_1", () => {
+    PaintBrush.clearCanvas()
     jest
       .spyOn(PSMath, "randomNumber")
       .mockReturnValueOnce(0)
+      .mockReturnValueOnce(0)
       .mockReturnValueOnce(1)
-      .mockReturnValueOnce(2)
-    draw.drawInfo() // first time request type = 0
-    expect(TestCanvas.getCanvas()).toMatchSnapshot()
     draw.drawInfo() // 2nd time request type = 1
     expect(TestCanvas.getCanvas()).toMatchSnapshot()
+  })
+
+  it("draws_request_2", () => {
+    PaintBrush.clearCanvas()
+    jest
+      .spyOn(PSMath, "randomNumber")
+      .mockReturnValueOnce(0)
+      .mockReturnValueOnce(0)
+      .mockReturnValueOnce(2)
     draw.drawInfo() // 3d time request type = 2
     expect(TestCanvas.getCanvas()).toMatchSnapshot()
   })

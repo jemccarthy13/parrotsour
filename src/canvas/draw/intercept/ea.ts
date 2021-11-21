@@ -21,7 +21,7 @@ interface EAInfo {
 }
 
 export default class DrawEA extends DrawPic {
-  private eaPic!: DrawPic
+  public eaPic!: DrawPic
   public eaInfo!: EAInfo
   public requestType = 0 // 0 = music, 1 = STR, 2 = BD
 
