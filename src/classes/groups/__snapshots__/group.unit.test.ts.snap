@@ -1,3 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AircraftGroup draw_group draws_all_groups 1`] = `<canvas />`;
+exports[`AircraftGroup draw_group draws_all_groups 1`] = `
+<canvas
+  data-snapshot-image="ba7009387b53996cec3eafa90acd2d803151174e5f5bfcf6861c2fdfa92988427e9933232f7a8d90a77664c67a27b71e8445ddb5a808dce2b43eea9df46a126c"
+/>
+`;

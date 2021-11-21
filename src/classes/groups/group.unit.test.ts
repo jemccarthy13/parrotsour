@@ -139,6 +139,8 @@ describe("AircraftGroup", () => {
   describe("draw_group", () => {
     it("draws_all_groups", () => {
       const grp = new AircraftGroup({
+        sx: 100,
+        sy: 100,
         nContacts: 4,
         hdg: 135,
         id: IDMatrix.FRIEND,
