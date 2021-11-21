@@ -12,5 +12,9 @@ export const checkCaps = (hasCaps: boolean, grps: AircraftGroup[]): void => {
       grps[idx].setCapping(true)
       numCaps--
     }
+  } else {
+    grps.forEach((grp) => {
+      grp.setCapping(false)
+    })
   }
 }
