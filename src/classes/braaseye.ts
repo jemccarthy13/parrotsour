@@ -1,5 +1,5 @@
-import { BRAA } from "classes/braa"
-import { Point } from "classes/point"
+import { BRAA } from "../classes/braa"
+import { Point } from "../classes/point"
 
 export class Braaseye {
   bull: BRAA
