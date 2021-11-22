@@ -1,5 +1,5 @@
-import { Point } from "classes/point"
-import Tasking from "classes/taskings/tasking"
+import { Point } from "../../classes/point"
+import Tasking from "../../classes/taskings/tasking"
 
 const PIXELS_TO_NM = 4
 
