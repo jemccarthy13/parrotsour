@@ -1,6 +1,6 @@
 {
   "name": "parrotsour-components",
-  "version": "4.0.4",
+  "version": "4.1.0",
   "private": false,
   "license": "MIT",
   "homepage": "http://www.parrotsour.com",
@@ -20,7 +20,6 @@
     "@mui/icons-material": "^5.1.0",
     "@mui/material": "^5.1.0",
     "@mui/styles": "^5.1.0",
-    "babel-cli": "^6.26.0",
     "compromise": "^13.11.4",
     "compromise-sentences": "^0.3.0",
     "hasha": "^5.2.2",
@@ -35,6 +34,13 @@
     "react-speech-recognition": "^3.9.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.16.0",
+    "@babel/core": "^7.16.0",
+    "@babel/node": "^7.16.0",
+    "@babel/plugin-proposal-class-properties": "^7.16.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.16.0",
+    "@babel/preset-env": "^7.16.4",
+    "@babel/preset-typescript": "^7.16.0",
     "@types/enzyme": "^3.10.10",
     "@types/jest": "^27.0.3",
     "@types/react-dom": "^17.0.11",
@@ -48,7 +54,7 @@
     "eslint-plugin-react": "^7.27.1",
     "history": "^5.0.0",
     "jsdom-canvas-2": "^11.6.3-alpha.0",
-    "typescript": "^4.2.4"
+    "typescript": "^4.5.2"
   },
   "scripts": {
     "start": "react-scripts start",
