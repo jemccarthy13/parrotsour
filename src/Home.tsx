@@ -20,8 +20,6 @@ import ChangeLog from "./changelog/changelog"
  *
  * Once procedural is running, the home page allows selection between procedural
  * and intercept.
- *
- * (TODO -- PROC -- figure out how to default intercept? and provide "Home" btn?)
  */
 export default class Home extends React.PureComponent {
   getPS = (): JSX.Element => {

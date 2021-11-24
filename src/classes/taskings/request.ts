@@ -1,10 +1,14 @@
 /* istanbul ignore file */
+
+/**
+ * Issue #12 - taskings / requests
+ */
 export class Airspace {
-  // temporary. TODO -- flush out how airspaces work
+  // temporary. -- flush out how airspaces work
 }
 
 //temporary
-// TODO -- figure out how AS requests should behave
+// -- figure out how AS requests should behave
 export class AirspaceRequest {
   location: string | undefined
   alt: number | undefined = 0

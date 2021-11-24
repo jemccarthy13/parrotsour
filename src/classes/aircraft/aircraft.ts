@@ -16,7 +16,7 @@ import {
 import { DataTrailFactory } from "./datatrail/datatrailfactory"
 
 /*
- * TODO -- EWI -- for fill-ins, implement more AC types?
+ * Issue #5 -- EWI -- for fill-ins, implement more AC types?
  */
 export enum ACType {
   FTR,
@@ -35,7 +35,7 @@ interface AircraftParams extends GroupParams {
 }
 
 /**
- * TODO -- AIRCRAFT -- consider moving to a structure like
+ * Issue #14 -- AIRCRAFT -- consider moving to a structure like
  * https://khalilstemmler.com/blogs/typescript/getters-and-setters/
  * To reduce the number of functions provided in the aircraft "api"
  */
@@ -43,7 +43,7 @@ export class Aircraft {
   // AASI (alt, aspect, speed, ID)
   private altitude: number
   private heading: number
-  // TODO -- SPEED -- implement aircraft speed logic
+  // Issue #5 -- SPEED -- implement aircraft speed logic
   // private speed: number
   private id: IDMatrix
 
@@ -71,10 +71,6 @@ export class Aircraft {
     this.startPos.x = p.sx || randomNumber(1, 100)
     this.startPos.y = p.sy || randomNumber(1, 100)
 
-    // TODO -- DATATRAIL -- store a map of SensorType -> DataTrail
-    // here, so it has both kinds of data trails available.
-    // Then, in the PSControls, toggling data trail types only
-    // triggers a redraw of existing groups' data trails (via .draw())
     this.dataTrail = new Map<number, DataTrail>()
 
     for (const type in SensorType) {
@@ -178,7 +174,7 @@ export class Aircraft {
   }
 
   /*************************************************************************
-   * Speed -- TODO
+   * Speed -- Issue #5
    *************************************************************************/
 
   /*************************************************************************

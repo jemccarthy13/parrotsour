@@ -98,11 +98,11 @@ export default class DrawEA extends DrawPic {
     const grp: AircraftGroup = this.groups[grpIdx]
     const strBR = bluePos.getBR(grp.getCenterOfMass(dataStyle))
 
+    // Issue #6 -- instead of an exact bearing, choose a reasonable str brg
     const info = {
       strBR,
       grp,
       query: strBR.bearing,
-      // TODO -- instead of an exact bearing, choose a reasonable str brg
     }
 
     if (randomNumber(1, 100) <= 50) {

@@ -242,7 +242,6 @@ export default class DrawPackage extends DrawPic {
   }
 
   checkAnchor = (): void => {
-    // TODO -- anchoring P's for closer package && comment
     const bPos = this.state.blueAir.getCenterOfMass(this.props.dataStyle)
 
     const isAnchNorth = this._isAnchorNPkg(

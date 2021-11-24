@@ -166,7 +166,8 @@ export default class DrawRange extends DrawPic {
 
     answer += this.formatDimensions() + ", "
 
-    // TODO -- determine open/close
+    // Issue #11 -- determine open/close for range based on speed
+
     answer += this.isEchelon(this.groups[0], this.groups[1]) + " "
 
     answer += this.picTrackDir() + " "

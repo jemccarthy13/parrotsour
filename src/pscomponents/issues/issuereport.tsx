@@ -136,7 +136,7 @@ export default function IssueReport(props: IRProps): ReactElement {
         onClose={handleToggleIssueForm}
       >
         <DialogContent>
-          {/* TODO - ISSUE_REPORTS -- change this to /issues.html and use php to read from reported issues */}
+          {/* Issue #13 - ISSUE_REPORTS -- change this to /issues.html and use php to read from reported issues */}
           See a list of <a href="/#/changelog.html">known issues</a>.
         </DialogContent>
 

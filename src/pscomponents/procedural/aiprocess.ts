@@ -104,7 +104,6 @@ export function aiProcess(
 
   const asset = _checkForAsset(processedText, answer.groups, sendResponse)
 
-  // TODO -- fix this?
   if (!asset) {
     return
   }

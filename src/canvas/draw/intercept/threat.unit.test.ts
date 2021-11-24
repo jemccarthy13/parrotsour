@@ -204,5 +204,4 @@ describe("DrawThreat", () => {
       expect(startBraa.range).toBeLessThan(40)
     }
   })
-  // TODO -- getPictureInfo
 })

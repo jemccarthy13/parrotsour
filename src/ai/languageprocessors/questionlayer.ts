@@ -59,7 +59,7 @@ export function processQuestionLayer(
       }
     } else if (thing === "tasking") {
       if (asset.isOnTask()) {
-        console.warn("TODO -- read back tasking when assigned")
+        console.warn("Issue #4")
       } else {
         if (asset.getType() === ACType.RPA) {
           sendResponse(callsign, "performing ISR iwas")

@@ -9,7 +9,7 @@ import {
 import { ExpandMoreIcon } from "../utils/muiiconadapter"
 
 /**
- * TODO -- convert this to use a fetch to retrieve the 'images' directory on
+ * Issue #13 -- allow this to also use a fetch to retrieve the 'images' directory on
  * awardspace to show all currently reported bugs from other people
  *
  * @returns Material-ui accordion of known bugs

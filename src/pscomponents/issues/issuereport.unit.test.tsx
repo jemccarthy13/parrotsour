@@ -124,12 +124,12 @@ describe("IssueReport_Component", () => {
     wrapper.update()
 
     console.warn(
-      "TODO -- figure out a way to test " +
+      "Issue #20 -- figure out a way to test " +
         "that the input value changes" +
         " as expected"
     )
     // expect(true).toEqual(false)
-    // TODO - figure out a way to test the input value changes?
+    // Issue #20 - figure out a way to test the input value changes?
     //expect(wrapper.debug({ verbose: true })).not.toEqual(prev)
   })
 })

@@ -77,10 +77,10 @@ export class PicAnimationHandler extends AnimationHandler {
           desiredLoc: [],
           desiredHeading: randomNumber(45, 330),
         })
-        grp.setManeuvers(0)
+        grp.setManeuvers(0) // Issue #2
       }
 
-      // TODO -- MANEUVER -- when maneuver count is >1, set two routing points
+      // Issue #2 -- MANEUVER -- when maneuver count is >1, set two routing points
       // (i.e. flank for xx nm then turn back hot)
     }
 

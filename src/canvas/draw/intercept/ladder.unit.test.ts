@@ -300,5 +300,5 @@ describe("DrawLadder", () => {
     expect(groups[2].getStartPos()).toEqual(new Point(100, 220))
   })
 
-  // TODO -- write echelon tests for TDD
+  // Issue #7 -- write echelon tests for TDD
 })

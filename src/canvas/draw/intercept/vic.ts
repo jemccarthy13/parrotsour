@@ -212,7 +212,7 @@ export default class DrawVic extends DrawPic {
 
     answer += this.formatWeighted() + " "
 
-    // TODO -- SPEED -- Opening/closing pic with range component
+    // Issue #11 -- SPEED -- Opening/closing pic with range component
 
     answer += this.picTrackDir() + " "
 

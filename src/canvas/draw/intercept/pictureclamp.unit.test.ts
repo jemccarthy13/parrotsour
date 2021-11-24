@@ -217,10 +217,11 @@ describe("getRestrictedStartPos", () => {
     ).toBeLessThanOrEqual(50)
   })
 
-  // TODO -- NS orientation
-  // TODO -- pInfo.start is provided
-  // TODO -- start.y provided
-  // TODO -- start.x provided
-  // TODO -- wide not provided
-  // TODO -- getStartPos
+  // Issue #10 implement picclamp tests
+  // -- NS orientation
+  // -- pInfo.start is provided
+  // -- start.y provided
+  // -- start.x provided
+  // -- wide not provided
+  // -- getStartPos
 })

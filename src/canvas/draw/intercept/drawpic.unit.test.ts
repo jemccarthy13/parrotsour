@@ -80,8 +80,6 @@ describe("DrawPic", () => {
     expect(grp2.getUseBull()).toEqual(false)
   })
 
-  // TODO -- check anchor highest
-  // TODO -- check anchor heaviest
   it("anchors_highest", () => {
     draw.initialize(testProps, testState)
     const grp1 = new AircraftGroup({

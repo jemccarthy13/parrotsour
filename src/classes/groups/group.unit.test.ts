@@ -9,10 +9,6 @@ import { FORMAT } from "../supportedformats"
 import { PaintBrush } from "../../canvas/draw/paintbrush"
 import TestCanvas from "../../testutils/testcanvas"
 
-/**
- * TODO -- TESTING -- Underlying random utility
- * https://luetkemj.github.io/170421/mocking-modules-in-jest
- */
 describe("AircraftGroup", () => {
   TestCanvas.useContext()
 

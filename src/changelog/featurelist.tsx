@@ -20,7 +20,7 @@ export default function BugList(): JSX.Element {
   const classes = useStyles()
 
   const features = [
-    "(v4.0.6) TODO-- implement tests for the remainder of classes/elements " +
+    "(v4.1.0) Implement tests for the remainder of classes/elements " +
       "to verify draw function results",
     "(v4.2.0) Handle FAST and different speeds for aircraft (DataTrail upgrade)",
     "(v4.2.1) Opening/closing comm (range pics)",

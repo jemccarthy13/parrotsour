@@ -1,8 +1,7 @@
 import { Point } from "../../point"
 import { IDMatrix } from "../id"
 
-// TODO -- DATATRAIL -- register? so that Aircraft can generate one of each type of datatrail?
-// TODO -- DATATRAIL -- Support a toggle for the different Sensor Types.....
+// Issue #15 -- DATATRAIL -- register? so that Aircraft can generate one of each type of datatrail?
 export abstract class DataTrail {
   private startPos: Point
 

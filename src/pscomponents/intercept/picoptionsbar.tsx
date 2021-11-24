@@ -43,6 +43,8 @@ class PicOptionsBar extends React.PureComponent<POBSelProps, POBSelState> {
     Cookies.set("UserWantHardMode", !isHardModeChecked)
   }
 
+  styles = {}
+
   render(): JSX.Element {
     const { picType, handleChangePicType, handleNewPic } = this.props
 
@@ -52,8 +54,10 @@ class PicOptionsBar extends React.PureComponent<POBSelProps, POBSelState> {
       <div style={{ display: "flex" }}>
         <div className="custom-sel-div">
           <Select
-            classes={{ select: "parrotsoursel" }}
-            autoWidth
+            fullWidth
+            classes={{
+              select: "parrotsoursel",
+            }}
             labelId="picSelLabel"
             id="pictureType"
             value={picType}

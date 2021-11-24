@@ -1,6 +1,5 @@
 <?php
  if( !empty($_POST['email']) || !empty($_PUT['email'])){
-    // TODO - issue comments get posted, but not properly sent in email msg body
     $email=$_POST['email'];
     $image=$_POST['image'];
     $comments=$_POST['comments'];

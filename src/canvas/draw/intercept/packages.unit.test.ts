@@ -101,11 +101,12 @@ describe("DrawPackages", () => {
     )
   })
 
-  // TODO -- az BlueInThe.NORTH
-  // TODO -- rng BlueInThe.EAST
-  // TODO -- rng BlueInThe.NORTH
-  // TODO -- equidistant, anchor highest
-  // TODO -- equidistant, equal height, anchor heaviest
-  // TODO -- >40, tryAgain
-  // TODO -- get picture info??
+  // Issue # 8 - Package tests
+  // -- az BlueInThe.NORTH
+  // -- rng BlueInThe.EAST
+  // -- rng BlueInThe.NORTH
+  // -- equidistant, anchor highest
+  // -- equidistant, equal height, anchor heaviest
+  // -- >40, tryAgain
+  // -- get picture info??
 })

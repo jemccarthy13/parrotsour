@@ -207,7 +207,7 @@ export default class DrawLadder extends DrawPic {
     this.groups[0].setUseBull(true)
     for (let g = 0; g < this.groups.length; g++) {
       if (g !== 0) {
-        // TODO - check echelon from prev group to cur group
+        // Issue #7 - check echelon from prev group to cur group
       }
       const rngBackToUse = g === 1 ? rangeBack : undefined
       answer += this.groups[g].format(this.props.format, rngBackToUse) + " "

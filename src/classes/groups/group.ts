@@ -42,7 +42,7 @@ export interface GroupParams {
  *
  * It contains logic to move, give intent to, and draw Aircraft.
  *
- * TODO -- GROUP SPLIT/MERGE -- Currently maneuvers are handled as an all
+ * Issue #16 -- GROUP SPLIT/MERGE -- Currently maneuvers are handled as an all
  * or nothing. In the animator, consider additional logic for (man > 0), to update
  * "groups" var to split groups. Should be 'easy'
  */
@@ -91,7 +91,7 @@ export class AircraftGroup extends Array<Aircraft> {
       p.sy += 2 * PIXELS_TO_NM * -Math.sin(vectors.offset)
     }
 
-    // TODO -- MANEUVER -- % chance of 2 maneuvers (i.e. flank turn back hot)
+    // Issue #2 -- MANEUVER -- % chance of 2 maneuvers (i.e. flank turn back hot)
     if (randomNumber(0, 100) < 20) {
       this.maneuvers = 1
     }
@@ -332,7 +332,7 @@ export class AircraftGroup extends Array<Aircraft> {
   }
 
   /*************************************************************************
-   * Speed -- TODO
+   * Speed -- Issue #5
    *************************************************************************/
 
   /*************************************************************************

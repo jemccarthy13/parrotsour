@@ -19,10 +19,8 @@ export interface PictureInfo {
 }
 
 //
-// TODO -- Comment this file so people know what's happening here.
-//
-//
-// TODO -- JEST -- "how to test non-exported functions"
+// Issue #9 -- Comment this file so people know what's happening here.
+//  -- JEST -- "how to test non-exported functions"
 // so I can take the export off of all the helper functions
 // necessary to export for now for testing/coverage
 //

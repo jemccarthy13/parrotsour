@@ -183,7 +183,7 @@ export default class ParrotSourControls extends React.PureComponent<
 
         <div style={{ display: "inline-flex", marginBottom: "10px" }}>
           <div style={{ display: "flex" }}>
-            {/** TODO -- ORIENTATION -- Support 'blue in the' N/S/E/W */}
+            {/** Issue #18 -- ORIENTATION -- Support 'blue in the' N/S/E/W */}
             <FormControlLabel
               control={
                 <IOSSwitch

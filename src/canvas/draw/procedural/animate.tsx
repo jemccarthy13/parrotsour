@@ -70,7 +70,7 @@ function doAnimation(
 
     groups[x].doNextRouting()
 
-    // *** TODO - PROCEDURAL -- work the request system
+    // *** Issue #12 - PROCEDURAL -- work the request system
 
     // if (groups[x].request !== undefined){
     //   groups[x].successAsReq = false;

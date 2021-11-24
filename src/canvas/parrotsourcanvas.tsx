@@ -67,14 +67,9 @@ export default abstract class ParrotSourCanvas extends React.PureComponent<
             )
           }
         } else {
-          // const callback = undefined
-          // //const { isHardMode } = this.props
-          // // callback = () =>
-          // //   drawFullInfo(ctx, this.state, this.props, answer.groups)
-
-          // TODO -- PAUSE -- Figure out how to draw full info
-          // when the pause button is pressed?
           this.animationHandler.pauseFight()
+          const { answer } = this.state
+          PaintBrush.drawFullInfo(this.state, this.props, answer.groups)
         }
       }
     }

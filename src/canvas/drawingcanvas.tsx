@@ -166,7 +166,7 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
    * will have their altitudes displayed inside a 'boot'
    * in the lower left hand corner.
    *
-   * TODO -- Add amplifying data and 'EWI' to the boot
+   * Issue #5
    *
    * @param mousePos Current mouse position in the canvas
    */

@@ -88,6 +88,7 @@ describe("ParrotSourControls", () => {
     expect(helpDialog.props.open).toEqual(true)
   })
 
-  // TODO -- handleslidermouseup
-  // TODO -- handleorientationchange
+  // Issue #19
+  // -- handleslidermouseup
+  // -- handleorientationchange
 })

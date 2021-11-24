@@ -182,7 +182,7 @@ export default class ParrotSourIntercept extends React.PureComponent<
     const { orient } = canvasConfig
 
     /**
-     * TODO -- ORIENT -- add support for BlueInThe.N/S/E/W
+     * Issue #18 -- ORIENT -- add support for BlueInThe.N/S/E/W
      */
     let newConfig: CanvasOrient = {
       height: 600,

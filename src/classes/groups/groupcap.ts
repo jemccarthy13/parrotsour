@@ -4,7 +4,8 @@ import { AircraftGroup } from "./group"
 /**
  * Draw a capping group
  *
- * TODO -- since it takes only group now, maybe move to group file?
+ * Issue #17 -- since it takes only group now, maybe move to group
+ * or PaintBrush file?
  *
  * @param {AircraftGroup} group Group to draw capping
  */
