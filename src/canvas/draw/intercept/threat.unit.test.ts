@@ -185,7 +185,7 @@ describe("DrawThreat", () => {
     expect(start).toBeDefined()
     if (start) {
       const startBraa = bPos.getBR(start)
-      expect(startBraa.range).toBeLessThan(30)
+      expect(startBraa.range).toBeLessThanOrEqual(35)
     }
   })
 
@@ -201,7 +201,7 @@ describe("DrawThreat", () => {
     expect(start).toBeDefined()
     if (start) {
       const startBraa = bPos.getBR(start)
-      expect(startBraa.range).toBeLessThan(40)
+      expect(startBraa.range).toBeLessThanOrEqual(40)
     }
   })
 })
