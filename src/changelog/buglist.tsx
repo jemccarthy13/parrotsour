@@ -19,17 +19,17 @@ export default function BugList(): JSX.Element {
 
   const bugs = [
     {
-      version: "4.0.4",
+      version: "4.1.0",
       description:
         "Sometimes in hard mode, picture 'width' will be <5 nm (sometimes '0')",
     },
     {
-      version: "4.0.4",
+      version: "4.1.0",
       description:
         "Sometimes packages and leading edge draw really weird pictures",
     },
     {
-      version: "4.0.4",
+      version: "4.1.0",
       description:
         "Sometimes random group draws with a large number of contacts?",
     },

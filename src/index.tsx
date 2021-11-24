@@ -28,10 +28,7 @@ export default ReactDOM.render(
   document.getElementById("root")
 )
 
-/**
- *
- */
-export const version = "4.0.6"
+export const version = "4.1.0"
 const cookieIsNotSet =
   Cookies.get(version + "Notify") === undefined ||
   Cookies.get(version + "Notify") === "false"
