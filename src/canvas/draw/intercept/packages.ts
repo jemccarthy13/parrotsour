@@ -80,6 +80,7 @@ export default class DrawPackage extends DrawPic {
     const starts = [new Point(s1x, s1y), new Point(s2x, s2y)]
 
     this.pictures.forEach((pic, idx) => {
+      pic.initialize(this.props, this.state)
       const info = pic.getPictureInfo(starts[idx])
       pic.dimensions = info
     })

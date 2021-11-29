@@ -2,6 +2,8 @@ import { MenuItem, Select, SelectChangeEvent } from "../../utils/muiadapter"
 import React from "react"
 import { Cookies } from "react-cookie-consent"
 
+import "../../css/select.css"
+
 export type POBSelProps = {
   picType: string
   handleChangePicType: (e: SelectChangeEvent<string>) => void
@@ -43,8 +45,6 @@ class PicOptionsBar extends React.PureComponent<POBSelProps, POBSelState> {
     Cookies.set("UserWantHardMode", !isHardModeChecked)
   }
 
-  styles = {}
-
   render(): JSX.Element {
     const { picType, handleChangePicType, handleNewPic } = this.props
 
@@ -55,9 +55,6 @@ class PicOptionsBar extends React.PureComponent<POBSelProps, POBSelState> {
         <div className="custom-sel-div">
           <Select
             fullWidth
-            classes={{
-              select: "parrotsoursel",
-            }}
             labelId="picSelLabel"
             id="pictureType"
             value={picType}

@@ -36,7 +36,7 @@ export default function VersionHistory(): JSX.Element {
   const versionHistory: VersionList = [
     {
       version: "4.1.0",
-      date: "24 Nov 2021",
+      date: "29 Nov 2021",
       features: [],
       fixes: [
         "September 2021 ALSA - hot is assumed for pictures where all groups track hot",

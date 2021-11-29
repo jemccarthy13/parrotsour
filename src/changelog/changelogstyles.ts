@@ -1,6 +1,18 @@
 import { Theme, makeStyles, createTheme } from "../utils/muistylesadapter"
 
-const theme: Theme = createTheme()
+// Issue #21 - Themes
+const theme: Theme = createTheme({
+  components: {
+    MuiAccordion: {
+      styleOverrides: {
+        root: {
+          borderRadius: "20px !important",
+          width: "50%",
+        },
+      },
+    },
+  },
+})
 
 export const useStyles = makeStyles(() => ({
   changeLI: {
