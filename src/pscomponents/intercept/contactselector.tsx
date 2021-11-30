@@ -17,7 +17,7 @@ export default function ContactSelector(props: CSProps): JSX.Element {
     updateCount(val)
   }
 
-  function contactConterChange() {
+  function contactCounterChange() {
     return (event: React.ChangeEvent<HTMLInputElement>) => {
       updateCount(parseInt(event.target.value))
     }
@@ -41,7 +41,7 @@ export default function ContactSelector(props: CSProps): JSX.Element {
         type="number"
         name="clicks"
         value={count}
-        onChange={contactConterChange}
+        onChange={contactCounterChange()}
       />
 
       <Tooltip title="# of red contacts; 0 = random">
