@@ -99,6 +99,7 @@ describe("DrawPackages", () => {
       "2 PACKAGES AZIMUTH 55 SOUTH PACKAGE BULLSEYE 262/38 " +
         "NORTH PACKAGE BULLSEYE 312/75"
     )
+    expect(pkg.getPictureInfo().deep).toEqual(-1)
   })
 
   // Issue # 8 - Package tests
