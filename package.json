@@ -72,7 +72,7 @@
     "coverage": "npm run test -- --coverage --detectOpenHandles",
     "test": "react-scripts test --watchAll",
     "ci-coverage": "npm run ci-test -- --coverage",
-    "ci-test": "react-scripts test --detectOpenHandles --watchAll=false"
+    "ci-test": "react-scripts test --maxWorkers=75% --watchAll=false"
   },
   "eslintConfig": {
     "extends": [
@@ -97,6 +97,11 @@
   "jest": {
     "snapshotSerializers": [
       "./src/testutils/canvas-serializer.ts"
+    ],
+    "coveragePathIgnorePatterns": [
+      "./src/pscomponents/procedural/ai.js",
+      "./src/pscomponents/procedural/aiprocess.js",
+      "./src/ai/*"
     ]
   }
 }

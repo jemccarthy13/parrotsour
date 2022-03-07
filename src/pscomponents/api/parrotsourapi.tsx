@@ -196,6 +196,7 @@ export function ParrotSourAPI(): JSX.Element {
             ref={canvasRef}
           />
           <button
+            id="downloadBtn"
             type="button"
             onClick={onClick}
             style={{ marginBottom: "20px" }}
