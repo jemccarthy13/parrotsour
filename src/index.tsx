@@ -28,14 +28,14 @@ export default ReactDOM.render(
   document.getElementById("root")
 )
 
-export const version = "4.1.0"
+export const version = "4.1.2"
 const cookieIsNotSet =
   Cookies.get(version + "Notify") === undefined ||
   Cookies.get(version + "Notify") === "false"
 
 function createDismiss(key: SnackbarKey) {
   function handleVersionClick(): void {
-    window.location.href = "#/changelog.html#4.0.6"
+    window.location.href = "#/changelog.html#4.1.2"
     Cookies.set(version + "Notify", true, { expires: 365 })
     snackActions.closeSnackbar(key)
   }

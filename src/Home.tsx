@@ -28,6 +28,7 @@ export default class Home extends React.PureComponent {
         type="chooser"
         interceptLink="/#/intercept.html"
         proceduralLink="/#/procedural.html"
+        apiLink='/#/api.html'
       />
     )
   }
@@ -44,6 +45,10 @@ export default class Home extends React.PureComponent {
     return <ParrotSour type="intercept" />
   }
 
+  getPSAPI = (): JSX.Element => {
+    return <ParrotSour type="api" />
+  }
+
   render(): React.ReactElement {
     return (
       <div className="app">
@@ -54,6 +59,8 @@ export default class Home extends React.PureComponent {
                 <Route path="/" element={this.getPSI()} />
                 <Route path="/changelog.html" element={<ChangeLog />} />
                 <Route path="/changelog" element={<ChangeLog />} />
+                <Route path="/api.html" element={this.getPSAPI()} />
+                <Route path="/api" element={this.getPSAPI()} />
                 <Route path="/parrotsour.html" element={this.getPS()} />
                 <Route path="/parrotsour" element={this.getPS()} />
                 <Route path="/intercept.html" element={this.getPSI()} />

@@ -6,7 +6,8 @@ const ParrotSourHeader = lazy(()=>import('./parrotsourheader'))
 
 type PSCProps = {
     interceptLink?: string,
-    proceduralLink?: string
+    proceduralLink?: string,
+    apiLink?: string,
 }
 
 export const ParrotSourChooser = (props:PSCProps):ReactElement => {
@@ -22,7 +23,7 @@ export const ParrotSourChooser = (props:PSCProps):ReactElement => {
         }
     }
 
-    const { interceptLink, proceduralLink } = props
+    const { interceptLink, proceduralLink, apiLink } = props
     return (
         <div>
             <ParrotSourHeader comp={<PsQT/>} answer={{pic:"", groups:[]}}/>
@@ -31,6 +32,7 @@ export const ParrotSourChooser = (props:PSCProps):ReactElement => {
             <div style={{textAlign:"center"}}>
                 <button style={buttonStyle} type="button" onClick={navigate(interceptLink)}> Intercept </button>
                 <button style={buttonStyle} type="button" onClick={navigate(proceduralLink)}> Procedural </button>
+                <button style={buttonStyle} type="button" onClick={navigate(apiLink)}> API </button>
             </div>
         </div>
     )
@@ -38,7 +40,8 @@ export const ParrotSourChooser = (props:PSCProps):ReactElement => {
 
 ParrotSourChooser.defaultProps = {
     interceptLink: "",
-    proceduralLink: ""
+    proceduralLink: "",
+    apiLink: "",
 }
 
 export default ParrotSourChooser

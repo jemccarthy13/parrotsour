@@ -87,3 +87,9 @@ export default class ParrotSourHeader extends React.PureComponent<
     )
   }
 }
+
+//@ts-expect-error defaultProps is req for compile
+ParrotSourHeader.defaultProps = {
+  comp: <></>,
+  answer: { pic: "", groups: [] },
+}

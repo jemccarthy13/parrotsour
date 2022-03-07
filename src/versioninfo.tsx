@@ -17,10 +17,10 @@ export default class VersionInfo extends React.PureComponent {
         Developed by John McCarthy <br />
         Version:&nbsp;
         <a style={{ color: "#7978FD" }} href="/#/changelog.html">
-          4.1.1
+          4.1.2
         </a>
         <br />
-        29 Nov 2021 <br />
+        07 Mar 2022 <br />
       </div>
     )
   }
