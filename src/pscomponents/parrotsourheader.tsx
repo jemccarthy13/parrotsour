@@ -50,18 +50,13 @@ export default class ParrotSourHeader extends React.PureComponent<
     const { comp, answer } = this.props
     return (
       <div>
-        <img
-          src="/icon/552trans.png"
+        {/* <img
+          src="/icon/trans.png"
           style={{ ...this.imgStyle, right: "5%" }}
-          id="acwlogo"
-          alt="552Logo"
+          id="wglogo"
+          alt="logo"
         />
-        <img
-          src="/icon/panthertrans.png"
-          style={{ ...this.imgStyle, right: "15%" }}
-          id="pantherlogo"
-          alt="968Logo"
-        />
+    */}
 
         <div style={{ display: "flex" }}>
           <button

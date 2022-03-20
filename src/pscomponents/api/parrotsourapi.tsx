@@ -13,6 +13,7 @@ import { FORMAT } from "../../classes/supportedformats"
 import { SensorType } from "../../classes/aircraft/datatrail/sensortype"
 import PictureCanvas from "../../canvas/picturecanvas"
 import { PaintBrush } from "../../canvas/draw/paintbrush"
+import snackActions from "../alert/psalert"
 
 export function ParrotSourAPI(): JSX.Element {
   const config = {
@@ -51,6 +52,7 @@ export function ParrotSourAPI(): JSX.Element {
   }
 
   const [numPics, setNumPics] = useState<number>(5)
+  const [accessCode, setCode] = useState<string>("")
   const [includeGroups, setIncludeGroups] = useState<boolean>(true)
 
   // Refs that store References to the current DOM elements
@@ -81,23 +83,37 @@ export function ParrotSourAPI(): JSX.Element {
     document.body.removeChild(element)
   }
 
-  const canvas = new PictureCanvas({ ...config })
-  function onClick() {
-    const answers = []
-    for (let x = 0; x < numPics; x++) {
-      try {
-        const answer = canvas.drawPicture(true)
-        const a = {
-          pic: answer.pic,
-          groups: includeGroups ? answer.groups : [],
-        }
-        answers.push(a)
-      } catch {
-        // nothing
+  async function validAccessCode() {
+    const resp = await fetch(
+      `${process.env.PUBLIC_URL}/database/codes/${accessCode}.php`,
+      {
+        method: "POST",
       }
+    )
+    return resp.status === 202
+  }
+
+  const canvas = new PictureCanvas({ ...config })
+  async function onClick() {
+    const isValidCode = await validAccessCode()
+    if (isValidCode) {
+      const answers = []
+      for (let x = 0; x < numPics; x++) {
+        try {
+          const answer = canvas.drawPicture(true)
+          const a = {
+            pic: answer.pic,
+            groups: includeGroups ? answer.groups : [],
+          }
+          answers.push(a)
+        } catch {
+          // nothing
+        }
+      }
+      download("data.json", JSON.stringify(answers))
+    } else {
+      snackActions.warning("Invalid access code.")
     }
-    console.log(answers.length)
-    download("data.json", JSON.stringify(answers))
   }
 
   const style = {
@@ -114,6 +130,13 @@ export function ParrotSourAPI(): JSX.Element {
     const i = parseInt(event.currentTarget.value)
     const itoUse = Number.isNaN(i) ? 0 : i
     setNumPics(itoUse)
+  }
+
+  function onChangeCode(
+    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) {
+    const code = event.currentTarget.value
+    setCode(code)
   }
 
   function changeIncludeGroups() {
@@ -170,6 +193,14 @@ export function ParrotSourAPI(): JSX.Element {
             value={numPics}
             variant="filled"
             onChange={onChange}
+          />
+          <TextField
+            label="Access code"
+            type="text"
+            fullWidth
+            value={accessCode}
+            variant="filled"
+            onChange={onChangeCode}
           />
           <FormGroup sx={{ paddingBottom: "20px" }}>
             <FormControlLabel

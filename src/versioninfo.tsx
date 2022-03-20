@@ -21,6 +21,10 @@ export default class VersionInfo extends React.PureComponent {
         </a>
         <br />
         07 Mar 2022 <br />
+        <div style={{ fontSize: "8px" }}>
+          This website is not affialiated with the United States Government, nor
+          sponsored any such entity.
+        </div>
       </div>
     )
   }
