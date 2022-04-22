@@ -124,7 +124,7 @@ export default function VersionHistory(): JSX.Element {
     },
     {
       version: "3.1.0",
-      date: "14 Dec 2020",
+      date: "30 March 2021",
       features: [
         "Implemented radar/arrow toggle (make it look like radar returns instead of arrows)",
       ],
@@ -136,7 +136,7 @@ export default function VersionHistory(): JSX.Element {
     },
     {
       version: "3.0.5",
-      date: "21 Nov 2020",
+      date: "21 March 2021",
       features: ["Bullseye follows mouse on canvas", "N/S orientation toggle"],
       fixes: [
         "Massive fixes to animation logic and arrow drawing",
@@ -151,14 +151,14 @@ export default function VersionHistory(): JSX.Element {
     },
     {
       version: "2.0.0",
-      date: "30 June 2020",
+      date: "15 February 2021",
       features: ["Added toggle to swap BRAA/BULLSEYE display order on screen"],
       fixes: ["Fixed anchoring pri's for more picture types"],
       improvements: ["Reduced code base size"],
     },
     {
       version: "1.3.4",
-      date: "28 June 2020",
+      date: "10 February 2021",
       features: ["Implemented opening closing for azimuth"],
       fixes: [
         "Fixed anchoring priorities for some picture types",
@@ -170,7 +170,7 @@ export default function VersionHistory(): JSX.Element {
     },
     {
       version: "1.3.3",
-      date: "03 Mar 2020 ",
+      date: "15 Jan 2021",
       features: [
         "Implemented EA / Bogey Dope request/response",
         "'Hard Mode' random track direction and assess for echelon/weighted",
@@ -185,7 +185,7 @@ export default function VersionHistory(): JSX.Element {
     },
     {
       version: "1.2.2",
-      date: "22 Feb 2020",
+      date: "10 Jan 2021",
       features: ["THREAT as a picture type", "Expanded quick tips"],
       fixes: ["Measuring before/mid fight bugs fixed"],
       improvements: [
@@ -197,33 +197,21 @@ export default function VersionHistory(): JSX.Element {
     },
     {
       version: "1.2.0",
-      date: "16 Feb 2020",
-      features: ["Select desired picture type", "Leading edge pictures"],
+      date: "05 Jan 2021",
+      features: [
+        "Initial Release",
+        "Select desired picture type",
+        "Leading edge pictures",
+        "Initial Red air basic maneuvers (picks new heading at predetermined range from blue)",
+      ],
       fixes: [
         "Minor formatting fixes (stacks, high, anchoring > 10 nm)",
         "Minor appearance fixes (track dir, leading edge)",
         "Measure to pause the animation. Release resumes animation.",
-      ],
-      improvements: [],
-    },
-    {
-      version: "1.1.0",
-      date: "06 Nov 2019",
-      features: [
-        "Initial Red air basic maneuvers (picks new heading at predetermined range from blue)",
-      ],
-      fixes: [
         "Red air animations are 'smarter'",
         "Minor math calculations fixed",
         "Canvas styling to help math calculations fix",
       ],
-      improvements: [],
-    },
-    {
-      version: "1.0.0",
-      date: "05 Nov 2019",
-      features: ["Initial Release"],
-      fixes: [],
       improvements: [],
     },
   ]
