@@ -9,6 +9,7 @@ import "./css/body.css"
 import "./css/fonts.css"
 
 const ParrotSour = lazy(() => import("./pscomponents/parrotsour"))
+const Login = lazy(() => import("./pscomponents/login"))
 
 import ChangeLog from "./changelog/changelog"
 
@@ -69,6 +70,7 @@ export default class Home extends React.PureComponent {
                 <Route path="/close" element={this.getPSC()} />
                 <Route path="/procedural.html" element={this.getPSP()} />
                 <Route path="/procedural" element={this.getPSP()} />
+                <Route path="/login" element={<Login />} />
               </Routes>
             </Suspense>
           </HashRouter>
