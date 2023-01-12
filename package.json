@@ -20,7 +20,6 @@
     "@mui/icons-material": "^5.5.0",
     "@mui/material": "^5.5.0",
     "@mui/styles": "^5.1.0",
-    "@pokusew/pcsclite": "^0.6.0",
     "compromise": "^13.11.4",
     "compromise-sentences": "^0.3.0",
     "hasha": "^5.2.2",
@@ -31,7 +30,7 @@
     "react-dom": "^17.0.2",
     "react-router": "^6.2.2",
     "react-router-dom": "^6.2.2",
-    "react-scripts": "^4.0.3",
+    "react-scripts": "^5.0.1",
     "react-speech-recognition": "^3.9.0"
   },
   "devDependencies": {
