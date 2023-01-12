@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 
-import { plugins } from "pretty-format"
-import { OptionsReceived } from "pretty-format/build/types"
+import { plugins, OptionsReceived } from "pretty-format";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export default function toMatchCanvasSnapshotFactory(
