@@ -1,6 +1,6 @@
 import { Theme } from "@mui/material/styles"
-import { makeStyles, createStyles, withStyles } from "@mui/styles"
+import { withStyles } from "tss-react/mui"
 import { createTheme } from "@mui/material"
 
-export { makeStyles, createStyles, withStyles, createTheme }
+export { withStyles, createTheme }
 export type { Theme }

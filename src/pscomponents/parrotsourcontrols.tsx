@@ -1,12 +1,12 @@
 import React, { ChangeEvent, ReactElement } from "react"
 
-import { IOSSwitch } from "./iosswitch"
 import PSCookies from "../utils/pscookies"
 import {
   FormControlLabel,
   DialogContent,
   DialogContentText,
   Dialog,
+  Switch,
 } from "../utils/muiadapter"
 
 export interface PSCProps {
@@ -186,7 +186,7 @@ export default class ParrotSourControls extends React.PureComponent<
             {/** Issue #18 -- ORIENTATION -- Support 'blue in the' N/S/E/W */}
             <FormControlLabel
               control={
-                <IOSSwitch
+                <Switch
                   checked={isOrientNS}
                   onChange={this.handleOrientationChange}
                   name="Orientation"
@@ -209,7 +209,7 @@ export default class ParrotSourControls extends React.PureComponent<
           <div style={{ display: "inline-flex" }}>
             <FormControlLabel
               control={
-                <IOSSwitch
+                <Switch
                   id="cursordispToggle"
                   checked={isBraaFirst}
                   onChange={this.handleDisplayFirstChanged}
@@ -242,7 +242,7 @@ export default class ParrotSourControls extends React.PureComponent<
           <div style={{ display: "inline-flex", marginLeft: "50px" }}>
             <FormControlLabel
               control={
-                <IOSSwitch
+                <Switch
                   id="dataTrailToggle"
                   checked={dataStyleIsRadar}
                   onChange={this.handleDataStyleChange}

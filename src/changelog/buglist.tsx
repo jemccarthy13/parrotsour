@@ -1,12 +1,10 @@
 import React from "react"
-import { useStyles } from "./changelogstyles"
 import {
-  Accordion,
   AccordionSummary,
   List,
-  ListItem,
 } from "../utils/muiadapter"
 import { ExpandMoreIcon } from "../utils/muiiconadapter"
+import { ChangeLI, StyledAccordion } from "./styles"
 
 /**
  * Issue #13 -- allow this to also use a fetch to retrieve the 'images' directory on
@@ -15,7 +13,6 @@ import { ExpandMoreIcon } from "../utils/muiiconadapter"
  * @returns Material-ui accordion of known bugs
  */
 export default function BugList(): JSX.Element {
-  const classes = useStyles()
 
   const bugs = [
     {
@@ -36,22 +33,21 @@ export default function BugList(): JSX.Element {
   ]
 
   return (
-    <Accordion defaultExpanded classes={{ root: classes.accordion }}>
+    <StyledAccordion defaultExpanded >
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         Known Bugs
       </AccordionSummary>
       <List>
         {bugs.map((bug) => {
           return (
-            <ListItem
+            <ChangeLI
               key={bug.version + Math.random() * 100}
-              classes={{ root: classes.changeLI }}
             >
               - ({bug.version}) {bug.description}
-            </ListItem>
+            </ChangeLI>
           )
         })}
       </List>
-    </Accordion>
+    </StyledAccordion>
   )
 }

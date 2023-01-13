@@ -1,5 +1,7 @@
-import React, { lazy, ReactElement, Suspense } from "react"
+import React, { ReactElement, Suspense, lazy } from "react"
+import { ThemeProvider } from "@mui/material"
 import { ParrotSourChooser } from "./parrotsourchooser"
+import { theme } from "../theme"
 
 const ParrotSourIntercept = lazy(
   () => import("./intercept/parrotsourintercept")
@@ -7,9 +9,7 @@ const ParrotSourIntercept = lazy(
 const ParrotSourProcedural = lazy(
   () => import("./procedural/parrotsourprocedural")
 )
-const ParrotSourAPI = lazy(
-  () => import("./api/parrotsourapi")
-)
+const ParrotSourAPI = lazy(() => import("./api/parrotsourapi"))
 const ParrotSourClose = lazy(() => import("./close/parrotsourclose"))
 
 type PSProps = {
@@ -38,10 +38,14 @@ export const ParrotSour = (props: PSProps): ReactElement => {
     comp = <ParrotSourProcedural />
   } else if (type === "close") {
     comp = <ParrotSourClose />
-  }  else if (type === "api") {
+  } else if (type === "api") {
     comp = <ParrotSourAPI />
   }
-  return <Suspense fallback={<div>Loading...</div>}>{comp}</Suspense>
+  return (
+    <ThemeProvider theme={theme}>
+      <Suspense fallback={<div>Loading...</div>}>{comp}</Suspense>
+    </ThemeProvider>
+  )
 }
 
 ParrotSour.defaultProps = {

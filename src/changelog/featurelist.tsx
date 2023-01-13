@@ -1,13 +1,11 @@
 /* eslint-disable react/forbid-component-props */
 import React from "react"
-import { useStyles } from "./changelogstyles"
 import {
-  Accordion,
   AccordionSummary,
   List,
-  ListItem,
 } from "../utils/muiadapter"
 import { ExpandMoreIcon } from "../utils/muiiconadapter"
+import { ChangeLI, StyledAccordionChild } from "./styles"
 
 /**
  * Returns a pretty list of scheduled features.
@@ -17,7 +15,6 @@ import { ExpandMoreIcon } from "../utils/muiiconadapter"
  * @returns Material-ui accordion of anticipated features.
  */
 export default function BugList(): JSX.Element {
-  const classes = useStyles()
 
   const features = [
     "(v4.2.0) Handle FAST and different speeds for aircraft (DataTrail upgrade)",
@@ -32,22 +29,21 @@ export default function BugList(): JSX.Element {
   ]
 
   return (
-    <Accordion className={classes.accordionChild}>
+    <StyledAccordionChild>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         Scheduled Features
       </AccordionSummary>
       <List>
         {features.map((feature) => {
           return (
-            <ListItem
+            <ChangeLI
               key={feature.length + Math.random() * 100}
-              className={classes.changeLI}
             >
               - {feature}
-            </ListItem>
+            </ChangeLI>
           )
         })}
       </List>
-    </Accordion>
+    </StyledAccordionChild>
   )
 }

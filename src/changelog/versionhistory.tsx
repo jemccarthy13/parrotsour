@@ -1,14 +1,12 @@
 /* eslint-disable react/forbid-component-props */
 import React, { useEffect } from "react"
 import { ExpandMoreIcon } from "../utils/muiiconadapter"
-import { useStyles } from "./changelogstyles"
 import {
   Accordion,
   AccordionSummary,
   List,
-  ListItem,
-  Typography,
 } from "../utils/muiadapter"
+import { ChangeLI, Column, Heading, SecondaryHeading, StyledAccordion } from "./styles"
 
 /**
  * @returns Pretty formatted accordion of version history, with
@@ -29,7 +27,6 @@ export default function VersionHistory(): JSX.Element {
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
-  const classes = useStyles()
 
   // All of the version information, manually sorted newest->oldest
   // the order in this list === display order
@@ -216,7 +213,7 @@ export default function VersionHistory(): JSX.Element {
     },
   ]
   return (
-    <Accordion defaultExpanded className={classes.accordion}>
+    <StyledAccordion>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         Version History/Change Log
       </AccordionSummary>
@@ -226,30 +223,29 @@ export default function VersionHistory(): JSX.Element {
           <div key={"div" + vers.version}>
             <Accordion key={vers.version} defaultExpanded={idx === 0}>
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <div className={classes.column}>
-                  <Typography className={classes.heading}>
+                <Column>
+                  <Heading>
                     <span id={vers.version}>
                       <b>Release {vers.version}</b>
                     </span>
-                  </Typography>
-                </div>
-                <div className={classes.column}>
-                  <Typography className={classes.secondaryHeading}>
+                  </Heading>
+                </Column>
+                <Column>
+                  <SecondaryHeading>
                     {vers.date}
-                  </Typography>
-                </div>
+                  </SecondaryHeading>
+                </Column>
               </AccordionSummary>
               {vers.features.length > 0 && (
                 <List>
                   &#128077; &nbsp;New Features
                   {vers.features.map((vFeat: string) => {
                     return (
-                      <ListItem
+                      <ChangeLI
                         key={vFeat.length + Math.random() * 100}
-                        className={classes.changeLI}
                       >
                         {vFeat}
-                      </ListItem>
+                      </ChangeLI>
                     )
                   })}
                 </List>
@@ -259,12 +255,11 @@ export default function VersionHistory(): JSX.Element {
                   &#10004;&#65039;&nbsp;Fixes
                   {vers.fixes.map((vFix: string) => {
                     return (
-                      <ListItem
+                      <ChangeLI
                         key={vFix.length + Math.random() * 100}
-                        className={classes.changeLI}
                       >
                         {vFix}
-                      </ListItem>
+                      </ChangeLI>
                     )
                   })}
                 </List>
@@ -274,12 +269,11 @@ export default function VersionHistory(): JSX.Element {
                   &#128640;Improvements
                   {vers.improvements.map((vImp: string) => {
                     return (
-                      <ListItem
+                      <ChangeLI
                         key={vImp.length + Math.random() * 100}
-                        className={classes.changeLI}
                       >
                         {vImp}
-                      </ListItem>
+                      </ChangeLI>
                     )
                   })}
                 </List>
@@ -288,6 +282,6 @@ export default function VersionHistory(): JSX.Element {
           </div>
         )
       })}
-    </Accordion>
+    </StyledAccordion>
   )
 }

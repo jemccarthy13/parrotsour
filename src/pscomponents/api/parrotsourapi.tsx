@@ -1,18 +1,18 @@
-import React, { useEffect, useRef, useState } from "react"
 import {
   Checkbox,
-  createTheme,
   FormControlLabel,
   FormGroup,
   Stack,
   TextField,
   ThemeProvider,
 } from "@mui/material"
+import React, { useEffect, useRef, useState } from "react"
 import { BlueInThe } from "../../canvas/canvastypes"
-import { FORMAT } from "../../classes/supportedformats"
-import { SensorType } from "../../classes/aircraft/datatrail/sensortype"
-import PictureCanvas from "../../canvas/picturecanvas"
 import { PaintBrush } from "../../canvas/draw/paintbrush"
+import PictureCanvas from "../../canvas/picturecanvas"
+import { SensorType } from "../../classes/aircraft/datatrail/sensortype"
+import { FORMAT } from "../../classes/supportedformats"
+import { theme } from "../../theme"
 import snackActions from "../alert/psalert"
 
 export function ParrotSourAPI(): JSX.Element {
@@ -142,41 +142,6 @@ export function ParrotSourAPI(): JSX.Element {
   function changeIncludeGroups() {
     setIncludeGroups(!includeGroups)
   }
-
-  const theme = createTheme({
-    palette: {
-      mode: "dark",
-    },
-    components: {
-      MuiCheckbox: {
-        styleOverrides: {
-          root: `
-            width:5px;
-            margin:auto;
-            padding:auto;
-          `,
-        },
-      },
-      MuiTextField: {
-        styleOverrides: {
-          root: `
-            font-size: 12px;
-            font-family: 'Roboto Mono', monospace;
-            height: 100%;
-            transform: unset;
-            padding-bottom: 20px;
-          `,
-        },
-        defaultProps: {
-          variant: "filled",
-          size: "small",
-          InputProps: {
-            disableUnderline: true,
-          },
-        },
-      },
-    },
-  })
 
   return (
     <ThemeProvider theme={theme}>
