@@ -1,5 +1,5 @@
 import { PaintBrush } from "../../../canvas/draw/paintbrush"
-import { headingToRadians, PIXELS_TO_NM } from "../../../utils/psmath"
+import { headingToRadians, PIXELS_TO_NM } from "../../../utils/math"
 import { Point } from "../../point"
 import { IDMatrix } from "../id"
 import { DataTrail } from "./datatrail"

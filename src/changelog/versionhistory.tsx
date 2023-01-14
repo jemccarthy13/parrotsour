@@ -1,12 +1,14 @@
 /* eslint-disable react/forbid-component-props */
 import React, { useEffect } from "react"
+import { Accordion, AccordionSummary, List } from "../utils/muiadapter"
 import { ExpandMoreIcon } from "../utils/muiiconadapter"
 import {
-  Accordion,
-  AccordionSummary,
-  List,
-} from "../utils/muiadapter"
-import { ChangeLI, Column, Heading, SecondaryHeading, StyledAccordion } from "./styles"
+  ChangeLI,
+  Column,
+  Heading,
+  SecondaryHeading,
+  StyledAccordion,
+} from "./styles"
 
 /**
  * @returns Pretty formatted accordion of version history, with
@@ -212,6 +214,7 @@ export default function VersionHistory(): JSX.Element {
       improvements: [],
     },
   ]
+
   return (
     <StyledAccordion>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
@@ -231,9 +234,7 @@ export default function VersionHistory(): JSX.Element {
                   </Heading>
                 </Column>
                 <Column>
-                  <SecondaryHeading>
-                    {vers.date}
-                  </SecondaryHeading>
+                  <SecondaryHeading>{vers.date}</SecondaryHeading>
                 </Column>
               </AccordionSummary>
               {vers.features.length > 0 && (
@@ -241,9 +242,7 @@ export default function VersionHistory(): JSX.Element {
                   &#128077; &nbsp;New Features
                   {vers.features.map((vFeat: string) => {
                     return (
-                      <ChangeLI
-                        key={vFeat.length + Math.random() * 100}
-                      >
+                      <ChangeLI key={vFeat.length + Math.random() * 100}>
                         {vFeat}
                       </ChangeLI>
                     )
@@ -255,9 +254,7 @@ export default function VersionHistory(): JSX.Element {
                   &#10004;&#65039;&nbsp;Fixes
                   {vers.fixes.map((vFix: string) => {
                     return (
-                      <ChangeLI
-                        key={vFix.length + Math.random() * 100}
-                      >
+                      <ChangeLI key={vFix.length + Math.random() * 100}>
                         {vFix}
                       </ChangeLI>
                     )
@@ -269,9 +266,7 @@ export default function VersionHistory(): JSX.Element {
                   &#128640;Improvements
                   {vers.improvements.map((vImp: string) => {
                     return (
-                      <ChangeLI
-                        key={vImp.length + Math.random() * 100}
-                      >
+                      <ChangeLI key={vImp.length + Math.random() * 100}>
                         {vImp}
                       </ChangeLI>
                     )

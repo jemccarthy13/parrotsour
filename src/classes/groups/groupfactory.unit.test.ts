@@ -10,7 +10,7 @@ import { FORMAT } from "../supportedformats"
 import { AircraftGroup } from "./group"
 import { GroupFactory } from "./groupfactory"
 
-jest.mock("../../utils/psmath", () => {
+jest.mock("../../utils/math", () => {
   return {
     randomNumber: () => 55,
     randomHeading: () => 96,

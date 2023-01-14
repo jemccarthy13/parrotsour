@@ -6,7 +6,6 @@
  * with npm-check to validate we have the most up-to-date
  * dependencies.
  */
-import "@babel/plugin-transform-flow-strip-types"
-import "@babel/plugin-transform-typescript"
-import "@babel/preset-flow"
+// import "@babel/plugin-transform-flow-strip-types"
+// import "@babel/plugin-transform-typescript"
 import "@babel/preset-env"

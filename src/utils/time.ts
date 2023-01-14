@@ -27,9 +27,11 @@ export function sleep(
  */
 export function formatT(time: number): string {
   let retVal: string = time.toString()
+
   if (time <= 9) {
     retVal = "0" + time
   }
+
   return retVal
 }
 
@@ -41,5 +43,6 @@ export function getTimeStamp(d?: Date): string {
   const fHours = formatT(date.getHours())
   const fMins = formatT(date.getMinutes())
   const fSecs = formatT(date.getSeconds())
+
   return fHours + ":" + fMins + ":" + fSecs
 }

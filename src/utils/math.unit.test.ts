@@ -6,24 +6,29 @@ import {
   headingToRadians,
   toDegrees,
   toRadians,
-} from "./psmath"
+} from "./math"
 
 describe("psmath", () => {
   it("randomNumber", () => {
     const a = [0, 0]
+
     for (let x = 0; x < 2000; x++) {
       const b = randomNumber(0, 1)
+
       a[b]++
     }
+
     const chi1 = ((0.539 - a[0]) ^ (0.539 - a[0])) / a[0]
     const chi2 = ((0.4602 - a[1]) ^ (0.4602 - a[1])) / a[1]
     const x2 = chi1 + chi2
+
     expect(x2).toBeLessThanOrEqual(0.01)
   })
 
   it("randomHeading_ALSA", () => {
     for (let x = 0; x < 2000; x++) {
       const hdg = randomHeading(FORMAT.ALSA, 270)
+
       expect(hdg).toBeGreaterThanOrEqual(0)
       expect(hdg).toBeLessThanOrEqual(360)
     }
@@ -32,6 +37,7 @@ describe("psmath", () => {
   it("randomHeading_IPE", () => {
     for (let x = 0; x < 2000; x++) {
       const hdg = randomHeading(FORMAT.IPE, 270)
+
       expect(hdg).toBeGreaterThanOrEqual(45)
       expect(hdg).toBeLessThanOrEqual(135)
     }
@@ -40,6 +46,7 @@ describe("psmath", () => {
   it("randomHeading_basedonblue", () => {
     for (let x = 0; x < 2000; x++) {
       const hdg = randomHeading(FORMAT.IPE, 90)
+
       expect(hdg).toBeGreaterThanOrEqual(225)
       expect(hdg).toBeLessThanOrEqual(315)
     }
@@ -48,6 +55,7 @@ describe("psmath", () => {
   it("randomHeading_bluehdg_undef", () => {
     for (let x = 0; x < 2000; x++) {
       const hdg = randomHeading(FORMAT.IPE)
+
       expect(hdg).toBeGreaterThanOrEqual(134)
       expect(hdg).toBeLessThanOrEqual(224)
     }
@@ -64,6 +72,7 @@ describe("psmath", () => {
       offset: 0,
       radians: 1.5707963267948966,
     })
+
     expect(headingToRadians(45)).toEqual({
       headAngle: 4.4505895925855405,
       offset: 5.497787143782138,

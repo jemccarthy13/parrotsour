@@ -1,11 +1,7 @@
 import { Braaseye } from "../../../classes/braaseye"
 import { AircraftGroup } from "../../../classes/groups/group"
 import { Point } from "../../../classes/point"
-import {
-  PIXELS_TO_NM,
-  randomHeading,
-  randomNumber,
-} from "../../../utils/psmath"
+import { PIXELS_TO_NM, randomHeading, randomNumber } from "../../../utils/math"
 import { FightAxis } from "../../canvastypes"
 import { getOpenCloseAzimuth } from "../formatutils"
 import { PaintBrush } from "../paintbrush"
@@ -49,6 +45,7 @@ export default class DrawChampagne extends DrawPic {
       hdg: heading + randomNumber(-10, 10),
       nContacts: contactList[0],
     })
+
     tg.setLabel("TRAIL GROUP")
 
     if (this.props.isHardMode)
@@ -58,6 +55,7 @@ export default class DrawChampagne extends DrawPic {
       )
 
     let nlg: AircraftGroup
+
     if (isNS) {
       nlg = new AircraftGroup({
         sx: startPos.x - this.dimensions.wide / 2,
@@ -81,6 +79,7 @@ export default class DrawChampagne extends DrawPic {
       )
 
     let slg
+
     if (isNS) {
       slg = new AircraftGroup({
         sx: startPos.x + this.dimensions.wide / 2,
@@ -120,6 +119,7 @@ export default class DrawChampagne extends DrawPic {
 
     let wPt = new Point(nlgPos.x, slgPos.y)
     let dPt = new Point(nlgPos.x, tgPos.y)
+
     if (isNS) {
       wPt = new Point(slgPos.x, nlgPos.y)
       dPt = new Point(tgPos.x, nlgPos.y)
@@ -132,6 +132,7 @@ export default class DrawChampagne extends DrawPic {
       this.dimensions.wide,
       showMeasurements
     )
+
     PaintBrush.drawMeasurement(
       tgPos,
       dPt,
@@ -141,6 +142,7 @@ export default class DrawChampagne extends DrawPic {
 
     const offsetXTrail = !isNS ? -100 : 0
     const offsetXNL = isNS ? -100 : 0
+
     PaintBrush.drawAltitudes(tgPos, tg.getAltitudes(), offsetXTrail)
     PaintBrush.drawAltitudes(slgPos, slg.getAltitudes())
     PaintBrush.drawAltitudes(nlgPos, nlg.getAltitudes(), offsetXNL)
@@ -162,6 +164,7 @@ export default class DrawChampagne extends DrawPic {
     const isNS = FightAxis.isNS(this.props.orientation.orient)
     const nLbl = isNS ? "WEST" : "NORTH"
     const sLbl = isNS ? "EAST" : "SOUTH"
+
     this.groups[1].setLabel(nLbl + " LEAD GROUP")
     this.groups[2].setLabel(sLbl + " LEAD GROUP")
     this.groups[0].setLabel("TRAIL GROUP")
@@ -189,10 +192,12 @@ export default class DrawChampagne extends DrawPic {
     let frmNPt = new Point(grp0Pos.x, grp2Pos.y)
     let fromSPt = new Point(grp1Pos.x, grp2Pos.y)
     let weighted = ""
+
     if (isNS) {
       frmNPt = new Point(grp2Pos.x, grp0Pos.y)
       fromSPt = new Point(grp2Pos.x, grp1Pos.y)
     }
+
     if (frmNPt.getBR(grp0Pos).range < this.dimensions.wide / 3) {
       weighted =
         " WEIGHTED " +
@@ -204,6 +209,7 @@ export default class DrawChampagne extends DrawPic {
         this.groups[1].getLabel().replace(" LEAD GROUP", "") +
         ", "
     }
+
     return weighted
   }
 
@@ -213,6 +219,7 @@ export default class DrawChampagne extends DrawPic {
 
   formatDimensions(): string {
     const openClose = getOpenCloseAzimuth(this.groups[1], this.groups[2])
+
     return (
       this.dimensions.wide +
       " WIDE" +
@@ -228,6 +235,7 @@ export default class DrawChampagne extends DrawPic {
     this.applyLabels()
 
     let answer = this.formatPicTitle() + " "
+
     answer += this.formatDimensions() + " "
     answer += this.formatWeighted() + " "
     answer += this.picTrackDir() + " "

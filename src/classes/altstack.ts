@@ -22,15 +22,14 @@ export function getAltStack(altitudes: number[], format: FORMAT): AltStack {
     .sort()
     .reverse()
 
-  const stackHeights: string[] = []
   let stackIndexes: number[] = []
 
   // break out into bins of 10k foot separation between contacts
   for (let x = formattedAlts.length; x >= 0; x--) {
     const diff: number =
       parseInt(formattedAlts[x - 1]) - parseInt(formattedAlts[x])
+
     if (diff >= 100) {
-      stackHeights.push(formattedAlts[x])
       stackIndexes.push(x)
     }
   }
@@ -40,9 +39,10 @@ export function getAltStack(altitudes: number[], format: FORMAT): AltStack {
   // get the highest altitude within each bucket for formatting
   const stacks: string[][] = []
   let lastZ = 0
-  for (let z = 0; z < stackIndexes.length; z++) {
-    stacks.push(formattedAlts.slice(lastZ, stackIndexes[z]))
-    lastZ = stackIndexes[z]
+
+  for (const stackIdx of stackIndexes) {
+    stacks.push(formattedAlts.slice(lastZ, stackIdx))
+    lastZ = stackIdx
   }
   stacks.push(formattedAlts.slice(lastZ))
 
@@ -54,7 +54,7 @@ export function getAltStack(altitudes: number[], format: FORMAT): AltStack {
 
   // if no stack, look for >40k for "HIGH"
   if (stacks.length <= 1) {
-    altitudes.sort()
+    altitudes.sort((a, b) => a - b)
     if (altitudes[altitudes.length - 1] >= 40) {
       answer2 += " HIGH "
     }
@@ -64,6 +64,7 @@ export function getAltStack(altitudes: number[], format: FORMAT): AltStack {
     for (let y = 0; y < stacks.length; y++) {
       // check to add "AND" for alsa, when on last stack alt
       const AND = y === stacks.length - 1 && format !== FORMAT.IPE ? "AND " : ""
+
       answer += AND + stacks[y][0].replace(/0$/, "k") + " "
     }
 

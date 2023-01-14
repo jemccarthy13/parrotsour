@@ -1,5 +1,5 @@
-import { DialogContent, DialogContentText } from "../../utils/muiadapter"
 import React, { ReactElement } from "react"
+import { DialogContent, DialogContentText } from "../../utils/muiadapter"
 
 export const PsQT = (): ReactElement => {
   return (

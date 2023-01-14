@@ -20,7 +20,7 @@ export function processCloseLayer(
   sendResponse: (s1: string, s2: string) => void,
   asset: AircraftGroup
 ): string {
-  processedText = processedText.replace(/\s\s+/g, " ")
+  processedText = processedText.replace(/\s{2,}/g, " ")
   const nl: ProcessResult = AIProcessor.process(processedText)
 
   const callsign = asset.getLabel()
@@ -43,6 +43,7 @@ export function processCloseLayer(
 
     if (turnDir) {
       let fl
+
       asset.updateIntent({
         desiredHeading: parseInt(newHdgText),
         forcedTurn: turnDirText,

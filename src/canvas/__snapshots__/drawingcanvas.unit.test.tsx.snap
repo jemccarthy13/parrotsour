@@ -2,7 +2,8 @@
 
 exports[`drawingCanvas click_and_drag 1`] = `
 <canvas
-  data-snapshot-image="c41069b0260694da34d4da2ffad951b8ccd16b7ade341652f29c84ee002a50a57ffdd22f72d43e4882d97a015d71b35f2e95cf4650acdae00694867c13871c6f"
+  data-snapshot-image="3f70bed6b2b659c6a38c93cf51e6b6774fbd642e7703650bf168a807d2ddf3183efd0d9a726e96b0821170289279ed96c9c88fe8ef8774f36ff6dfe8d1929169"
+  data-testid="mousecanvas"
   height="400"
   id="mousecanvas"
   style="background-color: transparent; width: 400px; height: 400px; border: 1px solid #000000; grid-column: 2; grid-row: 1; position: absolute; left: 0px;"
@@ -12,7 +13,8 @@ exports[`drawingCanvas click_and_drag 1`] = `
 
 exports[`drawingCanvas mousemove_multiple 1`] = `
 <canvas
-  data-snapshot-image="83b6086f8a632e7603bbc0bcaee01c3a7c2a190b295c5fdfee7cd96122b79f23b1e7123523a6663d3e4a9b203058d9f71948b01dc785b8dedb389574e2a058ab"
+  data-snapshot-image="80fd0c31d539a3a888166b4b1886dc6aae048e06091a055187b90b879f77091d063eed75cf1af5855023804dbd20fc1f91a1087c73295178f42345c436edb1b4"
+  data-testid="mousecanvas"
   height="400"
   id="mousecanvas"
   style="background-color: transparent; width: 400px; height: 400px; border: 1px solid #000000; grid-column: 2; grid-row: 1; position: absolute; left: 0px;"
@@ -22,7 +24,8 @@ exports[`drawingCanvas mousemove_multiple 1`] = `
 
 exports[`drawingCanvas mousemove_singular 1`] = `
 <canvas
-  data-snapshot-image="d474d496f5ac647eb8a22d728f868f7aa32bb99db06c26dd0a37a106b14693b1a769e699d29e0d423c636192410a55d9185e807c708534ff5f129f5d8ad1cb9d"
+  data-snapshot-image="61dfe89fd77165441639f9b2eebad48b3f542ce1fa7ff569b7811bdd3c9f708bcd3f8c5f61b8fce3c553b202827e3004fae2d2aeb35b49c2fe0886a0122cc942"
+  data-testid="mousecanvas"
   height="400"
   id="mousecanvas"
   style="background-color: transparent; width: 400px; height: 400px; border: 1px solid #000000; grid-column: 2; grid-row: 1; position: absolute; left: 0px;"

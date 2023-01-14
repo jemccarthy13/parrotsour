@@ -1,13 +1,12 @@
 import { SensorType } from "../../../classes/aircraft/datatrail/sensortype"
 import { AircraftGroup, GroupParams } from "../../../classes/groups/group"
 import { Point } from "../../../classes/point"
+import TestCanvas from "../../../testutils/testcanvas"
+import * as PSMath from "../../../utils/math"
 import { BlueInThe, PictureCanvasState } from "../../canvastypes"
+import { PaintBrush } from "../paintbrush"
 import DrawAzimuth from "./azimuth"
 import { testProps } from "./mockutils.unit.test"
-
-import * as PSMath from "../../../utils/psmath"
-import TestCanvas from "../../../testutils/testcanvas"
-import { PaintBrush } from "../paintbrush"
 
 let testState: PictureCanvasState
 let p: Partial<GroupParams>
@@ -99,6 +98,7 @@ describe("DrawAzimuth", () => {
 
   it("labels_EW", () => {
     const updatedProps = testProps
+
     updatedProps.orientation.orient = BlueInThe.NORTH
 
     azimuth.initialize(updatedProps, testState)
@@ -123,9 +123,11 @@ describe("DrawAzimuth", () => {
 
   it("EW_anchor_pris", () => {
     const updatedProps = testProps
+
     updatedProps.orientation.orient = BlueInThe.NORTH
 
     const updatedState = testState
+
     updatedState.blueAir = new AircraftGroup({
       sx: 400,
       sy: 50,
@@ -217,10 +219,12 @@ describe("DrawAzimuth", () => {
 
     jest.spyOn(PSMath, "randomNumber").mockReturnValue(10)
     const pInfo = azimuth.getPictureInfo()
+
     expect(pInfo.deep).toEqual(7 * PSMath.PIXELS_TO_NM)
     expect(pInfo.wide).toEqual(10 * PSMath.PIXELS_TO_NM)
 
     const az = azimuth.create()
+
     expect(az.groups.length).toEqual(0)
     expect(az.dimensions.deep).toEqual(0)
     expect(az.dimensions.wide).toEqual(0)
@@ -228,8 +232,10 @@ describe("DrawAzimuth", () => {
 
   it("creates_groups_ns", () => {
     const updatedProps = { ...testProps }
+
     updatedProps.orientation.orient = BlueInThe.NORTH
     const startPos = new Point(100, 100)
+
     azimuth.dimensions.wide = 40
     const groups = azimuth.createGroups(startPos, [1, 1])
 

@@ -1,6 +1,7 @@
 import React from "react"
-import { Select } from "../../utils/muiadapter"
-import { mount, ReactWrapper } from "enzyme"
+import { render, waitFor } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
+import { act } from "react-dom/test-utils"
 import PicOptionsBar, { POBSelProps } from "./picoptionsbar"
 
 const fakeProps: POBSelProps = {
@@ -11,48 +12,66 @@ const fakeProps: POBSelProps = {
   handleNewPic: jest.fn(),
 }
 
-let wrapper: ReactWrapper
-
 describe("PicOptionsBar", () => {
-  beforeEach(() => {
-    wrapper = mount(<PicOptionsBar {...fakeProps} />)
+  // const wrapper = render(<PicOptionsBar {...fakeProps} />)
+
+  it("calls_selection_change", async () => {
+    const wrapper = render(<PicOptionsBar {...fakeProps} />)
+
+    const picSelector = wrapper.getByRole(/button/, { name: "AZIMUTH" })
+
+    act(() => {
+      userEvent.click(picSelector)
+    })
+
+    await waitFor(() => {
+      expect(wrapper.getByRole(/option/, { name: "RANGE" })).toBeDefined()
+    })
+
+    userEvent.click(wrapper.getByRole(/option/, { name: "RANGE" }))
+
+    await waitFor(() => {
+      expect(fakeProps.handleChangePicType).toHaveBeenCalled()
+    })
   })
 
-  it("calls_selection_change", () => {
-    const sel = wrapper.find(Select).find("input")
-    expect(sel).toBeDefined()
+  it("calls_showmeasure_change", async () => {
+    const wrapper = render(<PicOptionsBar {...fakeProps} />)
 
-    let myVal = "az"
-    jest
-      .spyOn(fakeProps, "handleChangePicType")
-      .mockImplementationOnce((val) => {
-        myVal = val.target.value as string
-      })
-    sel.simulate("change", { target: { value: "wall" } })
+    const measure = wrapper.getByRole(/checkbox/, {
+      name: "I want to measure",
+    }) as HTMLInputElement
 
-    expect(myVal).toEqual("wall")
+    userEvent.click(measure)
+
+    await waitFor(() => {
+      expect(fakeProps.handleToggleMeasurements).toHaveBeenCalled()
+    })
   })
 
-  it("calls_showmeasure_change", () => {
-    const measure = wrapper.find("#measureMyself")
-    expect(measure).toBeDefined()
-    const measureSpy = jest.spyOn(fakeProps, "handleToggleMeasurements")
-    measure.simulate("change")
-    expect(measureSpy).toHaveBeenCalledTimes(1)
+  it("calls_hardmode_change", async () => {
+    const wrapper = render(<PicOptionsBar {...fakeProps} />)
+
+    const hard = wrapper.getByRole(/checkbox/, {
+      name: "Hard Mode",
+    }) as HTMLInputElement
+
+    userEvent.click(hard)
+
+    await waitFor(() => {
+      expect(fakeProps.handleToggleHardMode).toHaveBeenCalled()
+    })
   })
 
-  it("calls_hardmode_change", () => {
-    const hardMode = wrapper.find("#hardMode")
-    expect(hardMode).toBeDefined()
-    const measureSpy = jest.spyOn(fakeProps, "handleToggleHardMode")
-    hardMode.simulate("change")
-    expect(measureSpy).toHaveBeenCalledTimes(1)
-  })
+  it("calls_newpic_change", async () => {
+    const wrapper = render(<PicOptionsBar {...fakeProps} />)
 
-  it("calls_newpic_change", () => {
-    const newPicBtn = wrapper.find("#newpicbtn")
-    const newPicSpy = jest.spyOn(fakeProps, "handleNewPic")
-    newPicBtn.simulate("click")
-    expect(newPicSpy).toHaveBeenCalledTimes(1)
+    const newPicBtn = wrapper.getByRole(/button/, { name: "New Pic" })
+
+    userEvent.click(newPicBtn)
+
+    await waitFor(() => {
+      expect(fakeProps.handleNewPic).toHaveBeenCalled()
+    })
   })
 })

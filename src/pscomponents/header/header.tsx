@@ -1,8 +1,7 @@
-import React, { CSSProperties, ReactElement } from "react"
-
-import IssueReport from "./issues/issuereport"
-import { PictureAnswer } from "canvas/canvastypes"
-import { Dialog } from "../utils/muiadapter"
+import React, { ReactElement } from "react"
+import { PictureAnswer } from "../../canvas/canvastypes"
+import { Dialog } from "../../utils/muiadapter"
+import IssueReport from "../issues/report-form"
 
 interface PSHeaderProps {
   comp?: ReactElement
@@ -18,7 +17,6 @@ interface PSHeaderState {
  *
  * - Quick Tips
  * - Issue Report
- * - 552 Logos
  */
 export default class ParrotSourHeader extends React.PureComponent<
   PSHeaderProps,
@@ -31,35 +29,24 @@ export default class ParrotSourHeader extends React.PureComponent<
     }
   }
 
-  imgStyle: CSSProperties = {
-    position: "absolute",
-    height: "60px",
-    top: "5px",
-  }
-
   /**
    * Toggle display of the QuickTips Dialog Element (component passed in props)
    */
   handleToggleQT = (): void => {
     const { showQT } = this.state
+
     this.setState({ showQT: !showQT })
   }
 
   render(): ReactElement {
     const { showQT } = this.state
     const { comp, answer } = this.props
+
     return (
       <div>
-        {/* <img
-          src="/icon/trans.png"
-          style={{ ...this.imgStyle, right: "5%" }}
-          id="wglogo"
-          alt="logo"
-        />
-    */}
-
         <div style={{ display: "flex" }}>
           <button
+            data-testid="tips-btn"
             id="quickTipBtn"
             type="button"
             style={{ width: "25%", top: "5px" }}

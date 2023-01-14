@@ -1,7 +1,7 @@
 import { Braaseye } from "../../classes/braaseye"
 import { AircraftGroup } from "../../classes/groups/group"
 import { Point } from "../../classes/point"
-import { PIXELS_TO_NM, randomNumber } from "../../utils/psmath"
+import { PIXELS_TO_NM, randomNumber } from "../../utils/math"
 import { PictureCanvasProps, PictureCanvasState } from "../canvastypes"
 import { clampInContext } from "./drawutils"
 import { formatAlt } from "./formatutils"
@@ -23,6 +23,7 @@ export class PaintBrush {
 
   public static clearCanvas(): void {
     const ctx = PaintBrush.ctx
+
     ctx.fillStyle = "white"
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
     ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height)
@@ -45,6 +46,7 @@ export class PaintBrush {
     forcedCtx?: CanvasRenderingContext2D
   ): void {
     let context = PaintBrush.ctx
+
     if (forcedCtx) context = forcedCtx
     context.lineWidth = 1
     context.strokeStyle = color
@@ -71,6 +73,7 @@ export class PaintBrush {
     color = "black"
   ): void {
     const ctx = PaintBrush.ctx
+
     ctx.lineWidth = 1
     ctx.fillStyle = color
     ctx.font = size + "px Arial"
@@ -122,6 +125,7 @@ export class PaintBrush {
     const formattedAlts: string[] = alts.map((a: number) => {
       return formatAlt(a)
     })
+
     PaintBrush.drawText(
       formattedAlts.join(","),
       grpPos.x + 25 + offsetX,
@@ -133,6 +137,7 @@ export class PaintBrush {
 
   public static drawBullseye(bull?: Point, color?: string): Point {
     const context = PaintBrush.ctx
+
     color = color || "black"
     context.lineWidth = 1
     context.fillStyle = color
@@ -175,6 +180,7 @@ export class PaintBrush {
   ): void {
     for (let y = 0; y < groups.length; y++) {
       const grpPos = groups[y].getCenterOfMass(props.dataStyle)
+
       if (props.showMeasurements) {
         new Braaseye(
           grpPos,

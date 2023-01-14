@@ -3,11 +3,7 @@ import { AircraftGroup } from "../../../classes/groups/group"
 import RangeBack from "../../../classes/groups/rangeback"
 import { Point } from "../../../classes/point"
 import { FORMAT } from "../../../classes/supportedformats"
-import {
-  PIXELS_TO_NM,
-  randomHeading,
-  randomNumber,
-} from "../../../utils/psmath"
+import { PIXELS_TO_NM, randomHeading, randomNumber } from "../../../utils/math"
 import { FightAxis } from "../../canvastypes"
 import { PaintBrush } from "../paintbrush"
 import { DrawPic } from "./drawpic"
@@ -20,6 +16,7 @@ export default class DrawLadder extends DrawPic {
 
   chooseNumGroups(nCts: number): void {
     let maxGrps = 5
+
     if (nCts < 3) {
       maxGrps = 3
     } else if (nCts < 5) {
@@ -33,8 +30,10 @@ export default class DrawLadder extends DrawPic {
 
   getPictureInfo(start?: Point): PictureInfo {
     let depth = 0
+
     for (let x = 1; x < this.numGroupsToCreate; x++) {
       const nextSep = randomNumber(7 * PIXELS_TO_NM, 15 * PIXELS_TO_NM)
+
       this.seps.push(nextSep)
       depth += nextSep
     }
@@ -72,8 +71,10 @@ export default class DrawLadder extends DrawPic {
     let totalArrowOffset = 0
 
     const groups: AircraftGroup[] = []
+
     for (let x = 0; x < this.numGroupsToCreate; x++) {
       const offsetHeading = randomNumber(-10, 10)
+
       totalArrowOffset += this.seps[x]
 
       if (this.props.isHardMode)
@@ -88,8 +89,10 @@ export default class DrawLadder extends DrawPic {
         hdg: heading + offsetHeading,
         nContacts: contactList[x],
       })
+
       groups.push(grp)
     }
+
     return groups
   }
 
@@ -123,10 +126,12 @@ export default class DrawLadder extends DrawPic {
         .getBraaseye()
         .draw(showMeasurements, braaFirst, altOffsetX, altOffsetY)
     }
+
     let actualDeep
     const prevGpPos =
       this.groups[this.groups.length - 1].getCenterOfMass(dataStyle)
     const gpPos = this.groups[0].getCenterOfMass(dataStyle)
+
     if (isNS) {
       actualDeep = Math.floor(Math.abs(gpPos.y - prevGpPos.y) / PIXELS_TO_NM)
       PaintBrush.drawMeasurement(
@@ -187,6 +192,7 @@ export default class DrawLadder extends DrawPic {
     this.applyLabels()
 
     let answer = this.formatPicTitle() + " "
+
     answer += this.formatDimensions() + " "
     answer += this.picTrackDir() + " "
 
@@ -196,9 +202,11 @@ export default class DrawLadder extends DrawPic {
     const isNS = FightAxis.isNS(this.props.orientation.orient)
 
     let nonPriPt = new Point(nonPriPos.x, priPos.y)
+
     if (isNS) {
       nonPriPt = new Point(priPos.x, nonPriPos.y)
     }
+
     const rangeBack: RangeBack = new RangeBack(
       this.props.format === FORMAT.ALSA ? "SEPARATION" : "RANGE",
       nonPriPt.getBR(priPos).range
@@ -209,7 +217,9 @@ export default class DrawLadder extends DrawPic {
       if (g !== 0) {
         // Issue #7 - check echelon from prev group to cur group
       }
+
       const rngBackToUse = g === 1 ? rangeBack : undefined
+
       answer += this.groups[g].format(this.props.format, rngBackToUse) + " "
     }
 

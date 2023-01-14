@@ -1,22 +1,17 @@
-// Components
-import ParrotSourCanvas from "../canvas/parrotsourcanvas"
-
-// Interfaces
 import {
   BlueInThe,
   PictureAnswer,
   PictureCanvasState,
   PictureCanvasProps,
 } from "../canvas/canvastypes"
+import ParrotSourCanvas from "../canvas/parrotsourcanvas"
+import { IDMatrix } from "../classes/aircraft/id"
 import { AircraftGroup } from "../classes/groups/group"
 import { Point } from "../classes/point"
-
-// Functions
-import { IDMatrix } from "../classes/aircraft/id"
-import { randomNumber } from "../utils/psmath"
-import { PaintBrush } from "./draw/paintbrush"
-import { PictureFactory } from "./draw/intercept/picturefactory"
+import { randomNumber } from "../utils/math"
 import { DrawPic } from "./draw/intercept/drawpic"
+import { PictureFactory } from "./draw/intercept/picturefactory"
+import { PaintBrush } from "./draw/paintbrush"
 
 /**
  * This component is the main control for drawing pictures for intercepts.
@@ -33,6 +28,7 @@ export default class PictureCanvas extends ParrotSourCanvas {
     this._componentDidUpdate(prevProps)
     let animateImage = undefined
     const ctx = PaintBrush.getContext()
+
     if (
       prevProps.isHardMode !== this.props.isHardMode ||
       prevProps.orientation !== this.props.orientation ||
@@ -40,6 +36,7 @@ export default class PictureCanvas extends ParrotSourCanvas {
     ) {
       if (this.props.resetCallback) this.props.resetCallback()
     }
+
     if (
       prevProps.dataStyle !== this.props.dataStyle ||
       prevProps.showMeasurements !== this.props.showMeasurements ||
@@ -109,6 +106,7 @@ export default class PictureCanvas extends ParrotSourCanvas {
     answer.groups.forEach((grp) => {
       const grpPos = grp.getCenterOfMass(dataStyle)
       const bearingToBlue = grpPos.getBR(bluePos).bearingNum
+
       grp.updateIntent({
         desiredHeading: Math.round(bearingToBlue / 90.0) * 90,
       })
@@ -146,11 +144,12 @@ export default class PictureCanvas extends ParrotSourCanvas {
       id: IDMatrix.FRIEND,
     })
 
-    await this.setState({ blueAir, bullseye })
+    this.setState({ blueAir, bullseye })
 
     const blueOnly = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height)
 
     const answer: PictureAnswer = this.drawPicture()
+
     this.props.setAnswer(answer)
 
     blueAir.draw(this.props.dataStyle)

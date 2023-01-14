@@ -36,6 +36,7 @@ export function drawGroupCap(group: AircraftGroup): void {
     const ratio = 2 / strength - 0.1
     let startPI = 0
     let endPI = ratio
+
     radius = 12
     for (let x = 1; x <= strength; x++) {
       c.arc(startX, startY, radius, startPI * Math.PI, endPI * Math.PI)

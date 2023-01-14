@@ -1,12 +1,9 @@
 /* istanbul ignore file */
-import ReactDOM from "react-dom"
 import React, { Suspense } from "react"
+import { CookieConsent, Cookies } from "react-cookie-consent"
+import ReactDOM from "react-dom"
 import Home from "./Home"
-
 import GlobalSnackbarProvider from "./pscomponents/alert/globalalertprovider"
-
-import CookieConsent, { Cookies } from "react-cookie-consent"
-
 import snackActions, { SnackbarKey } from "./pscomponents/alert/psalert"
 import { Button } from "./utils/muiadapter"
 
@@ -52,6 +49,7 @@ function createDismiss(key: SnackbarKey) {
     </>
   )
 }
+
 // remove after confidence most people have seen new release notification
 if (cookieIsNotSet) {
   snackActions.info("Check out the newest release of ParrotSour!", {

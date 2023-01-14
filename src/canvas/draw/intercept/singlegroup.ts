@@ -2,7 +2,7 @@ import { Braaseye } from "../../../classes/braaseye"
 import { AircraftGroup } from "../../../classes/groups/group"
 import { GroupFactory } from "../../../classes/groups/groupfactory"
 import { Point } from "../../../classes/point"
-import { PIXELS_TO_NM } from "../../../utils/psmath"
+import { PIXELS_TO_NM } from "../../../utils/math"
 import { FightAxis } from "../../canvastypes"
 import { PaintBrush } from "../paintbrush"
 import { DrawPic } from "./drawpic"
@@ -37,7 +37,9 @@ export default class DrawSingleGroup extends DrawPic {
       undefined,
       contactList[0]
     )
+
     sg.setLabel("SINGLE GROUP")
+
     return [sg]
   }
 
@@ -67,11 +69,14 @@ export default class DrawSingleGroup extends DrawPic {
 
     let offsetX = 0
     let offsetY = 0
+
     if (isNS) {
       offsetX = -60
       offsetY = 40
     }
+
     const sgPos = sg.getCenterOfMass(this.props.dataStyle)
+
     PaintBrush.drawAltitudes(sgPos, sg.getAltitudes(), offsetX, offsetY)
 
     sg.setBraaseye(new Braaseye(sgPos, bluePos, bullseye))
@@ -100,7 +105,9 @@ export default class DrawSingleGroup extends DrawPic {
 
   getAnswer = (): string => {
     const sg = this.groups[0]
+
     sg.setUseBull(true)
+
     return sg.format(this.props.format).replace(/\s+/g, " ").trim()
   }
 }

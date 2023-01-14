@@ -1,5 +1,4 @@
 import React from "react"
-
 import BugList from "./buglist"
 import FeatureList from "./featurelist"
 import VersionHistory from "./versionhistory"

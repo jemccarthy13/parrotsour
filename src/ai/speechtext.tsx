@@ -1,6 +1,5 @@
 import "../css/microphone.css"
 import React, { ReactElement, useRef, useState } from "react"
-
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition"
@@ -18,6 +17,7 @@ export function SpeechTextControls(props: SpeechTextProps): ReactElement {
     resetTranscript()
     setIsListening(true)
     const curRef = microphoneRef.current
+
     if (curRef) curRef.classList.add("listening")
     SpeechRecognition.startListening({
       continuous: true,
@@ -26,6 +26,7 @@ export function SpeechTextControls(props: SpeechTextProps): ReactElement {
 
   const preProcess = (transcript: string) => {
     let tmpAnswer = transcript
+
     tmpAnswer = tmpAnswer
       .replaceAll("golf", "gulf")
       .replaceAll("proseed", "proceed")
@@ -36,9 +37,10 @@ export function SpeechTextControls(props: SpeechTextProps): ReactElement {
 
     tmpAnswer = tmpAnswer.replaceAll("flight level", "FL")
     tmpAnswer = tmpAnswer.replaceAll("flight Level", "FL")
-    const re = new RegExp(
-      /^([A-Za-z])[A-Za-z]*([A-Za-z]) *([0-9])[0-9]*([0-9])/
-    )
+
+    // TODO - less capture, then [0], [-1] to get first and last characters to build vcs
+    // eslint-disable-next-line regexp/optimal-quantifier-concatenation
+    const re = new RegExp(/^([A-Za-z])[A-Za-z]*([A-Za-z]) *(\d)\d*(\d)/)
     const match = tmpAnswer.match(re)
 
     if (match) {
@@ -47,6 +49,7 @@ export function SpeechTextControls(props: SpeechTextProps): ReactElement {
       const num1 = match[3]
       const num2 = match[4]
       const vcs = let1 + let2 + num1 + num2
+
       tmpAnswer = tmpAnswer.replace(match[0], vcs.toUpperCase())
     }
 
@@ -65,11 +68,13 @@ export function SpeechTextControls(props: SpeechTextProps): ReactElement {
     sleep(1200).then(() => {
       SpeechRecognition.stopListening()
       const curRef = microphoneRef.current
+
       if (curRef) curRef.classList.remove("listening")
       let tmpAnswer = transcript
 
       tmpAnswer = preProcess(transcript)
       const { handler } = props
+
       handler(tmpAnswer)
     })
   }

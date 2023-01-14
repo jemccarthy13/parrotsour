@@ -2,7 +2,7 @@
 
 exports[`DrawEA draws_request_0 1`] = `
 <canvas
-  data-snapshot-image="9a275f427aeaa3473392f2ea7c1ce586c87d1810dea440387802ab455617952b4f962c44e58c8ce0cc1a0366d87dbb23c5188acc028f3c6e517c4652ad5cf531"
+  data-snapshot-image="977b2a1abe6c563993ae09ec0402e4ddeb422a9e397f7506fcd96c56dc4901d7c95ecff08e37c71c80d25fcc88480b51c9df9cf7cf188720a44824a0094d06e7"
   height="500"
   width="800"
 />
@@ -10,7 +10,7 @@ exports[`DrawEA draws_request_0 1`] = `
 
 exports[`DrawEA draws_request_1 1`] = `
 <canvas
-  data-snapshot-image="0310fc77383ed56faa9883e3ca6ba47aef1ebf117f58e342312d2cbb152bdc492ba71b09b52509b63b11c51f393843694239ffb389a4ad4c7a4639ae8f6d3b0b"
+  data-snapshot-image="9563460c64b9139ec056d471e3e25e5429031fc314e130c94fdf8c18e105592748e2685c264b620947befcf5232a0806f018f24c29e7403ba3a64bc32a2fac00"
   height="500"
   width="800"
 />
@@ -18,7 +18,7 @@ exports[`DrawEA draws_request_1 1`] = `
 
 exports[`DrawEA draws_request_2 1`] = `
 <canvas
-  data-snapshot-image="4e0a6cf9b4104522bbea2fa7e542b68c8ec76d3cea4592b02120b8822df375ef35adc8b9da5392189fa035f3a00411210a6e93f16b4284c3f5f01d58effb04a3"
+  data-snapshot-image="fe3cb3a805793db084ad80acf4eb02ef9ca5dbb575c43c9d2eea3284347ea9a4633b8e0dd69f1ade6f9bba3d1a5f00ad011ec2bd7a468f014231939a80129db4"
   height="500"
   width="800"
 />

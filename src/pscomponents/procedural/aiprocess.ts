@@ -1,17 +1,13 @@
 // Classes & Interfaces
-import { PictureAnswer } from "../../canvas/canvastypes"
-import { AircraftGroup } from "../../classes/groups/group"
-
-// 'AI' Processors -- see the function aiProcess for more details
-import { AIProcessor } from "../../ai/languageprocessors/nlprocessor"
-import { processQuestionLayer } from "../../ai/languageprocessors/questionlayer"
-import { processMoveLayer } from "../../ai/languageprocessors/movelayer"
+import { getAsset } from "../../ai/getAsset"
 import { processCloseLayer } from "../../ai/languageprocessors/closelayer"
 import { processElevatorLayer } from "../../ai/languageprocessors/elevatorlayer"
+import { processMoveLayer } from "../../ai/languageprocessors/movelayer"
+import { AIProcessor } from "../../ai/languageprocessors/nlprocessor"
+import { processQuestionLayer } from "../../ai/languageprocessors/questionlayer"
 import { processRadioCheckLayer } from "../../ai/languageprocessors/radiochecklayer"
-
-// Functions
-import { getAsset } from "../../ai/getAsset"
+import { PictureAnswer } from "../../canvas/canvastypes"
+import { AircraftGroup } from "../../classes/groups/group"
 import { convertToXY } from "./cgrshelpers"
 
 /**
@@ -30,17 +26,20 @@ function _findAndReplaceCGRS(msgText: string): {
   msgText: string
 } {
   let textToParse = msgText.toUpperCase()
-  const re = new RegExp("([0-9]+[A-Z]+[0-9]*)")
+  const re = /(\d+[A-Z]+\d*)/
   const matches = textToParse.match(re)
   const cgrs: string[] = []
+
   if (matches) {
     matches.forEach((elem) => {
       const xy = convertToXY(elem)
+
       textToParse = textToParse.replace(elem, xy.x + " " + xy.y)
       cgrs.push(elem)
     })
   }
   textToParse = textToParse.toLowerCase()
+
   return { cgrs, msgText: textToParse }
 }
 
@@ -66,6 +65,7 @@ function _checkForAsset(
   if (!asset) {
     sendResponse("SYSTEM", "No such callsign.")
   }
+
   return asset
 }
 

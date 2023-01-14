@@ -1,11 +1,9 @@
 // Classes & Interfaces
-import { AircraftGroup } from "../classes/groups/group"
 import { PictureCanvasProps, PictureCanvasState } from "../canvas/canvastypes"
-import { SensorType } from "../classes/aircraft/datatrail/sensortype"
-
-// Functions
-import { sleep } from "../utils/pstime"
 import { PaintBrush } from "../canvas/draw/paintbrush"
+import { SensorType } from "../classes/aircraft/datatrail/sensortype"
+import { AircraftGroup } from "../classes/groups/group"
+import { sleep } from "../utils/time"
 
 /**
  * This class is the parent class for Animation.
@@ -129,9 +127,7 @@ export abstract class AnimationHandler {
     //   - 'move' drawn arrows based on current heading
     //   - turn towards the target heading (desired pt or heading)
     //   - apply decision-making logic
-    for (let x = 0; x < groups.length; x++) {
-      const grp = groups[x]
-
+    for (const grp of groups) {
       grp.move()
       grp.draw(props.dataStyle)
       this.applyLogic(grp, state, props.dataStyle, resetCallback)

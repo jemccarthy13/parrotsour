@@ -1,15 +1,13 @@
 import { SensorType } from "../../../classes/aircraft/datatrail/sensortype"
 import { AircraftGroup } from "../../../classes/groups/group"
 import { Point } from "../../../classes/point"
-import { PIXELS_TO_NM } from "../../../utils/psmath"
+import TestCanvas from "../../../testutils/testcanvas"
+import { PIXELS_TO_NM } from "../../../utils/math"
 import { BlueInThe, PictureCanvasState } from "../../canvastypes"
 import { PaintBrush } from "../paintbrush"
 import { testProps } from "./mockutils.unit.test"
 import { PictureInfo } from "./pictureclamp"
-
 import DrawThreat from "./threat"
-
-import TestCanvas from "../../../testutils/testcanvas"
 
 describe("DrawThreat", () => {
   let dThreat: DrawThreat

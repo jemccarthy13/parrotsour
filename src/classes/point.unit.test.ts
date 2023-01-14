@@ -1,4 +1,6 @@
-const PIXELS_TO_NM = 4
+import { BlueInThe } from "../canvas/canvastypes"
+import { PIXELS_TO_NM } from "../utils/math"
+import { Point } from "./point"
 
 // Come back to this to self-contain 100% coverage in unit tests
 // // mock BRAA to self-contain intent tests
@@ -16,13 +18,10 @@ const PIXELS_TO_NM = 4
 // // import { BRAA } from "./braa"
 // jest.mock("./braa")
 
-import { Point } from "./point"
-
-import { BlueInThe } from "../canvas/canvastypes"
-
 describe("point", () => {
   it("has_XY", () => {
     const p: Point = new Point(10, 10)
+
     expect(p.x).toEqual(10)
     expect(p.y).toEqual(10)
   })
@@ -33,6 +32,7 @@ describe("point", () => {
     // p2 is directly West
     let p2: Point = new Point(20, 10)
     let br = p.getBR(p2)
+
     expect(br.range).toEqual(~~(10 / PIXELS_TO_NM))
     expect(br.bearingNum).toEqual(90)
     expect(br.bearing).toEqual("090")
@@ -93,6 +93,7 @@ describe("point", () => {
     const p: Point = new Point(100, 100)
     const p2: Point = new Point(52, 76)
     let dist = p.straightDistNM(p2, BlueInThe.NORTH)
+
     expect(dist).toEqual(~~(24 / PIXELS_TO_NM))
 
     dist = p.straightDistNM(p2, BlueInThe.SOUTH)

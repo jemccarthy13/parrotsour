@@ -1,13 +1,13 @@
 import { SensorType } from "../../../classes/aircraft/datatrail/sensortype"
 import { AircraftGroup, GroupParams } from "../../../classes/groups/group"
 import { Point } from "../../../classes/point"
+import TestCanvas from "../../../testutils/testcanvas"
 import { BlueInThe, PictureCanvasState } from "../../canvastypes"
 import { PaintBrush } from "../paintbrush"
 import { testProps } from "./mockutils.unit.test"
-import { PictureFactory } from "./picturefactory"
-import DrawPackage from "./packages"
 import { Package } from "./package"
-import TestCanvas from "../../../testutils/testcanvas"
+import DrawPackage from "./packages"
+import { PictureFactory } from "./picturefactory"
 
 describe("DrawPackages", () => {
   let testState: PictureCanvasState
@@ -50,6 +50,7 @@ describe("DrawPackages", () => {
   it("casts_correctly", () => {
     const pkg: Package = new Package()
     const pt = new Point(50, 50)
+
     pkg.setBullseyePt(pt)
     expect(pkg.getBullseyePt()).toEqual(pt)
   })
@@ -67,6 +68,7 @@ describe("DrawPackages", () => {
       alts: [10],
       nContacts: 1,
     })
+
     pkg.pictures[0].groups = [sg2]
     pkg.pictures[1].groups = [sg1]
 
@@ -92,6 +94,7 @@ describe("DrawPackages", () => {
       alts: [10],
       nContacts: 1,
     })
+
     pkg.pictures[0].groups = [sg1]
     pkg.pictures[1].groups = [sg2]
 

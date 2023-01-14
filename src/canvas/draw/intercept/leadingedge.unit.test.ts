@@ -59,6 +59,7 @@ describe("DrawPackages", () => {
       alts: [10],
       nContacts: 1,
     })
+
     le.groups = [sg1, sg2]
     expect(le.getAnswer().includes("2 GROUPS, LEADING EDGE")).toEqual(true)
   })

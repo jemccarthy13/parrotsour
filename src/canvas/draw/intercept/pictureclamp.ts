@@ -2,7 +2,7 @@ import { BlueInThe, FightAxis } from "../../../canvas/canvastypes"
 import { SensorType } from "../../../classes/aircraft/datatrail/sensortype"
 import { AircraftGroup } from "../../../classes/groups/group"
 import { Point } from "../../../classes/point"
-import { PIXELS_TO_NM, randomNumber } from "../../../utils/psmath"
+import { PIXELS_TO_NM, randomNumber } from "../../../utils/math"
 import { PaintBrush } from "../paintbrush"
 
 export type Bounds = {
@@ -30,6 +30,7 @@ export const _howFarOut = (x: number, min: number, max: number): number => {
   } else if (x > max) {
     return -(x - max)
   }
+
   return 0
 }
 
@@ -38,10 +39,12 @@ export const _clampPictureInContext = (
   orientation: BlueInThe
 ): Point => {
   const ctx = PaintBrush.getContext()
+
   if (!pInfo.start) {
     console.warn(
       "Without a starting point to clamp, _clampPictureInContext will generate a random point."
     )
+
     return new Point(
       randomNumber(1, ctx.canvas.width),
       randomNumber(1, ctx.canvas.height)
@@ -60,6 +63,7 @@ export const _clampPictureInContext = (
 
   pInfo.start.x += _howFarOut(pInfo.start.x, minValWithBuffer, maxXWithBuffer)
   pInfo.start.y += _howFarOut(pInfo.start.y, minValWithBuffer, maxYWithBuffer)
+
   return pInfo.start
 }
 
@@ -76,6 +80,7 @@ export const getRestrictedStartPos = (
 
   let limitLine = blueLoc.x
   let canvasSize = ctx.canvas.width
+
   if (FightAxis.isNS(orientation)) {
     limitLine = blueLoc.y
     canvasSize = ctx.canvas.height
@@ -83,6 +88,7 @@ export const getRestrictedStartPos = (
 
   let lBound = (limitLine + maxNMFromBlue * PIXELS_TO_NM) / canvasSize
   let uBound = (limitLine + minNMFromBlue * PIXELS_TO_NM) / canvasSize
+
   if (orientation === BlueInThe.SOUTH || orientation === BlueInThe.EAST) {
     lBound = (limitLine - maxNMFromBlue * PIXELS_TO_NM) / canvasSize
     uBound = (limitLine - minNMFromBlue * PIXELS_TO_NM) / canvasSize
@@ -92,6 +98,7 @@ export const getRestrictedStartPos = (
     orientation === BlueInThe.NORTH || orientation === BlueInThe.SOUTH
 
   let mults = { lowX: lBound, hiX: uBound, lowY: 0.2, hiY: 0.8 }
+
   if (isNS) {
     mults = { lowX: 0.2, hiX: 0.8, lowY: lBound, hiY: uBound }
   }
@@ -127,10 +134,13 @@ export const getStartPos = (
 ): Point => {
   const ctx = PaintBrush.getContext()
   let canvasSize = ctx.canvas.width
+
   if (orientation === BlueInThe.NORTH || orientation === BlueInThe.SOUTH) {
     canvasSize = ctx.canvas.height
   }
+
   const maxMiles = canvasSize / PIXELS_TO_NM
+
   return getRestrictedStartPos(
     blueAir,
     orientation,

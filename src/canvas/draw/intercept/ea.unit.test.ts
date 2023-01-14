@@ -4,7 +4,7 @@ import { Braaseye } from "../../../classes/braaseye"
 import { AircraftGroup, GroupParams } from "../../../classes/groups/group"
 import { Point } from "../../../classes/point"
 import TestCanvas from "../../../testutils/testcanvas"
-import * as PSMath from "../../../utils/psmath"
+import * as PSMath from "../../../utils/math"
 import { PictureCanvasState } from "../../canvastypes"
 import { PaintBrush } from "../paintbrush"
 import DrawEA from "./ea"
@@ -21,6 +21,7 @@ describe("DrawEA", () => {
   beforeEach(() => {
     const startX = 200
     const startY = 200
+
     p = {
       dataTrailType: SensorType.ARROW,
       sx: startX,
@@ -29,6 +30,7 @@ describe("DrawEA", () => {
       hdg: 90,
       alts: [20, 20, 20, 20],
     }
+
     testState = {
       bullseye: new Point(400, 400),
       blueAir: new AircraftGroup({ sx: 600, sy: 400, hdg: 270, nContacts: 4 }),
@@ -42,6 +44,7 @@ describe("DrawEA", () => {
     draw.createGroups(new Point(startX, startY), [1])
 
     const sg = new AircraftGroup(p)
+
     draw.eaPic.groups = [sg]
     draw.groups = [sg]
     draw.drawInfo()
@@ -89,6 +92,7 @@ describe("DrawEA", () => {
   it("getsPicInfo", () => {
     const initPt = new Point(100, 100)
     const pInfo = draw.getPictureInfo(initPt)
+
     expect(pInfo.start).toEqual(initPt)
     expect(pInfo.deep).toEqual(-1) // draw.eaInfo isn't set
     expect(pInfo.wide).toEqual(-1)
@@ -96,6 +100,7 @@ describe("DrawEA", () => {
 
   it("music_singlegroup_singlecontact", () => {
     const sg = new AircraftGroup({ ...p, hdg: 5, alts: [10], nContacts: 1 })
+
     sg.setBraaseye(
       new Braaseye(new Point(50, 50), new Point(50, 50), new Point(100, 50))
     )
@@ -123,6 +128,7 @@ describe("DrawEA", () => {
 
   it("bogey_dope_oth_aspect", () => {
     const sg = new AircraftGroup({ ...p, hdg: 150 })
+
     draw.groups = [sg]
     draw.getPictureInfo()
     draw.requestType = 1
@@ -134,6 +140,7 @@ describe("DrawEA", () => {
 
   it("music_singlegroup_multicontact", () => {
     const sg = new AircraftGroup({ ...p, hdg: 5, alts: [10, 15], nContacts: 2 })
+
     sg.setBraaseye(
       new Braaseye(new Point(50, 50), new Point(50, 50), new Point(100, 50))
     )
@@ -162,6 +169,7 @@ describe("DrawEA", () => {
 
   it("bogey_dope_oth_aspect", () => {
     const sg = new AircraftGroup({ ...p, hdg: 150 })
+
     draw.groups = [sg]
     draw.getPictureInfo()
     draw.requestType = 1
@@ -180,6 +188,7 @@ describe("DrawEA", () => {
       nContacts: 1,
       alts: [5],
     })
+
     ng.setLabel("EAST GROUP")
     sg.setLabel("WEST GROUP")
     draw.groups = [ng, sg]
@@ -196,12 +205,14 @@ describe("DrawEA", () => {
     expect(draw.formatWeighted()).toEqual("")
 
     const warn = jest.spyOn(console, "warn").mockImplementation()
+
     draw.applyLabels()
     expect(warn).toHaveBeenCalledTimes(1)
   })
 
   it("selects_strobe_query", () => {
     const sg = new AircraftGroup({ ...p, hdg: 150 })
+
     draw.groups = [sg]
     jest
       .spyOn(PSMath, "randomNumber")
@@ -229,6 +240,7 @@ describe("DrawEA", () => {
       alts: [10],
       nContacts: 1,
     })
+
     sg.setLabel("STROBE GROUP")
     draw.groups = [sg]
     draw.eaInfo.grp = sg
@@ -250,6 +262,7 @@ describe("DrawEA", () => {
       alts: [10],
       nContacts: 1,
     })
+
     sg.setLabel("STROBE GROUP")
     draw.groups = [sg]
     draw.eaInfo.grp = sg

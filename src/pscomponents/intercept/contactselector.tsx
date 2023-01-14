@@ -10,6 +10,7 @@ export default function ContactSelector(props: CSProps): JSX.Element {
 
   const updateCount = (val: number) => {
     const { updateCount } = props
+
     if (val < 0) {
       val = 0
     }
@@ -26,7 +27,7 @@ export default function ContactSelector(props: CSProps): JSX.Element {
   return (
     <div>
       <label style={{ padding: "5px" }} htmlFor="numContacts">
-        Fight: 4 v{" "}
+        Fight: 4 v
       </label>
 
       <input

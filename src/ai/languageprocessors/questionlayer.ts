@@ -39,15 +39,19 @@ export function processQuestionLayer(
   if (isQuestion || interrogative) {
     const q = interrogative ? question2 : question
     const thing = q.groups().thing.text()
+
     if (questionLocNouns.includes(thing)) {
       const pos = asset.getCenterOfMass(SensorType.ARROW)
+
       if (asset.isCapping()) {
         sendResponse(callsign, "working " + convertToCGRS(pos.x, pos.y))
       } else if (asset.getNextRoutingPoint() !== undefined) {
         const rPoint = asset.getNextRoutingPoint()
+
         if (rPoint) {
           const current = convertToCGRS(pos.x, pos.y).replace("+", "")
           const desired = convertToCGRS(rPoint.x, rPoint.y)
+
           sendResponse(
             callsign,
             "passing " + current + ", enroute to " + desired
@@ -75,9 +79,11 @@ export function processQuestionLayer(
     } else {
       sendResponse(callsign, "I don't understand the question")
     }
+
     retVal = retVal
       .replaceAll(question.text(), "")
       .replaceAll(question2.text(), "")
   }
+
   return retVal
 }

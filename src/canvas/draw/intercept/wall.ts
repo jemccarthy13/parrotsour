@@ -1,11 +1,7 @@
 import { Braaseye } from "../../../classes/braaseye"
 import { AircraftGroup } from "../../../classes/groups/group"
 import { Point } from "../../../classes/point"
-import {
-  PIXELS_TO_NM,
-  randomHeading,
-  randomNumber,
-} from "../../../utils/psmath"
+import { PIXELS_TO_NM, randomHeading, randomNumber } from "../../../utils/math"
 import { FightAxis } from "../../canvastypes"
 import { getOpenCloseAzimuth } from "../formatutils"
 import { PaintBrush } from "../paintbrush"
@@ -29,6 +25,7 @@ export default class DrawWall extends DrawPic {
    */
   chooseNumGroups(nCts: number): void {
     let maxGroups = Math.min(Math.max(nCts, 3), 5)
+
     if (nCts === 0) maxGroups = 5
     this.numGroupsToCreate = randomNumber(3, maxGroups)
   }
@@ -37,11 +34,14 @@ export default class DrawWall extends DrawPic {
 
   getPictureInfo(start?: Point): PictureInfo {
     let width = 0
+
     for (let x = 1; x < this.numGroupsToCreate; x++) {
       const nextSep = randomNumber(7 * PIXELS_TO_NM, 15 * PIXELS_TO_NM)
+
       this.seps.push(nextSep)
       width += nextSep
     }
+
     const wide = width
     // to ensure measurements can be drawn behind wall
     const deep = 20 * PIXELS_TO_NM
@@ -69,8 +69,10 @@ export default class DrawWall extends DrawPic {
     let totalArrowOffset = 0
 
     const groups: AircraftGroup[] = []
+
     for (let x = 0; x < this.numGroupsToCreate; x++) {
       const offsetHeading = randomNumber(-10, 10)
+
       totalArrowOffset += this.seps[x]
 
       if (this.props.isHardMode)
@@ -106,8 +108,10 @@ export default class DrawWall extends DrawPic {
         altOffsetX = -15 * (this.groups.length - x)
         altOffsetY = 40 + 11 * (this.groups.length - (this.groups.length - x))
       }
+
       const grp = this.groups[x]
       const grpPos = grp.getCenterOfMass(dataStyle)
+
       PaintBrush.drawAltitudes(
         grpPos,
         grp.getAltitudes(),
@@ -127,6 +131,7 @@ export default class DrawWall extends DrawPic {
     let widthNM = Math.floor((prevGpPos.y - gpPos.y) / PIXELS_TO_NM)
     let fromPt = new Point(gpPos.x + 25, gpPos.y)
     let toPt = new Point(gpPos.x + 25, prevGpPos.y)
+
     if (isNS) {
       widthNM = Math.floor((prevGpPos.x - gpPos.x) / PIXELS_TO_NM)
       fromPt = new Point(gpPos.x, gpPos.y - 25)
@@ -140,6 +145,7 @@ export default class DrawWall extends DrawPic {
     const isNS = FightAxis.isNS(this.props.orientation.orient)
     const nLbl = isNS ? "WEST" : "NORTH"
     const sLbl = isNS ? "EAST" : "SOUTH"
+
     switch (this.groups.length) {
       case 3:
         this.groups[0].setLabel(nLbl + " GROUP")
@@ -194,6 +200,7 @@ export default class DrawWall extends DrawPic {
     this.applyLabels()
 
     let answer = this.formatPicTitle() + " "
+
     answer += this.formatDimensions() + " "
     answer += this.formatWeighted() + " "
 
@@ -205,6 +212,7 @@ export default class DrawWall extends DrawPic {
 
     for (let idx = 0; idx < this.groups.length; idx++) {
       const group = this.groups[idx]
+
       answer += group.format(this.props.format) + " "
     }
 

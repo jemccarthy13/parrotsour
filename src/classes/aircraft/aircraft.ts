@@ -1,19 +1,16 @@
-// Classes and interfaces
-import { DataTrail } from "./datatrail/datatrail"
-import { SensorType } from "./datatrail/sensortype"
-import { GroupParams } from "../groups/group"
-import { IDMatrix } from "./id"
-import { AircraftIntent, IntentParams } from "./intent"
-import { Point } from "../point"
-import Tasking from "../taskings/tasking"
-
-// Functions
 import {
   getDegDeltaBetween,
   headingToRadians,
   randomNumber,
-} from "../../utils/psmath"
+} from "../../utils/math"
+import { GroupParams } from "../groups/group"
+import { Point } from "../point"
+import Tasking from "../taskings/tasking"
+import { DataTrail } from "./datatrail/datatrail"
 import { DataTrailFactory } from "./datatrail/datatrailfactory"
+import { SensorType } from "./datatrail/sensortype"
+import { IDMatrix } from "./id"
+import { AircraftIntent, IntentParams } from "./intent"
 
 /*
  * Issue #5 -- EWI -- for fill-ins, implement more AC types?

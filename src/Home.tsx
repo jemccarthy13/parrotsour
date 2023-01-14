@@ -1,17 +1,14 @@
 import React, { Suspense, lazy } from "react"
-
 import { Route, Routes } from "react-router"
 import { HashRouter } from "react-router-dom"
-
+import ChangeLog from "./changelog/changelog"
 import "./css/snackbar.css"
 import "./css/styles.css"
 import "./css/body.css"
 import "./css/fonts.css"
 
-const ParrotSour = lazy(() => import("./pscomponents/parrotsour"))
-const Login = lazy(() => import("./pscomponents/login"))
-
-import ChangeLog from "./changelog/changelog"
+const ParrotSour = lazy(() => import("./pscomponents/home/parrotsour"))
+const Login = lazy(() => import("./pscomponents/home/login"))
 
 /**
  * This is the main entry point into the front-facing application.
@@ -29,7 +26,7 @@ export default class Home extends React.PureComponent {
         type="chooser"
         interceptLink="/#/intercept.html"
         proceduralLink="/#/procedural.html"
-        apiLink='/#/api.html'
+        apiLink="/#/api.html"
       />
     )
   }

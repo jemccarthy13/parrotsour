@@ -1,7 +1,5 @@
 import React, { CSSProperties } from "react"
-
 import { SnackbarKey, SnackbarProvider } from "notistack"
-
 import snackActions, { SnackbarUtilsConfigurator } from "./psalert"
 
 const transparentBtnStyle: CSSProperties = {
@@ -34,6 +32,7 @@ export default class GlobalAlertProvider extends SnackbarProvider {
 
   render(): React.ReactElement {
     const { children, ...other } = this.props
+
     return (
       <SnackbarProvider {...other} action={this.dismissAction}>
         <SnackbarUtilsConfigurator />

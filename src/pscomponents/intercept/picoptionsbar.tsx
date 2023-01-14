@@ -1,8 +1,6 @@
-import { MenuItem, Select, SelectChangeEvent } from "../../utils/muiadapter"
 import React from "react"
 import { Cookies } from "react-cookie-consent"
-
-import "../../css/select.css"
+import { MenuItem, Select, SelectChangeEvent } from "../../utils/muiadapter"
 
 export type POBSelProps = {
   picType: string
@@ -20,7 +18,10 @@ interface POBSelState {
 /**
  * Functional component to select and toggles related to picture generation.
  */
-class PicOptionsBar extends React.PureComponent<POBSelProps, POBSelState> {
+export default class PicOptionsBar extends React.PureComponent<
+  POBSelProps,
+  POBSelState
+> {
   constructor(props: POBSelProps) {
     super(props)
     this.state = {
@@ -31,16 +32,20 @@ class PicOptionsBar extends React.PureComponent<POBSelProps, POBSelState> {
 
   handleToggleMeasurements = (): void => {
     const { handleToggleMeasurements } = this.props
+
     handleToggleMeasurements()
     const { isWantMeasureChecked } = this.state
+
     this.setState({ isWantMeasureChecked: !isWantMeasureChecked })
     Cookies.set("UserWantMeasure", !isWantMeasureChecked)
   }
 
   handleToggleHardMode = (): void => {
     const { handleToggleHardMode } = this.props
+
     handleToggleHardMode()
     const { isHardModeChecked } = this.state
+
     this.setState({ isHardModeChecked: !isHardModeChecked })
     Cookies.set("UserWantHardMode", !isHardModeChecked)
   }
@@ -52,8 +57,15 @@ class PicOptionsBar extends React.PureComponent<POBSelProps, POBSelState> {
 
     return (
       <div style={{ display: "flex" }}>
-        <div className="custom-sel-div">
+        <div style={{ paddingRight: "16px", width: "25%" }}>
           <Select
+            sx={{
+              backgroundColor: "#eee",
+              color: "#444",
+              height: "24px",
+              padding: "unset",
+            }}
+            size="small"
             fullWidth
             labelId="picSelLabel"
             id="pictureType"
@@ -74,7 +86,9 @@ class PicOptionsBar extends React.PureComponent<POBSelProps, POBSelState> {
             <MenuItem value="threat">THREAT</MenuItem>
             <MenuItem value="ea">EA / BOGEY DOPE</MenuItem>
             <MenuItem value="pod">PICTURE OF THE DAY</MenuItem>
-            {false && <MenuItem value="singlegroup">SINGLE</MenuItem>}
+            {process.env.NODE_ENV === "development" && (
+              <MenuItem value="singlegroup">SINGLE</MenuItem>
+            )}
           </Select>
         </div>
         <button
@@ -114,7 +128,6 @@ class PicOptionsBar extends React.PureComponent<POBSelProps, POBSelState> {
                 onChange={this.handleToggleHardMode}
               />
               <label style={{ paddingRight: "10px" }} htmlFor="hardMode">
-                {" "}
                 Hard Mode
               </label>
               <div className="box" />
@@ -125,5 +138,3 @@ class PicOptionsBar extends React.PureComponent<POBSelProps, POBSelState> {
     )
   }
 }
-
-export default PicOptionsBar

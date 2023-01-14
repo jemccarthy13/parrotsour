@@ -1,22 +1,19 @@
 /* istanbul ignore file */
-// Interfaces
-import { AircraftGroup } from "../../../classes/groups/group"
 import {
   PictureCanvasProps,
   PictureCanvasState,
 } from "../../../canvas/canvastypes"
-
-import PSAlert from "../../../pscomponents/alert/psalert"
-
-// Functions
-import { randomNumber } from "../../../utils/psmath"
 import { SensorType } from "../../../classes/aircraft/datatrail/sensortype"
+import { AircraftGroup } from "../../../classes/groups/group"
+import PSAlert from "../../../pscomponents/alert/psalert"
+import { randomNumber } from "../../../utils/math"
 import { PaintBrush } from "../paintbrush"
 
 let continueAnimation = false
 
 function sleep(milliseconds: number): void {
   const start = new Date().getTime()
+
   for (let i = 0; i < 1e7; i++) {
     if (new Date().getTime() - start > milliseconds) {
       break
@@ -48,6 +45,7 @@ function checkForCoAltitude(
           .range <= 20
     })
   )
+
   if (result.length !== 0) {
     PSAlert.error("CoAlt!")
   }
@@ -109,11 +107,13 @@ function doAnimation(
       let newHeading = groups[x].getHeading()
 
       const nextPoint = groups[x].getNextRoutingPoint()
+
       if (nextPoint) {
         newHeading = groups[x]
           .getCenterOfMass(props.dataStyle)
           .getBR(nextPoint).bearingNum
       }
+
       groups[x].updateIntent({
         desiredHeading: newHeading,
       })
@@ -129,7 +129,9 @@ function doAnimation(
       //   "blue"
       // )
     }
+
     const sPos = groups[x].getCenterOfMass(props.dataStyle)
+
     PaintBrush.drawText(groups[x].getLabel(), sPos.x - 10, sPos.y + 20, 12)
   }
 
@@ -137,6 +139,7 @@ function doAnimation(
     const slider: HTMLInputElement = document.getElementById(
       "speedSlider"
     ) as HTMLInputElement
+
     if (slider && slider.value) {
       sleep(500 * ((100 - parseInt(slider.value)) / 100))
     } else {
@@ -146,6 +149,7 @@ function doAnimation(
     const animate = function () {
       doAnimation(ctx, props, state, groups, animateCanvas, resetCallback)
     }
+
     window.requestAnimationFrame(animate)
 
     for (let y = 0; y < groups.length; y++) {
@@ -169,7 +173,9 @@ export function animateGroups(
     if (randomNumber(0, 10) <= 2) {
       groups[x].setManeuvers(1)
     }
+
     const bPos = state.blueAir.getCenterOfMass(props.dataStyle)
+
     groups[x].updateIntent({
       desiredHeading: groups[x].getCenterOfMass(props.dataStyle).getBR(bPos)
         .bearingNum,

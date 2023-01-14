@@ -2,11 +2,7 @@ import { Braaseye } from "../../../classes/braaseye"
 import { AircraftGroup } from "../../../classes/groups/group"
 import { GroupFactory } from "../../../classes/groups/groupfactory"
 import { Point } from "../../../classes/point"
-import {
-  PIXELS_TO_NM,
-  randomHeading,
-  randomNumber,
-} from "../../../utils/psmath"
+import { PIXELS_TO_NM, randomHeading, randomNumber } from "../../../utils/math"
 import { FightAxis } from "../../canvastypes"
 import { getOpenCloseAzimuth } from "../formatutils"
 import { PaintBrush } from "../paintbrush"
@@ -89,6 +85,7 @@ export default class DrawAzimuth extends DrawPic {
     let offsetX2 = 0
     let offsetY2 = 0
     let m2: Point
+
     if (isNS) {
       m2 = new Point(sPos.x, nPos.y)
       offsetX = -60
@@ -117,6 +114,7 @@ export default class DrawAzimuth extends DrawPic {
     // if Anchor N and NS, SG = "EAST", NG = "WEST"
     let firstGroup = this.groups[1]
     let secondGroup = this.groups[0]
+
     firstGroup.setLabel("EAST GROUP")
     secondGroup.setLabel("WEST GROUP")
     if (!this.groups[0].isAnchor()) {
@@ -155,6 +153,7 @@ export default class DrawAzimuth extends DrawPic {
     this.applyLabels()
 
     let answer = this.formatPicTitle() + " "
+
     answer += this.formatDimensions() + " "
     answer += getOpenCloseAzimuth(this.groups[0], this.groups[1]) + " "
     answer += this.isEchelon(this.groups[0], this.groups[1]) + " "
@@ -165,6 +164,7 @@ export default class DrawAzimuth extends DrawPic {
     for (let x = 0; x < this.groups.length; x++) {
       answer += this.groups[x].format(this.props.format) + " "
     }
+
     return answer.replace(/\s+/g, " ").trim()
   }
 }

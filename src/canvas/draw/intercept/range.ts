@@ -3,11 +3,7 @@ import { AircraftGroup } from "../../../classes/groups/group"
 import { GroupFactory } from "../../../classes/groups/groupfactory"
 import { Point } from "../../../classes/point"
 import { toCardinal } from "../../../utils/aspect"
-import {
-  PIXELS_TO_NM,
-  randomHeading,
-  randomNumber,
-} from "../../../utils/psmath"
+import { PIXELS_TO_NM, randomHeading, randomNumber } from "../../../utils/math"
 import { FightAxis } from "../../canvastypes"
 import { PaintBrush } from "../paintbrush"
 import { DrawPic } from "./drawpic"
@@ -65,6 +61,7 @@ export default class DrawRange extends DrawPic {
       dataTrailType: this.props.dataStyle,
       nContacts: contactList[1],
     })
+
     return [tg, lg]
   }
 
@@ -83,6 +80,7 @@ export default class DrawRange extends DrawPic {
     let offsetX2 = 0
     let offsetY2 = 0
     const isNS = FightAxis.isNS(orientation.orient)
+
     if (isNS) {
       m2 = new Point(tPos.x, lg.getCenterOfMass(dataStyle).y)
     } else {
@@ -100,6 +98,7 @@ export default class DrawRange extends DrawPic {
     PaintBrush.drawAltitudes(tPos, tg.getAltitudes(), offsetX2, offsetY2)
 
     const bluePos = blueAir.getCenterOfMass(dataStyle)
+
     lg.setBraaseye(new Braaseye(lPos, bluePos, bullseye))
     tg.setBraaseye(new Braaseye(tPos, bluePos, bullseye))
 
@@ -128,6 +127,7 @@ export default class DrawRange extends DrawPic {
 
     let firstGroup = lg
     let secondGroup = tg
+
     if (tg.getBraaseye().braa.range < lg.getBraaseye().braa.range) {
       firstGroup = tg
       firstGroup.setLabel("LEAD GROUP")
@@ -146,6 +146,7 @@ export default class DrawRange extends DrawPic {
     const isNS = FightAxis.isNS(this.props.orientation.orient)
     const tgPos = grp2.getCenterOfMass(this.props.dataStyle)
     const lgPos = grp1.getCenterOfMass(this.props.dataStyle)
+
     if (
       (!isNS && new Point(tgPos.x, lgPos.y).getBR(tgPos).range > 5) ||
       (isNS && tgPos.getBR(new Point(lgPos.x, tgPos.y)).range > 5)
@@ -156,6 +157,7 @@ export default class DrawRange extends DrawPic {
         answer += " ECHELON " + toCardinal(tgPos.getBR(lgPos).bearingNum) + ", "
       }
     }
+
     return answer
   }
 

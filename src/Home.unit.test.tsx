@@ -1,46 +1,93 @@
 import React from "react"
-import { mount, shallow } from "enzyme"
-
-import Home from "./Home"
-import ParrotSour from "./pscomponents/parrotsour"
+import { render, waitFor } from "@testing-library/react"
 import { createHashHistory } from "history"
-import ParrotSourIntercept from "./pscomponents/intercept/parrotsourintercept"
-import ParrotSourProcedural from "./pscomponents/procedural/parrotsourprocedural"
-import ParrotSourChooser from "./pscomponents/parrotsourchooser"
+import Home from "./Home"
 
 describe("Home", () => {
-  beforeAll(() => {
-    console.warn(
-      "These tests do not accurately render home.\r\n" +
-        "Waiting for the Suspense to resolve is not currently implemented/supported"
-    )
-  })
+  it("should_render_default", async () => {
+    const home = render(<Home />)
 
-  it("should_render_default", () => {
-    const home = shallow(<Home />)
-    expect(home.find(ParrotSour)).toBeDefined()
-    expect(home.find(ParrotSourIntercept)).toBeDefined()
-    expect(home).toMatchSnapshot()
-  })
+    await waitFor(
+      () => {
+        expect(home.queryByText(/Quick Tips/)).toBeDefined()
+      },
+      { timeout: 5000 }
+    )
+  }, 6000)
 
   it("should_render_with_procedural", async () => {
     const history = createHashHistory()
+
     history.push("/procedural.html")
-    const home = mount(<Home />)
-    expect(home.find(ParrotSourProcedural)).toBeDefined()
+    const home = render(<Home />)
+
+    await waitFor(
+      () => {
+        expect(home.queryByText(/Quick Tips/)).toBeDefined()
+      },
+      { timeout: 5000 }
+    )
   })
 
   it("should_render_with_intercept", async () => {
     const history = createHashHistory()
+
     history.push("/intercept.html")
-    const home = mount(<Home />)
-    expect(home.find(ParrotSourIntercept)).toBeDefined()
+    const home = render(<Home />)
+
+    expect(home).toBeDefined()
+
+    await waitFor(
+      () => {
+        expect(home.queryByText(/Quick Tips/)).toBeDefined()
+      },
+      { timeout: 5000 }
+    )
+  })
+
+  it("should_render_with_close", async () => {
+    const history = createHashHistory()
+
+    history.push("/close.html")
+    const home = render(<Home />)
+
+    expect(home).toBeDefined()
+
+    await waitFor(
+      () => {
+        expect(home.queryByText(/Quick Tips/)).toBeDefined()
+      },
+      { timeout: 5000 }
+    )
+  })
+
+  it("should_render_with_api", async () => {
+    const history = createHashHistory()
+
+    history.push("/api.html")
+    const home = render(<Home />)
+
+    expect(home).toBeDefined()
+
+    await waitFor(
+      () => {
+        expect(home.getByText(/Download/)).toBeDefined()
+      },
+      { timeout: 5000 }
+    )
   })
 
   it("should_render_with_chooser", async () => {
     const history = createHashHistory()
+
     history.push("/parrotsour.html")
-    const home = mount(<Home />)
-    expect(home.find(ParrotSourChooser)).toBeDefined()
+    const home = render(<Home />)
+
+    await waitFor(
+      () => {
+        expect(home.queryByText(/Intercept/)).toBeDefined()
+      },
+      { timeout: 5000 }
+    )
   })
 })

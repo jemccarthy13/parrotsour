@@ -1,17 +1,14 @@
 /* istanbul ignore file */
 import React, { ReactElement } from "react"
-
-import DrawingCanvas from "../../drawingcanvas"
-
+import { ProceduralAnimationHandler } from "../../../animation/proceduralanimator"
 import { PictureAnswer, PictureCanvasProps } from "../../../canvas/canvastypes"
-
-import { AircraftGroup } from "../../../classes/groups/group"
-import { PIXELS_TO_NM, randomNumber } from "../../../utils/psmath"
-import { Point } from "../../../classes/point"
 import { getStartPos } from "../../../canvas/draw/intercept/pictureclamp"
 import { IDMatrix } from "../../../classes/aircraft/id"
+import { AircraftGroup } from "../../../classes/groups/group"
+import { Point } from "../../../classes/point"
+import { PIXELS_TO_NM, randomNumber } from "../../../utils/math"
+import DrawingCanvas from "../../drawingcanvas"
 import ParrotSourCanvas from "../../parrotsourcanvas"
-import { ProceduralAnimationHandler } from "../../../animation/proceduralanimator"
 import { PaintBrush } from "../paintbrush"
 
 /**
@@ -75,6 +72,7 @@ export default class ProceduralCanvas extends ParrotSourCanvas {
     const grpPos = grp.getCenterOfMass(dataStyle)
 
     PaintBrush.drawText(grp.getLabel(), grpPos.x, grpPos.y + 35, 12)
+
     return {
       pic: "",
       groups: [grp],
@@ -83,6 +81,7 @@ export default class ProceduralCanvas extends ParrotSourCanvas {
 
   drawCGRSGrid = (): void => {
     const ctx = PaintBrush.getContext()
+
     for (let x = 0; x < ctx.canvas.width; x += 10 * PIXELS_TO_NM) {
       if (x % (30 * PIXELS_TO_NM) === 0) {
         PaintBrush.drawLine(x, 0, x, ctx.canvas.height)
@@ -90,6 +89,7 @@ export default class ProceduralCanvas extends ParrotSourCanvas {
         PaintBrush.drawLine(x, 0, x, ctx.canvas.height, "gray")
       }
     }
+
     for (let y = 0; y < ctx.canvas.height; y += 10 * PIXELS_TO_NM) {
       if (y % (30 * PIXELS_TO_NM) === 0) {
         PaintBrush.drawLine(0, y, ctx.canvas.width, y)
@@ -114,6 +114,7 @@ export default class ProceduralCanvas extends ParrotSourCanvas {
     let off = 0
     let rowC = startRow
     let col2Chr = startCol2
+
     for (let y = 10; y < ctx.canvas.height; y += 120) {
       for (let x = 10; x < ctx.canvas.width; x += 120) {
         if (col2Chr + colC > 25) {
@@ -121,6 +122,7 @@ export default class ProceduralCanvas extends ParrotSourCanvas {
           off++
           colC = 0
         }
+
         PaintBrush.drawText(
           rowC + chr(startCol1 + off) + chr(col2Chr + colC),
           x + 33,
@@ -155,6 +157,7 @@ export default class ProceduralCanvas extends ParrotSourCanvas {
     const answer: PictureAnswer = this.drawPicture()
 
     const { setAnswer } = this.props
+
     setAnswer(answer)
     this.setState({ answer, animateCanvas: imageData })
   }
@@ -173,6 +176,7 @@ export default class ProceduralCanvas extends ParrotSourCanvas {
       dataStyle,
     } = this.props
     const { bullseye, answer } = this.state
+
     return (
       <DrawingCanvas
         answer={answer}

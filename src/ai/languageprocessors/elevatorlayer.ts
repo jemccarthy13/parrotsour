@@ -22,19 +22,23 @@ export function processElevatorLayer(
   const isCommand = elevCmd.found
 
   const originalReplaceStr = elevCmd.text()
+
   if (isCommand) {
     const newflActual = elevCmd.groups().fl.text()
     let newfl = newflActual
     let cpy = "c, "
+
     if (isVoice) {
       cpy = "copy, "
       newfl = newflActual.replace("FL", " flight level ")
       newfl = newflActual?.split("").join(" ")
     }
+
     sendResponse(
       asset.getLabel(),
       cpy + elevCmd.groups().act.verbs().toGerund().text() + " " + newfl
     )
+
     asset.updateIntent({
       desiredAlt: parseInt(newflActual) / 10,
     })

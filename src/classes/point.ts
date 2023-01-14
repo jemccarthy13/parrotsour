@@ -1,6 +1,6 @@
 import { BlueInThe } from "../canvas/canvastypes"
+import { PIXELS_TO_NM, toDegrees } from "../utils/math"
 import { BRAA } from "./braa"
-import { PIXELS_TO_NM, toDegrees } from "../utils/psmath"
 
 /**
  * An x,y Cartesian point that can calculate bearing and
@@ -39,6 +39,7 @@ export class Point {
     let brg = Math.round(
       270 + toDegrees(Math.atan2(this.y - toPoint.y, this.x - toPoint.x))
     )
+
     if (brg > 360) {
       brg = brg - 360
     }

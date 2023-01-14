@@ -1,11 +1,7 @@
 import { Braaseye } from "../../../classes/braaseye"
 import { AircraftGroup } from "../../../classes/groups/group"
 import { Point } from "../../../classes/point"
-import {
-  PIXELS_TO_NM,
-  randomHeading,
-  randomNumber,
-} from "../../../utils/psmath"
+import { PIXELS_TO_NM, randomHeading, randomNumber } from "../../../utils/math"
 import { FightAxis } from "../../canvastypes"
 import { getOpenCloseAzimuth } from "../formatutils"
 import { PaintBrush } from "../paintbrush"
@@ -63,6 +59,7 @@ export default class DrawVic extends DrawPic {
     } else {
       sy = startPos.y + this.dimensions.wide
     }
+
     const stg = new AircraftGroup({
       sx,
       sy,
@@ -78,6 +75,7 @@ export default class DrawVic extends DrawPic {
       sx = startPos.x + this.dimensions.deep
       sy = startPos.y + this.dimensions.wide / 2
     }
+
     const lg = new AircraftGroup({
       sx,
       sy,
@@ -105,6 +103,7 @@ export default class DrawVic extends DrawPic {
     let offsetX = 0
     let dPt = new Point(stgPos.x, lgPos.y)
     let wPt = new Point(stgPos.x, ntgPos.y)
+
     if (isNS) {
       offsetX = -70
       dPt = new Point(lgPos.x, stgPos.y)
@@ -113,6 +112,7 @@ export default class DrawVic extends DrawPic {
 
     const realDepth = dPt.getBR(lgPos).range
     const realWidth = wPt.getBR(stgPos).range
+
     this.dimensions.deep = realDepth
     this.dimensions.wide = realWidth
     PaintBrush.drawMeasurement(lgPos, dPt, realDepth, showMeasurements)
@@ -137,6 +137,7 @@ export default class DrawVic extends DrawPic {
 
   formatDimensions(): string {
     const openClose = getOpenCloseAzimuth(this.groups[1], this.groups[2])
+
     return (
       this.dimensions.deep +
       " DEEP, " +
@@ -163,6 +164,7 @@ export default class DrawVic extends DrawPic {
     const stgStraightPos = isNS
       ? new Point(stgPos.x, lgPos.y)
       : new Point(lgPos.x, stgPos.y)
+
     if (ntgStraightPos.getBR(lgPos).range < this.dimensions.wide / 3) {
       answer +=
         " WEIGHTED " +
@@ -183,6 +185,7 @@ export default class DrawVic extends DrawPic {
 
     let nLbl = "NORTH"
     let sLbl = "SOUTH"
+
     if (isNS) {
       nLbl = "WEST"
       sLbl = "EAST"
@@ -193,6 +196,7 @@ export default class DrawVic extends DrawPic {
 
     if (!this.groups[1].isAnchor()) {
       const tmp = this.groups[1]
+
       this.groups[1] = this.groups[2]
       this.groups[2] = tmp
     }
@@ -208,6 +212,7 @@ export default class DrawVic extends DrawPic {
     this.applyLabels()
 
     let answer = this.formatPicTitle() + " "
+
     answer += this.formatDimensions() + " "
 
     answer += this.formatWeighted() + " "

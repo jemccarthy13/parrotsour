@@ -2,7 +2,7 @@
 
 exports[`Braaseye draws_correctly_braaFirst 1`] = `
 <canvas
-  data-snapshot-image="676d0716748afaddb149537a5007e819e56753828675e354fa87b15d81a98412eb3acfa65d92979b74442d294f65ca83f78e5e1103e8528f3366149b7f395b40"
+  data-snapshot-image="e8b1df6035af40f00b6cc2737316cd20483240cab600b9c157d627deb3d66a87cff192ca17dac753488afb36c1815a9e66fbfc1194b5b69d42326637752cef96"
   height="50"
   width="100"
 />
@@ -10,7 +10,7 @@ exports[`Braaseye draws_correctly_braaFirst 1`] = `
 
 exports[`Braaseye draws_correctly_noOffset 1`] = `
 <canvas
-  data-snapshot-image="1ee48db16d6d38a66d29a816c3d866ff897832b665cac64670877098f1e922a2024757c10694a357263b655c56d3d4985f9bb502ab7c86908859f7edaacd88fe"
+  data-snapshot-image="95ac8c7149e872ccb8f2481c356526ce473a92f4cee648b72fe7c747b0830c4c1470086cec270f73e5f8861580c33dd9f96c7f12edc3d4ebb8da8d1fa4bd8ff5"
   height="50"
   width="100"
 />
@@ -18,7 +18,7 @@ exports[`Braaseye draws_correctly_noOffset 1`] = `
 
 exports[`Braaseye draws_correctly_withOffset 1`] = `
 <canvas
-  data-snapshot-image="1c543bf7fefadd97e634e8528801c374123b1c38b88f2607513d896f30c15bfbdce7c9717f984a709722ff51ad535df1dbf2f785660e69ce6aa514e2f72793f2"
+  data-snapshot-image="81b97fb44b2296b07c35686d3b192298e1db0569474cf7717cbaa4ed65baecd46843e1cba26f25c94df13f10b1db52d24635c272a906e4b57cbe9edf5a7d4445"
   height="50"
   width="100"
 />

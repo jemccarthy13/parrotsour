@@ -1,23 +1,17 @@
 /* istanbul ignore file */
-// Components
-import ParrotSourCanvas from "./parrotsourcanvas"
-
-// Interfaces
+import { CloseAnimationHandler } from "../animation/closeanimator"
+import { SensorType } from "../classes/aircraft/datatrail/sensortype"
+import { IDMatrix } from "../classes/aircraft/id"
+import { AircraftGroup } from "../classes/groups/group"
+import { randomNumber } from "../utils/math"
 import {
   BlueInThe,
   PictureAnswer,
   PictureCanvasState,
   PictureCanvasProps,
 } from "./canvastypes"
-import { AircraftGroup } from "../classes/groups/group"
-
-import { randomNumber } from "../utils/psmath"
-
-// Interfaces
-import { IDMatrix } from "../classes/aircraft/id"
 import { PaintBrush } from "./draw/paintbrush"
-import { SensorType } from "../classes/aircraft/datatrail/sensortype"
-import { CloseAnimationHandler } from "../animation/closeanimator"
+import ParrotSourCanvas from "./parrotsourcanvas"
 
 /**
  * This component is the main control for drawing 1v1 close control intercepts.
@@ -43,9 +37,11 @@ export default class CloseCanvas extends ParrotSourCanvas {
     this._componentDidUpdate(prevProps)
     let animateImage = undefined
     const ctx = PaintBrush.getContext()
+
     if (prevProps.orientation !== this.props.orientation) {
       if (this.props.resetCallback) this.props.resetCallback()
     }
+
     if (
       prevProps.dataStyle !== this.props.dataStyle ||
       prevProps.showMeasurements !== this.props.showMeasurements ||
@@ -107,6 +103,7 @@ export default class CloseCanvas extends ParrotSourCanvas {
       yPos = 20
       heading = 180
     }
+
     const fighter = new AircraftGroup({
       sx: xPos,
       sy: yPos,
@@ -114,6 +111,7 @@ export default class CloseCanvas extends ParrotSourCanvas {
       nContacts: 1,
       id: IDMatrix.FRIEND,
     })
+
     fighter.setLabel("VR01")
     fighter.draw(SensorType.RAW)
 
@@ -124,14 +122,17 @@ export default class CloseCanvas extends ParrotSourCanvas {
       nContacts: 1,
       id: IDMatrix.FRIEND,
     })
+
     target.draw(SensorType.RAW)
     target.setLabel("VR02")
 
     const ftrPos = fighter.getCenterOfMass(SensorType.RAW)
+
     PaintBrush.drawAltitudes(ftrPos, fighter.getAltitudes())
     PaintBrush.drawText(fighter.getLabel(), ftrPos.x, ftrPos.y + 35, 12)
 
     const grpPos = target.getCenterOfMass(SensorType.RAW)
+
     PaintBrush.drawAltitudes(grpPos, target.getAltitudes())
     PaintBrush.drawText(target.getLabel(), grpPos.x, grpPos.y + 35, 12)
 
@@ -157,6 +158,7 @@ export default class CloseCanvas extends ParrotSourCanvas {
     const blueOnly = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height)
 
     const answer: PictureAnswer = this.drawPicture()
+
     this.props.setAnswer(answer)
 
     this.setState({ answer, animateCanvas: blueOnly })

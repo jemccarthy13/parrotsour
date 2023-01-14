@@ -23,6 +23,9 @@ export const theme = createTheme({
           marginLeft: 16,
           marginTop: "auto",
           marginBottom: "auto",
+          "&.Mui-checked": {
+            backgroundColor: "#52d869",
+          },
         },
         switchBase: {
           padding: 1,
@@ -38,9 +41,6 @@ export const theme = createTheme({
           borderRadius: 24 / 2,
           opacity: "1 !important",
         },
-        checked: {
-          backgroundColor: "#52d869",
-        },
       },
     },
     MuiTextField: {
@@ -48,7 +48,7 @@ export const theme = createTheme({
         root: `
             font-size: 12px;
             font-family: 'Roboto Mono', monospace;
-            height: 100%;
+            height: auto;
             transform: unset;
             padding-bottom: 20px;
           `,
@@ -59,6 +59,15 @@ export const theme = createTheme({
         InputProps: {
           disableUnderline: true,
         },
+      },
+    },
+    MuiInputBase: {
+      styleOverrides: {
+        root: `
+          font-size: 14px;
+          height: auto !important;
+          transform: unset;
+        `,
       },
     },
   },

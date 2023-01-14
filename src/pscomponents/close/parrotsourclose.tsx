@@ -1,12 +1,5 @@
 /* istanbul ignore file */
 import React, { lazy, ReactElement, Suspense } from "react"
-
-import "../../css/select.css"
-import "../../css/slider.css"
-import "../../css/parrotsour.css"
-import "../../css/toggle.css"
-
-import { InterceptQT } from "../quicktips/interceptQT"
 import {
   BlueInThe,
   CanvasOrient,
@@ -14,11 +7,15 @@ import {
 } from "../../canvas/canvastypes"
 import { SensorType } from "../../classes/aircraft/datatrail/sensortype"
 import { FORMAT } from "../../classes/supportedformats"
-import PSCookies from "../../utils/pscookies"
+import PSCookies from "../../utils/cookies"
+import { InterceptQT } from "../quicktips/intercept-tips"
 import CloseCommandBox from "./commandbox"
+import "../../css/slider.css"
+import "../../css/parrotsour.css"
+import "../../css/toggle.css"
 
-const ParrotSourHeader = lazy(() => import("../parrotsourheader"))
-const ParrotSourControls = lazy(() => import("../parrotsourcontrols"))
+const ParrotSourHeader = lazy(() => import("../header/header"))
+const ParrotSourControls = lazy(() => import("../header/controls"))
 
 const CloseCanvas = lazy(() => import("../../canvas/closecanvas"))
 const VersionInfo = lazy(() => import("../../versioninfo"))
@@ -67,10 +64,7 @@ export default class ParrotSourClose extends React.PureComponent<
         ? SensorType.RAW
         : SensorType.ARROW,
     }
-    this.dummyCallback = this.pauseAnimate.bind(this)
   }
-
-  dummyCallback: () => void
 
   /**
    * Called when the PSControls slider value is changed
@@ -107,8 +101,9 @@ export default class ParrotSourClose extends React.PureComponent<
    * Called to start the animation
    */
   startAnimate = (): void => {
-    // const { answer } = this.state
-    // answer.groups.forEach((grp) => grp.setCapping(false))
+    const { answer } = this.state
+
+    answer.groups.forEach((grp) => grp.setCapping(false))
     this.setState({ animate: true })
   }
 
@@ -134,6 +129,7 @@ export default class ParrotSourClose extends React.PureComponent<
       width: 700,
       orient: BlueInThe.NORTH,
     }
+
     if (orient == BlueInThe.NORTH) {
       newConfig = {
         height: 500,
@@ -146,6 +142,7 @@ export default class ParrotSourClose extends React.PureComponent<
 
   onDataStyleChange = (): void => {
     const { dataStyle } = this.state
+
     if (dataStyle === SensorType.ARROW) {
       this.setState({ dataStyle: SensorType.RAW })
     } else {

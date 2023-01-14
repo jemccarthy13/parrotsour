@@ -7,6 +7,7 @@ import DrawAzimuth from "./azimuth"
 import { testProps } from "./mockutils.unit.test"
 
 const mockWarn = jest.fn()
+
 jest.mock("../../../pscomponents/alert/psalert", () => ({
   success: jest.fn(),
   warning: () => mockWarn(),
@@ -43,6 +44,7 @@ describe("DrawPic", () => {
 
   it("assigns_contacts_too_few_contacts", () => {
     const nCts = draw.assignContacts(2, 1)
+
     expect(mockWarn).toHaveBeenCalledTimes(1)
     expect(nCts.length).toEqual(2)
     expect(nCts[0]).toEqual(1) // 1 from assign contacts
@@ -51,12 +53,14 @@ describe("DrawPic", () => {
 
   it("assigns_contacts_all", () => {
     const nCts = draw.assignContacts(1, 3)
+
     expect(nCts.length).toEqual(1)
     expect(nCts[0]).toEqual(3)
   })
 
   it("assigns_contacts_random", () => {
     const nCts = draw.assignContacts(1, 0)
+
     expect(nCts.length).toEqual(1)
     expect(nCts[0]).toEqual(0)
   })
@@ -65,6 +69,7 @@ describe("DrawPic", () => {
     draw.initialize(testProps, testState)
     const grp1 = new AircraftGroup({ sx: 300, sy: 400 })
     const grp2 = new AircraftGroup({ sx: 200, sy: 400 })
+
     draw.groups = [grp1, grp2]
     draw.drawInfo()
     draw.checkAnchor(grp1, grp2)
@@ -94,6 +99,7 @@ describe("DrawPic", () => {
       alts: [20],
       nContacts: 1,
     })
+
     draw.groups = [grp1, grp2]
     draw.drawInfo()
     draw.checkAnchor(grp1, grp2)
@@ -114,6 +120,7 @@ describe("DrawPic", () => {
       alts: [19],
       nContacts: 1,
     })
+
     draw.groups = [grp3, grp4]
     draw.drawInfo()
     draw.checkAnchor(grp3, grp4)
@@ -137,6 +144,7 @@ describe("DrawPic", () => {
       alts: [20, 20, 20],
       nContacts: 3,
     })
+
     draw.groups = [grp1, grp2]
     draw.drawInfo()
     draw.checkAnchor(grp1, grp2)

@@ -1,5 +1,5 @@
 import { PaintBrush } from "../../../canvas/draw/paintbrush"
-import { headingToRadians, PIXELS_TO_NM } from "../../../utils/psmath"
+import { headingToRadians, PIXELS_TO_NM } from "../../../utils/math"
 import { Point } from "../../point"
 import { IDMatrix } from "../id"
 import { DataTrail } from "./datatrail"
@@ -23,6 +23,7 @@ export class IFFDataTrail extends DataTrail {
     let xPos = startx
     let yPos = starty
     const iPts: Point[] = []
+
     // draw the radar trail
     if (!this.iffPoints || this.iffPoints.length === 0) {
       for (let mult = 0; mult < 5; mult++) {
@@ -58,18 +59,21 @@ export class IFFDataTrail extends DataTrail {
 
     const xPos = startx + offsetX * 6 + jit * Math.random() + Math.random()
     const yPos = starty + offsetY * 6 + jit * Math.random() + Math.random()
+
     newIFFPts.push(new Point(xPos, yPos))
     this.iffPoints = newIFFPts
   }
 
   draw(heading: number, id: IDMatrix): void {
     const ctx = PaintBrush.getContext()
+
     if (id !== IDMatrix.SUSPECT && id !== IDMatrix.HOSTILE) {
       ctx.strokeStyle = "blue"
       ctx.lineWidth = 1
       for (let l = 0; l < this.iffPoints.length; l++) {
         const xPos = this.iffPoints[l].x
         const yPos = this.iffPoints[l].y
+
         ctx.beginPath()
         ctx.moveTo(xPos, yPos)
         ctx.lineTo(xPos - 3, yPos)

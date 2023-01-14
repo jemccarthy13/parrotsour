@@ -9,6 +9,7 @@ export enum IDMatrix {
 export function getMostRestrictiveID(ids: IDMatrix[]): IDMatrix {
   function idToNum(id: IDMatrix) {
     const num = 4
+
     switch (id) {
       case IDMatrix.SUSPECT:
         return 3
@@ -19,16 +20,21 @@ export function getMostRestrictiveID(ids: IDMatrix[]): IDMatrix {
       case IDMatrix.FRIEND:
         return 1
     }
+
     return num
   }
+
   let lowestID = IDMatrix.HOSTILE
   let lowestIDNum = 4
+
   for (let i = 0; i < ids.length; i++) {
     const idNum = idToNum(ids[i])
+
     if (idNum < lowestIDNum) {
       lowestIDNum = idNum
       lowestID = ids[i]
     }
   }
+
   return lowestID
 }

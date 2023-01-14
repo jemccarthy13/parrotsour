@@ -2,6 +2,8 @@ import { SensorType } from "../../../classes/aircraft/datatrail/sensortype"
 import { AircraftGroup, GroupParams } from "../../../classes/groups/group"
 import { Point } from "../../../classes/point"
 import { FORMAT } from "../../../classes/supportedformats"
+import TestCanvas from "../../../testutils/testcanvas"
+import * as PSMath from "../../../utils/math"
 import {
   BlueInThe,
   PictureCanvasProps,
@@ -10,8 +12,6 @@ import {
 import { PaintBrush } from "../paintbrush"
 import DrawLadder from "./ladder"
 import { testProps } from "./mockutils.unit.test"
-import * as PSMath from "../../../utils/psmath"
-import TestCanvas from "../../../testutils/testcanvas"
 
 let testState: PictureCanvasState
 let p: Partial<GroupParams>

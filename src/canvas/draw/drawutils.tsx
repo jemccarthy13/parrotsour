@@ -16,7 +16,8 @@ export function clampInContext(
   x: number | Point,
   y?: number
 ): Point {
-  let retPoint = Point.DEFAULT
+  let retPoint: Point
+
   if (x instanceof Point) {
     retPoint = new Point(
       Math.min(Math.max(x.x, 0), ctx.canvas.width),
@@ -29,5 +30,6 @@ export function clampInContext(
       Math.min(Math.max(y, 0), ctx.canvas.height)
     )
   }
+
   return retPoint
 }

@@ -1,4 +1,4 @@
-import PSCookies from "./pscookies"
+import PSCookies from "./cookies"
 
 describe("PSCookies", () => {
   it("has_default_cookies", () => {

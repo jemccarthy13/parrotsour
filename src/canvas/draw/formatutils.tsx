@@ -1,9 +1,9 @@
 /**
  * This file contains utilities for group and answer formatting
  */
-import { AircraftGroup } from "../../classes/groups/group"
-import { toRadians } from "../../utils/psmath"
 import { ArrowDataTrail } from "../../classes/aircraft/datatrail/arrowdatatrail"
+import { AircraftGroup } from "../../classes/groups/group"
+import { toRadians } from "../../utils/math"
 
 /**
  * Convert an altitude to a 3-digit flight level
@@ -47,6 +47,7 @@ export function getOpenCloseAzimuth(
     closing ||
     (Math.abs(speed1to2) < acceptableRate && speed2to1 < 0) ||
     (Math.abs(speed2to1) < acceptableRate && speed1to2 > 0)
+
   opening =
     opening ||
     (Math.abs(speed1to2) < acceptableRate && speed2to1 > 0) ||
@@ -59,6 +60,7 @@ export function getOpenCloseAzimuth(
     if (opening) {
       retVal = " OPENING "
     }
+
     if (closing) {
       retVal = " CLOSING "
     }

@@ -1,9 +1,8 @@
 import { SensorType } from "../../classes/aircraft/datatrail/sensortype"
 import { AircraftGroup } from "../../classes/groups/group"
+import TestCanvas from "../../testutils/testcanvas"
 import { getOpenCloseAzimuth } from "./formatutils"
 import { PaintBrush } from "./paintbrush"
-
-import TestCanvas from "../../testutils/testcanvas"
 
 describe("FormatUtils", () => {
   TestCanvas.useContext(200, 200)
@@ -195,6 +194,7 @@ describe("FormatUtils", () => {
       expect(TestCanvas.getCanvas()).toMatchSnapshot()
       expect(getOpenCloseAzimuth(grp1, grp2)).toEqual("")
     })
+
     it("openclose_90_offset", () => {
       grp1.setHeading(1)
       grp2.setHeading(90)
@@ -203,6 +203,7 @@ describe("FormatUtils", () => {
       expect(TestCanvas.getCanvas()).toMatchSnapshot()
       expect(getOpenCloseAzimuth(grp1, grp2)).toEqual(" OPENING ")
     })
+
     it("openclose", () => {
       grp1.setHeading(310)
       grp2.setHeading(40)
@@ -219,6 +220,7 @@ describe("FormatUtils", () => {
         hdg: 180,
         nContacts: 3,
       })
+
       grp2 = new AircraftGroup({
         sx: 50,
         sy: 150,
@@ -424,6 +426,7 @@ describe("FormatUtils", () => {
       expect(TestCanvas.getCanvas()).toMatchSnapshot()
       expect(getOpenCloseAzimuth(grp1, grp2)).toEqual("")
     })
+
     it("openclose_90_offset", () => {
       grp1.setHeading(1)
       grp2.setHeading(90)
@@ -432,6 +435,7 @@ describe("FormatUtils", () => {
       expect(TestCanvas.getCanvas()).toMatchSnapshot()
       expect(getOpenCloseAzimuth(grp1, grp2)).toEqual(" OPENING ")
     })
+
     it("openclose", () => {
       grp1.setHeading(310)
       grp2.setHeading(40)
@@ -448,6 +452,7 @@ describe("FormatUtils", () => {
         hdg: 180,
         nContacts: 3,
       })
+
       grp2 = new AircraftGroup({
         sx: 50,
         sy: 150,

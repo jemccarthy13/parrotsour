@@ -4,11 +4,7 @@ import { AircraftGroup } from "../../../classes/groups/group"
 import { Point } from "../../../classes/point"
 import { FORMAT } from "../../../classes/supportedformats"
 import { Aspect } from "../../../utils/aspect"
-import {
-  PIXELS_TO_NM,
-  randomHeading,
-  randomNumber,
-} from "../../../utils/psmath"
+import { PIXELS_TO_NM, randomHeading, randomNumber } from "../../../utils/math"
 import { FightAxis } from "../../canvastypes"
 import { PaintBrush } from "../paintbrush"
 import { DrawPic } from "./drawpic"
@@ -26,6 +22,7 @@ export default class DrawThreat extends DrawPic {
   getPictureInfo(start?: Point): PictureInfo {
     const isNS = FightAxis.isNS(this.props.orientation.orient)
     const bPos = this.state.blueAir.getCenterOfMass(this.props.dataStyle)
+
     if (start === undefined) {
       start = new Point(
         randomNumber(bPos.x - 25 * PIXELS_TO_NM, bPos.x - 10 * PIXELS_TO_NM),
@@ -54,6 +51,7 @@ export default class DrawThreat extends DrawPic {
       hdg: heading,
       nContacts: contactList[0],
     })
+
     return [sg]
   }
 
@@ -106,6 +104,7 @@ export default class DrawThreat extends DrawPic {
     const sgAlts: AltStack = sg.getAltStack(this.props.format)
 
     let answer: string = this.formatPicTitle()
+
     answer += braaseye.braa.toString() + " "
     answer += sgAlts.stack + " "
     answer += aspectH + " HOSTILE "

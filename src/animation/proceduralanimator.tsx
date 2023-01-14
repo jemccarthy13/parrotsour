@@ -1,4 +1,3 @@
-// Classes
 import { PictureCanvasState } from "../canvas/canvastypes"
 import { PaintBrush } from "../canvas/draw/paintbrush"
 import { SensorType } from "../classes/aircraft/datatrail/sensortype"

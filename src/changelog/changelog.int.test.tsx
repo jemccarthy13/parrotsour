@@ -1,8 +1,7 @@
 import React from "react"
 import { ThemeProvider } from "@mui/system"
-import { mount } from "enzyme"
-import { Accordion } from "../utils/muiadapter"
-import { createTheme } from "../utils/muistylesadapter"
+import { render } from "@testing-library/react"
+import { theme } from "../theme"
 import ChangeLog from "./changelog"
 
 /**
@@ -14,12 +13,11 @@ describe("ChangeLog", () => {
   })
 
   it("renders_with_children", () => {
-    const theme = createTheme()
-    const wrapper = mount(
+    const wrapper = render(
       <ThemeProvider theme={theme}>
         <ChangeLog />
       </ThemeProvider>
     )
-    expect(wrapper.find(Accordion)).toBeDefined()
+    expect(wrapper.getAllByText(/bugs/i).length).toBeGreaterThan(0)
   })
 })

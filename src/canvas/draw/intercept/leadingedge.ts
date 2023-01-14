@@ -44,9 +44,11 @@ export default class DrawLeadEdge extends DrawPic {
       { start }
     )
     const leadInfo = this.leadEdge.getPictureInfo(pic1StartPos)
+
     this.leadEdge.dimensions = leadInfo
 
     const followInfo = this.followOn.getPictureInfo(pic1StartPos)
+
     this.followOn.dimensions = followInfo
 
     return {
@@ -64,14 +66,17 @@ export default class DrawLeadEdge extends DrawPic {
       startPos,
       contactList.slice(0, this.leadEdge.getNumGroups())
     )
+
     this.leadEdge.groups = leadGrps
 
     let furthestPic1Group = this.leadEdge.groups[0]
     let furthestRange = 0
+
     this.leadEdge.groups.forEach((grp) => {
       const grpRange = grp
         .getCenterOfMass(dataStyle)
         .getBR(blueAir.getCenterOfMass(dataStyle)).range
+
       if (grpRange > furthestRange) {
         furthestPic1Group = grp
         furthestRange = grpRange
@@ -87,6 +92,7 @@ export default class DrawLeadEdge extends DrawPic {
       25,
       40
     )
+
     this.followOn.dimensions.start = pic2StartPos
 
     const followGrps = this.followOn.createGroups(
@@ -117,6 +123,7 @@ export default class DrawLeadEdge extends DrawPic {
 
     PaintBrush.drawBullseye(this.state.bullseye)
     this.state.blueAir.draw(this.props.dataStyle)
+
     return this.draw(false, nCts)
   }
 
@@ -135,10 +142,12 @@ export default class DrawLeadEdge extends DrawPic {
 
     let closestFollowOn = groups2[0]
     let closestRange = Number.MAX_VALUE
+
     groups2.forEach((grp) => {
       const grpRange = grp
         .getCenterOfMass(dataStyle)
         .getBR(blueAir.getCenterOfMass(dataStyle)).range
+
       if (grpRange < closestRange) {
         closestFollowOn = grp
         closestRange = grpRange
@@ -152,14 +161,17 @@ export default class DrawLeadEdge extends DrawPic {
       pic2Pos,
       this.props.orientation.orient
     )
+
     this.rngBack = rngBack
 
     let answer = "FOLLOW ON "
+
     if (this.props.format === FORMAT.IPE) {
       answer += "GROUPS " + rngBack + " MILES"
     } else {
       answer += rngBack
     }
+
     return answer
   }
 

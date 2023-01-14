@@ -34,6 +34,7 @@ export class Braaseye {
         "blue",
         showMeasurements
       )
+
       this.bull.draw(
         this.drawLoc.x + 25 + offsetX,
         this.drawLoc.y + 11 + offsetY,
@@ -47,6 +48,7 @@ export class Braaseye {
         "black",
         showMeasurements
       )
+
       this.braa.draw(
         this.drawLoc.x + 25 + offsetX,
         this.drawLoc.y + 11 + offsetY,

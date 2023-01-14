@@ -1,9 +1,8 @@
 import { PaintBrush } from "../../canvas/draw/paintbrush"
+import TestCanvas from "../../testutils/testcanvas"
 import { IDMatrix } from "../aircraft/id"
 import { AircraftGroup } from "./group"
 import { drawGroupCap } from "./groupcap"
-
-import TestCanvas from "../../testutils/testcanvas"
 
 describe("draw_group_cap", () => {
   TestCanvas.useContext()

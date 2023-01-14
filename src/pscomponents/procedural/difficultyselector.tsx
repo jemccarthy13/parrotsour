@@ -1,5 +1,5 @@
-import { ToggleButton, ToggleButtonGroup } from "../../utils/muiadapter"
 import React, { ReactElement } from "react"
+import { ToggleButton, ToggleButtonGroup } from "../../utils/muiadapter"
 
 type DSState = {
   difficulty: string
@@ -25,6 +25,7 @@ export default class DifficultySelector extends React.PureComponent<
 
   render(): ReactElement {
     const { difficulty } = this.state
+
     return (
       <ToggleButtonGroup
         value={difficulty}

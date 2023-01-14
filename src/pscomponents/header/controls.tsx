@@ -1,13 +1,12 @@
 import React, { ChangeEvent, ReactElement } from "react"
-
-import PSCookies from "../utils/pscookies"
+import PSCookies from "../../utils/cookies"
 import {
   FormControlLabel,
   DialogContent,
   DialogContentText,
   Dialog,
   Switch,
-} from "../utils/muiadapter"
+} from "../../utils/muiadapter"
 
 export interface PSCProps {
   handleSliderChange: { (val: number): void }
@@ -59,14 +58,17 @@ export default class ParrotSourControls extends React.PureComponent<
    */
   handleSliderChange = (evt: ChangeEvent<HTMLInputElement>): void => {
     const val = parseInt(evt.currentTarget.value)
+
     this.setState({ speedSliderValue: val })
 
     const { handleSliderChange } = this.props
+
     handleSliderChange(val)
   }
 
   handleSliderMouseUp = (): void => {
     const { speedSliderValue } = this.state
+
     PSCookies.setSliderValue(speedSliderValue)
   }
 
@@ -75,6 +77,7 @@ export default class ParrotSourControls extends React.PureComponent<
    */
   handleFightsOn = (): void => {
     const { startAnimate } = this.props
+
     startAnimate()
   }
 
@@ -83,6 +86,7 @@ export default class ParrotSourControls extends React.PureComponent<
    */
   handlePauseFight = (): void => {
     const { pauseAnimate } = this.props
+
     pauseAnimate()
   }
 
@@ -107,25 +111,31 @@ export default class ParrotSourControls extends React.PureComponent<
    */
   handleDataStyleChange = (): void => {
     const { dataStyleIsRadar } = this.state
+
     this.setState({ dataStyleIsRadar: !dataStyleIsRadar })
     PSCookies.setDataStyleIsRadar(!dataStyleIsRadar)
     const { handleDataStyleChange } = this.props
+
     handleDataStyleChange()
   }
 
   handleDisplayFirstChanged = (): void => {
     const { isBraaFirst } = this.state
+
     this.setState({ isBraaFirst: !isBraaFirst })
     PSCookies.setBraaFirst(!isBraaFirst)
     const { displayFirstChanged } = this.props
+
     displayFirstChanged()
   }
 
   handleOrientationChange = (): void => {
     const { isOrientNS } = this.state
+
     this.setState({ isOrientNS: !isOrientNS })
     PSCookies.setOrientNS(!isOrientNS)
     const { modifyCanvas } = this.props
+
     modifyCanvas()
   }
 
@@ -138,6 +148,7 @@ export default class ParrotSourControls extends React.PureComponent<
       dataStyleIsRadar,
       isOrientNS,
     } = this.state
+
     return (
       <div>
         <div style={{ display: "inline" }}>
@@ -234,6 +245,7 @@ export default class ParrotSourControls extends React.PureComponent<
               className="helpicon"
               id="btnDisplayFirstHelp"
               type="button"
+              data-testid="displayFirstHelp"
               onClick={this.handleToggleHelp}
             >
               ?
@@ -266,6 +278,7 @@ export default class ParrotSourControls extends React.PureComponent<
               style={{ padding: "0px", margin: "5px", float: "right" }}
               className="helpicon"
               id="btnDisplayDatatrailHelp"
+              data-testid="dataTrailHelp"
               type="button"
               onClick={this.handleToggleArrowHelp}
             >

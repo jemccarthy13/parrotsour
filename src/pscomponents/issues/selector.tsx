@@ -10,6 +10,7 @@ const IssueSelector = (props: IssueSelectorProps): ReactElement => {
   function handleClick(evt: ChangeEvent) {
     if (evt.target.id !== prevSel) {
       const { selectionChanged } = props
+
       selectionChanged(evt.target.id)
       setPrevSel(evt.target.id)
     }
@@ -23,6 +24,7 @@ const IssueSelector = (props: IssueSelectorProps): ReactElement => {
       <ul>
         <li>
           <input
+            data-testid="iss-pic-selector"
             style={{ color: "grey" }}
             type="radio"
             id="picprob"
@@ -38,6 +40,7 @@ const IssueSelector = (props: IssueSelectorProps): ReactElement => {
         </li>
         <li>
           <input
+            data-testid="iss-feature-selector"
             style={{ color: "grey" }}
             type="radio"
             id="feature"
@@ -52,6 +55,7 @@ const IssueSelector = (props: IssueSelectorProps): ReactElement => {
         </li>
         <li>
           <input
+            data-testid="iss-oth-selector"
             type="radio"
             id="othprob"
             name="issue"
@@ -59,7 +63,7 @@ const IssueSelector = (props: IssueSelectorProps): ReactElement => {
             onChange={handleClick}
           />
           <label htmlFor="othprob" style={{ color: "grey" }}>
-            Something else{" "}
+            Something else
           </label>
           <div className="check-no-hover" />
         </li>

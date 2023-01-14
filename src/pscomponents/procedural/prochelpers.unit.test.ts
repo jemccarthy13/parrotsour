@@ -1,6 +1,6 @@
 import { AircraftGroup } from "../../classes/groups/group"
 import { Point } from "../../classes/point"
-import { PIXELS_TO_NM } from "../../utils/psmath"
+import { PIXELS_TO_NM } from "../../utils/math"
 import { getAsset } from "../../ai/getAsset"
 
 import { Base26, convertToCGRS, convertToXY, getColIndex } from "./cgrshelpers"

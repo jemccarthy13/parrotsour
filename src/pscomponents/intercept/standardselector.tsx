@@ -1,13 +1,12 @@
-/* eslint-disable react/forbid-component-props */
 import React, { ReactElement } from "react"
+import { FORMAT } from "../../classes/supportedformats"
 import {
   Dialog,
   DialogContentText,
   DialogTitle,
   IconButton,
 } from "../../utils/muiadapter"
-import { FORMAT } from "../../classes/supportedformats"
-import { AlsaHelp } from "../quicktips/alsahelp"
+import { AlsaHelp } from "../quicktips/alsa-tips"
 
 export type StdSelectorProps = {
   selectionChanged: (val: FORMAT) => () => void
@@ -38,6 +37,7 @@ export default class StandardSelector extends React.PureComponent<
   render(): ReactElement {
     const { selectionChanged } = this.props
     const { showAlsaQT } = this.state
+
     return (
       <div className="pscontainer">
         <h2>
@@ -80,14 +80,14 @@ export default class StandardSelector extends React.PureComponent<
 
         <Dialog open={showAlsaQT} onClose={this.handleToggleAlsaQT}>
           <DialogTitle
-            style={{ paddingBottom: "5px", borderBottom: "1px solid black" }}
+            sx={{ paddingBottom: "5px", borderBottom: "1px solid black" }}
           >
             ALSA
             <br />
             <br />
             <IconButton
               onClick={this.handleToggleAlsaQT}
-              style={{
+              sx={{
                 position: "absolute",
                 right: "20px",
                 top: "10px",

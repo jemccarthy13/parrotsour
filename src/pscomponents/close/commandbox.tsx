@@ -1,11 +1,8 @@
 /* istanbul ignore file */
 import React, { ReactElement, KeyboardEvent } from "react"
-
-import SpeechTextControls from "../../ai/speechtext"
-
-import { getTimeStamp } from "../../utils/pstime"
-
+import { SpeechTextControls } from "../../ai/speechtext"
 import { PictureAnswer } from "../../canvas/canvastypes"
+import { getTimeStamp } from "../../utils/time"
 import { aiProcess } from "../procedural/aiprocess"
 
 type CBState = {
@@ -33,6 +30,7 @@ export default class CloseCommandBox extends React.PureComponent<
 
   componentDidUpdate(): void {
     const msgBox: HTMLTextAreaElement | null = this.chatroomRef.current
+
     if (msgBox !== null) msgBox.scrollTop = msgBox.scrollHeight
   }
 
@@ -43,9 +41,11 @@ export default class CloseCommandBox extends React.PureComponent<
 
   handleInputKeypress = (event: KeyboardEvent<HTMLTextAreaElement>): void => {
     const key = event.key
+
     if (key === "Enter") {
       event.preventDefault()
       const text = event.currentTarget.value.toString()
+
       this.sendChatMessage(text)
       //document.getElementById("chatInput")
     }
@@ -55,11 +55,13 @@ export default class CloseCommandBox extends React.PureComponent<
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ): void => {
     const text = event.currentTarget.value.toString()
+
     this.sendChatMessage(text)
   }
 
   sendSystemMsg = async (msg: string): Promise<void> => {
     const { text } = this.state
+
     await this.setState({
       text: text + getTimeStamp() + " *** " + msg + "\r\n",
     })
@@ -67,12 +69,14 @@ export default class CloseCommandBox extends React.PureComponent<
 
   sendMessage = (sender: string, message: string, voice?: boolean): void => {
     const { text } = this.state
+
     if (!voice) {
       this.setState({
         text: text + getTimeStamp() + " <" + sender + "> " + message + "\n",
       })
     } else {
       const msg = new SpeechSynthesisUtterance()
+
       msg.text = message
       window.speechSynthesis.speak(msg)
     }
@@ -80,6 +84,7 @@ export default class CloseCommandBox extends React.PureComponent<
 
   _clearTextBox = (): void => {
     const current: HTMLTextAreaElement | null = this.inputRef.current
+
     if (current !== null) current.value = ""
   }
 
@@ -87,6 +92,7 @@ export default class CloseCommandBox extends React.PureComponent<
     if (msg.indexOf("/") === 0) {
       if (msg.indexOf("/nick") === 0) {
         const newCs = msg.replace("/nick", "").trim()
+
         this.setState({ sender: newCs })
         this.sendSystemMsg("changed nick to " + newCs)
       } else if (msg.indexOf("/help") === 0) {
@@ -107,6 +113,7 @@ export default class CloseCommandBox extends React.PureComponent<
     } else {
       const { sender } = this.state
       const { answer } = this.props
+
       await this.sendMessage(sender, msg)
       aiProcess({ text: msg, voice: false }, answer, this.sendMessage)
     }
@@ -116,12 +123,14 @@ export default class CloseCommandBox extends React.PureComponent<
 
   handleMessage = (text: string): void => {
     const { answer } = this.props
+
     aiProcess({ text, voice: true }, answer, this.sendMessage)
   }
 
   render(): ReactElement {
     const handler = this.handleMessage
     const { text } = this.state
+
     return (
       <div
         id="chat"

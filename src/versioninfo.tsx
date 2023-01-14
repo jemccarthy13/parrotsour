@@ -13,7 +13,7 @@ export default class VersionInfo extends React.PureComponent {
 
   render(): ReactElement {
     return (
-      <div id="vInfo" style={this.vStyle}>
+      <div data-testid="version-info" id="vInfo" style={this.vStyle}>
         Developed by John McCarthy <br />
         Version:&nbsp;
         <a style={{ color: "#7978FD" }} href="/#/changelog.html">

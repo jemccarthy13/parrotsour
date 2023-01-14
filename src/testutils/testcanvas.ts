@@ -6,11 +6,6 @@ export default class TestCanvas {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     TestCanvas.canvas.getContext("2d")!
 
-  static useCanvas(width?: number, height?: number): void {
-    this.setDimensions(width, height)
-    PaintBrush.use(TestCanvas.context)
-  }
-
   static setDimensions(width?: number, height?: number): void {
     if (width) TestCanvas.canvas.width = width
     if (height) TestCanvas.canvas.height = height

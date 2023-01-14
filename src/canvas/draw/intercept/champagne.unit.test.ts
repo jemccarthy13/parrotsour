@@ -2,7 +2,7 @@ import { SensorType } from "../../../classes/aircraft/datatrail/sensortype"
 import { AircraftGroup, GroupParams } from "../../../classes/groups/group"
 import { Point } from "../../../classes/point"
 import TestCanvas from "../../../testutils/testcanvas"
-import { PIXELS_TO_NM } from "../../../utils/psmath"
+import { PIXELS_TO_NM } from "../../../utils/math"
 import { BlueInThe, PictureCanvasState } from "../../canvastypes"
 import { PaintBrush } from "../paintbrush"
 import DrawChampange from "./champagne"
@@ -72,6 +72,7 @@ describe("DrawChamp", () => {
 
   it("champ_labels_EW", () => {
     const updatedProps = { ...testProps }
+
     updatedProps.orientation.orient = BlueInThe.NORTH
 
     champ.initialize(updatedProps, testState)
@@ -173,9 +174,11 @@ describe("DrawChamp", () => {
 
   it("creates_groups", () => {
     const updatedProps = { ...testProps, isHardMode: true }
+
     champ.initialize(updatedProps, testState)
     const pt = new Point(100, 100)
     const grps = champ.createGroups(pt, [1, 1, 1])
+
     expect(grps.length).toEqual(3)
     expect(grps[0].getStrength()).toEqual(1)
     expect(grps[1].getStrength()).toEqual(1)
@@ -188,9 +191,11 @@ describe("DrawChamp", () => {
   it("creates_groups_NS", () => {
     testProps.orientation.orient = BlueInThe.NORTH
     const updatedProps = { ...testProps }
+
     champ.initialize(updatedProps, testState)
     const pt = new Point(100, 100)
     const grps = champ.createGroups(pt, [1, 1, 1])
+
     expect(grps.length).toEqual(3)
     expect(grps[0].getStrength()).toEqual(1)
     expect(grps[1].getStrength()).toEqual(1)

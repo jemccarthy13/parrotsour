@@ -130,9 +130,11 @@ export class AircraftIntent {
    */
   getNextRoutingPoint(): Point | undefined {
     let retPt = undefined
+
     if (this.desiredLoc.length > 0) {
       retPt = this.desiredLoc[0]
     }
+
     return retPt
   }
 
@@ -143,11 +145,14 @@ export class AircraftIntent {
   atNextRoutingPoint(curPt: Point): boolean {
     const firstLoc = this.getNextRoutingPoint()
     let isAtNext = false
+
     if (firstLoc) {
       const reachedDestX = Math.abs(firstLoc.x - curPt.x) < 5 * PIXELS_TO_NM
       const reachedDestY = Math.abs(firstLoc.y - curPt.y) < 5 * PIXELS_TO_NM
+
       isAtNext = reachedDestX && reachedDestY
     }
+
     return isAtNext
   }
 

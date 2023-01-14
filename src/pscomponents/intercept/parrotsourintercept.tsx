@@ -1,11 +1,7 @@
 import React, { lazy, ReactElement, Suspense } from "react"
-
-import "../../css/select.css"
 import "../../css/slider.css"
 import "../../css/parrotsour.css"
 import "../../css/toggle.css"
-
-import { InterceptQT } from "../quicktips/interceptQT"
 import {
   BlueInThe,
   PictureAnswer,
@@ -13,14 +9,15 @@ import {
 } from "../../canvas/canvastypes"
 import { SensorType } from "../../classes/aircraft/datatrail/sensortype"
 import { FORMAT } from "../../classes/supportedformats"
-import PSCookies from "../../utils/pscookies"
-import ContactSelector from "./contactselector"
+import PSCookies from "../../utils/cookies"
 import { SelectChangeEvent } from "../../utils/muiadapter"
+import { InterceptQT } from "../quicktips/intercept-tips"
+import ContactSelector from "./contactselector"
 
 const PicTypeSelector = lazy(() => import("./picoptionsbar"))
 const StandardSelector = lazy(() => import("./standardselector"))
-const ParrotSourHeader = lazy(() => import("../parrotsourheader"))
-const ParrotSourControls = lazy(() => import("../parrotsourcontrols"))
+const ParrotSourHeader = lazy(() => import("../header/header"))
+const ParrotSourControls = lazy(() => import("../header/controls"))
 
 const PictureCanvas = lazy(() => import("../../canvas/picturecanvas"))
 const VersionInfo = lazy(() => import("../../versioninfo"))
@@ -163,6 +160,7 @@ export default class ParrotSourIntercept extends React.PureComponent<
    */
   startAnimate = (): void => {
     const { answer } = this.state
+
     answer.groups.forEach((grp) => grp.setCapping(false))
     this.setState({ animate: true })
   }
@@ -189,6 +187,7 @@ export default class ParrotSourIntercept extends React.PureComponent<
       width: 700,
       orient: BlueInThe.NORTH,
     }
+
     if (orient == BlueInThe.NORTH) {
       newConfig = {
         height: 500,
@@ -210,6 +209,7 @@ export default class ParrotSourIntercept extends React.PureComponent<
 
   onDataStyleChange = (): void => {
     const { dataStyle } = this.state
+
     if (dataStyle === SensorType.ARROW) {
       this.setState({ dataStyle: SensorType.RAW })
     } else {

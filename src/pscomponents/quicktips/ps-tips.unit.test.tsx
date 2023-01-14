@@ -1,7 +1,6 @@
 import React from "react"
-import { mount } from "enzyme"
-import { InterceptQT } from "./interceptQT"
-import { DialogContent } from "../../utils/muiadapter"
+import { render } from "@testing-library/react"
+import { PsQT } from "./ps-tips"
 
 /**
  * All it has to do is show up (render) with some text.
@@ -13,10 +12,10 @@ import { DialogContent } from "../../utils/muiadapter"
  * This test should be updated if the help becomes stateful
  * or controlled.
  */
-describe("InterceptQT_Dialog", () => {
+describe("PsQT_Dialog", () => {
   it("renders", () => {
-    const helpDialog = mount(<InterceptQT />)
-    expect(helpDialog.find(DialogContent)).toBeDefined()
-    expect(helpDialog.text()).not.toEqual("")
+    const helpDialog = render(<PsQT />)
+    expect(helpDialog.getByText(/intercept:/i)).toBeDefined()
+    expect(helpDialog.getByText(/procedural:/i)).toBeDefined()
   })
 })

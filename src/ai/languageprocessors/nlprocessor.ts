@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 import nlp from "compromise"
-
 import sentences from "compromise-sentences"
+
 nlp.extend(sentences) // add support for isQuestion
 
 /**

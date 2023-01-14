@@ -1,7 +1,7 @@
 import { BRAA } from "../../../classes/braa"
 import { AircraftGroup } from "../../../classes/groups/group"
 import { Point } from "../../../classes/point"
-import { randomNumber } from "../../../utils/psmath"
+import { randomNumber } from "../../../utils/math"
 import { FightAxis, PictureAnswer } from "../../canvastypes"
 import { PaintBrush } from "../paintbrush"
 import { DrawPic } from "./drawpic"
@@ -82,6 +82,7 @@ export default class DrawPackage extends DrawPic {
     this.pictures.forEach((pic, idx) => {
       pic.initialize(this.props, this.state)
       const info = pic.getPictureInfo(starts[idx])
+
       pic.dimensions = info
     })
 
@@ -125,10 +126,12 @@ export default class DrawPackage extends DrawPic {
     const bPos = blueAir.getCenterOfMass(dataStyle)
 
     const isNS = FightAxis.isNS(orientation.orient)
+
     for (let x = 0; x < groups.length; x++) {
       const gPos = groups[x].getCenterOfMass(dataStyle)
 
       const BRAA = bPos.getBR(gPos)
+
       if (BRAA.range < closestRng) {
         closestGroup = groups[x]
         closestRng = BRAA.range
@@ -145,9 +148,11 @@ export default class DrawPackage extends DrawPic {
     // it it's deep (rng) get lead pos (depends on orientation)
     const cPos = closestGroup.getCenterOfMass(dataStyle)
     let retVal = new Point(sum / groups.length, cPos.y)
+
     if (!isNS) {
       retVal = new Point(cPos.x, sum / groups.length)
     }
+
     return retVal
   }
 
@@ -161,14 +166,17 @@ export default class DrawPackage extends DrawPic {
       .map((grp) => grp.getStrength())
       .reduce((a, b) => a + b)
     const nCts = nPkgContacts + sPkgContacts
+
     PaintBrush.clearCanvas()
     PaintBrush.drawBullseye(this.state.bullseye)
     this.state.blueAir.draw(this.props.dataStyle)
+
     return this.draw(false, nCts)
   }
 
   _isAnchorNPkg = (nBR: number, sBR: number): boolean => {
     let anchorNorth = true
+
     if (sBR < nBR) {
       anchorNorth = false
     } else if (sBR === nBR) {
@@ -182,6 +190,7 @@ export default class DrawPackage extends DrawPic {
           return Math.max(...grp.getAltitudes())
         })
       )
+
       if (maxAlt2 > maxAlt1) {
         anchorNorth = false
       } else if (maxAlt2 === maxAlt1) {
@@ -190,6 +199,7 @@ export default class DrawPackage extends DrawPic {
         }
       }
     }
+
     return anchorNorth
   }
 
@@ -210,12 +220,14 @@ export default class DrawPackage extends DrawPic {
     this.rngBack = isNS
       ? new Point(bullPt1.x, bullPt2.y).getBR(bullPt1)
       : new Point(bullPt2.x, bullPt1.y).getBR(bullPt1)
+
     // measure wide if az
     if (!this.isRange) {
       this.rngBack = isNS
         ? new Point(bullPt2.x, bullPt1.y).getBR(bullPt1)
         : new Point(bullPt1.x, bullPt2.y).getBR(bullPt1)
     }
+
     return (this.isRange ? " RANGE " : " AZIMUTH ") + this.rngBack.range + " "
   }
 
@@ -228,6 +240,7 @@ export default class DrawPackage extends DrawPic {
 
     let nLbl = isNS ? "EAST" : "NORTH"
     let sLbl = isNS ? "WEST" : "SOUTH"
+
     if (this.isRange) {
       nLbl = isNS ? "LEAD" : "TRAIL"
       sLbl = isNS ? "TRAIL" : "LEAD"
@@ -249,6 +262,7 @@ export default class DrawPackage extends DrawPic {
       bPos.getBR(this.packages[0].getBullseyePt()).range,
       bPos.getBR(this.packages[1].getBullseyePt()).range
     )
+
     this.packages[0].setAnchor(isAnchNorth)
     this.packages[1].setAnchor(!isAnchNorth)
   }

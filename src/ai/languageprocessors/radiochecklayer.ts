@@ -11,10 +11,12 @@ export function processRadioCheckLayer(
 
   // search - text starts with callsign, optionally includes radio check, and nothing else
   // should match "VR01" or "VR01 radio check" but nothing else
-  const regex = new RegExp("^([A-Za-z]+[0-9][0-9] *(radio check)?)$")
+  const regex = /^([A-Za-z]+\d\d *radio check?)$/
   const matches = regex.exec(processedText)
+
   if (matches && matches[1]) {
     let fullCs = callsign
+
     if (isVoice)
       fullCs = callsign.replace("VR", "viper ").replace("0", " zero ")
     sendResponse(callsign, "go for " + fullCs)

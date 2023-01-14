@@ -5,14 +5,13 @@ import React, {
   ReactElement,
   TouchEvent,
 } from "react"
-
-import { DrawCanvasProps } from "./canvastypes"
+import { Aircraft } from "../classes/aircraft/aircraft"
 import { Braaseye } from "../classes/braaseye"
 import { Point } from "../classes/point"
-import { PaintBrush } from "./draw/paintbrush"
-import { PIXELS_TO_NM } from "../utils/psmath"
+import { PIXELS_TO_NM } from "../utils/math"
+import { DrawCanvasProps } from "./canvastypes"
 import { formatAlt } from "./draw/formatutils"
-import { Aircraft } from "../classes/aircraft/aircraft"
+import { PaintBrush } from "./draw/paintbrush"
 
 export interface CanvasMouseEvent {
   clientX: number
@@ -57,6 +56,7 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
       const mouseCanvas: HTMLCanvasElement = mouseCanvasRef.current
 
       const ctx = canvas.getContext("2d")
+
       mouseCvCtx.current = mouseCanvas.getContext("2d")
       canvas.height = orientation.height
       canvas.width = orientation.width
@@ -88,9 +88,11 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
   ): Point => {
     const rect = canvas?.getBoundingClientRect()
     let pos = Point.DEFAULT
+
     if (rect) {
       pos = new Point(evt.clientX - rect.left, evt.clientY - rect.top)
     }
+
     return pos
   }
 
@@ -102,6 +104,7 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
    */
   function drawMouse(start: Point, end: Point) {
     const prevCtx = PaintBrush.getContext()
+
     PaintBrush.use(mouseCvCtx.current)
 
     if (mousePressed && mouseCvCtx.current) {
@@ -143,6 +146,7 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
     setMousePressed(true)
 
     const mousePos = getMousePos(canvasRef.current, e)
+
     setStart(mousePos)
   }
 
@@ -173,24 +177,31 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
   const drawBoot = (mousePos: Point) => {
     const { answer, dataStyle } = props
 
-    let alts: number[] = []
+    const alts: number[] = []
+
     answer.groups.forEach((grp) => {
       grp.forEach((ac) => {
         const inRngPt = new Point(mousePos.x + 50, mousePos.y)
+
         if (ac.getCenterOfMass(dataStyle).getBR(inRngPt).range < 5) {
           alts.push(ac.getAltitude())
         }
       })
     })
-    alts = alts.sort().reverse()
+
+    alts.sort((a, b) => a - b)
+    alts.reverse()
+
     const ctx = mouseCvCtx.current
 
     if (ctx) {
       ctx.fillStyle = "white"
       const startY = 120
       const bootStartY = ctx.canvas.height - startY
+
       ctx.fillRect(0, bootStartY, 50, startY)
       const prevCtx = PaintBrush.getContext()
+
       PaintBrush.use(ctx)
       PaintBrush.drawLine(0, bootStartY, 50, bootStartY)
       PaintBrush.drawLine(50, bootStartY, 50, ctx.canvas.height)
@@ -211,6 +222,7 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
     answer.groups.forEach((grp) => {
       grp.forEach((ac) => {
         const inRngPt = new Point(mousePos.x + 50, mousePos.y)
+
         if (ac.getCenterOfMass(dataStyle).getBR(inRngPt).range < 1.5) {
           grps.push(ac)
         }
@@ -220,6 +232,7 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
     if (grps.length > 0) {
       if (mouseCvCtx.current) {
         const prevCtx = PaintBrush.getContext()
+
         PaintBrush.use(mouseCvCtx.current)
         PaintBrush.drawText("Hdg:", 20, 20)
         PaintBrush.drawText(grps[0].getHeading().toString(), 50, 20)
@@ -237,6 +250,7 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
    */
   const canvasMouseMove = (e: CanvasMouseEvent) => {
     const mousePos = getMousePos(canvasRef.current, e)
+
     if (mouseCvCtx.current && mouseCanvasRef.current) {
       mouseCvCtx.current.clearRect(
         0,
@@ -245,6 +259,7 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
         mouseCanvasRef.current.height
       )
     }
+
     const isCapsLock =
       e.getModifierState("CapsLock") || e.getModifierState("Shift")
 
@@ -255,6 +270,7 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
     //
     if (isCapsLock && mouseCvCtx.current && canvasRef.current) {
       const rect = canvasRef.current.getBoundingClientRect()
+
       if (rect) {
         mouseCvCtx.current.strokeStyle = "green"
         mouseCvCtx.current.lineWidth = 1
@@ -291,6 +307,7 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
    */
   const canvasTouchStart = (e: TouchEvent) => {
     const touch = e.changedTouches[0]
+
     canvasMouseDown({
       clientX: touch.clientX,
       clientY: touch.clientY,
@@ -305,6 +322,7 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
    */
   const canvasTouchMove = (e: TouchEvent) => {
     const touch = e.changedTouches[0]
+
     canvasMouseMove({
       clientX: touch.clientX,
       clientY: touch.clientY,
@@ -350,6 +368,7 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
         />
         <canvas
           id="mousecanvas"
+          data-testid="mousecanvas"
           {...moveProps}
           style={{
             ...style,

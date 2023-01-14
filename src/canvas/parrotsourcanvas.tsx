@@ -1,19 +1,13 @@
 import React, { ReactElement } from "react"
-
-// Components
-import DrawingCanvas from "../canvas/drawingcanvas"
-
-// Classes & types
+import { AnimationHandler } from "../animation/animationhandler"
+import { PicAnimationHandler } from "../animation/picanimator"
 import {
   PictureAnswer,
   PictureCanvasProps,
   PictureCanvasState,
 } from "../canvas/canvastypes"
-import { PicAnimationHandler } from "../animation/picanimator"
+import DrawingCanvas from "../canvas/drawingcanvas"
 import { AircraftGroup } from "../classes/groups/group"
-import { AnimationHandler } from "../animation/animationhandler"
-
-// Functions
 import { Point } from "../classes/point"
 import { PaintBrush } from "./draw/paintbrush"
 
@@ -30,7 +24,7 @@ export default abstract class ParrotSourCanvas extends React.PureComponent<
       bullseye: Point.DEFAULT,
       blueAir: new AircraftGroup(),
       reDraw: (): PictureAnswer => {
-        throw "Should not use parent reDraw"
+        throw new Error("Should not use parent reDraw")
       },
       answer: { pic: "", groups: [] },
     }
@@ -54,6 +48,7 @@ export default abstract class ParrotSourCanvas extends React.PureComponent<
     if (oldAnimate !== animate) {
       const { animate, resetCallback } = this.props
       const { animateCanvas, answer } = this.state
+
       if (PaintBrush.getContext()) {
         if (animate) {
           if (animateCanvas) {
@@ -69,6 +64,7 @@ export default abstract class ParrotSourCanvas extends React.PureComponent<
         } else {
           this.animationHandler.pauseFight()
           const { answer } = this.state
+
           PaintBrush.drawFullInfo(this.state, this.props, answer.groups)
         }
       }
@@ -100,6 +96,7 @@ export default abstract class ParrotSourCanvas extends React.PureComponent<
       dataStyle,
     } = this.props
     const { bullseye, answer } = this.state
+
     return (
       <DrawingCanvas
         answer={answer}

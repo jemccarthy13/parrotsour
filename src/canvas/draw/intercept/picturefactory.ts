@@ -1,17 +1,17 @@
-import { randomNumber } from "../../../utils/psmath"
-import DrawSingleGroup from "./singlegroup"
+import { randomNumber } from "../../../utils/math"
 import DrawAzimuth from "./azimuth"
-import DrawRange from "./range"
-import DrawWall from "./wall"
-import DrawLadder from "./ladder"
 import DrawChampagne from "./champagne"
-import DrawVic from "./vic"
-import DrawThreat from "./threat"
-import DrawEA from "./ea"
-import DrawPOD from "./pod"
-import DrawPackage from "./packages"
 import { DrawPic } from "./drawpic"
+import DrawEA from "./ea"
+import DrawLadder from "./ladder"
 import DrawLeadEdge from "./leadingedge"
+import DrawPackage from "./packages"
+import DrawPOD from "./pod"
+import DrawRange from "./range"
+import DrawSingleGroup from "./singlegroup"
+import DrawThreat from "./threat"
+import DrawVic from "./vic"
+import DrawWall from "./wall"
 
 export class PictureFactory {
   private static DrawMap = new Map<string, () => DrawPic>([
@@ -46,6 +46,7 @@ export class PictureFactory {
     if (complexity <= 0) {
       complexity = 4
     }
+
     const numType = randomNumber(0, types[complexity].length - 1)
 
     return types[complexity][numType]
@@ -59,6 +60,7 @@ export class PictureFactory {
     desiredNumContacts = desiredNumContacts ? desiredNumContacts : 0
 
     let complexity = desiredNumContacts
+
     if (complexity === 0) complexity = 4
     if (complexity > 4) complexity = 4
     if (forced)
@@ -73,9 +75,11 @@ export class PictureFactory {
     }
 
     let drawFunc = this.DrawMap.get(type)
+
     if (drawFunc === undefined) {
       drawFunc = new DrawAzimuth().create
     }
+
     return drawFunc()
   }
 }

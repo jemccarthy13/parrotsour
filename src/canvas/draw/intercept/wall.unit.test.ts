@@ -2,11 +2,11 @@ import { SensorType } from "../../../classes/aircraft/datatrail/sensortype"
 import { AircraftGroup, GroupParams } from "../../../classes/groups/group"
 import { Point } from "../../../classes/point"
 import TestCanvas from "../../../testutils/testcanvas"
+import * as PSMath from "../../../utils/math"
 import { BlueInThe, PictureCanvasState } from "../../canvastypes"
+import { PaintBrush } from "../paintbrush"
 import { testProps } from "./mockutils.unit.test"
 import DrawWall from "./wall"
-import * as PSMath from "../../../utils/psmath"
-import { PaintBrush } from "../paintbrush"
 
 let testState: PictureCanvasState
 let p: Partial<GroupParams>
@@ -21,11 +21,13 @@ describe("DrawWall", () => {
 
   function setBlueInTheNorth() {
     const updatedProps = { ...testProps }
+
     updatedProps.orientation.orient = BlueInThe.NORTH
     const updatedState = {
       ...testState,
       blueAir: new AircraftGroup({ sx: 200, sy: 50, hdg: 180, nContacts: 4 }),
     }
+
     wall.initialize(updatedProps, updatedState)
   }
 
@@ -60,6 +62,7 @@ describe("DrawWall", () => {
 
   it("simple_functions", () => {
     const created = new DrawWall().create()
+
     expect(created.formatPicTitle()).toEqual("0 GROUP WALL")
   })
 
@@ -91,6 +94,7 @@ describe("DrawWall", () => {
     wall.numGroupsToCreate = 3
     const startPt = new Point(100, 100)
     const pInfo = wall.getPictureInfo(startPt)
+
     expect(pInfo.wide).toEqual(2 * 10 * PSMath.PIXELS_TO_NM)
     expect(pInfo.deep).toEqual(20 * PSMath.PIXELS_TO_NM)
     expect(pInfo.start).toEqual(startPt)
@@ -103,6 +107,7 @@ describe("DrawWall", () => {
     wall.numGroupsToCreate = 3
     const startPt = new Point(100, 100)
     const grps = wall.createGroups(startPt, [1, 2, 3])
+
     expect(grps[0].getStartPos()).toEqual(startPt)
     expect(grps[0].getHeading()).toEqual(90)
     expect(grps[0].getStrength()).toEqual(1)
@@ -116,6 +121,7 @@ describe("DrawWall", () => {
 
   it("creates_groups_hard_mode", () => {
     const updatedProps = { ...testProps }
+
     updatedProps.isHardMode = true
     wall.initialize(updatedProps, testState)
     jest
@@ -129,6 +135,7 @@ describe("DrawWall", () => {
     wall.numGroupsToCreate = 3
     const startPt = new Point(100, 100)
     const grps = wall.createGroups(startPt, [1, 2, 3])
+
     expect(grps[0].getStartPos()).toEqual(startPt)
     expect(grps[0].getHeading()).toEqual(90)
     expect(grps[0].getStrength()).toEqual(1)
@@ -148,6 +155,7 @@ describe("DrawWall", () => {
     wall.numGroupsToCreate = 3
     const startPt = new Point(100, 100)
     const grps = wall.createGroups(startPt, [1, 2, 3])
+
     expect(grps[0].getStartPos()).toEqual(startPt)
     expect(grps[0].getHeading()).toEqual(90)
     expect(grps[0].getStrength()).toEqual(1)
@@ -168,6 +176,7 @@ describe("DrawWall", () => {
       alts: [15, 15, 15],
       nContacts: 3,
     })
+
     wall.groups = [group1, group2, group3]
     wall.drawInfo()
     expect(wall.dimensions.wide).toEqual(40)

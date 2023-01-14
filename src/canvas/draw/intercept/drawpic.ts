@@ -1,7 +1,9 @@
-import snackActions from "../../../pscomponents/alert/psalert"
 import { AircraftGroup } from "../../../classes/groups/group"
 import { Point } from "../../../classes/point"
-import { randomNumber } from "../../../utils/psmath"
+import { FORMAT } from "../../../classes/supportedformats"
+import snackActions from "../../../pscomponents/alert/psalert"
+import { Aspect, toCardinal } from "../../../utils/aspect"
+import { randomNumber } from "../../../utils/math"
 import {
   FightAxis,
   PictureAnswer,
@@ -10,8 +12,6 @@ import {
 } from "../../canvastypes"
 import { checkCaps } from "./cap"
 import { PictureInfo } from "./pictureclamp"
-import { Aspect, toCardinal } from "../../../utils/aspect"
-import { FORMAT } from "../../../classes/supportedformats"
 
 export abstract class DrawPic {
   abstract create(): DrawPic
@@ -78,6 +78,7 @@ export abstract class DrawPic {
   assignContacts = (grps: number, contacts: number): number[] => {
     let cntSoFar = 0
     const answer = []
+
     if (grps > contacts && contacts !== 0) {
       snackActions.warning(
         contacts +
@@ -86,9 +87,11 @@ export abstract class DrawPic {
           " group(s). Picture will be random."
       )
     }
+
     for (let x = 0; x < grps; x++) {
       // 0 for random contacts per group
       let nCts = 0
+
       // if not random
       if (contacts !== 0) {
         // if it's the last group, use remaining # contacts
@@ -102,6 +105,7 @@ export abstract class DrawPic {
       answer.push(nCts)
       cntSoFar += nCts
     }
+
     return answer
   }
 
@@ -122,6 +126,7 @@ export abstract class DrawPic {
     const isEchX = !isNS && nPos.getBR(new Point(sPos.x, nPos.y)).range > 5
     const isEchY = isNS && nPos.getBR(new Point(nPos.x, sPos.y)).range > 5
     let ech = ""
+
     if (isEchX || isEchY) {
       if (ngBraaseye.braa.range < sgBraaseye.braa.range) {
         ech = " ECHELON " + toCardinal(nPos.getBR(sPos).bearingNum) + ", "
@@ -129,6 +134,7 @@ export abstract class DrawPic {
         ech = " ECHELON " + toCardinal(nPos.getBR(nPos).bearingNum) + ", "
       }
     }
+
     return ech
   }
 
@@ -155,6 +161,7 @@ export abstract class DrawPic {
     // Picture track direction is included in answer iff
     // all groups track same direction and the Aspect isn't HOT
     const asp = blueAir.getAspect(this.groups[0], dataStyle)
+
     if (format !== FORMAT.IPE) {
       if (sameTrackDir && asp !== Aspect.HOT) {
         answer = trackDir + ". "
@@ -168,6 +175,7 @@ export abstract class DrawPic {
         group.setUseTrackDir(false)
       }
     })
+
     return answer
   }
 
@@ -182,6 +190,7 @@ export abstract class DrawPic {
     let anchorN = false
     const ngBraaseye = group1.getBraaseye()
     const sgBraaseye = group2.getBraaseye()
+
     if (ngBraaseye.braa.range < sgBraaseye.braa.range) {
       anchorN = true
     } else if (ngBraaseye.braa.range === sgBraaseye.braa.range) {

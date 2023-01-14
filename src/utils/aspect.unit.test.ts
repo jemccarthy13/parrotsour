@@ -23,22 +23,27 @@ describe("Aspect", () => {
     redAir.setHeading(95)
     expect(blueAir.getAspect(redAir, SensorType.ARROW)).toEqual("HOT")
   })
+
   it("calculates_aspect_beam", () => {
     redAir.setHeading(1)
     expect(blueAir.getAspect(redAir, SensorType.ARROW)).toEqual("BEAM")
   })
+
   it("calculates_aspect_flank", () => {
     redAir.setHeading(135)
     expect(blueAir.getAspect(redAir, SensorType.ARROW)).toEqual("FLANK")
   })
+
   it("calculates_aspect_drag", () => {
     redAir.setHeading(260)
     expect(blueAir.getAspect(redAir, SensorType.ARROW)).toEqual("DRAG")
   })
+
   it("calculates_aspect_drag", () => {
     redAir.setHeading(270)
     expect(blueAir.getAspect(redAir, SensorType.ARROW)).toEqual("DRAG")
   })
+
   it("calculates_aspect_drag", () => {
     redAir.setHeading(269)
     expect(blueAir.getAspect(redAir, SensorType.ARROW)).toEqual("DRAG")

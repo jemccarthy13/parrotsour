@@ -1,10 +1,9 @@
 import React from "react"
-import { mount } from "enzyme"
-import DrawingCanvas, { CanvasMouseEvent } from "./drawingcanvas"
-
+import { fireEvent, render } from "@testing-library/react"
+import { SensorType } from "../classes/aircraft/datatrail/sensortype"
 import { Point } from "../classes/point"
 import { BlueInThe, DrawCanvasProps } from "./canvastypes"
-import { SensorType } from "../classes/aircraft/datatrail/sensortype"
+import DrawingCanvas, { CanvasMouseEvent } from "./drawingcanvas"
 
 /**
  * Mock draw function for a drawing canvas
@@ -31,14 +30,14 @@ const testProps: DrawCanvasProps = {
 }
 
 describe("drawingCanvas", () => {
-  let drawingCanvas = mount(<DrawingCanvas {...testProps} />)
+  let drawingCanvas = render(<DrawingCanvas {...testProps} />)
 
   it("renders", () => {
-    expect(drawingCanvas).not.toBe(null)
+    expect(drawingCanvas).toBeDefined()
   })
 
   it("mousemove_singular", () => {
-    drawingCanvas = mount(<DrawingCanvas {...testProps} />)
+    drawingCanvas = render(<DrawingCanvas {...testProps} />)
     expect(drawingCanvas).not.toBe(null)
 
     const moveEvent: CanvasMouseEvent = {
@@ -47,15 +46,13 @@ describe("drawingCanvas", () => {
       getModifierState: () => false,
     }
 
-    const mouseCanvas = drawingCanvas.find("#mousecanvas")
-    mouseCanvas.simulate("mousemove", { ...moveEvent })
-
-    const mCanvasInstance = mouseCanvas.instance()
-    expect(mCanvasInstance).toMatchSnapshot()
+    const mouseCanvas = drawingCanvas.getByTestId("mousecanvas")
+    fireEvent.mouseMove(mouseCanvas, moveEvent)
+    expect(mouseCanvas).toMatchSnapshot()
   })
 
   it("mousemove_multiple", () => {
-    drawingCanvas = mount(<DrawingCanvas {...testProps} />)
+    drawingCanvas = render(<DrawingCanvas {...testProps} />)
     expect(drawingCanvas).not.toBe(null)
 
     const moveEvent: CanvasMouseEvent = {
@@ -69,16 +66,15 @@ describe("drawingCanvas", () => {
       getModifierState: () => false,
     }
 
-    const mouseCanvas = drawingCanvas.find("#mousecanvas")
-    mouseCanvas.simulate("mousemove", { ...moveEvent })
-    mouseCanvas.simulate("mousemove", { ...moveEvent2 })
+    const mouseCanvas = drawingCanvas.getByTestId("mousecanvas")
+    fireEvent.mouseMove(mouseCanvas, moveEvent)
+    fireEvent.mouseMove(mouseCanvas, moveEvent2)
 
-    const mCanvasInstance = mouseCanvas.instance()
-    expect(mCanvasInstance).toMatchSnapshot()
+    expect(mouseCanvas).toMatchSnapshot()
   })
 
   it("click_and_drag", () => {
-    drawingCanvas = mount(<DrawingCanvas {...testProps} />)
+    drawingCanvas = render(<DrawingCanvas {...testProps} />)
     expect(drawingCanvas).not.toBe(null)
 
     const moveEvent: CanvasMouseEvent = {
@@ -92,12 +88,12 @@ describe("drawingCanvas", () => {
       getModifierState: () => false,
     }
 
-    const mouseCanvas = drawingCanvas.find("#mousecanvas")
-    mouseCanvas.simulate("mousedown", { ...moveEvent })
-    mouseCanvas.simulate("mousemove", { ...moveEvent2 })
-    mouseCanvas.simulate("mouseup", { ...moveEvent2 })
+    const mouseCanvas = drawingCanvas.getByTestId("mousecanvas")
+    fireEvent.mouseMove(mouseCanvas, moveEvent)
+    fireEvent.mouseDown(mouseCanvas, moveEvent)
+    fireEvent.mouseMove(mouseCanvas, moveEvent2)
+    fireEvent.mouseUp(mouseCanvas, moveEvent2)
 
-    const mCanvasInstance = mouseCanvas.instance()
-    expect(mCanvasInstance).toMatchSnapshot()
+    expect(mouseCanvas).toMatchSnapshot()
   })
 })

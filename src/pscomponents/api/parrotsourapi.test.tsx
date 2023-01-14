@@ -1,10 +1,11 @@
-import { mount } from "enzyme"
 import React from "react"
-import ParrotSourAPI from "./parrotsourapi"
+import { render } from "@testing-library/react"
+import { ParrotSourAPI } from "./parrotsourapi"
 
 describe("psapi", () => {
   it("renders", () => {
-    const apiPage = mount(<ParrotSourAPI />)
-    expect(apiPage.find("#downloadBtn")).toBeDefined()
+    const apiPage = render(<ParrotSourAPI />)
+
+    expect(apiPage.getAllByRole(/button/).length).toBeGreaterThan(0)
   })
 })

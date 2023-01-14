@@ -1,7 +1,6 @@
 import React from "react"
-import { mount } from "enzyme"
-import { ProceduralQT } from "./proceduralQT"
-import { DialogContent } from "../../utils/muiadapter"
+import { render } from "@testing-library/react"
+import { AlsaHelp } from "./alsa-tips"
 
 /**
  * All it has to do is show up (render) with some text.
@@ -13,10 +12,11 @@ import { DialogContent } from "../../utils/muiadapter"
  * This test should be updated if the help becomes stateful
  * or controlled.
  */
-describe("ProceduralQT_Dialog", () => {
+describe("ALSAHelp_Dialog", () => {
   it("renders", () => {
-    const helpDialog = mount(<ProceduralQT />)
-    expect(helpDialog.find(DialogContent)).toBeDefined()
-    expect(helpDialog.text()).not.toEqual("")
+    const helpDialog = render(<AlsaHelp />)
+    expect(helpDialog.getAllByText(/track direction/i).length).toBeGreaterThan(
+      0
+    )
   })
 })

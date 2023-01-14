@@ -1,23 +1,16 @@
-// Classes & Interfaces
-import { SensorType } from "../aircraft/datatrail/sensortype"
-import { Point } from "../point"
+import { Aspect, aspectFromCATA, toCardinal } from "../../utils/aspect"
+import { headingToRadians, PIXELS_TO_NM, randomNumber } from "../../utils/math"
 import { ACType, Aircraft } from "../aircraft/aircraft"
+import { SensorType } from "../aircraft/datatrail/sensortype"
 import { getMostRestrictiveID, IDMatrix } from "../aircraft/id"
 import { IntentParams } from "../aircraft/intent"
-import Tasking from "../taskings/tasking"
-import { FORMAT } from "../supportedformats"
-
 import { AltStack, getAltStack } from "../altstack"
-// Functions
-import {
-  headingToRadians,
-  PIXELS_TO_NM,
-  randomNumber,
-} from "../../utils/psmath"
-import { drawGroupCap } from "./groupcap"
-import { Braaseye } from "../braaseye"
-import { Aspect, aspectFromCATA, toCardinal } from "../../utils/aspect"
 import { BRAA } from "../braa"
+import { Braaseye } from "../braaseye"
+import { Point } from "../point"
+import { FORMAT } from "../supportedformats"
+import Tasking from "../taskings/tasking"
+import { drawGroupCap } from "./groupcap"
 import RangeBack from "./rangeback"
 
 /**
@@ -77,6 +70,7 @@ export class AircraftGroup extends Array<Aircraft> {
 
     // Create nContacts number of Aircraft and add to this collection
     const nContacts = p.nContacts || randomNumber(1, 4)
+
     for (let contact = 0; contact < nContacts; contact++) {
       if (p.alts && p.alts[contact])
         this.push(new Aircraft({ ...p, alt: p.alts[contact] }))
@@ -87,6 +81,7 @@ export class AircraftGroup extends Array<Aircraft> {
       // Compute start position offset for follow-on groups (calculated from
       // 90 deg perpendicular)
       const vectors = headingToRadians(p.hdg)
+
       p.sx += 2 * PIXELS_TO_NM * Math.cos(vectors.offset)
       p.sy += 2 * PIXELS_TO_NM * -Math.sin(vectors.offset)
     }
@@ -119,12 +114,14 @@ export class AircraftGroup extends Array<Aircraft> {
 
   formatNumContacts(): string {
     let answer = ""
+
     if (this.getStrength() > 1) {
       if (this.getStrength() >= 3) {
         answer += "HEAVY "
       }
       answer += this.getStrength() + " CONTACTS"
     }
+
     return answer
   }
 
@@ -142,16 +139,19 @@ export class AircraftGroup extends Array<Aircraft> {
 
     // format bullseye if anchor priority
     const braaseye = this.getBraaseye()
+
     if (this.useBull || false) {
       answer += "BULLSEYE " + braaseye.bull.toString() + ", "
     }
 
     // format altitude stack
     const altStack = this.getAltStack(format)
+
     answer += altStack.stack + " "
 
     // format track direction
     const trackDir = this.getTrackDir()
+
     answer += " "
     answer += trackDir !== undefined ? trackDir : ""
 
@@ -163,6 +163,7 @@ export class AircraftGroup extends Array<Aircraft> {
 
     // apply fill-ins (HI/FAST/etc)
     answer += " " + altStack.fillIns
+
     return answer.replace(/ {2}/g, " ")
   }
 
@@ -189,13 +190,17 @@ export class AircraftGroup extends Array<Aircraft> {
     if (this.isCapping()) {
       return this.startPos
     }
+
     let x = 0
     let y = 0
+
     for (let idx = 0; idx < this.getStrength(); idx++) {
       const acPos = this[idx].getCenterOfMass(dataStyle)
+
       x += acPos.x
       y += acPos.y
     }
+
     return new Point(x / this.getStrength(), y / this.getStrength())
   }
 
@@ -206,6 +211,7 @@ export class AircraftGroup extends Array<Aircraft> {
     const acThatIsCapping: Aircraft | undefined = this.find((ac) =>
       ac.isCapping()
     )
+
     return acThatIsCapping !== undefined
   }
 
@@ -243,6 +249,7 @@ export class AircraftGroup extends Array<Aircraft> {
       .getBR(this.getCenterOfMass(dataStyle))
 
     let dist = (otherGrp.getHeading() - parseInt(recipBrg.bearing) + 360) % 360
+
     if (dist > 180) dist = 360 - dist
     const cata = dist
 
@@ -271,11 +278,13 @@ export class AircraftGroup extends Array<Aircraft> {
    */
   getTrackDir(): string | undefined {
     let trackDir = undefined
+
     if (this.isCapping()) {
       trackDir = "CAP"
     } else if (this.useTrackDir) {
       trackDir = "TRACK " + toCardinal(this.getHeading())
     }
+
     return trackDir
   }
 
@@ -325,9 +334,11 @@ export class AircraftGroup extends Array<Aircraft> {
    */
   getAltitudes(): number[] {
     const alts = []
+
     for (let idx = 0; idx < this.length; idx++) {
       alts.push(this[idx].getAltitude())
     }
+
     return alts
   }
 
@@ -367,9 +378,11 @@ export class AircraftGroup extends Array<Aircraft> {
    */
   getIDMatrix(): IDMatrix {
     const ids: IDMatrix[] = []
+
     this.forEach((ac) => {
       ids.push(ac.getIDMatrix())
     })
+
     return getMostRestrictiveID(ids)
   }
 

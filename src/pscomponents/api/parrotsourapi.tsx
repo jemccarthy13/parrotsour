@@ -1,3 +1,4 @@
+import React, { useEffect, useRef, useState } from "react"
 import {
   Checkbox,
   FormControlLabel,
@@ -6,7 +7,6 @@ import {
   TextField,
   ThemeProvider,
 } from "@mui/material"
-import React, { useEffect, useRef, useState } from "react"
 import { BlueInThe } from "../../canvas/canvastypes"
 import { PaintBrush } from "../../canvas/draw/paintbrush"
 import PictureCanvas from "../../canvas/picturecanvas"
@@ -69,6 +69,7 @@ export function ParrotSourAPI(): JSX.Element {
 
   function download(filename: string, text: string) {
     const element = document.createElement("a")
+
     element.setAttribute(
       "href",
       "data:text/plain;charset=utf-8," + encodeURIComponent(text)
@@ -90,14 +91,18 @@ export function ParrotSourAPI(): JSX.Element {
         method: "POST",
       }
     )
+
     return resp.status === 202
   }
 
   const canvas = new PictureCanvas({ ...config })
+
   async function onClick() {
     const isValidCode = await validAccessCode()
+
     if (isValidCode) {
       const answers = []
+
       for (let x = 0; x < numPics; x++) {
         try {
           const answer = canvas.drawPicture(true)
@@ -105,6 +110,7 @@ export function ParrotSourAPI(): JSX.Element {
             pic: answer.pic,
             groups: includeGroups ? answer.groups : [],
           }
+
           answers.push(a)
         } catch {
           // nothing
@@ -129,6 +135,7 @@ export function ParrotSourAPI(): JSX.Element {
   ) {
     const i = parseInt(event.currentTarget.value)
     const itoUse = Number.isNaN(i) ? 0 : i
+
     setNumPics(itoUse)
   }
 
@@ -136,6 +143,7 @@ export function ParrotSourAPI(): JSX.Element {
     event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) {
     const code = event.currentTarget.value
+
     setCode(code)
   }
 
@@ -192,6 +200,7 @@ export function ParrotSourAPI(): JSX.Element {
             ref={canvasRef}
           />
           <button
+            data-testid="download-results"
             id="downloadBtn"
             type="button"
             onClick={onClick}

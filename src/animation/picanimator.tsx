@@ -1,10 +1,9 @@
-import { AnimationHandler } from "./animationhandler"
-import { AircraftGroup } from "../classes/groups/group"
 import { PictureCanvasState } from "../canvas/canvastypes"
-
-import { randomNumber } from "../utils/psmath"
-import { SensorType } from "../classes/aircraft/datatrail/sensortype"
 import { PaintBrush } from "../canvas/draw/paintbrush"
+import { SensorType } from "../classes/aircraft/datatrail/sensortype"
+import { AircraftGroup } from "../classes/groups/group"
+import { randomNumber } from "../utils/math"
+import { AnimationHandler } from "./animationhandler"
 
 /**
  * This Handler implements applyLogic to drive towards a desired point

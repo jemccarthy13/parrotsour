@@ -36,12 +36,15 @@ export function headingToRadians(heading: number): {
   offset: number
 } {
   let deg: number = 360 - (heading - 90)
+
   if (heading < 90) deg = 90 - heading
 
   let arrowHead = deg - 150
+
   if (arrowHead < 0) arrowHead = 360 + arrowHead
 
   let offsetVector = deg - 90
+
   if (offsetVector < 0) offsetVector = 360 + offsetVector
 
   return {
@@ -69,9 +72,11 @@ export function randomHeading(format: FORMAT, blueHeading = -1): number {
   const offset = randomNumber(-bound, bound)
 
   let blueOpp = blueHeading - 180
+
   if (blueOpp < 0) blueOpp = 360 + blueOpp
 
   let heading: number = blueOpp + offset
+
   heading = (360 + heading) % 360
 
   return heading
@@ -90,10 +95,12 @@ export function getDegDeltaBetween(
   const RH = (desHeading - heading + 360) % 360
 
   let deltaA = RH
+
   if (forced === "LEFT") {
     deltaA = -LH
   } else if (LH < RH) {
     deltaA = -LH
   }
+
   return deltaA
 }

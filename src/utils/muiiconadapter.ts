@@ -1,3 +1,3 @@
-import ExpandMoreIcon from "@mui/icons-material/Expand"
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
 
 export { ExpandMoreIcon }

@@ -1,23 +1,26 @@
-import { getRestrictedStartPos, _clampPictureInContext } from "./pictureclamp"
-
-import { BlueInThe } from "../../canvastypes"
-import { Point } from "../../../classes/point"
-import { PIXELS_TO_NM } from "../../../utils/psmath"
-
-import { _howFarOut } from "./pictureclamp"
-import { AircraftGroup } from "../../../classes/groups/group"
 import { SensorType } from "../../../classes/aircraft/datatrail/sensortype"
-import { PaintBrush } from "../paintbrush"
+import { AircraftGroup } from "../../../classes/groups/group"
+import { Point } from "../../../classes/point"
 import TestCanvas from "../../../testutils/testcanvas"
+import { PIXELS_TO_NM } from "../../../utils/math"
+import { BlueInThe } from "../../canvastypes"
+import { PaintBrush } from "../paintbrush"
+import {
+  _howFarOut,
+  getRestrictedStartPos,
+  _clampPictureInContext,
+} from "./pictureclamp"
 
 const TEN_NM = PIXELS_TO_NM * 10
 
 beforeAll(() => {
   TestCanvas.useContext(800, 500)
 })
+
 afterEach(() => {
   PaintBrush.clearCanvas()
 })
+
 /**
  * Test the "_howFarOut" function.
  *
@@ -32,41 +35,49 @@ afterEach(() => {
 describe("_howFarOut", () => {
   it("howFarOut_belowMin0", () => {
     const result = _howFarOut(-100, 0, 100)
+
     expect(result).toEqual(100)
   })
 
   it("howFarOut_atMin", () => {
     const result = _howFarOut(-100, 0, 100)
+
     expect(result).toEqual(100)
   })
 
   it("howFarOut_belowMinNeg", () => {
     const result = _howFarOut(-100, -10, 100)
+
     expect(result).toEqual(90)
   })
 
   it("howFarOut_belowCustomMin", () => {
     const result = _howFarOut(-100, 5, 100)
+
     expect(result).toEqual(105)
   })
 
   it("howFarOut_inRange", () => {
     const result = _howFarOut(60, 0, 100)
+
     expect(result).toEqual(0)
   })
 
   it("howFarOut_atMax", () => {
     const result = _howFarOut(100, 0, 100)
+
     expect(result).toEqual(0)
   })
 
   it("howFarOut_atMin", () => {
     const result = _howFarOut(0, 0, 100)
+
     expect(result).toEqual(0)
   })
 
   it("howFarOut_aboveMax", () => {
     const result = _howFarOut(101, 0, 100)
+
     expect(result).toEqual(-1)
   })
 })
@@ -87,6 +98,7 @@ describe("_clampPictureInContext", () => {
     )
 
     const ctx = PaintBrush.getContext()
+
     expect(result.x).toEqual(1 + 7 * PIXELS_TO_NM)
     expect(result.y).toEqual(
       startPt.y -
@@ -120,6 +132,7 @@ describe("_clampPictureInContext", () => {
     )
 
     const ctx = PaintBrush.getContext()
+
     expect(result.x).toEqual(
       startPt.x - (startPt.x - (ctx.canvas.width - 1 - TEN_NM))
     )
@@ -137,9 +150,11 @@ describe("_clampPictureInContext", () => {
     )
 
     const ctx = PaintBrush.getContext()
+
     expect(result.x).toEqual(
       startPt.x - (startPt.x - (ctx.canvas.width - 1 - TEN_NM))
     )
+
     expect(result.y).toEqual(
       startPt.y -
         (startPt.y - (ctx.canvas.height - 1 - 7 * PIXELS_TO_NM)) -
@@ -161,6 +176,7 @@ describe("_clampPictureInContext", () => {
     expect(result.x).toEqual(
       startPt.x - (startPt.x - (ctx.canvas.width - 1 - 7 * PIXELS_TO_NM))
     )
+
     expect(result.y).toEqual(
       startPt.y -
         (startPt.y - (ctx.canvas.height - 1 - 7 * PIXELS_TO_NM)) -
@@ -176,6 +192,7 @@ describe("_clampPictureInContext", () => {
     warnSpy.mockRestore()
 
     const ctx = PaintBrush.getContext()
+
     expect(result.x).toBeLessThanOrEqual(ctx.canvas.width - 1)
     expect(result.x).toBeGreaterThanOrEqual(1)
     expect(result.y).toBeLessThanOrEqual(ctx.canvas.height - 1)
@@ -209,9 +226,11 @@ describe("getRestrictedStartPos", () => {
     )
 
     const pos = new Point(blueAir.getStartPos().x, startPos.y)
+
     expect(
       pos.getBR(blueAir.getCenterOfMass(SensorType.ARROW)).range
     ).toBeGreaterThanOrEqual(45)
+
     expect(
       pos.getBR(blueAir.getCenterOfMass(SensorType.ARROW)).range
     ).toBeLessThanOrEqual(50)

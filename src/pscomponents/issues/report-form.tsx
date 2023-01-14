@@ -1,12 +1,5 @@
 import React, { MutableRefObject, ReactElement, useRef, useState } from "react"
-
-import IssueSelector from "./issueselector"
-
-import Snackbar from "../alert/psalert"
-
 import { PictureAnswer } from "../../canvas/canvastypes"
-
-import "../../css/collapsible.css"
 import {
   Button,
   Dialog,
@@ -14,6 +7,9 @@ import {
   DialogContent,
   TextField,
 } from "../../utils/muiadapter"
+import Snackbar from "../alert/psalert"
+import IssueSelector from "./selector"
+import "../../css/collapsible.css"
 
 type IRProps = {
   answer?: PictureAnswer
@@ -52,6 +48,7 @@ export default function IssueReport(props: IRProps): ReactElement {
 
   async function handleSubmit(): Promise<void> {
     let goodForm = false
+
     if (formRef.current) {
       goodForm = formRef.current.reportValidity()
     }
@@ -64,11 +61,13 @@ export default function IssueReport(props: IRProps): ReactElement {
       ) as HTMLCanvasElement
 
       let realEmail = email ? email : "unknown"
+
       if (email && email.indexOf("@") === -1) realEmail += "@gmail.com"
 
       const realText = text ? text : "unknown"
 
       const formData = new FormData()
+
       formData.append("email", realEmail)
       formData.append("comments", realText + " \n\n" + answer)
       formData.append("problemtype", selection)
@@ -120,15 +119,15 @@ export default function IssueReport(props: IRProps): ReactElement {
   }
 
   return (
-    <div style={{ width: "25%" }}>
+    <div data-testid="iss-rpt-form" style={{ width: "25%" }}>
       <button
+        data-testid="iss-rpt-btn"
         id="showFormBtn"
         type="button"
         style={{ marginLeft: "5%", top: "5px" }}
         onClick={handleToggleIssueForm}
       >
-        {" "}
-        Report Issue{" "}
+        Report Issue
       </button>
       <Dialog
         fullScreen={false}
@@ -144,25 +143,27 @@ export default function IssueReport(props: IRProps): ReactElement {
           <DialogContent>
             <IssueSelector selectionChanged={onIssueSelChanged} />
           </DialogContent>
-          <TextField
-            classes={{ root: "textfull" }}
-            required
-            id="email"
-            label="Email"
-            fullWidth
-            type="text"
-            onChange={handleEmailChange}
-          />
-          <TextField
-            classes={{ root: "textfull" }}
-            required
-            id="issue"
-            label="Issue Description"
-            fullWidth
-            type="text"
-            multiline
-            onChange={handleTextChanged}
-          />
+          <div style={{ width: "75%", margin: "auto", height: "100%" }}>
+            <TextField
+              required
+              id="email"
+              label="Email"
+              fullWidth
+              type="text"
+              onChange={handleEmailChange}
+            />
+            <TextField
+              required
+              id="issue"
+              name="issuetxt"
+              label="Issue Description"
+              fullWidth
+              type="text"
+              multiline
+              onChange={handleTextChanged}
+            />
+          </div>
+
           <button type="button" hidden onClick={handleSubmit} />
           <DialogActions>
             <Button

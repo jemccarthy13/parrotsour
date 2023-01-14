@@ -2,16 +2,16 @@ import { SensorType } from "../../../classes/aircraft/datatrail/sensortype"
 import { AircraftGroup, GroupParams } from "../../../classes/groups/group"
 import { Point } from "../../../classes/point"
 import { FORMAT } from "../../../classes/supportedformats"
+import TestCanvas from "../../../testutils/testcanvas"
+import * as PSMath from "../../../utils/math"
 import {
   BlueInThe,
   PictureCanvasProps,
   PictureCanvasState,
 } from "../../canvastypes"
 import { PaintBrush } from "../paintbrush"
-import DrawVic from "./vic"
 import { testProps } from "./mockutils.unit.test"
-import * as PSMath from "../../../utils/psmath"
-import TestCanvas from "../../../testutils/testcanvas"
+import DrawVic from "./vic"
 
 let testState: PictureCanvasState
 let p: Partial<GroupParams>
@@ -27,11 +27,13 @@ jest.mock("./cap", () => {
 describe("DrawVic", () => {
   function setBlueInTheNorth() {
     const updatedProps = { ...testProps }
+
     updatedProps.orientation.orient = BlueInThe.NORTH
     const updatedState = {
       ...testState,
       blueAir: new AircraftGroup({ sx: 200, sy: 50, hdg: 180, nContacts: 4 }),
     }
+
     vic.initialize(updatedProps, updatedState)
   }
 
@@ -122,6 +124,7 @@ describe("DrawVic", () => {
     vic.drawInfo()
 
     const updatedProps = { ...testProps, format: FORMAT.IPE }
+
     vic.initialize(updatedProps, testState)
 
     expect(vic.getAnswer()).toEqual(
@@ -174,6 +177,7 @@ describe("DrawVic", () => {
   it("gets_picture_info", () => {
     vic.numGroupsToCreate = 3
     const pInfo = vic.getPictureInfo()
+
     expect(pInfo.deep).toBeLessThan(45 * PSMath.PIXELS_TO_NM)
     expect(pInfo.deep).toBeLessThan(45 * PSMath.PIXELS_TO_NM)
     expect(pInfo.wide).toBeLessThan(45 * PSMath.PIXELS_TO_NM)
@@ -186,6 +190,7 @@ describe("DrawVic", () => {
     vic.dimensions = vic.getPictureInfo()
     const startPos = new Point(100, 100)
     const groups = vic.createGroups(startPos, [1, 1, 1]) // three single contact groups
+
     expect(groups[0].getHeading()).toEqual(90)
     expect(groups[1].getHeading()).toEqual(110)
     expect(groups[2].getHeading()).toEqual(110)
@@ -200,6 +205,7 @@ describe("DrawVic", () => {
       .mockReturnValueOnce(90)
       .mockReturnValueOnce(80)
       .mockReturnValueOnce(125)
+
     jest
       .spyOn(PSMath, "randomNumber")
       .mockReturnValueOnce(20)
@@ -207,11 +213,13 @@ describe("DrawVic", () => {
       .mockReturnValue(1)
 
     const updatedProps: PictureCanvasProps = { ...testProps, isHardMode: true }
+
     vic.initialize(updatedProps, testState)
     vic.numGroupsToCreate = 3
     vic.dimensions = vic.getPictureInfo()
     const startPos = new Point(100, 100)
     const groups = vic.createGroups(startPos, [1, 1, 1]) // three single contact groups
+
     expect(groups[0].getHeading()).toEqual(125)
     expect(groups[1].getHeading()).toEqual(91)
     expect(groups[2].getHeading()).toEqual(81)
@@ -225,12 +233,14 @@ describe("DrawVic", () => {
     jest.spyOn(PSMath, "randomNumber").mockReturnValue(1)
 
     const updatedProps: PictureCanvasProps = { ...testProps }
+
     updatedProps.orientation.orient = BlueInThe.NORTH
 
     vic.initialize(updatedProps, testState)
     vic.numGroupsToCreate = 3
     const startPos = new Point(100, 100)
     const groups = vic.createGroups(startPos, [1, 1, 1]) // three single contact groups
+
     expect(groups[0].getHeading()).toEqual(90)
     expect(groups[1].getHeading()).toEqual(91)
     expect(groups[2].getHeading()).toEqual(91)
@@ -259,6 +269,7 @@ describe("DrawVic", () => {
       sy: 400,
       alts: [13, 13, 13, 13],
     })
+
     vic.groups = [lg, ntg, stg]
     vic.drawInfo()
     expect(vic.getAnswer().includes("WEIGHTED SOUTH")).toEqual(true)
@@ -283,6 +294,7 @@ describe("DrawVic", () => {
       sy: 500,
       alts: [13, 13, 13, 13],
     })
+
     vic.groups = [lg, ntg, stg]
     vic.drawInfo()
     expect(vic.getAnswer().includes("WEIGHTED NORTH")).toEqual(true)
@@ -311,6 +323,7 @@ describe("DrawVic", () => {
       sy: 200,
       alts: [13, 13, 13, 13],
     })
+
     vic.groups = [lg, ntg, stg]
     vic.drawInfo()
     expect(vic.getAnswer().includes("WEIGHTED WEST")).toEqual(true)
@@ -339,6 +352,7 @@ describe("DrawVic", () => {
       sy: 200,
       alts: [13, 13, 13, 13],
     })
+
     vic.groups = [lg, ntg, stg]
     vic.drawInfo()
     expect(vic.getAnswer().includes("WEIGHTED EAST")).toEqual(true)

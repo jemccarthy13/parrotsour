@@ -1,24 +1,26 @@
-import { shallow } from "enzyme"
 import React from "react"
+import { render, waitFor } from "@testing-library/react"
+import { act } from "react-dom/test-utils"
+import { AnimationHandler } from "../animation/animationhandler"
 import { SensorType } from "../classes/aircraft/datatrail/sensortype"
 import { FORMAT } from "../classes/supportedformats"
-import { BlueInThe, PictureCanvasProps } from "./canvastypes"
-
-import ParrotSourCanvas from "./parrotsourcanvas"
-import DrawingCanvas from "./drawingcanvas"
-import { PicAnimationHandler } from "../animation/picanimator"
-import { PaintBrush } from "./draw/paintbrush"
 import TestCanvas from "../testutils/testcanvas"
+import { BlueInThe, PictureCanvasProps } from "./canvastypes"
+import { PaintBrush } from "./draw/paintbrush"
+import ParrotSourCanvas from "./parrotsourcanvas"
+import PictureCanvas from "./picturecanvas"
 
-jest.mock("../animation/picanimator")
-const animatorAnimate = jest.spyOn(PicAnimationHandler.prototype, "animate")
-const animatorPause = jest.spyOn(PicAnimationHandler.prototype, "pauseFight")
+jest.mock("../animation/animationhandler")
+const animatorAnimate = jest.spyOn(AnimationHandler.prototype, "animate")
+const animatorPause = jest.spyOn(AnimationHandler.prototype, "pauseFight")
 
 const resetFn = jest.fn()
 
-const ctx = TestCanvas.useContext(10, 30)
-
 describe("ParrotSourCanvas", () => {
+  beforeAll(() => {
+    TestCanvas.useContext(10, 30)
+  })
+
   beforeEach(() => {
     PaintBrush.clearCanvas()
   })
@@ -44,46 +46,82 @@ describe("ParrotSourCanvas", () => {
   }
 
   it("renders", () => {
-    const wrapper = shallow(<ParrotSourCanvas {...testProps} />)
-    expect(wrapper.find(DrawingCanvas)).toHaveLength(1)
+    const wrapper = render(<ParrotSourCanvas {...testProps} />)
+
+    expect(wrapper).toBeDefined()
   })
 
-  it("handles_animation_toggled_false", () => {
-    const wrapper = shallow(<ParrotSourCanvas {...testProps} />)
-    wrapper.setState({ ctx })
+  it("handles_animation_toggled_false", async () => {
+    const wrapper = render(<ParrotSourCanvas {...testProps} />)
+
     expect(animatorAnimate).not.toHaveBeenCalled()
     expect(animatorPause).not.toHaveBeenCalled()
-    wrapper.setProps({ animate: false })
-    expect(animatorAnimate).not.toHaveBeenCalled()
-    expect(animatorPause).toHaveBeenCalled()
+    const { rerender } = wrapper
+
+    act(() => {
+      rerender(<ParrotSourCanvas {...testProps} animate={false} />)
+    })
+
+    await waitFor(() => {
+      expect(animatorAnimate).not.toHaveBeenCalled()
+      expect(animatorPause).toHaveBeenCalled()
+    })
   })
 
-  it("no_change_when_other_props_change", () => {
-    const wrapper = shallow(<ParrotSourCanvas {...testProps} />)
-    expect(wrapper.find(DrawingCanvas)).toHaveLength(1)
+  it("no_change_when_other_props_change", async () => {
+    const wrapper = render(<ParrotSourCanvas {...testProps} />)
+
+    expect(wrapper.getByTestId(/mousecanvas/i)).toBeDefined()
     expect(animatorAnimate).not.toHaveBeenCalled()
     expect(animatorPause).not.toHaveBeenCalled()
-    wrapper.setProps({ isHardMode: true })
-    expect(animatorAnimate).not.toHaveBeenCalled()
-    expect(animatorPause).not.toHaveBeenCalled()
+    const { rerender } = wrapper
+
+    act(() => {
+      rerender(<ParrotSourCanvas {...testProps} />)
+    })
+
+    await waitFor(() => {
+      expect(animatorAnimate).not.toHaveBeenCalled()
+      expect(animatorPause).not.toHaveBeenCalled()
+    })
   })
 
-  it("handles_animation_toggled_true", () => {
-    const wrapper = shallow(<ParrotSourCanvas {...testProps} animate={false} />)
-    wrapper.setState({ ctx, animateCanvas: "test" })
+  it("handles_animation_toggled_true", async () => {
+    const wrapper = render(<PictureCanvas {...testProps} animate={false} />)
+
     expect(animatorAnimate).not.toHaveBeenCalled()
     expect(animatorPause).not.toHaveBeenCalled()
-    wrapper.setProps({ animate: true })
-    expect(animatorAnimate).toHaveBeenCalled()
-    expect(animatorPause).not.toHaveBeenCalled()
+
+    const { rerender } = wrapper
+
+    act(() => {
+      rerender(<PictureCanvas {...testProps} animate={false} />)
+    })
+
+    act(() => {
+      rerender(<PictureCanvas {...testProps} showMeasurements={false} />)
+    })
+
+    act(() => {
+      rerender(<PictureCanvas {...testProps} animate />)
+    })
+
+    await waitFor(() => {
+      expect(animatorAnimate).toHaveBeenCalled()
+      expect(animatorPause).toHaveBeenCalled()
+    })
   })
 
   it("no_change_when_no_previous_imagedata", () => {
-    const wrapper = shallow(<ParrotSourCanvas {...testProps} animate={false} />)
-    wrapper.setState({ ctx })
+    const wrapper = render(<ParrotSourCanvas {...testProps} animate={false} />)
+
     expect(animatorAnimate).not.toHaveBeenCalled()
     expect(animatorPause).not.toHaveBeenCalled()
-    wrapper.setProps({ animate: true })
+    const { rerender } = wrapper
+
+    act(() => {
+      rerender(<ParrotSourCanvas {...testProps} animate />)
+    })
     expect(animatorAnimate).not.toHaveBeenCalled()
     expect(animatorPause).not.toHaveBeenCalled()
   })

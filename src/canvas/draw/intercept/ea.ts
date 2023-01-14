@@ -3,7 +3,7 @@ import { BRAA } from "../../../classes/braa"
 import { AircraftGroup } from "../../../classes/groups/group"
 import { Point } from "../../../classes/point"
 import { Aspect, toCardinal } from "../../../utils/aspect"
-import { randomNumber } from "../../../utils/psmath"
+import { randomNumber } from "../../../utils/math"
 import { PaintBrush } from "../paintbrush"
 import { DrawPic } from "./drawpic"
 import { PictureInfo } from "./pictureclamp"
@@ -37,6 +37,7 @@ export default class DrawEA extends DrawPic {
 
   getPictureInfo(start?: Point): PictureInfo {
     const ctx = PaintBrush.getContext()
+
     // force draw to happen on the right side of the screen
     if (start === undefined) {
       start = new Point(
@@ -46,6 +47,7 @@ export default class DrawEA extends DrawPic {
     }
 
     const picInfo = this.eaPic.getPictureInfo(start)
+
     this.eaPic.dimensions = picInfo
 
     return picInfo
@@ -54,6 +56,7 @@ export default class DrawEA extends DrawPic {
   createGroups = (startPos: Point, contactList: number[]): AircraftGroup[] => {
     this.groups = this.eaPic.createGroups(startPos, contactList)
     this.eaPic.groups = this.groups
+
     return this.groups
   }
 
@@ -65,16 +68,19 @@ export default class DrawEA extends DrawPic {
     let closestGrp: AircraftGroup = this.groups[0]
     let closestRng = 9999
     let braa = new BRAA(0, 0)
+
     for (let x = 0; x < this.groups.length; x++) {
       const tmpBraa = this.state.blueAir
         .getCenterOfMass(this.props.dataStyle)
         .getBR(this.groups[x].getCenterOfMass(this.props.dataStyle))
+
       if (tmpBraa.range < closestRng) {
         braa = tmpBraa
         closestRng = braa.range
         closestGrp = this.groups[x]
       }
     }
+
     return closestGrp
   }
 
@@ -121,6 +127,7 @@ export default class DrawEA extends DrawPic {
 
     this.requestType = randomNumber(0, 2)
     let request = '"EAGLE01, MUSIC ' + this.eaInfo.grp.getLabel() + '"'
+
     if (this.requestType === 1) {
       request = '"EAGLE01, BOGEY DOPE NEAREST GRP"'
     } else if (this.requestType === 2) {
@@ -129,6 +136,7 @@ export default class DrawEA extends DrawPic {
 
     // draw the query
     const ctx = PaintBrush.getContext()
+
     PaintBrush.drawText(request, ctx.canvas.width / 2, 20)
   }
 
@@ -140,6 +148,7 @@ export default class DrawEA extends DrawPic {
 
     grp.setUseBull(true)
     let answer = grp.format(this.props.format)
+
     if (grp.getStrength() > 1) {
       answer += " LINE ABREAST 3 "
     }
@@ -156,6 +165,7 @@ export default class DrawEA extends DrawPic {
     const altStack = grp.getAltStack(this.props.format)
     const aspectH = this.state.blueAir.getAspect(grp, this.props.dataStyle)
     const trackDir = toCardinal(grp.getHeading())
+
     return (
       "EAGLE01 STROBE RANGE " +
       this.eaInfo.strBR.range +
@@ -182,8 +192,10 @@ export default class DrawEA extends DrawPic {
     const aspectH = this.state.blueAir.getAspect(cGrp, this.props.dataStyle)
 
     let aspect = aspectH.toString() + " "
+
     aspect += aspectH !== Aspect.HOT ? toCardinal(cGrp.getHeading()) : ""
     let response: string = cGrp.getLabel()
+
     response += " BRAA " + braa.toString() + " "
     response += altStack.stack + ", "
     response += aspect + " HOSTILE "
@@ -191,6 +203,7 @@ export default class DrawEA extends DrawPic {
     response += cGrp.formatNumContacts()
 
     response += altStack.fillIns
+
     return response.replace(/\s+/g, " ").trim()
   }
 
@@ -209,6 +222,7 @@ export default class DrawEA extends DrawPic {
 
   getAnswer(): string {
     let answer = ""
+
     switch (this.requestType) {
       case 0:
         answer = this.formatMusic()
@@ -220,6 +234,7 @@ export default class DrawEA extends DrawPic {
         answer = this.formatStrobe()
         break
     }
+
     return answer.replace(/\s+/g, " ").trim()
   }
 }

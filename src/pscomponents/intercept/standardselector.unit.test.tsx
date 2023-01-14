@@ -1,8 +1,7 @@
 import React from "react"
-import { mount, ReactWrapper } from "enzyme"
+import { render, waitFor } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 import StandardSelector, { StdSelectorProps } from "./standardselector"
-import { FORMAT } from "../../classes/supportedformats"
-import { Dialog } from "../../utils/muiadapter"
 
 describe("StandardSelector", () => {
   const mockSelChg = jest.fn()
@@ -10,41 +9,33 @@ describe("StandardSelector", () => {
     selectionChanged: () => mockSelChg,
   }
 
-  let wrapper: ReactWrapper
-  beforeEach(() => {
-    wrapper = mount(<StandardSelector {...fakeProps} />)
-  })
+  it("handles_format_standard_change", async () => {
+    const wrapper = render(<StandardSelector {...fakeProps} />)
 
-  it("handles_format_standard_change", () => {
-    const ipe = wrapper.find("#ipe")
-    expect(ipe).toBeDefined()
-    let myVal = FORMAT.ALSA
+    const alsaBtn = wrapper.getByRole(/radio/, {
+      name: "ALSA ACC",
+    }) as HTMLInputElement
 
-    mockSelChg.mockImplementationOnce((val) => {
-      myVal = val.format
+    expect(alsaBtn.checked).toEqual(true)
+
+    const ipeBtn = wrapper.getByRole(/radio/, {
+      name: "3-3 IPE",
+    }) as HTMLInputElement
+
+    userEvent.click(ipeBtn)
+
+    await waitFor(() => {
+      expect(ipeBtn.checked).toEqual(true)
     })
-
-    ipe.simulate("change", { format: FORMAT.IPE })
-
-    expect(myVal).toEqual(FORMAT.IPE)
   })
 
-  it("handles_toggle_alsa_tips", () => {
-    console.warn(
-      "05/07/2021- Surpressing external usage of console.error\r\n" +
-        "Use '(test command) --silent' to turn off all console messages."
-    )
-    jest.spyOn(console, "error").mockImplementation()
+  it("handles_toggle_alsa_tips", async () => {
+    const wrapper = render(<StandardSelector {...fakeProps} />)
 
-    const dialog = wrapper.find(Dialog)
-    expect(dialog.prop("open")).toEqual(false)
+    userEvent.click(wrapper.getByRole(/button/))
 
-    const qtBtn = wrapper.find("#alsaQTBtn")
-    expect(qtBtn).toHaveLength(1)
-
-    qtBtn.simulate("click")
-
-    const dialogOpen = wrapper.find(Dialog)
-    expect(dialogOpen.prop("open")).toEqual(true)
+    await waitFor(() => {
+      expect(wrapper.getByText(/Download the pub/)).toBeDefined()
+    })
   })
 })

@@ -1,9 +1,11 @@
-import { PictureCanvasProps, PictureCanvasState } from "canvas/canvastypes"
-import { AircraftGroup } from "./group"
-import { Point } from "../point"
-
-import { randomHeading } from "../../utils/psmath"
+import {
+  PictureCanvasProps,
+  PictureCanvasState,
+} from "../../canvas/canvastypes"
 import { getStartPos } from "../../canvas/draw/intercept/pictureclamp"
+import { randomHeading } from "../../utils/math"
+import { Point } from "../point"
+import { AircraftGroup } from "./group"
 
 export class GroupFactory {
   public static randomGroupAtLoc(
@@ -20,6 +22,7 @@ export class GroupFactory {
 
     const p = { sx: startPos.x, sy: startPos.y, hdg, nContacts }
     const grp = new AircraftGroup(p)
+
     return grp
   }
 
@@ -34,6 +37,7 @@ export class GroupFactory {
       props.orientation.orient,
       props.dataStyle
     )
+
     return this.randomGroupAtLoc(props, state, startLoc, heading, numContacts)
   }
 }

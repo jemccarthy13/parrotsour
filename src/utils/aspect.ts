@@ -19,6 +19,7 @@ export function aspectFromCATA(cata: number): Aspect {
   } else {
     aspectH = Aspect.DRAG
   }
+
   return aspectH
 }
 
@@ -50,5 +51,6 @@ export function toCardinal(degrees: number): string {
   // the compass is divided every 20 degrees, so find the 'box' of degrees the
   // current heading is in
   const val = Math.floor(degrees / (360 / arr.length) + 0.5)
+
   return arr[val % arr.length]
 }

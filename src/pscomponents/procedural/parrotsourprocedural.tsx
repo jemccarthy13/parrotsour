@@ -1,15 +1,9 @@
 import "regenerator-runtime/runtime"
 import React, { lazy, ReactElement, Suspense } from "react"
-
-import "../../css/select.css"
 import "../../css/slider.css"
 import "../../css/parrotsour.css"
 import "../../css/toggle.css"
 import "../../css/togglebuttongroup.css"
-
-import { ProceduralQT } from "../quicktips/proceduralQT"
-import DifficultySelector from "./difficultyselector"
-import ChatBox from "./chatbox"
 import {
   BlueInThe,
   PictureAnswer,
@@ -17,13 +11,16 @@ import {
 } from "../../canvas/canvastypes"
 import { SensorType } from "../../classes/aircraft/datatrail/sensortype"
 import { FORMAT } from "../../classes/supportedformats"
+import { ProceduralQT } from "../quicktips/procedural-tips"
+import ChatBox from "./chatbox"
+import DifficultySelector from "./difficultyselector"
 
 const ProceduralCanvas = lazy(
   () => import("../../canvas/draw/procedural/proceduralcanvas")
 )
 
-const ParrotSourHeader = lazy(() => import("../parrotsourheader"))
-const ParrotSourControls = lazy(() => import("../parrotsourcontrols"))
+const ParrotSourHeader = lazy(() => import("../header/header"))
+const ParrotSourControls = lazy(() => import("../header/controls"))
 
 const VersionInfo = lazy(() => import("../../versioninfo"))
 
@@ -125,6 +122,7 @@ export default class ParrotSourProcedural extends React.PureComponent<
       width: 600,
       orient: BlueInThe.NORTH,
     }
+
     if (orient === BlueInThe.NORTH) {
       newConfig = {
         height: 500,
@@ -150,6 +148,7 @@ export default class ParrotSourProcedural extends React.PureComponent<
     const { canvasConfig, braaFirst, answer } = this.state
     const { showMeasurements, isHardMode, animate, newPic, speedSliderValue } =
       this.state
+
     return (
       <div>
         <Suspense fallback={<div>Loading...</div>}>

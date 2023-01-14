@@ -1,15 +1,12 @@
 import React, { ReactElement, KeyboardEvent } from "react"
-
-import SpeechTextControls from "../../ai/speechtext"
-
-import { getTimeStamp } from "../../utils/pstime"
-
+import { SpeechTextControls } from "../../ai/speechtext"
 import { PictureAnswer } from "../../canvas/canvastypes"
-import { aiProcess } from "./aiprocess"
-import { AircraftGroup } from "../../classes/groups/group"
-import { convertToCGRS } from "./cgrshelpers"
-import { SensorType } from "../../classes/aircraft/datatrail/sensortype"
 import { formatAlt } from "../../canvas/draw/formatutils"
+import { SensorType } from "../../classes/aircraft/datatrail/sensortype"
+import { AircraftGroup } from "../../classes/groups/group"
+import { getTimeStamp } from "../../utils/time"
+import { aiProcess } from "./aiprocess"
+import { convertToCGRS } from "./cgrshelpers"
 
 type CBState = {
   text: string
@@ -34,6 +31,7 @@ export default class ChatBox extends React.PureComponent<CBProps, CBState> {
 
   componentDidUpdate(): void {
     const msgBox: HTMLTextAreaElement | null = this.chatroomRef.current
+
     if (msgBox !== null) msgBox.scrollTop = msgBox.scrollHeight
   }
 
@@ -44,9 +42,11 @@ export default class ChatBox extends React.PureComponent<CBProps, CBState> {
 
   handleInputKeypress = (event: KeyboardEvent<HTMLTextAreaElement>): void => {
     const key = event.key
+
     if (key === "Enter") {
       event.preventDefault()
       const text = event.currentTarget.value.toString()
+
       this.sendChatMessage(text)
       //document.getElementById("chatInput")
     }
@@ -56,11 +56,13 @@ export default class ChatBox extends React.PureComponent<CBProps, CBState> {
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ): void => {
     const text = event.currentTarget.value.toString()
+
     this.sendChatMessage(text)
   }
 
   sendSystemMsg = async (msg: string): Promise<void> => {
     const { text } = this.state
+
     await this.setState({
       text: text + getTimeStamp() + " *** " + msg + "\r\n",
     })
@@ -68,12 +70,14 @@ export default class ChatBox extends React.PureComponent<CBProps, CBState> {
 
   sendMessage = (sender: string, message: string, voice?: boolean): void => {
     const { text } = this.state
+
     if (!voice) {
       this.setState({
         text: text + getTimeStamp() + " <" + sender + "> " + message + "\n",
       })
     } else {
       const msg = new SpeechSynthesisUtterance()
+
       msg.text = message
       if (window.speechSynthesis) window.speechSynthesis.speak(msg)
     }
@@ -81,6 +85,7 @@ export default class ChatBox extends React.PureComponent<CBProps, CBState> {
 
   _clearTextBox = (): void => {
     const current: HTMLTextAreaElement | null = this.inputRef.current
+
     if (current !== null) current.value = ""
   }
 
@@ -88,13 +93,16 @@ export default class ChatBox extends React.PureComponent<CBProps, CBState> {
     if (msg.indexOf("/") === 0) {
       if (msg.indexOf("/nick") === 0) {
         const newCs = msg.replace("/nick", "").trim()
+
         this.setState({ sender: newCs })
         this.sendSystemMsg("changed nick to " + newCs)
       } else if (msg.indexOf("/handover") === 0) {
         const { answer } = this.props
+
         await this.sendSystemMsg("BMA Rundown")
         answer.groups.forEach((grp: AircraftGroup) => {
           const pos = grp.getCenterOfMass(SensorType.ARROW)
+
           this.sendSystemMsg(
             grp.getLabel() +
               " / " +
@@ -125,6 +133,7 @@ export default class ChatBox extends React.PureComponent<CBProps, CBState> {
     } else {
       const { sender } = this.state
       const { answer } = this.props
+
       await this.sendMessage(sender, msg)
       aiProcess({ text: msg, voice: false }, answer, this.sendMessage)
     }
@@ -134,12 +143,14 @@ export default class ChatBox extends React.PureComponent<CBProps, CBState> {
 
   handleMessage = (text: string): void => {
     const { answer } = this.props
+
     aiProcess({ text, voice: true }, answer, this.sendMessage)
   }
 
   render(): ReactElement {
     const handler = this.handleMessage
     const { text } = this.state
+
     return (
       <div
         id="chat"

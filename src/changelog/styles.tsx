@@ -1,22 +1,21 @@
-
-import { Accordion, ListItem, Typography } from '@mui/material';
-import styled from 'styled-components';
+import { Accordion, ListItem, Typography } from "@mui/material"
+import styled from "styled-components"
 
 export const ChangeLI = styled(ListItem)`
   color: gray;
   border-bottom: 0px solid gray;
-`;
+`
 
-export const Column = styled('div')`
+export const Column = styled("div")`
   flex-basis: 33.33%;
 `
 
 export const Heading = styled(Typography)`
-  font-size: ${(props) => props.theme.typography.pxToRem(15)};
+  font-size: 16px;
 `
 export const SecondaryHeading = styled(Typography)`
-  color: ${(props) => props.theme.palette.text.secondary};
-  font-size: ${(props) => props.theme.typography.pxToRem(15)};
+  font-size: 16px;
+  color: white;
 `
 
 export const StyledAccordion = styled(Accordion)`
@@ -29,4 +28,3 @@ export const StyledAccordionChild = styled(Accordion)`
   width: 50%;
   margin: 16px 0;
 `
-  

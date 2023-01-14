@@ -24,36 +24,42 @@ export default class PSCookies {
 
   constructor() {
     let savedSliderVal = parseInt(Cookies.get(SliderCookie))
+
     if (Number.isNaN(savedSliderVal)) {
       savedSliderVal = 50
     }
     this.speedSlider = savedSliderVal
 
     const savedBraaFirst = Cookies.get(BraaFirstCookie)
+
     this.braaFirst = false
     if (savedBraaFirst === "true") {
       this.braaFirst = true
     }
 
     const savedDataStyle = Cookies.get(DataStyleCookie)
+
     this.dataStyle = false
     if (savedDataStyle === "true") {
       this.dataStyle = true
     }
 
     const savedOrientation = Cookies.get(OrientCookie)
+
     this.isOrientNS = false
     if (savedOrientation === "true") {
       this.isOrientNS = true
     }
 
     const savedHardMode = Cookies.get(HardModeCookie)
+
     this.isHardMode = false
     if (savedHardMode === "true") {
       this.isHardMode = true
     }
 
     const savedWantMeasure = Cookies.get(WantMeasureCookie)
+
     this.isWantMeasure = false
     if (savedWantMeasure === "true") {
       this.isWantMeasure = true

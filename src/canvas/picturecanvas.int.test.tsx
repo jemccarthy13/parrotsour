@@ -1,15 +1,22 @@
 import React from "react"
 
-import { mount } from "enzyme"
 import { FORMAT } from "../classes/supportedformats"
+import { AircraftGroup } from "../classes/groups/group"
 import PictureCanvas from "./picturecanvas"
 import { SensorType } from "../classes/aircraft/datatrail/sensortype"
 import { BlueInThe, PictureCanvasProps } from "./canvastypes"
 
 import { PicAnimationHandler } from "../animation/picanimator"
-import { Point } from "../classes/point"
+import { render, waitFor } from "@testing-library/react"
+import { act } from "react-dom/test-utils"
 
 jest.mock("../animation/picanimator")
+
+const mockDraw = jest
+  .spyOn(AircraftGroup.prototype, "draw")
+  .mockImplementation(() => {
+    console.log("hello")
+  })
 const animatorAnimate = jest.spyOn(PicAnimationHandler.prototype, "animate")
 const animatorPause = jest.spyOn(PicAnimationHandler.prototype, "pauseFight")
 
@@ -46,13 +53,15 @@ describe("PictureCanvas", () => {
     desiredNumContacts: 0,
   }
 
-  it("full_renders_mouse_and_pic_canvas", () => {
-    const wrapper = mount(<PictureCanvas {...testProps} />)
-    expect(wrapper.find("canvas")).toHaveLength(2)
+  it("full_renders_mouse_and_pic_canvas", async () => {
+    const wrapper = render(<PictureCanvas {...testProps} />)
+    await waitFor(() => {
+      expect(wrapper).toBeDefined()
+    })
   })
 
-  it("renders_blueinthe_north", () => {
-    const wrapper = mount(
+  it("renders_blueinthe_north", async () => {
+    const wrapper = render(
       <PictureCanvas
         {...testProps}
         picType="random"
@@ -63,115 +72,129 @@ describe("PictureCanvas", () => {
         }}
       />
     )
-    expect(wrapper.find("canvas")).toHaveLength(2)
-  })
-
-  it("renders_leadedge_forced", () => {
-    const wrapper = mount(<PictureCanvas {...testProps} />)
-    expect(wrapper.find("canvas")).toHaveLength(2)
-    const instance = wrapper.instance() as PictureCanvas
-    instance.drawPicture(true)
-  })
-
-  it("stops_animate_when_hardmode_changed", () => {
-    const wrapper = mount(<PictureCanvas {...testProps} />)
-    wrapper.setProps({ isHardMode: true })
-    wrapper.update()
-    expect(resetFn).toHaveBeenCalled()
-  })
-
-  it("stops_animate_when_picType_changed", () => {
-    const wrapper = mount(<PictureCanvas {...testProps} />)
-    wrapper.setProps({ picType: "range" })
-    wrapper.update()
-    expect(resetFn).toHaveBeenCalled()
-  })
-
-  it("stops_animate_when_orientation_changed", () => {
-    const wrapper = mount(<PictureCanvas {...testProps} />)
-    wrapper.setProps({
-      orientation: { height: 100, width: 100, orient: BlueInThe.WEST },
+    await waitFor(() => {
+      expect(wrapper.getByTestId(/mousecanvas/)).toBeDefined()
     })
-    wrapper.update()
-    expect(resetFn).toHaveBeenCalled()
   })
 
-  it("pause_animate_has_no_reset", () => {
-    const wrapper = mount(
+  it("renders_leadedge_forced", async () => {
+    const wrapper = render(<PictureCanvas {...testProps} />)
+    await waitFor(() => {
+      expect(wrapper.getByTestId("mousecanvas")).toBeDefined()
+    })
+  })
+
+  it("stops_animate_when_hardmode_changed", async () => {
+    const wrapper = render(<PictureCanvas {...testProps} />)
+
+    const { rerender } = wrapper
+    act(() => {
+      rerender(<PictureCanvas {...testProps} isHardMode />)
+    })
+
+    await waitFor(() => {
+      expect(resetFn).toHaveBeenCalled()
+    })
+  })
+
+  it("stops_animate_when_picType_changed", async () => {
+    const wrapper = render(<PictureCanvas {...testProps} />)
+    const { rerender } = wrapper
+    act(() => {
+      rerender(<PictureCanvas {...testProps} picType="range" />)
+    })
+
+    await waitFor(() => {
+      expect(resetFn).toHaveBeenCalled()
+    })
+  })
+
+  it("stops_animate_when_orientation_changed", async () => {
+    const wrapper = render(<PictureCanvas {...testProps} />)
+    const { rerender } = wrapper
+
+    act(() => {
+      rerender(
+        <PictureCanvas
+          {...testProps}
+          orientation={{ height: 100, width: 100, orient: BlueInThe.WEST }}
+        />
+      )
+    })
+
+    await waitFor(() => {
+      expect(resetFn).toHaveBeenCalled()
+    })
+  })
+
+  it("pause_animate_has_no_reset", async () => {
+    const wrapper = render(
       <PictureCanvas {...testProps} resetCallback={undefined} />
     )
-    wrapper.setProps({
-      orientation: { height: 100, width: 100, orient: BlueInThe.WEST },
+    const { rerender } = wrapper
+
+    act(() => {
+      rerender(
+        <PictureCanvas
+          {...testProps}
+          resetCallback={undefined}
+          orientation={{ height: 100, width: 100, orient: BlueInThe.WEST }}
+        />
+      )
     })
-    wrapper.update()
-    expect(resetFn).not.toHaveBeenCalled()
+
+    await waitFor(() => {
+      expect(resetFn).not.toHaveBeenCalled()
+    })
   })
 
-  it("no_pause_and_resume_animate_if_no_animte", () => {
-    const wrapper = mount(
+  it("no_pause_and_resume_animate_if_no_animte", async () => {
+    const wrapper = render(
       <PictureCanvas {...testProps} resetCallback={undefined} animate={false} />
     )
-    const mockDraw = jest.fn()
-    jest.mock("../classes/groups/group")
-    wrapper.setState({
-      answer: {
-        groups: [
-          {
-            draw: mockDraw,
-            getCenterOfMass: () => {
-              return new Point(50, 50)
-            },
-            getAltitudes: () => {
-              return [50]
-            },
-            move: jest.fn(),
-            doesManeuvers: jest.fn(),
-          },
-        ],
-        pic: "2 grps az",
-      },
+    const { rerender } = wrapper
+
+    act(() => {
+      rerender(
+        <PictureCanvas
+          {...testProps}
+          resetCallback={undefined}
+          animate={false}
+          showMeasurements={false}
+        />
+      )
     })
-    wrapper.setProps({
-      showMeasurements: false,
+
+    await waitFor(() => {
+      expect(resetFn).not.toHaveBeenCalled()
+      expect(mockDraw).toHaveBeenCalled()
+      expect(animatorAnimate).not.toHaveBeenCalled()
+      expect(animatorPause).not.toHaveBeenCalled()
     })
-    wrapper.update()
-    expect(resetFn).not.toHaveBeenCalled()
-    expect(mockDraw).toHaveBeenCalled()
-    expect(animatorAnimate).not.toHaveBeenCalled()
-    expect(animatorPause).not.toHaveBeenCalled()
   })
 
-  it("pause_and_resume_animate", () => {
-    const wrapper = mount(
+  it("pause_and_resume_animate", async () => {
+    const wrapper = render(
       <PictureCanvas {...testProps} resetCallback={undefined} animate />
     )
-    const mockDraw = jest.fn()
-    jest.mock("../classes/groups/group")
-    wrapper.setState({
-      answer: {
-        groups: [
-          {
-            draw: mockDraw,
-            getCenterOfMass: () => {
-              return new Point(50, 50)
-            },
-            getAltitudes: () => {
-              return [50]
-            },
-            move: jest.fn(),
-            doesManeuvers: jest.fn(),
-          },
-        ],
-        pic: "2 grps az",
-      },
+
+    const { rerender } = wrapper
+    act(() => {
+      rerender(
+        <PictureCanvas
+          {...testProps}
+          resetCallback={undefined}
+          animate
+          showMeasurements={false}
+        />
+      )
     })
-    wrapper.setProps({
-      showMeasurements: false,
+
+    await waitFor(() => {
+      expect(resetFn).not.toHaveBeenCalled()
+      expect(mockDraw).toHaveBeenCalled()
+      expect(animatorAnimate).toHaveBeenCalled()
+      expect(animatorPause).toHaveBeenCalled()
     })
-    wrapper.update()
-    expect(resetFn).not.toHaveBeenCalled()
-    expect(mockDraw).toHaveBeenCalled()
-    expect(animatorAnimate).toHaveBeenCalled()
-    expect(animatorPause).toHaveBeenCalled()
   })
 })

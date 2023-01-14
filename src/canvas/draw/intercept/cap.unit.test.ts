@@ -20,6 +20,7 @@ describe("cap_util", () => {
     TestCanvas.useContext(800, 500)
 
     const ng = new AircraftGroup(p)
+
     grps = [ng]
   })
 
@@ -42,6 +43,7 @@ describe("cap_util", () => {
 
   it("flags_some_caps", () => {
     const sg = new AircraftGroup(p)
+
     grps.push(sg)
     checkCaps(true, grps)
 
@@ -49,6 +51,7 @@ describe("cap_util", () => {
       grps.find((grp) => {
         return grp.isCapping() === true
       }) !== undefined
+
     expect(hasCap).toEqual(true)
   })
 })

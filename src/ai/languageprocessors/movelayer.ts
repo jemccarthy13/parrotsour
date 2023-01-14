@@ -25,7 +25,7 @@ export function processMoveLayer(
   cgrs: string[],
   isVoice: boolean
 ): string {
-  processedText = processedText.replace(/\s\s+/g, " ")
+  processedText = processedText.replace(/\s{2,}/g, " ")
   const nl: ProcessResult = AIProcessor.process(processedText)
 
   const callsign = asset.getLabel()
@@ -53,6 +53,7 @@ export function processMoveLayer(
       const locX = parseInt(move.groups().x.text())
       const locY = parseInt(move.groups().y.text())
       let fl
+
       if (move3d.found) {
         fl = move3d.groups().fl.text()
         asset.updateIntent({
@@ -71,6 +72,7 @@ export function processMoveLayer(
         fl = fl?.split("").join(" ")
         cgrsReply = toNATOPhonetic(cgrsReply)
       }
+
       sendResponse(
         callsign,
         cpy +

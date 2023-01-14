@@ -1,3 +1,27 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`VersionInfo has_version 1`] = `ReactWrapper {}`;
+exports[`VersionInfo has_version 1`] = `
+<div
+  data-testid="version-info"
+  id="vInfo"
+  style="color: lightblue; padding-top: 200px; padding-bottom: 20px; font-size: 18px;"
+>
+  Developed by John McCarthy 
+  <br />
+  Version: 
+  <a
+    href="/#/changelog.html"
+    style="color: rgb(121, 120, 253);"
+  >
+    4.1.2
+  </a>
+  <br />
+  07 Mar 2022 
+  <br />
+  <div
+    style="font-size: 8px;"
+  >
+    This website is not affialiated with the United States Government, nor sponsored any such entity.
+  </div>
+</div>
+`;
