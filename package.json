@@ -84,7 +84,8 @@
     "test:coverage": "npm run test -- --coverage",
     "test:watch": "react-scripts test --watchAll --maxWorkers=75%",
     "ci-coverage": "npm run ci-test -- --coverage",
-    "ci-test": "npm run test -- --silent"
+    "ci-test": "npm run test -- --silent",
+    "prepare": "husky install"
   },
   "eslintConfig": {
     "extends": [
