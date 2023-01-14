@@ -12,6 +12,7 @@ export class ArrowDataTrail extends DataTrail {
     const dist = ArrowDataTrail.LEN_TRAIL * PIXELS_TO_NM
 
     const startPos = this.getStartPos()
+
     return new Point(
       Math.floor(startPos.x + 1.2 * dist * Math.cos(vector.radians)),
       Math.floor(startPos.y + 1.2 * dist * -Math.sin(vector.radians))
@@ -24,6 +25,7 @@ export class ArrowDataTrail extends DataTrail {
 
   draw(heading: number, id: IDMatrix): void {
     const ctx = PaintBrush.getContext()
+
     ctx.lineWidth = 1
     ctx.fillStyle = id
 

@@ -24,14 +24,17 @@ export class RadarDataTrail extends DataTrail {
     let xPos = startx
     let yPos = starty
     const rdrPts: Point[] = []
+
     // draw the radar trail
     if (!this.radarPoints || this.radarPoints.length === 0) {
       for (let mult = 0; mult < 6; mult++) {
         // add a bit of jitter with randomness
         const jit = 3
+
         xPos = startx + offsetX * mult + jit * Math.random() + Math.random()
         yPos = starty + offsetY * mult + jit * Math.random() + Math.random()
         const rdrPt = new Point(xPos, yPos)
+
         rdrPts.push(rdrPt)
       }
       this.radarPoints = rdrPts
@@ -62,12 +65,14 @@ export class RadarDataTrail extends DataTrail {
 
     const xPos = startx + offsetX * 6 + jit * Math.random() + Math.random()
     const yPos = starty + offsetY * 6 + jit * Math.random() + Math.random()
+
     newRdrPts.push(new Point(xPos, yPos))
     this.radarPoints = newRdrPts
   }
 
   draw(heading: number, id: IDMatrix): void {
     const ctx = PaintBrush.getContext()
+
     // Draw radar dots
     ctx.strokeStyle = "#FF8C00"
     ctx.lineWidth = 2
@@ -133,11 +138,13 @@ export class RadarDataTrail extends DataTrail {
 
       const leftX = headX + 2 * PIXELS_TO_NM * Math.cos(toRadians(240))
       const leftY = headY + 2 * PIXELS_TO_NM - Math.sin(toRadians(240))
+
       ctx.moveTo(headX, headY)
       ctx.lineTo(leftX, leftY)
 
       const rightX = headX + 2 * PIXELS_TO_NM * Math.cos(toRadians(300))
       const rightY = headY + 2 * PIXELS_TO_NM - Math.sin(toRadians(300))
+
       ctx.moveTo(headX, headY)
       ctx.lineTo(rightX, rightY)
       ctx.stroke()
@@ -152,6 +159,7 @@ export class RadarDataTrail extends DataTrail {
     const vector = headingToRadians(heading)
     const deltX = 3 * PIXELS_TO_NM * Math.cos(vector.radians)
     const deltY = 3 * PIXELS_TO_NM * -Math.sin(vector.radians)
+
     ctx.moveTo(plotAhead.x - 2.5, plotAhead.y - 2.5)
     ctx.lineTo(plotAhead.x - 2.5 + 1.2 * deltX, plotAhead.y - 2.5 + 1.2 * deltY)
     ctx.stroke()

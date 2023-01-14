@@ -56,6 +56,7 @@ export abstract class AnimationHandler {
     const sX = group.getCenterOfMass(dataStyle).x
     const sY = group.getCenterOfMass(dataStyle).y
     const ctx = PaintBrush.getContext()
+
     return (
       sX < buffer ||
       sX > ctx.canvas.width - buffer ||
@@ -142,6 +143,7 @@ export abstract class AnimationHandler {
       "speedSlider"
     ) as HTMLInputElement
     let speed = props.sliderSpeed
+
     if (slider && slider.value) speed = parseInt(slider.value)
 
     // delay is proportion of 5000ms based on current slider setting
@@ -153,6 +155,7 @@ export abstract class AnimationHandler {
       const slpObj = sleep(delay, () => {
         binding(props, state, groups, animateCanvas, resetCallback)
       })
+
       this.setSleepCancel(slpObj.cancel)
     }
   }

@@ -70,9 +70,9 @@ export class IFFDataTrail extends DataTrail {
     if (id !== IDMatrix.SUSPECT && id !== IDMatrix.HOSTILE) {
       ctx.strokeStyle = "blue"
       ctx.lineWidth = 1
-      for (let l = 0; l < this.iffPoints.length; l++) {
-        const xPos = this.iffPoints[l].x
-        const yPos = this.iffPoints[l].y
+      for (const point of this.iffPoints) {
+        const xPos = point.x
+        const yPos = point.y
 
         ctx.beginPath()
         ctx.moveTo(xPos, yPos)

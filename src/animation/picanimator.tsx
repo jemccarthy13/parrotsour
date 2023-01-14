@@ -28,6 +28,7 @@ export class PicAnimationHandler extends AnimationHandler {
     const brToRed = blueAir
       .getCenterOfMass(dataStyle)
       .getBR(groups[0].getCenterOfMass(dataStyle))
+
     blueAir.updateIntent({
       desiredHeading: brToRed.bearingNum,
     })
@@ -60,9 +61,11 @@ export class PicAnimationHandler extends AnimationHandler {
     // check to see if the group should maneuver
     const manCheck = (): boolean => {
       const br = startPos.getBR(bluePos)
+
       if (br.range < 70) {
         return true
       }
+
       return false
     }
 
@@ -86,6 +89,7 @@ export class PicAnimationHandler extends AnimationHandler {
     // draw altitudes during the animation
     if (this.continueAnimate) {
       const grpPos = grp.getCenterOfMass(dataStyle)
+
       PaintBrush.drawAltitudes(grpPos, grp.getAltitudes())
 
       if (this._isNearBounds(grp, dataStyle)) {

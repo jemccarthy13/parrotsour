@@ -85,6 +85,7 @@ export class Aircraft {
     // Set current altitude
     let low = 15
     let hi = 45
+
     if (this.type === ACType.RPA) {
       low = 0o5
       hi = 18
@@ -122,6 +123,7 @@ export class Aircraft {
     }
     dataStyle = dataStyle === undefined ? SensorType.ARROW : dataStyle
     const dataTrail = this.dataTrail.get(dataStyle)
+
     if (dataTrail) {
       return dataTrail.getCenterOfMass(this.getHeading())
     } else {
@@ -210,6 +212,7 @@ export class Aircraft {
    */
   draw(dataStyle: SensorType): void {
     const dataTrail = this.dataTrail.get(dataStyle)
+
     if (dataTrail) {
       dataTrail.draw(this.getHeading(), this.getIDMatrix())
     }
@@ -225,6 +228,7 @@ export class Aircraft {
       const rads: number = headingToRadians(this.getHeading()).radians
       const offsetX: number = 7 * Math.cos(rads)
       const offsetY: number = -7 * Math.sin(rads)
+
       this.startPos.x += offsetX
       this.startPos.y += offsetY
 
@@ -245,6 +249,7 @@ export class Aircraft {
     // if Aircraft wants to go somewhere
     // determine the bearing to the next route point
     const tgtPos = this.intent.getNextRoutingPoint()
+
     if (tgtPos) {
       this.intent.setDesiredHeading(
         this.getCenterOfMass().getBR(tgtPos).bearingNum
@@ -262,6 +267,7 @@ export class Aircraft {
     // each frame
     let divisor = 7
     const absDelt = Math.abs(turnDegrees)
+
     if (absDelt >= 90) {
       divisor = 15
     } else if (absDelt < 7) {
@@ -277,6 +283,7 @@ export class Aircraft {
   doNextAltChange(): void {
     const atDesiredAlt = this.intent.getDesiredAltitude() === this.getAltitude()
     const CHANGE_PER_FRAME = 0.5
+
     if (!atDesiredAlt) {
       if (this.intent.getDesiredAltitude() > this.getAltitude()) {
         this.altitude += CHANGE_PER_FRAME // climb
@@ -330,9 +337,11 @@ export class Aircraft {
       if (this.intent.atNextRoutingPoint(this.getStartPos())) {
         this.intent.removeRoutingPoint()
       }
+
       // If Aircraft still has a point left in routing, update desired heading
       // and turn towards it
       const nextPt = this.intent.getNextRoutingPoint()
+
       if (nextPt)
         this.updateIntent({
           desiredHeading: this.getCenterOfMass().getBR(nextPt).bearingNum,
