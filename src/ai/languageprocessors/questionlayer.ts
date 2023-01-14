@@ -28,6 +28,7 @@ export function processQuestionLayer(
   const question2 = nl.match("[<cs>#Noun] interrogative [<thing>#Noun] *")
 
   // Cannot figure out how to get specific types for nl.sentences()
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const sentences = nl.sentences() as any
   const isQuestion = sentences.isQuestion().length > 0
   const interrogative = question2.found

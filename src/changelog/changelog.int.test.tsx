@@ -1,5 +1,5 @@
 import React from "react"
-import { ThemeProvider } from "@mui/system"
+import { ThemeProvider } from "@mui/material"
 import { render } from "@testing-library/react"
 import { theme } from "../theme"
 import ChangeLog from "./changelog"
@@ -18,6 +18,7 @@ describe("ChangeLog", () => {
         <ChangeLog />
       </ThemeProvider>
     )
+
     expect(wrapper.getAllByText(/bugs/i).length).toBeGreaterThan(0)
   })
 })

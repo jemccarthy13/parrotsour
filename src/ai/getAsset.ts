@@ -39,5 +39,6 @@ export function findAssetInMsg(
   if (!asset) {
     sendResponse("SYSTEM", "No such callsign.")
   }
+
   return asset
 }

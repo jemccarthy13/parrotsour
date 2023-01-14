@@ -1,4 +1,3 @@
-import "regenerator-runtime/runtime"
 import React, { lazy, ReactElement, Suspense } from "react"
 import "../../css/slider.css"
 import "../../css/parrotsour.css"

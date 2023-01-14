@@ -26,6 +26,7 @@ export class CloseAnimationHandler extends AnimationHandler {
     const brToRed = blueAir
       .getCenterOfMass(dataStyle)
       .getBR(groups[0].getCenterOfMass(dataStyle))
+
     blueAir.updateIntent({
       desiredHeading: brToRed.bearingNum,
     })
@@ -60,6 +61,7 @@ export class CloseAnimationHandler extends AnimationHandler {
     // draw altitudes during the animation
     if (this.continueAnimate) {
       const grpPos = grp.getCenterOfMass(dataStyle)
+
       PaintBrush.drawAltitudes(grpPos, grp.getAltitudes())
 
       // if (this._isNearBounds( grp, dataStyle)) {

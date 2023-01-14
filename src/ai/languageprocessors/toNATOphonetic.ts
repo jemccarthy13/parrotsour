@@ -11,6 +11,7 @@
  */
 export function toNATOPhonetic(text: string): string {
   const m = new Map()
+
   m.set("A", "alpha")
   m.set("B", "bravo")
   m.set("C", "charlie")
@@ -37,5 +38,6 @@ export function toNATOPhonetic(text: string): string {
   m.set("X", "x-ray")
   m.set("Y", "yankee")
   m.set("Z", "zulu")
+
   return [...text.toUpperCase()].map((x) => (m.get(x) ? m.get(x) : x)).join(" ")
 }
