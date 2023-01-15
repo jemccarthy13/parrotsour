@@ -34,11 +34,11 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
    */
   useEffect(() => {
     PaintBrush.use(canvasRef.current?.getContext("2d"))
-  }, [canvasRef])
+  }, [canvasRef.current])
 
   const mouseCanvasRef: React.RefObject<HTMLCanvasElement> =
     useRef<HTMLCanvasElement>(null)
-  const mouseCvCtx: React.MutableRefObject<CanvasRenderingContext2D | null> =
+  const mouseCanvasContext: React.MutableRefObject<CanvasRenderingContext2D | null> =
     useRef(null)
 
   // State variables are used to track mouse position
@@ -57,7 +57,7 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
 
       const ctx = canvas.getContext("2d")
 
-      mouseCvCtx.current = mouseCanvas.getContext("2d")
+      mouseCanvasContext.current = mouseCanvas.getContext("2d")
       canvas.height = orientation.height
       canvas.width = orientation.width
       canvas.style.width = orientation.width + "px"
@@ -68,12 +68,7 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
       mouseCanvas.style.width = orientation.width + "px"
       mouseCanvas.style.height = orientation.height + "px"
 
-      // Trigger the parent render ('draw' from props)
-      const render = async () => {
-        if (draw && ctx) draw(ctx)
-      }
-
-      render()
+      if (draw && ctx) draw(ctx)
     }
   }, [draw, orientation, picType, newPic, isHardMode])
 
@@ -105,9 +100,9 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
   function drawMouse(start: Point, end: Point) {
     const prevCtx = PaintBrush.getContext()
 
-    PaintBrush.use(mouseCvCtx.current)
+    PaintBrush.use(mouseCanvasContext.current)
 
-    if (mousePressed && mouseCvCtx.current) {
+    if (mousePressed && mouseCanvasContext.current) {
       PaintBrush.drawLine(start.x, start.y, end.x, end.y)
     }
 
@@ -128,7 +123,7 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
       y: braaFirst ? end.y - 11 : end.y,
     }
 
-    if (mouseCvCtx.current) {
+    if (mouseCanvasContext.current) {
       if (mousePressed) {
         b.braa.draw(drawBRPos.x, drawBRPos.y, "blue", true)
       }
@@ -142,7 +137,7 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
    * Braaseye start point.
    * @param e CanvasMouseEvent with mouse position
    */
-  const canvasMouseDown = function (e: CanvasMouseEvent) {
+  const handleMouseDown = function (e: CanvasMouseEvent) {
     setMousePressed(true)
 
     const mousePos = getMousePos(canvasRef.current, e)
@@ -155,12 +150,12 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
    * Restore the imagedata (w/o line draws).
    */
   const onMouseLeave = () => {
-    if (mouseCvCtx.current)
-      mouseCvCtx.current.clearRect(
+    if (mouseCanvasContext.current)
+      mouseCanvasContext.current.clearRect(
         0,
         0,
-        mouseCvCtx.current.canvas.width,
-        mouseCvCtx.current.canvas.height
+        mouseCanvasContext.current.canvas.width,
+        mouseCanvasContext.current.canvas.height
       )
   }
 
@@ -192,7 +187,7 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
     alts.sort((a, b) => a - b)
     alts.reverse()
 
-    const ctx = mouseCvCtx.current
+    const ctx = mouseCanvasContext.current
 
     if (ctx) {
       ctx.fillStyle = "white"
@@ -230,10 +225,10 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
     })
 
     if (grps.length > 0) {
-      if (mouseCvCtx.current) {
+      if (mouseCanvasContext.current) {
         const prevCtx = PaintBrush.getContext()
 
-        PaintBrush.use(mouseCvCtx.current)
+        PaintBrush.use(mouseCanvasContext.current)
         PaintBrush.drawText("Hdg:", 20, 20)
         PaintBrush.drawText(grps[0].getHeading().toString(), 50, 20)
         PaintBrush.drawText("Alt:", 20, 40)
@@ -248,11 +243,11 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
    * Draws the appropriate information on the canvas.
    * @param e CanvasMouseEvent containing mouse position
    */
-  const canvasMouseMove = (e: CanvasMouseEvent) => {
+  const handleMouseMove = (e: CanvasMouseEvent) => {
     const mousePos = getMousePos(canvasRef.current, e)
 
-    if (mouseCvCtx.current && mouseCanvasRef.current) {
-      mouseCvCtx.current.clearRect(
+    if (mouseCanvasContext.current && mouseCanvasRef.current) {
+      mouseCanvasContext.current.clearRect(
         0,
         0,
         mouseCanvasRef.current.width,
@@ -268,21 +263,21 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
     //
     // draw the range ring & "stack" boot
     //
-    if (isCapsLock && mouseCvCtx.current && canvasRef.current) {
+    if (isCapsLock && mouseCanvasContext.current && canvasRef.current) {
       const rect = canvasRef.current.getBoundingClientRect()
 
       if (rect) {
-        mouseCvCtx.current.strokeStyle = "green"
-        mouseCvCtx.current.lineWidth = 1
-        mouseCvCtx.current.beginPath()
-        mouseCvCtx.current.arc(
+        mouseCanvasContext.current.strokeStyle = "green"
+        mouseCanvasContext.current.lineWidth = 1
+        mouseCanvasContext.current.beginPath()
+        mouseCanvasContext.current.arc(
           mousePos.x + 50,
           mousePos.y,
           5 * PIXELS_TO_NM,
           0,
           360
         )
-        mouseCvCtx.current.stroke()
+        mouseCanvasContext.current.stroke()
 
         drawBoot(mousePos)
       }
@@ -296,7 +291,7 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
    * Called when the mouse is released.
    * Restores previous ImageData.
    */
-  const canvasMouseUp = () => {
+  const handleMouseUp = () => {
     setMousePressed(false)
   }
 
@@ -308,7 +303,7 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
   const canvasTouchStart = (e: TouchEvent) => {
     const touch = e.changedTouches[0]
 
-    canvasMouseDown({
+    handleMouseDown({
       clientX: touch.clientX,
       clientY: touch.clientY,
       getModifierState: () => false,
@@ -323,7 +318,7 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
   const canvasTouchMove = (e: TouchEvent) => {
     const touch = e.changedTouches[0]
 
-    canvasMouseMove({
+    handleMouseMove({
       clientX: touch.clientX,
       clientY: touch.clientY,
       getModifierState: () => false,
@@ -339,6 +334,36 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
     setMousePressed(false)
   }
 
+  /**
+   * Called when a touch event (down press) registred on canvas.
+   * Converts touch event to CanvasMouseEvent for processing.
+   * @param e TouchEvent containing touch location
+   */
+  const canvasMouseStart = (
+    e: React.MouseEvent<HTMLCanvasElement, MouseEvent>
+  ) => {
+    handleMouseDown({
+      clientX: e.clientX,
+      clientY: e.clientY,
+      getModifierState: () => false,
+    })
+  }
+
+  /**
+   * Called when a TouchEvent (move) is registered on canvas
+   * Converts TouchEvent to MouseEvent for processing
+   * @param e TouchEvent containing touch location
+   */
+  const canvasMouseMove = (
+    e: React.MouseEvent<HTMLCanvasElement, MouseEvent>
+  ) => {
+    handleMouseMove({
+      clientX: e.clientX,
+      clientY: e.clientY,
+      getModifierState: () => false,
+    })
+  }
+
   const style = {
     touchAction: "none",
     backgroundColor: "white",
@@ -348,9 +373,9 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
   }
 
   const moveProps = {
-    onMouseDown: canvasMouseDown,
+    onMouseDown: canvasMouseStart,
     onMouseMove: canvasMouseMove,
-    onMouseUp: canvasMouseUp,
+    onMouseUp: handleMouseUp,
     onTouchStart: canvasTouchStart,
     onTouchMove: canvasTouchMove,
     onTouchEnd: canvasTouchEnd,
@@ -358,29 +383,27 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
   }
 
   return (
-    <div style={{ display: "block", textAlign: "left" }}>
-      <div style={{ display: "grid", position: "relative" }}>
-        <canvas
-          id="pscanvas"
-          {...moveProps}
-          style={{ ...style, gridColumn: "2", gridRow: "1", left: "0px" }}
-          ref={canvasRef}
-        />
-        <canvas
-          id="mousecanvas"
-          data-testid="mousecanvas"
-          {...moveProps}
-          style={{
-            ...style,
-            gridColumn: "2",
-            gridRow: "1",
-            position: "absolute",
-            left: "0px",
-            backgroundColor: "transparent",
-          }}
-          ref={mouseCanvasRef}
-        />
-      </div>
+    <div style={{ display: "grid", position: "relative" }}>
+      <canvas
+        id="pscanvas"
+        {...moveProps}
+        style={{ ...style, gridColumn: "2", gridRow: "1", left: "0px" }}
+        ref={canvasRef}
+      />
+      <canvas
+        id="mousecanvas"
+        data-testid="mousecanvas"
+        {...moveProps}
+        style={{
+          ...style,
+          gridColumn: "2",
+          gridRow: "1",
+          position: "absolute",
+          left: "0px",
+          backgroundColor: "transparent",
+        }}
+        ref={mouseCanvasRef}
+      />
     </div>
   )
 }

@@ -7,7 +7,7 @@ import {
   DialogContent,
   TextField,
 } from "../../utils/muiadapter"
-import Snackbar from "../alert/psalert"
+import { snackActions } from "../alert/psalert"
 import IssueSelector from "./selector"
 import "../../css/collapsible.css"
 
@@ -15,7 +15,9 @@ type IRProps = {
   answer?: PictureAnswer
 }
 
-export default function IssueReport(props: IRProps): ReactElement {
+export default function IssueReport({
+  answer = { groups: [], pic: "" },
+}: IRProps): ReactElement {
   const [showIssueForm, setShowIssueForm] = useState(false)
   const [selection, setSelection] = useState("picprob")
   const [submitEnabled, setSubmitEnabled] = useState(true)
@@ -55,7 +57,6 @@ export default function IssueReport(props: IRProps): ReactElement {
 
     setSubmitEnabled(false)
     if (goodForm) {
-      const { answer } = props
       const canvas: HTMLCanvasElement = document.getElementById(
         "pscanvas"
       ) as HTMLCanvasElement
@@ -83,10 +84,10 @@ export default function IssueReport(props: IRProps): ReactElement {
       )
 
       if (response.ok) {
-        Snackbar.success("Submitted!")
+        snackActions.success("Submitted!")
         handleToggleIssueForm()
       } else {
-        Snackbar.error("Issue report failed.\nTry again later.")
+        snackActions.error("Issue report failed.\nTry again later.")
       }
     }
 
@@ -181,11 +182,4 @@ export default function IssueReport(props: IRProps): ReactElement {
       </Dialog>
     </div>
   )
-}
-
-IssueReport.defaultProps = {
-  answer: {
-    pic: "",
-    groups: [],
-  },
 }

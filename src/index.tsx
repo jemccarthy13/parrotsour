@@ -2,10 +2,10 @@
 import React, { Suspense } from "react"
 import { CookieConsent, Cookies } from "react-cookie-consent"
 import ReactDOM from "react-dom"
-import Home from "./Home"
+import { Home } from "./Home"
+import { DismissAction } from "./pscomponents/alert/dismissaction"
 import GlobalSnackbarProvider from "./pscomponents/alert/globalalertprovider"
-import snackActions, { SnackbarKey } from "./pscomponents/alert/psalert"
-import { Button } from "./utils/muiadapter"
+import { snackActions } from "./pscomponents/alert/psalert"
 
 export default ReactDOM.render(
   <React.StrictMode>
@@ -25,39 +25,34 @@ export default ReactDOM.render(
   document.getElementById("root")
 )
 
-export const version = "4.1.2"
+export const version = process.env.REACT_APP_VERSION
 const cookieIsNotSet =
   Cookies.get(version + "Notify") === undefined ||
   Cookies.get(version + "Notify") === "false"
 
-function createDismiss(key: SnackbarKey) {
-  function handleVersionClick(): void {
-    window.location.href = "#/changelog.html#4.1.2"
-    Cookies.set(version + "Notify", true, { expires: 365 })
-    snackActions.closeSnackbar(key)
-  }
-
-  function handleDismissClick(): void {
-    Cookies.set(version + "Notify", true, { expires: 365 })
-    snackActions.closeSnackbar(key)
-  }
-
-  return (
-    <>
-      <Button onClick={handleVersionClick}>{version}</Button>
-      <Button onClick={handleDismissClick}>Dismiss</Button>
-    </>
-  )
+function confirm() {
+  Cookies.set(version + "Notify", true, { expires: 365 })
+  window.location.href = `#/changelog.html#${process.env.REACT_APP_VERSION}`
 }
 
-// remove after confidence most people have seen new release notification
+function cancel() {
+  Cookies.set(version + "Notify", true, { expires: 365 })
+}
+
 if (cookieIsNotSet) {
   snackActions.info("Check out the newest release of ParrotSour!", {
     style: { pointerEvents: "all" },
     autoHideDuration: 10000,
     preventDuplicate: true,
-    action: (key) => {
-      return createDismiss(key)
+    action: (snackbarkey) => {
+      return (
+        <DismissAction
+          key={snackbarkey}
+          confirmCallback={confirm}
+          cancelCallback={cancel}
+          confirmText={`${version}`}
+        />
+      )
     },
   })
 }

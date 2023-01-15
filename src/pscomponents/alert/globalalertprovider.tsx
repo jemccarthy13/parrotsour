@@ -1,6 +1,10 @@
 import React, { CSSProperties } from "react"
-import { SnackbarKey, SnackbarProvider } from "notistack"
-import snackActions, { SnackbarUtilsConfigurator } from "./psalert"
+import {
+  snackActions,
+  SnackbarUtilsConfigurator,
+  SnackbarKey,
+  SnackbarProvider,
+} from "./psalert"
 
 const transparentBtnStyle: CSSProperties = {
   height: "100%",

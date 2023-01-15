@@ -13,7 +13,7 @@ import PictureCanvas from "../../canvas/picturecanvas"
 import { SensorType } from "../../classes/aircraft/datatrail/sensortype"
 import { FORMAT } from "../../classes/supportedformats"
 import { theme } from "../../theme"
-import snackActions from "../alert/psalert"
+import { snackActions } from "../alert/psalert"
 
 export function ParrotSourAPI(): JSX.Element {
   const config = {

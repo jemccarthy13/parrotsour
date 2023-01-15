@@ -1,7 +1,7 @@
 import { AircraftGroup } from "../../../classes/groups/group"
 import { Point } from "../../../classes/point"
 import { FORMAT } from "../../../classes/supportedformats"
-import snackActions from "../../../pscomponents/alert/psalert"
+import { snackActions } from "../../../pscomponents/alert/psalert"
 import { Aspect, toCardinal } from "../../../utils/aspect"
 import { randomNumber } from "../../../utils/math"
 import {

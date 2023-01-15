@@ -4,6 +4,7 @@ import {
   SnackbarKey,
   useSnackbar,
   WithSnackbarProps,
+  SnackbarProvider,
 } from "notistack"
 
 let snackbarRef: WithSnackbarProps
@@ -14,7 +15,7 @@ export const SnackbarUtilsConfigurator: React.FC = () => {
   return null
 }
 
-export default {
+export const snackActions = {
   success(msg: string, options: OptionsObject = {}): SnackbarKey {
     return this.toast(msg, { ...options, variant: "success" })
   },
@@ -36,3 +37,4 @@ export default {
 }
 
 export type { SnackbarKey }
+export { SnackbarProvider }

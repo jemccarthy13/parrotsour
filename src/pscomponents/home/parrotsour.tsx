@@ -22,9 +22,12 @@ type PSProps = {
 /**
  * The main entry class for a ParrotSour component
  */
-export const ParrotSour = (props: PSProps): ReactElement => {
-  const { type, interceptLink, proceduralLink, apiLink } = props
-
+export const ParrotSour = ({
+  type,
+  interceptLink = "#/intercept.html",
+  proceduralLink = "#/procedural.html",
+  apiLink = "#/api.html",
+}: PSProps): ReactElement => {
   let comp = (
     <ParrotSourChooser
       interceptLink={interceptLink}
@@ -48,12 +51,6 @@ export const ParrotSour = (props: PSProps): ReactElement => {
       <Suspense fallback={<div>Loading...</div>}>{comp}</Suspense>
     </ThemeProvider>
   )
-}
-
-ParrotSour.defaultProps = {
-  interceptLink: "#/intercept.html",
-  proceduralLink: "#/procedural.html",
-  apiLink: "#/api.html",
 }
 
 export default ParrotSour

@@ -5,7 +5,7 @@ import {
 } from "../../../canvas/canvastypes"
 import { SensorType } from "../../../classes/aircraft/datatrail/sensortype"
 import { AircraftGroup } from "../../../classes/groups/group"
-import PSAlert from "../../../pscomponents/alert/psalert"
+import { snackActions } from "../../../pscomponents/alert/psalert"
 import { randomNumber } from "../../../utils/math"
 import { PaintBrush } from "../paintbrush"
 
@@ -39,15 +39,16 @@ function checkForCoAltitude(
   dataStyle: SensorType
 ) {
   const result = groups1.filter((grp: AircraftGroup) =>
-    groups2.some((grp2) => {
-      grp.getAltitude() === grp2.getAltitude() &&
+    groups2.some(
+      (grp2) =>
+        grp.getAltitude() === grp2.getAltitude() &&
         grp.getCenterOfMass(dataStyle).getBR(grp2.getCenterOfMass(dataStyle))
           .range <= 20
-    })
+    )
   )
 
   if (result.length !== 0) {
-    PSAlert.error("CoAlt!")
+    snackActions.error("CoAlt!")
   }
 }
 
@@ -63,10 +64,10 @@ function doAnimation(
 
   ctx.putImageData(animateCanvas, 0, 0)
 
-  for (let x = 0; x < groups.length; x++) {
+  for (const group of groups) {
     checkForCoAltitude(groups, groups, props.dataStyle)
 
-    groups[x].doNextRouting()
+    group.doNextRouting()
 
     // *** Issue #12 - PROCEDURAL -- work the request system
 
@@ -97,29 +98,29 @@ function doAnimation(
     //   }
     // }
 
-    groups[x].updateAltitude()
+    group.updateAltitude()
 
-    if (!groups[x].isCapping() && !groups[x].hasRouting()) {
-      groups[x].draw(props.dataStyle)
+    if (!group.isCapping() && !group.hasRouting()) {
+      group.draw(props.dataStyle)
 
-      groups[x].move()
+      group.move()
 
-      let newHeading = groups[x].getHeading()
+      let newHeading = group.getHeading()
 
-      const nextPoint = groups[x].getNextRoutingPoint()
+      const nextPoint = group.getNextRoutingPoint()
 
       if (nextPoint) {
-        newHeading = groups[x]
+        newHeading = group
           .getCenterOfMass(props.dataStyle)
           .getBR(nextPoint).bearingNum
       }
 
-      groups[x].updateIntent({
+      group.updateIntent({
         desiredHeading: newHeading,
       })
     } else {
       // const sPos = groups[x].getCenterOfMass(props.dataStyle)
-      groups[x].draw(props.dataStyle)
+      group.draw(props.dataStyle)
       // drawGroupCap(
       //   ctx,
       //   props.orientation.orient,
@@ -130,9 +131,9 @@ function doAnimation(
       // )
     }
 
-    const sPos = groups[x].getCenterOfMass(props.dataStyle)
+    const sPos = group.getCenterOfMass(props.dataStyle)
 
-    PaintBrush.drawText(groups[x].getLabel(), sPos.x - 10, sPos.y + 20, 12)
+    PaintBrush.drawText(group.getLabel(), sPos.x - 10, sPos.y + 20, 12)
   }
 
   if (continueAnimation) {
@@ -152,10 +153,10 @@ function doAnimation(
 
     window.requestAnimationFrame(animate)
 
-    for (let y = 0; y < groups.length; y++) {
+    for (const group of groups) {
       PaintBrush.drawAltitudes(
-        groups[y].getCenterOfMass(props.dataStyle),
-        groups[y].getAltitudes()
+        group.getCenterOfMass(props.dataStyle),
+        group.getAltitudes()
       )
     }
   }
@@ -169,15 +170,15 @@ export function animateGroups(
   animateCanvas: ImageData,
   resetCallback?: (showMeasure: boolean) => void
 ): void {
-  for (let x = 0; x < groups.length; x++) {
+  for (const group of groups) {
     if (randomNumber(0, 10) <= 2) {
-      groups[x].setManeuvers(1)
+      group.setManeuvers(1)
     }
 
     const bPos = state.blueAir.getCenterOfMass(props.dataStyle)
 
-    groups[x].updateIntent({
-      desiredHeading: groups[x].getCenterOfMass(props.dataStyle).getBR(bPos)
+    group.updateIntent({
+      desiredHeading: group.getCenterOfMass(props.dataStyle).getBR(bPos)
         .bearingNum,
     })
   }

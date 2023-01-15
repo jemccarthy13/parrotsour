@@ -3,7 +3,7 @@ import { render, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { act } from "react-dom/test-utils"
 import GlobalAlertProvider from "./globalalertprovider"
-import snackActions from "./psalert"
+import { snackActions } from "./psalert"
 
 jest.setTimeout(10000)
 

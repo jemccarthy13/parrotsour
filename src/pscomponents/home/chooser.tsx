@@ -9,7 +9,11 @@ type PSCProps = {
   apiLink?: string
 }
 
-export const ParrotSourChooser = (props: PSCProps): ReactElement => {
+export const ParrotSourChooser = ({
+  interceptLink = "",
+  proceduralLink = "",
+  apiLink = "",
+}: PSCProps): ReactElement => {
   const buttonStyle = {
     width: "25%",
     margin: "5px",
@@ -20,8 +24,6 @@ export const ParrotSourChooser = (props: PSCProps): ReactElement => {
       window.location.href = link ? link : "#"
     }
   }
-
-  const { interceptLink, proceduralLink, apiLink } = props
 
   return (
     <div>
@@ -49,12 +51,6 @@ export const ParrotSourChooser = (props: PSCProps): ReactElement => {
       </div>
     </div>
   )
-}
-
-ParrotSourChooser.defaultProps = {
-  interceptLink: "",
-  proceduralLink: "",
-  apiLink: "",
 }
 
 export default ParrotSourChooser

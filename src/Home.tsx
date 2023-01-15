@@ -1,5 +1,5 @@
 import React, { Suspense, lazy } from "react"
-import { Route, Routes } from "react-router"
+import { Navigate, Route, Routes } from "react-router"
 import { HashRouter } from "react-router-dom"
 import ChangeLog from "./changelog/changelog"
 import "./css/snackbar.css"
@@ -19,60 +19,65 @@ const Login = lazy(() => import("./pscomponents/home/login"))
  * Once procedural is running, the home page allows selection between procedural
  * and intercept.
  */
-export default class Home extends React.PureComponent {
-  getPS = (): JSX.Element => {
-    return (
-      <ParrotSour
-        type="chooser"
-        interceptLink="/#/intercept.html"
-        proceduralLink="/#/procedural.html"
-        apiLink="/#/api.html"
-      />
-    )
+export const Home = () => {
+  if (process.env.REACT_APP_MAINTENANCE === "true") {
+    return <>Maintenance</>
   }
 
-  getPSP = (): JSX.Element => {
-    return <ParrotSour type="procedural" />
-  }
-
-  getPSC = (): JSX.Element => {
-    return <ParrotSour type="close" />
-  }
-
-  getPSI = (): JSX.Element => {
-    return <ParrotSour type="intercept" />
-  }
-
-  getPSAPI = (): JSX.Element => {
-    return <ParrotSour type="api" />
-  }
-
-  render(): React.ReactElement {
-    return (
-      <div className="app">
-        <div className="body-content" style={{ width: "100%" }}>
-          <HashRouter>
-            <Suspense fallback={<div>Loading...</div>}>
-              <Routes>
-                <Route path="/" element={this.getPSI()} />
-                <Route path="/changelog.html" element={<ChangeLog />} />
-                <Route path="/changelog" element={<ChangeLog />} />
-                <Route path="/api.html" element={this.getPSAPI()} />
-                <Route path="/api" element={this.getPSAPI()} />
-                <Route path="/parrotsour.html" element={this.getPS()} />
-                <Route path="/parrotsour" element={this.getPS()} />
-                <Route path="/intercept.html" element={this.getPSI()} />
-                <Route path="/intercept" element={this.getPSI()} />
-                <Route path="/close.html" element={this.getPSC()} />
-                <Route path="/close" element={this.getPSC()} />
-                <Route path="/procedural.html" element={this.getPSP()} />
-                <Route path="/procedural" element={this.getPSP()} />
+  return (
+    <div className="app">
+      <div className="body-content" style={{ width: "100%" }}>
+        <HashRouter>
+          <Suspense fallback={<div>Loading...</div>}>
+            <Routes>
+              <Route path="/" element={<Navigate to="/intercept" />} />
+              <Route
+                path="/chooser"
+                element={
+                  <ParrotSour
+                    type="chooser"
+                    interceptLink="/#/intercept.html"
+                    proceduralLink="/#/procedural.html"
+                    apiLink="/#/api.html"
+                  />
+                }
+              />
+              <Route path="/parrotsour" element={<Navigate to="/chooser" />} />
+              <Route
+                path="/intercept"
+                element={<ParrotSour type="intercept" />}
+              />
+              <Route
+                path="/intercept.html"
+                element={<Navigate to="/intercept" />}
+              />
+              <Route path="/close" element={<ParrotSour type="close" />} />
+              <Route path="/close.html" element={<Navigate to="/close" />} />
+              <Route
+                path="/procedural"
+                element={<ParrotSour type="procedural" />}
+              />
+              <Route
+                path="/procedural.html"
+                element={<Navigate to="/procedural" />}
+              />
+              <Route path="/changelog" element={<ChangeLog />} />
+              <Route
+                path="/changelog.html"
+                element={<Navigate to="/changelog" />}
+              />
+              <Route path="/api" element={<ParrotSour type="api" />} />
+              <Route
+                path="/parrotsour.html"
+                element={<Navigate to="/chooser" />}
+              />
+              {process.env.NODE_ENV === "development" && (
                 <Route path="/login" element={<Login />} />
-              </Routes>
-            </Suspense>
-          </HashRouter>
-        </div>
+              )}
+            </Routes>
+          </Suspense>
+        </HashRouter>
       </div>
-    )
-  }
+    </div>
+  )
 }

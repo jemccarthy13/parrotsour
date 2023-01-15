@@ -1,7 +1,7 @@
 import React from "react"
 import { render, waitFor } from "@testing-library/react"
 import { createHashHistory } from "history"
-import Home from "./Home"
+import { Home } from "./Home"
 
 describe("Home", () => {
   it("should_render_default", async () => {
@@ -75,7 +75,7 @@ describe("Home", () => {
       },
       { timeout: 5000 }
     )
-  })
+  }, 6000)
 
   it("should_render_with_chooser", async () => {
     const history = createHashHistory()
