@@ -47,6 +47,7 @@ describe("drawingCanvas", () => {
     }
 
     const mouseCanvas = drawingCanvas.getByTestId("mousecanvas")
+
     fireEvent.mouseMove(mouseCanvas, moveEvent)
     expect(mouseCanvas).toMatchSnapshot()
   })
@@ -67,6 +68,7 @@ describe("drawingCanvas", () => {
     }
 
     const mouseCanvas = drawingCanvas.getByTestId("mousecanvas")
+
     fireEvent.mouseMove(mouseCanvas, moveEvent)
     fireEvent.mouseMove(mouseCanvas, moveEvent2)
 
@@ -89,6 +91,7 @@ describe("drawingCanvas", () => {
     }
 
     const mouseCanvas = drawingCanvas.getByTestId("mousecanvas")
+
     fireEvent.mouseMove(mouseCanvas, moveEvent)
     fireEvent.mouseDown(mouseCanvas, moveEvent)
     fireEvent.mouseMove(mouseCanvas, moveEvent2)

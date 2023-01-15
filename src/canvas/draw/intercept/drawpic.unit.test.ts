@@ -1,19 +1,20 @@
 import { AircraftGroup } from "../../../classes/groups/group"
 import { Point } from "../../../classes/point"
+import { snackActions } from "../../../pscomponents/alert/psalert"
 import TestCanvas from "../../../testutils/testcanvas"
 import { PictureCanvasState } from "../../canvastypes"
 import { PaintBrush } from "../paintbrush"
 import DrawAzimuth from "./azimuth"
 import { testProps } from "./mockutils.unit.test"
 
-const mockWarn = jest.fn()
-
 jest.mock("../../../pscomponents/alert/psalert", () => ({
-  success: jest.fn(),
-  warning: () => mockWarn(),
-  info: jest.fn(),
-  error: jest.fn(),
-  toast: jest.fn(),
+  snackActions: {
+    success: jest.fn(),
+    warning: jest.fn(),
+    info: jest.fn(),
+    error: jest.fn(),
+    toast: jest.fn(),
+  },
 }))
 
 describe("DrawPic", () => {
@@ -43,9 +44,13 @@ describe("DrawPic", () => {
   })
 
   it("assigns_contacts_too_few_contacts", () => {
+    const snackSpy = jest
+      .spyOn(snackActions, "warning")
+      .mockImplementation(jest.fn())
+
     const nCts = draw.assignContacts(2, 1)
 
-    expect(mockWarn).toHaveBeenCalledTimes(1)
+    expect(snackSpy).toHaveBeenCalledTimes(1)
     expect(nCts.length).toEqual(2)
     expect(nCts[0]).toEqual(1) // 1 from assign contacts
     expect(nCts[1]).toEqual(0) // 0 for random (none leftover after init assign)
