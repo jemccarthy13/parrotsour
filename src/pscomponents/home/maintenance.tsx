@@ -15,7 +15,8 @@ export const Maintenance = () => {
       <br />
       <br />
       <div style={{ fontFamily: "Arial", fontSize: "16px" }}>
-        We&lsquo;re busy updating the site for you.
+        We&lsquo;re busy updating the site for you. There is a surprise coming
+        soon!
       </div>
     </div>
   )

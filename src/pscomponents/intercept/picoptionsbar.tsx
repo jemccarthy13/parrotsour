@@ -1,6 +1,12 @@
 import React from "react"
 import { Cookies } from "react-cookie-consent"
-import { MenuItem, Select, SelectChangeEvent } from "../../utils/muiadapter"
+import {
+  FormControlLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  Checkbox,
+} from "../../utils/muiadapter"
 
 export type POBSelProps = {
   picType: string
@@ -100,40 +106,18 @@ export default class PicOptionsBar extends React.PureComponent<
           New Pic
         </button>
 
-        <div
-          className="check-container"
-          style={{ paddingTop: "0px", paddingBottom: "0px" }}
-        >
-          <ul style={{ display: "inline-flex" }}>
-            <li>
-              <input
-                type="checkbox"
-                id="measureMyself"
-                defaultChecked={isWantMeasureChecked}
-                onChange={this.handleToggleMeasurements}
-              />
-              <label
-                style={{ width: "max-content", paddingRight: "10px" }}
-                htmlFor="measureMyself"
-              >
-                I want to measure
-              </label>
-              <div className="box" />
-            </li>
-            <li>
-              <input
-                type="checkbox"
-                id="hardMode"
-                defaultChecked={isHardModeChecked}
-                onChange={this.handleToggleHardMode}
-              />
-              <label style={{ paddingRight: "10px" }} htmlFor="hardMode">
-                Hard Mode
-              </label>
-              <div className="box" />
-            </li>
-          </ul>
-        </div>
+        <FormControlLabel
+          control={<Checkbox defaultChecked={isWantMeasureChecked} />}
+          label="I want to measure"
+          sx={{ marginLeft: "16px" }}
+          onChange={this.handleToggleMeasurements}
+        />
+        <FormControlLabel
+          control={<Checkbox defaultChecked={isHardModeChecked} />}
+          label="Hard Mode"
+          sx={{ marginLeft: "16px" }}
+          onChange={this.handleToggleHardMode}
+        />
       </div>
     )
   }

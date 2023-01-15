@@ -1,113 +1,100 @@
-import React, { ReactElement } from "react"
+import React, { useCallback, useState } from "react"
 import { FORMAT } from "../../classes/supportedformats"
 import {
   Dialog,
   DialogContentText,
   DialogTitle,
+  FormControlLabel,
   IconButton,
+  Radio,
+  RadioGroup,
 } from "../../utils/muiadapter"
-import { AlsaHelp } from "../quicktips/alsa-tips"
+import { AlsaHelp } from "../help/alsa-tips"
 
-export type StdSelectorProps = {
-  selectionChanged: (val: FORMAT) => () => void
+export type StandardSelectorProps = {
+  onChange: (val: FORMAT) => void
 }
 
-type StdSelectorState = {
-  showAlsaQT: boolean
-}
+export const StandardSelector = (props: StandardSelectorProps) => {
+  const [isShowAlsaQT, setShowAlsaQT] = useState(false)
 
-export default class StandardSelector extends React.PureComponent<
-  StdSelectorProps,
-  StdSelectorState
-> {
-  constructor(props: StdSelectorProps) {
-    super(props)
-    this.state = {
-      showAlsaQT: false,
-    }
+  const { onChange } = props
+
+  function handleToggleAlsaQT() {
+    setShowAlsaQT((prev) => !prev)
   }
 
-  /**
-   * Toggle the quick tips dialog for ALSA help
-   */
-  handleToggleAlsaQT = (): void => {
-    this.setState((prevState) => ({ showAlsaQT: !prevState.showAlsaQT }))
-  }
+  const handleRadioChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const newFormat = FORMAT[e.currentTarget.value as keyof typeof FORMAT]
 
-  render(): ReactElement {
-    const { selectionChanged } = this.props
-    const { showAlsaQT } = this.state
+      onChange(newFormat)
+    },
+    [onChange]
+  )
 
-    return (
-      <div className="pscontainer">
-        <h2>
-          <u>Select Standard</u>
-        </h2>
-        <ul>
-          <li>
-            <input
-              type="radio"
-              id="ipe"
-              name="format"
-              value="ipe"
-              onChange={selectionChanged(FORMAT.IPE)}
-            />
-            <label htmlFor="ipe">3-3 IPE</label>
-            <div className="check" />
-          </li>
-          <li>
-            <input
-              type="radio"
-              id="alsa"
-              name="format"
-              value="alsa"
-              defaultChecked
-              onChange={selectionChanged(FORMAT.ALSA)}
-            />
-            <label htmlFor="alsa">ALSA ACC </label>
-            <div className="check" />
-            <button
-              style={{ padding: "0px" }}
-              className="helpicon"
-              id="alsaQTBtn"
-              type="button"
-              onClick={this.handleToggleAlsaQT}
-            >
-              ?
-            </button>
-          </li>
-        </ul>
-
-        <Dialog open={showAlsaQT} onClose={this.handleToggleAlsaQT}>
-          <DialogTitle
-            sx={{ paddingBottom: "5px", borderBottom: "1px solid black" }}
-          >
-            ALSA
-            <br />
-            <br />
-            <IconButton
-              onClick={this.handleToggleAlsaQT}
-              sx={{
-                position: "absolute",
-                right: "20px",
-                top: "10px",
-                width: "fit-content",
-              }}
-            >
-              X
-            </IconButton>
-            <DialogContentText>
-              Download the pub&nbsp;
-              <a target="_window" href="https://www.alsa.mil/MTTPs/ACC/">
-                here!
-              </a>
-              <br />
-              <br />
-            </DialogContentText>
-          </DialogTitle>
-          <AlsaHelp />
-        </Dialog>
+  return (
+    <div className="pscontainer">
+      <div style={{ display: "inline-flex", paddingBottom: "24px" }}>
+        <div style={{ margin: "auto", marginRight: "8px" }}>Standard:</div>
+        <RadioGroup
+          aria-labelledby="standard-selector-radio-buttons"
+          name="standard-selection"
+          onChange={handleRadioChange}
+          defaultValue="alsa"
+          sx={{ margin: "auto" }}
+          row
+        >
+          <FormControlLabel value="ipe" control={<Radio />} label="3-3 IPE" />
+          <FormControlLabel
+            value="alsa"
+            control={<Radio />}
+            label={
+              <>
+                ALSA ACC
+                <button
+                  style={{ padding: "0px", alignSelf: "center" }}
+                  className="helpicon"
+                  id="alsaQTBtn"
+                  type="button"
+                  onClick={handleToggleAlsaQT}
+                >
+                  ?
+                </button>
+              </>
+            }
+          />
+        </RadioGroup>
       </div>
-    )
-  }
+      <Dialog open={isShowAlsaQT} onClose={handleToggleAlsaQT}>
+        <DialogTitle
+          sx={{ paddingBottom: "5px", borderBottom: "1px solid black" }}
+        >
+          ALSA
+          <br />
+          <br />
+          <IconButton
+            onClick={handleToggleAlsaQT}
+            sx={{
+              position: "absolute",
+              right: "20px",
+              top: "10px",
+              width: "fit-content",
+            }}
+          >
+            X
+          </IconButton>
+          <DialogContentText>
+            Download the pub&nbsp;
+            <a target="_window" href="https://www.alsa.mil/MTTPs/ACC/">
+              here!
+            </a>
+          </DialogContentText>
+        </DialogTitle>
+        <AlsaHelp />
+      </Dialog>
+    </div>
+  )
 }
+
+export default StandardSelector

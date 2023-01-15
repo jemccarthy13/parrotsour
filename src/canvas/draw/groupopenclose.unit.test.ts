@@ -5,7 +5,9 @@ import { getOpenCloseAzimuth } from "./formatutils"
 import { PaintBrush } from "./paintbrush"
 
 describe("FormatUtils", () => {
-  TestCanvas.useContext(200, 200)
+  const ctx = TestCanvas.useContext(200, 200)
+
+  PaintBrush.use(ctx)
 
   beforeEach(() => {
     PaintBrush.clearCanvas()

@@ -9,9 +9,9 @@ import ParrotSourIntercept from "../pscomponents/intercept/parrotsourintercept"
 import PicOptionsBar from "../pscomponents/intercept/picoptionsbar"
 import StandardSelector from "../pscomponents/intercept/standardselector"
 import ParrotSourProcedural from "../pscomponents/procedural/parrotsourprocedural"
-import { AlsaHelp } from "../pscomponents/quicktips/alsa-tips"
-import { InterceptQT } from "../pscomponents/quicktips/intercept-tips"
-import { PsQT } from "../pscomponents/quicktips/ps-tips"
+import { AlsaHelp } from "../pscomponents/help/alsa-tips"
+import { InterceptQT } from "../pscomponents/help/intercept-tips"
+import { PsQT } from "../pscomponents/help/ps-tips"
 
 export {
   DrawingCanvas as Canvas,

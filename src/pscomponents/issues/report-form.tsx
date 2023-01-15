@@ -16,6 +16,7 @@ import {
 import { snackActions } from "../alert/psalert"
 import IssueSelector from "./selector"
 import "../../css/collapsible.css"
+import { FormFieldContainer } from "./styles"
 
 type IRProps = {
   answer?: PictureAnswer
@@ -36,23 +37,25 @@ export default function IssueReport({
     setShowIssueForm((prev) => !prev)
   }, [])
 
-  const onIssueSelChanged = useCallback((val: string) => {
-    console.log(val)
-    setSelection(val)
-  }, [])
+  const onIssueSelChanged = useCallback(
+    (evt: React.ChangeEvent<HTMLInputElement>) => {
+      setSelection(evt.currentTarget.value)
+    },
+    []
+  )
 
   const handleEmailChange = useCallback(
     (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       setEmail(e.currentTarget.value)
     },
-    []
+    [setEmail, email]
   )
 
   const handleTextChanged = useCallback(
     (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       setText(e.currentTarget.value)
     },
-    []
+    [setText]
   )
 
   const handleCancelClick = useCallback(
@@ -60,66 +63,71 @@ export default function IssueReport({
       event.preventDefault()
       setShowIssueForm(false)
     },
-    []
+    [setShowIssueForm]
   )
 
-  async function handleSubmit(selection: string): Promise<void> {
-    let goodForm = false
+  const handleSubmit = useCallback(
+    async (selection: string, email = "unknown", text = "default-no-text") => {
+      let goodForm = false
 
-    if (formRef.current) {
-      goodForm = formRef.current.reportValidity()
-    }
+      if (formRef.current) {
+        goodForm = formRef.current.reportValidity()
+      }
 
-    setSubmitEnabled(false)
-    if (goodForm) {
-      const canvas: HTMLCanvasElement = document.getElementById(
-        "pscanvas"
-      ) as HTMLCanvasElement
+      setSubmitEnabled(false)
+      if (goodForm) {
+        const canvas: HTMLCanvasElement = document.getElementById(
+          "pscanvas"
+        ) as HTMLCanvasElement
 
-      let realEmail = email ? email : "unknown"
+        let realEmail = email
 
-      if (email && email.indexOf("@") === -1) realEmail += "@gmail.com"
+        if (email && email.indexOf("@") === -1) realEmail += "@gmail.com"
 
-      const realText = text ? text : "unknown"
+        const realText = text
 
-      const formData = new FormData()
+        const formData = new FormData()
 
-      formData.append("email", realEmail)
-      formData.append("comments", realText + " \n\n" + answer)
-      formData.append("problemtype", selection)
+        formData.append("email", realEmail)
+        formData.append("comments", realText + " \n\n" + answer)
+        formData.append("problemtype", selection)
 
-      if (selection === "picprob")
-        formData.append("image", canvas.toDataURL("image/png"))
+        console.log(realEmail, selection)
 
-      try {
-        const response = await fetch(
-          process.env.PUBLIC_URL + "/database/emailissue.php",
-          {
-            method: "POST",
-            body: formData,
+        if (selection === "picprob")
+          formData.append("image", canvas.toDataURL("image/png"))
+
+        try {
+          const response = await fetch(
+            process.env.PUBLIC_URL + "/database/emailissue.php",
+            {
+              method: "POST",
+              body: formData,
+            }
+          )
+
+          if (response.ok) {
+            snackActions.success("Submitted!")
+            handleToggleIssueForm()
+          } else {
+            snackActions.error("Issue report failed.\nTry again later.")
           }
-        )
-
-        if (response.ok) {
-          snackActions.success("Submitted!")
-          handleToggleIssueForm()
-        } else {
+        } catch (e) {
           snackActions.error("Issue report failed.\nTry again later.")
         }
-      } catch (e) {
-        snackActions.error("Issue report failed.\nTry again later.")
       }
-    }
 
-    setSubmitEnabled(true)
-  }
+      setSubmitEnabled(true)
+    },
+    []
+  )
 
   const handleBtnSubmit = useCallback(
     (evt: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
       evt.preventDefault()
-      handleSubmit(selection)
+      handleSubmit(selection, email, text)
     },
-    [selection]
+    [selection, email, text]
   )
 
   return (
@@ -134,20 +142,16 @@ export default function IssueReport({
         Report Issue
       </button>
       <Dialog
+        sx={{ width: "100%", margin: "auto" }}
         fullScreen={false}
         open={showIssueForm}
         onClose={handleToggleIssueForm}
       >
-        <DialogContent>
-          {/* Issue #13 - ISSUE_REPORTS -- change this to /issues.html and use php to read from reported issues */}
-          See a list of <a href="/#/changelog.html">known issues</a>.
-        </DialogContent>
-
         <form ref={formRef}>
           <DialogContent>
-            <IssueSelector selectionChanged={onIssueSelChanged} />
+            <IssueSelector value={selection} onChange={onIssueSelChanged} />
           </DialogContent>
-          <div style={{ width: "75%", margin: "auto", height: "100%" }}>
+          <FormFieldContainer>
             <TextField
               required
               id="email"
@@ -166,7 +170,7 @@ export default function IssueReport({
               multiline
               onChange={handleTextChanged}
             />
-          </div>
+          </FormFieldContainer>
 
           <DialogActions>
             <Button

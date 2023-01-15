@@ -6,7 +6,7 @@
  * List of available formats.
  */
 export enum FORMAT {
-  ALSA,
-  IPE,
-  CLOSE,
+  ALSA = "alsa",
+  IPE = "ipe",
+  CLOSE = "close",
 }

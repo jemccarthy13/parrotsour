@@ -1,73 +1,56 @@
-import React, { ChangeEvent, ReactElement, useState } from "react"
+import React, { ReactElement } from "react"
+import { FormControlLabel, Radio, RadioGroup } from "../../utils/muiadapter"
+import { IssueHelpText } from "./styles"
 
 type IssueSelectorProps = {
-  selectionChanged: (val: string) => void
+  onChange: React.ChangeEventHandler<HTMLInputElement>
+  value?: string
 }
 
-const IssueSelector = (props: IssueSelectorProps): ReactElement => {
-  const [prevSel, setPrevSel] = useState("picprob")
-
-  function handleClick(evt: ChangeEvent) {
-    if (evt.target.id !== prevSel) {
-      const { selectionChanged } = props
-
-      selectionChanged(evt.target.id)
-      setPrevSel(evt.target.id)
-    }
-  }
-
+const IssueSelector = ({
+  onChange,
+  value = "picprob",
+}: IssueSelectorProps): ReactElement => {
   return (
     <div className="pscontainer">
       <h2>
         <u>Problem:</u>
       </h2>
-      <ul>
-        <li>
-          <input
-            data-testid="iss-pic-selector"
-            style={{ color: "grey" }}
-            type="radio"
-            id="picprob"
-            name="issue"
-            value="picprob"
-            defaultChecked
-            onChange={handleClick}
-          />
-          <label id="piclbl" htmlFor="picprob" style={{ color: "grey" }}>
-            The answer to this picture is incorrect
-          </label>
-          <div className="check-no-hover" />
-        </li>
-        <li>
-          <input
-            data-testid="iss-feature-selector"
-            style={{ color: "grey" }}
-            type="radio"
-            id="feature"
-            name="issue"
-            value="feature"
-            onChange={handleClick}
-          />
-          <label htmlFor="feature" style={{ color: "grey" }}>
-            Wouldn&lsquo;t it be nice if...
-          </label>
-          <div className="check-no-hover" />
-        </li>
-        <li>
-          <input
-            data-testid="iss-oth-selector"
-            type="radio"
-            id="othprob"
-            name="issue"
-            value="othprob"
-            onChange={handleClick}
-          />
-          <label htmlFor="othprob" style={{ color: "grey" }}>
-            Something else
-          </label>
-          <div className="check-no-hover" />
-        </li>
-      </ul>
+      {/* Issue #13 - ISSUE_REPORTS -- change this to /issues.html and use php to read from reported issues */}
+      <div style={{ marginBottom: "24px" }}>
+        See a list of <a href="/#/changelog.html">known issues</a>.
+      </div>
+
+      <RadioGroup
+        aria-labelledby="demo-controlled-radio-buttons-group"
+        name="controlled-radio-buttons-group"
+        value={value}
+        onChange={onChange}
+      >
+        <FormControlLabel
+          value="picprob"
+          control={<Radio />}
+          label={
+            <>
+              The answer to this picture is incorrect
+              <IssueHelpText>
+                A copy of the image is submitted with this report
+              </IssueHelpText>
+            </>
+          }
+        />
+        <FormControlLabel
+          value="feature"
+          control={<Radio />}
+          label={
+            <>
+              Feature request
+              <IssueHelpText>Wouldn&lsquo;t it be nice if...</IssueHelpText>
+            </>
+          }
+        />
+        <FormControlLabel value="othprob" control={<Radio />} label="Other" />
+      </RadioGroup>
     </div>
   )
 }

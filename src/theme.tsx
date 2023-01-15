@@ -7,11 +7,25 @@ export const theme = createTheme({
   components: {
     MuiCheckbox: {
       styleOverrides: {
+        root: {
+          margin: "auto",
+          padding: "8px",
+          "&.Mui-checked": {
+            color: "#52d869",
+          },
+        },
+      },
+      defaultProps: {
+        disableRipple: true,
+      },
+    },
+    MuiInputBase: {
+      styleOverrides: {
         root: `
-            width:5px;
-            margin:auto;
-            padding:auto;
-          `,
+          font-size: 14px;
+          height: auto !important;
+          transform: unset;
+        `,
       },
     },
     MuiListItem: {
@@ -19,6 +33,23 @@ export const theme = createTheme({
         root: {
           color: "gray",
           borderBottom: "0px solid gray",
+        },
+      },
+    },
+    MuiRadio: {
+      styleOverrides: {
+        root: {
+          "&.Mui-checked": {
+            color: "#52d869",
+          },
+        },
+      },
+      defaultProps: { disableRipple: true },
+    },
+    MuiSelect: {
+      styleOverrides: {
+        icon: {
+          color: "#444",
         },
       },
     },
@@ -51,7 +82,6 @@ export const theme = createTheme({
           marginLeft: "auto",
         },
       },
-      defaultProps: {},
     },
     MuiSwitch: {
       styleOverrides: {
@@ -98,15 +128,6 @@ export const theme = createTheme({
         InputProps: {
           disableUnderline: true,
         },
-      },
-    },
-    MuiInputBase: {
-      styleOverrides: {
-        root: `
-          font-size: 14px;
-          height: auto !important;
-          transform: unset;
-        `,
       },
     },
   },

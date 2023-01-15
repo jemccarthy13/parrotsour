@@ -1,12 +1,12 @@
 import React from "react"
 import { render, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import StandardSelector, { StdSelectorProps } from "./standardselector"
+import { StandardSelector, StandardSelectorProps } from "./standardselector"
 
 describe("StandardSelector", () => {
   const mockSelChg = jest.fn()
-  const fakeProps: StdSelectorProps = {
-    selectionChanged: () => mockSelChg,
+  const fakeProps: StandardSelectorProps = {
+    onChange: mockSelChg,
   }
 
   it("handles_format_standard_change", async () => {

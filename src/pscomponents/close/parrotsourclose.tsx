@@ -8,9 +8,8 @@ import {
 import { SensorType } from "../../classes/aircraft/datatrail/sensortype"
 import { FORMAT } from "../../classes/supportedformats"
 import PSCookies from "../../utils/cookies"
-import { InterceptQT } from "../quicktips/intercept-tips"
+import { InterceptQT } from "../help/intercept-tips"
 import CloseCommandBox from "./commandbox"
-import "../../css/parrotsour.css"
 import "../../css/toggle.css"
 
 const ParrotSourHeader = lazy(() => import("../header/header"))

@@ -7,8 +7,11 @@ import {
   waitFor,
 } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
+import fetchMock from "jest-fetch-mock"
 import { snackActions } from "../alert/psalert"
 import IssueReport from "./report-form"
+
+fetchMock.enableMocks()
 
 jest.mock("../alert/psalert", () => ({
   snackActions: {
@@ -156,17 +159,7 @@ describe("IssueReport_Component", () => {
     })
   })
 
-  it("handles_submit", async () => {
-    const wrapper = render(<IssueReport answer={answer} />)
-
-    const snackSpy = jest
-      .spyOn(snackActions, "error")
-      .mockImplementation(jest.fn())
-
-    act(() => {
-      openDialog(wrapper)
-    })
-
+  async function fillForm(wrapper: RenderResult, email: string, text: string) {
     await waitFor(() => {
       expect(wrapper.getByText(/Cancel/)).not.toEqual(null)
     })
@@ -180,24 +173,128 @@ describe("IssueReport_Component", () => {
         (wrapper.getByTestId(/iss-oth-selector/) as HTMLInputElement).checked
       ).toEqual(true)
     })
-    const email = wrapper.getByRole(/textbox/, { name: "Email" })
 
-    fireEvent.change(email, { target: { value: "abc@def.com" } })
+    const emailBox = wrapper.getByRole(/textbox/, { name: "Email" })
+
+    fireEvent.change(emailBox, { target: { value: email } })
 
     const issTxt = wrapper.getByRole(/textbox/, { name: "Issue Description" })
 
-    fireEvent.change(issTxt, { target: { value: "My issue description" } })
+    fireEvent.change(issTxt, { target: { value: text } })
 
     await waitFor(() => {
-      expect((issTxt as HTMLInputElement).value).toEqual("My issue description")
+      expect(
+        (
+          wrapper.getByRole(/textbox/, {
+            name: "Issue Description",
+          }) as HTMLInputElement
+        ).value
+      ).toEqual(text)
     })
+  }
 
+  function submit(wrapper: RenderResult) {
     const submitBtn = wrapper.getByRole(/button/, { name: "Submit" })
 
     userEvent.click(submitBtn)
+  }
+
+  it.only("handles_submit_no_network", async () => {
+    const wrapper = render(<IssueReport answer={answer} />)
+
+    fetchMock.dontMock()
+    const snackSpy = jest
+      .spyOn(snackActions, "error")
+      .mockImplementation(jest.fn())
+
+    act(() => {
+      openDialog(wrapper)
+    })
+
+    await fillForm(wrapper, "abc@def.com", "My issue description")
+
+    submit(wrapper)
 
     await waitFor(() => {
       expect(snackSpy).toHaveBeenCalled()
     })
+  })
+
+  it.only("handles_submit_good_fetch", async () => {
+    const wrapper = render(<IssueReport answer={answer} />)
+
+    fetchMock.enableMocks()
+    fetchMock.mockOnce(JSON.stringify({ ok: true }))
+
+    const snackSpy = jest
+      .spyOn(snackActions, "success")
+      .mockImplementation(jest.fn())
+
+    act(() => {
+      openDialog(wrapper)
+    })
+
+    await fillForm(wrapper, "abc@def.com", "My issue description")
+
+    submit(wrapper)
+
+    await waitFor(() => {
+      expect(snackSpy).toHaveBeenCalled()
+    })
+    expect(fetchMock).toHaveBeenCalled()
+  })
+
+  it.only("handles_submit_failed_fetch", async () => {
+    const wrapper = render(<IssueReport answer={answer} />)
+
+    fetchMock.enableMocks()
+    fetchMock.mockOnce(JSON.stringify({ ok: false }), {
+      status: 500,
+      statusText: undefined,
+    })
+
+    const snackSpy = jest
+      .spyOn(snackActions, "error")
+      .mockImplementation(jest.fn())
+
+    act(() => {
+      openDialog(wrapper)
+    })
+
+    await fillForm(wrapper, "abc@def.com", "My issue description")
+
+    submit(wrapper)
+
+    await waitFor(() => {
+      expect(snackSpy).toHaveBeenCalled()
+    })
+    expect(fetchMock).toHaveBeenCalled()
+  })
+
+  it.only("handles_submit_invalid_email", async () => {
+    const wrapper = render(<IssueReport answer={answer} />)
+
+    fetchMock.enableMocks()
+    fetchMock.mockOnce(JSON.stringify({ ok: false }), {
+      status: 500,
+      statusText: undefined,
+    })
+
+    const snackSpy = jest
+      .spyOn(snackActions, "error")
+      .mockImplementation(jest.fn())
+
+    act(() => {
+      openDialog(wrapper)
+    })
+
+    await fillForm(wrapper, "abc", "My issue description")
+
+    submit(wrapper)
+
+    await waitFor(() => {
+      expect(snackSpy).toHaveBeenCalled()
+    })
+    expect(fetchMock).toHaveBeenCalled()
   })
 })

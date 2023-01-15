@@ -1,6 +1,6 @@
 import React, { lazy, ReactElement, Suspense } from "react"
-import "../../css/parrotsour.css"
 import "../../css/toggle.css"
+import { Typography } from "@mui/material"
 import {
   BlueInThe,
   PictureAnswer,
@@ -10,8 +10,10 @@ import { SensorType } from "../../classes/aircraft/datatrail/sensortype"
 import { FORMAT } from "../../classes/supportedformats"
 import PSCookies from "../../utils/cookies"
 import { SelectChangeEvent } from "../../utils/muiadapter"
-import { InterceptQT } from "../quicktips/intercept-tips"
+import { ExpandMoreIcon, ExpandLessIcon } from "../../utils/muiiconadapter"
+import { InterceptQT } from "../help/intercept-tips"
 import ContactSelector from "./contactselector"
+import { AnswerContainer } from "./styles"
 
 const PicTypeSelector = lazy(() => import("./picoptionsbar"))
 const StandardSelector = lazy(() => import("./standardselector"))
@@ -94,11 +96,9 @@ export default class ParrotSourIntercept extends React.PureComponent<
    * Called when the format selection changes
    * @param fmt - new format to use to generate answers
    */
-  formatSelChange = (fmt: FORMAT): (() => void) => {
-    return () => {
-      this.setState({ format: fmt })
-      this.onNewPic()
-    }
+  handleFormatSelChange = (fmt: FORMAT) => {
+    this.setState({ format: fmt })
+    this.onNewPic()
   }
 
   /**
@@ -113,6 +113,10 @@ export default class ParrotSourIntercept extends React.PureComponent<
    * Toggle the answer collapsible
    */
   handleRevealPic = (): void => {
+    this.setState((prevState) => ({ showAnswer: !prevState.showAnswer }))
+  }
+
+  handleRevealTabPane = () => {
     this.setState((prevState) => ({ showAnswer: !prevState.showAnswer }))
   }
 
@@ -231,7 +235,7 @@ export default class ParrotSourIntercept extends React.PureComponent<
         <hr />
 
         <Suspense fallback={<div />}>
-          <StandardSelector selectionChanged={this.formatSelChange} />
+          <StandardSelector onChange={this.handleFormatSelChange} />
         </Suspense>
 
         <Suspense fallback={<div />}>
@@ -261,23 +265,31 @@ export default class ParrotSourIntercept extends React.PureComponent<
 
         <button
           type="button"
-          className={showAnswer ? "collapsible active" : "collapsible"}
+          style={{ width: "25%", height: "38px", borderRadius: "0px" }}
           onClick={this.handleRevealPic}
         >
-          Reveal Pic
+          <span style={{ display: "flex", height: "100%" }}>
+            Reveal Pic
+            <Typography
+              sx={{
+                alignSelf: "center",
+                marginLeft: "auto",
+              }}
+            >
+              {showAnswer ? (
+                <ExpandLessIcon sx={{ display: "block", height: "100%" }} />
+              ) : (
+                <ExpandMoreIcon sx={{ display: "block", height: "100%" }} />
+              )}
+            </Typography>
+          </span>
         </button>
+
         {showAnswer && (
-          <div
-            className="content"
-            id="answerDiv"
-            style={{ color: "black", padding: "20px", whiteSpace: "pre-wrap" }}
-          >
-            {answer ? answer.pic : <div />}
-          </div>
+          <AnswerContainer>{answer ? answer.pic : <div />}</AnswerContainer>
         )}
-        <br />
-        <br />
-        <br />
+
+        <div style={{ height: "48px" }} />
 
         <Suspense fallback={<div />}>
           <PictureCanvas

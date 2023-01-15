@@ -1,5 +1,4 @@
 import React, { lazy, ReactElement, Suspense } from "react"
-import "../../css/parrotsour.css"
 import "../../css/toggle.css"
 import "../../css/togglebuttongroup.css"
 import {
@@ -9,7 +8,7 @@ import {
 } from "../../canvas/canvastypes"
 import { SensorType } from "../../classes/aircraft/datatrail/sensortype"
 import { FORMAT } from "../../classes/supportedformats"
-import { ProceduralQT } from "../quicktips/procedural-tips"
+import { ProceduralQT } from "../help/procedural-tips"
 import ChatBox from "./chatbox"
 import DifficultySelector from "./difficultyselector"
 
