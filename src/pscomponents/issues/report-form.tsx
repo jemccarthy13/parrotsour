@@ -1,4 +1,10 @@
-import React, { MutableRefObject, ReactElement, useRef, useState } from "react"
+import React, {
+  MutableRefObject,
+  ReactElement,
+  useCallback,
+  useRef,
+  useState,
+} from "react"
 import { PictureAnswer } from "../../canvas/canvastypes"
 import {
   Button,
@@ -26,29 +32,38 @@ export default function IssueReport({
 
   const formRef: MutableRefObject<HTMLFormElement | null> = useRef(null)
 
-  /**
-   * Toggle the issue form display when the control button is pressed in the header,
-   * or when clickaway happens
-   */
-  function handleToggleIssueForm() {
-    setShowIssueForm(!showIssueForm)
-  }
+  const handleToggleIssueForm = useCallback(() => {
+    setShowIssueForm((prev) => !prev)
+  }, [])
 
-  function onIssueSelChanged(val: string): () => void {
-    return () => {
-      setSelection(val)
-    }
-  }
+  const onIssueSelChanged = useCallback((val: string) => {
+    console.log(val)
+    setSelection(val)
+  }, [])
 
-  function handleEmailChange(e: React.ChangeEvent<HTMLTextAreaElement>): void {
-    setEmail(e.currentTarget.value)
-  }
+  const handleEmailChange = useCallback(
+    (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+      setEmail(e.currentTarget.value)
+    },
+    []
+  )
 
-  function handleTextChanged(e: React.ChangeEvent<HTMLTextAreaElement>): void {
-    setText(e.currentTarget.value)
-  }
+  const handleTextChanged = useCallback(
+    (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+      setText(e.currentTarget.value)
+    },
+    []
+  )
 
-  async function handleSubmit(): Promise<void> {
+  const handleCancelClick = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+      event.preventDefault()
+      setShowIssueForm(false)
+    },
+    []
+  )
+
+  async function handleSubmit(selection: string): Promise<void> {
     let goodForm = false
 
     if (formRef.current) {
@@ -75,18 +90,23 @@ export default function IssueReport({
 
       if (selection === "picprob")
         formData.append("image", canvas.toDataURL("image/png"))
-      const response = await fetch(
-        process.env.PUBLIC_URL + "/database/emailissue.php",
-        {
-          method: "POST",
-          body: formData,
-        }
-      )
 
-      if (response.ok) {
-        snackActions.success("Submitted!")
-        handleToggleIssueForm()
-      } else {
+      try {
+        const response = await fetch(
+          process.env.PUBLIC_URL + "/database/emailissue.php",
+          {
+            method: "POST",
+            body: formData,
+          }
+        )
+
+        if (response.ok) {
+          snackActions.success("Submitted!")
+          handleToggleIssueForm()
+        } else {
+          snackActions.error("Issue report failed.\nTry again later.")
+        }
+      } catch (e) {
         snackActions.error("Issue report failed.\nTry again later.")
       }
     }
@@ -94,30 +114,13 @@ export default function IssueReport({
     setSubmitEnabled(true)
   }
 
-  async function handleFormSubmit(
-    evt: React.FormEvent<HTMLFormElement>
-  ): Promise<void> {
-    evt.preventDefault()
-    handleSubmit()
-  }
-
-  async function handleBtnSubmit(
-    evt: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ): Promise<void> {
-    evt.preventDefault()
-    handleSubmit()
-  }
-
-  /**
-   * Handle cancel button click
-   * @param event
-   */
-  function handleCancelClick(
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ): void {
-    event.preventDefault()
-    setShowIssueForm(false)
-  }
+  const handleBtnSubmit = useCallback(
+    (evt: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+      evt.preventDefault()
+      handleSubmit(selection)
+    },
+    [selection]
+  )
 
   return (
     <div data-testid="iss-rpt-form" style={{ width: "25%" }}>
@@ -140,7 +143,7 @@ export default function IssueReport({
           See a list of <a href="/#/changelog.html">known issues</a>.
         </DialogContent>
 
-        <form onSubmit={handleFormSubmit} ref={formRef}>
+        <form ref={formRef}>
           <DialogContent>
             <IssueSelector selectionChanged={onIssueSelChanged} />
           </DialogContent>
@@ -165,7 +168,6 @@ export default function IssueReport({
             />
           </div>
 
-          <button type="button" hidden onClick={handleSubmit} />
           <DialogActions>
             <Button
               id="submitIssueReport"

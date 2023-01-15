@@ -62,7 +62,75 @@ Object {
             <div
               class="MuiDialogContent-root css-ypiqx9-MuiDialogContent-root"
             >
-              <div />
+              <div
+                class="pscontainer"
+              >
+                <h2>
+                  <u>
+                    Problem:
+                  </u>
+                </h2>
+                <ul>
+                  <li>
+                    <input
+                      checked=""
+                      data-testid="iss-pic-selector"
+                      id="picprob"
+                      name="issue"
+                      style="color: grey;"
+                      type="radio"
+                      value="picprob"
+                    />
+                    <label
+                      for="picprob"
+                      id="piclbl"
+                      style="color: grey;"
+                    >
+                      The answer to this picture is incorrect
+                    </label>
+                    <div
+                      class="check-no-hover"
+                    />
+                  </li>
+                  <li>
+                    <input
+                      data-testid="iss-feature-selector"
+                      id="feature"
+                      name="issue"
+                      style="color: grey;"
+                      type="radio"
+                      value="feature"
+                    />
+                    <label
+                      for="feature"
+                      style="color: grey;"
+                    >
+                      Wouldn‘t it be nice if...
+                    </label>
+                    <div
+                      class="check-no-hover"
+                    />
+                  </li>
+                  <li>
+                    <input
+                      data-testid="iss-oth-selector"
+                      id="othprob"
+                      name="issue"
+                      type="radio"
+                      value="othprob"
+                    />
+                    <label
+                      for="othprob"
+                      style="color: grey;"
+                    >
+                      Something else
+                    </label>
+                    <div
+                      class="check-no-hover"
+                    />
+                  </li>
+                </ul>
+              </div>
             </div>
             <div
               style="width: 75%; margin: auto; height: 100%;"
@@ -165,10 +233,6 @@ Object {
                 </div>
               </div>
             </div>
-            <button
-              hidden=""
-              type="button"
-            />
             <div
               class="MuiDialogActions-root MuiDialogActions-spacing css-hlj6pa-MuiDialogActions-root"
             >
@@ -337,7 +401,75 @@ Object {
             <div
               class="MuiDialogContent-root css-ypiqx9-MuiDialogContent-root"
             >
-              <div />
+              <div
+                class="pscontainer"
+              >
+                <h2>
+                  <u>
+                    Problem:
+                  </u>
+                </h2>
+                <ul>
+                  <li>
+                    <input
+                      checked=""
+                      data-testid="iss-pic-selector"
+                      id="picprob"
+                      name="issue"
+                      style="color: grey;"
+                      type="radio"
+                      value="picprob"
+                    />
+                    <label
+                      for="picprob"
+                      id="piclbl"
+                      style="color: grey;"
+                    >
+                      The answer to this picture is incorrect
+                    </label>
+                    <div
+                      class="check-no-hover"
+                    />
+                  </li>
+                  <li>
+                    <input
+                      data-testid="iss-feature-selector"
+                      id="feature"
+                      name="issue"
+                      style="color: grey;"
+                      type="radio"
+                      value="feature"
+                    />
+                    <label
+                      for="feature"
+                      style="color: grey;"
+                    >
+                      Wouldn‘t it be nice if...
+                    </label>
+                    <div
+                      class="check-no-hover"
+                    />
+                  </li>
+                  <li>
+                    <input
+                      data-testid="iss-oth-selector"
+                      id="othprob"
+                      name="issue"
+                      type="radio"
+                      value="othprob"
+                    />
+                    <label
+                      for="othprob"
+                      style="color: grey;"
+                    >
+                      Something else
+                    </label>
+                    <div
+                      class="check-no-hover"
+                    />
+                  </li>
+                </ul>
+              </div>
             </div>
             <div
               style="width: 75%; margin: auto; height: 100%;"
@@ -440,10 +572,6 @@ Object {
                 </div>
               </div>
             </div>
-            <button
-              hidden=""
-              type="button"
-            />
             <div
               class="MuiDialogActions-root MuiDialogActions-spacing css-hlj6pa-MuiDialogActions-root"
             >

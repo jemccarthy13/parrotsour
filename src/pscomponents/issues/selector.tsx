@@ -1,7 +1,7 @@
 import React, { ChangeEvent, ReactElement, useState } from "react"
 
 type IssueSelectorProps = {
-  selectionChanged: (val: string) => () => void
+  selectionChanged: (val: string) => void
 }
 
 const IssueSelector = (props: IssueSelectorProps): ReactElement => {

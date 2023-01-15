@@ -1,33 +1,29 @@
 import React from "react"
-import IssueReport from "./report-form"
 import {
   RenderResult,
+  act,
   fireEvent,
   render,
   waitFor,
 } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
+import { snackActions } from "../alert/psalert"
+import IssueReport from "./report-form"
 
-// Mocked for standalone (unittest) coverage
-jest.mock("./selector", () => {
-  return "div"
-})
-
-jest.mock("../alert/psalert", () => {
-  return {
+jest.mock("../alert/psalert", () => ({
+  snackActions: {
     success: jest.fn(),
     warn: jest.fn(),
     error: jest.fn(),
     toast: jest.fn(),
-  }
-})
+  },
+}))
 
 beforeAll(() => {
-  // console.warn(
-  //   "05/07/2021- Surpressing external usage of console.error\r\n" +
-  //     "Use '(test command) --silent' to turn off all console messages."
-  // )
-  // jest.spyOn(console, "error").mockImplementation()
+  console.warn(
+    "1/15/2023- Surpressing MUI console.error for failure to wrap transition in act."
+  )
+  jest.spyOn(console, "error").mockImplementation()
 })
 
 describe("IssueReport_Component", () => {
@@ -39,11 +35,13 @@ describe("IssueReport_Component", () => {
 
   it("renders_correctly", () => {
     const wrapper = render(<IssueReport answer={answer} />)
+
     expect(wrapper).toBeDefined()
   })
 
   it("opens_dialog_on_button_click", async () => {
     const wrapper = render(<IssueReport answer={answer} />)
+
     await openDialog(wrapper)
     // open and content present
     expect(wrapper).toMatchSnapshot()
@@ -52,8 +50,9 @@ describe("IssueReport_Component", () => {
   it("closes_dialog_on_cancel_click", async () => {
     const wrapper = render(<IssueReport answer={answer} />)
 
-    // open dialog programatically
-    openDialog(wrapper)
+    act(() => {
+      openDialog(wrapper)
+    })
 
     await waitFor(() => {
       expect(wrapper.queryByText(/Cancel/)).not.toEqual(null)
@@ -70,7 +69,9 @@ describe("IssueReport_Component", () => {
       </div>
     )
 
-    openDialog(wrapper)
+    act(() => {
+      openDialog(wrapper)
+    })
 
     await waitFor(() => {
       expect(wrapper.queryByText(/Cancel/)).not.toEqual(null)
@@ -83,6 +84,29 @@ describe("IssueReport_Component", () => {
       keyCode: 27,
       charCode: 27,
     })
+
+    await waitFor(() => {
+      expect(wrapper.queryAllByText(/Cancel/).length).toEqual(0)
+    })
+  })
+
+  it("handles_cancel", async () => {
+    const wrapper = render(<IssueReport answer={answer} />)
+
+    act(() => {
+      openDialog(wrapper)
+    })
+
+    await waitFor(() => {
+      expect(wrapper.getByText(/Cancel/)).not.toEqual(null)
+    })
+
+    const cancelBtn = wrapper.getByText(/Cancel/)
+
+    act(() => {
+      userEvent.click(cancelBtn)
+    })
+
     await waitFor(() => {
       expect(wrapper.queryAllByText(/Cancel/).length).toEqual(0)
     })
@@ -90,13 +114,17 @@ describe("IssueReport_Component", () => {
 
   it("handles_email_field_changes", async () => {
     const wrapper = render(<IssueReport answer={answer} />)
-    openDialog(wrapper)
+
+    act(() => {
+      openDialog(wrapper)
+    })
 
     await waitFor(() => {
       expect(wrapper.getByText(/Cancel/)).not.toEqual(null)
     })
 
     const emailBox = wrapper.getByRole(/textbox/, { name: "Email" })
+
     emailBox.focus()
 
     fireEvent.change(emailBox, { target: { value: "abcdefg" } })
@@ -104,36 +132,72 @@ describe("IssueReport_Component", () => {
     await waitFor(() => {
       expect((emailBox as HTMLTextAreaElement).value).toEqual("abcdefg")
     })
-    // const emailField = wrapper.findWhere((elem) => {
-    //   return elem.is(TextField) && elem.prop("label") === "Email"
-    // })
-    // emailField
-    //   .find("input")
-    //   .at(0)
-    //   .simulate("change", { currentTarget: { value: "abcdefg" } })
-    // wrapper.update()
-    //expect(wrapper.debug({ verbose: true })).not.toEqual(prev)
   })
 
-  it.skip("handles_descr_field_changes", () => {
+  it("handles_descr_field_changes", async () => {
     const wrapper = render(<IssueReport answer={answer} />)
-    openDialog(wrapper)
-    // const issueField = wrapper.findWhere((elem) => {
-    //   return elem.is(TextField) && elem.prop("label") === "Issue Description"
-    // })
-    // issueField
-    //   .find("textarea")
-    //   .at(0)
-    //   .simulate("change", { currentTarget: { value: "issue text here" } })
-    // wrapper.update()
 
-    console.warn(
-      "Issue #20 -- figure out a way to test " +
-        "that the input value changes" +
-        " as expected"
-    )
-    // expect(true).toEqual(false)
-    // Issue #20 - figure out a way to test the input value changes?
-    //expect(wrapper.debug({ verbose: true })).not.toEqual(prev)
+    act(() => {
+      openDialog(wrapper)
+    })
+
+    await waitFor(() => {
+      expect(wrapper.getByText(/Cancel/)).not.toEqual(null)
+    })
+
+    const emailBox = wrapper.getByRole(/textbox/, { name: "Issue Description" })
+
+    emailBox.focus()
+
+    fireEvent.change(emailBox, { target: { value: "issue text here" } })
+
+    await waitFor(() => {
+      expect((emailBox as HTMLTextAreaElement).value).toEqual("issue text here")
+    })
+  })
+
+  it("handles_submit", async () => {
+    const wrapper = render(<IssueReport answer={answer} />)
+
+    const snackSpy = jest
+      .spyOn(snackActions, "error")
+      .mockImplementation(jest.fn())
+
+    act(() => {
+      openDialog(wrapper)
+    })
+
+    await waitFor(() => {
+      expect(wrapper.getByText(/Cancel/)).not.toEqual(null)
+    })
+
+    act(() => {
+      userEvent.click(wrapper.getByTestId(/iss-oth-selector/))
+    })
+
+    await waitFor(() => {
+      expect(
+        (wrapper.getByTestId(/iss-oth-selector/) as HTMLInputElement).checked
+      ).toEqual(true)
+    })
+    const email = wrapper.getByRole(/textbox/, { name: "Email" })
+
+    fireEvent.change(email, { target: { value: "abc@def.com" } })
+
+    const issTxt = wrapper.getByRole(/textbox/, { name: "Issue Description" })
+
+    fireEvent.change(issTxt, { target: { value: "My issue description" } })
+
+    await waitFor(() => {
+      expect((issTxt as HTMLInputElement).value).toEqual("My issue description")
+    })
+
+    const submitBtn = wrapper.getByRole(/button/, { name: "Submit" })
+
+    userEvent.click(submitBtn)
+
+    await waitFor(() => {
+      expect(snackSpy).toHaveBeenCalled()
+    })
   })
 })
