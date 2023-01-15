@@ -1,8 +1,7 @@
-/* eslint-disable react/forbid-component-props */
 import React from "react"
-import { AccordionSummary, List } from "../utils/muiadapter"
+import { AccordionSummary, List, ListItem } from "../utils/muiadapter"
 import { ExpandMoreIcon } from "../utils/muiiconadapter"
-import { ChangeLI, StyledAccordionChild } from "./styles"
+import { StyledAccordionChild } from "./styles"
 
 /**
  * Returns a pretty list of scheduled features.
@@ -35,9 +34,9 @@ export default function BugList(): JSX.Element {
       <List>
         {features.map((feature) => {
           return (
-            <ChangeLI key={`${feature.length}${feature.slice(0, 15)}`}>
+            <ListItem key={`${feature.length}${feature.slice(0, 15)}`}>
               - {feature}
-            </ChangeLI>
+            </ListItem>
           )
         })}
       </List>

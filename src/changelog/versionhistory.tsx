@@ -1,14 +1,12 @@
-/* eslint-disable react/forbid-component-props */
 import React, { useEffect } from "react"
-import { Accordion, AccordionSummary, List } from "../utils/muiadapter"
-import { ExpandMoreIcon } from "../utils/muiiconadapter"
 import {
-  ChangeLI,
-  Column,
-  Heading,
-  SecondaryHeading,
-  StyledAccordion,
-} from "./styles"
+  Accordion,
+  AccordionSummary,
+  List,
+  ListItem,
+} from "../utils/muiadapter"
+import { ExpandMoreIcon } from "../utils/muiiconadapter"
+import { Column, Heading, SecondaryHeading, StyledAccordion } from "./styles"
 
 /**
  * @returns Pretty formatted accordion of version history, with
@@ -257,9 +255,9 @@ export default function VersionHistory(): JSX.Element {
                   &#128077; &nbsp;New Features
                   {vers.features.map((vFeat: string) => {
                     return (
-                      <ChangeLI key={vFeat.length + Math.random() * 100}>
+                      <ListItem key={vFeat.length + Math.random() * 100}>
                         - {vFeat}
-                      </ChangeLI>
+                      </ListItem>
                     )
                   })}
                 </List>
@@ -269,9 +267,9 @@ export default function VersionHistory(): JSX.Element {
                   &#10004;&#65039;&nbsp;Fixes
                   {vers.fixes.map((vFix: string) => {
                     return (
-                      <ChangeLI key={vFix.length + Math.random() * 100}>
+                      <ListItem key={vFix.length + Math.random() * 100}>
                         - {vFix}
-                      </ChangeLI>
+                      </ListItem>
                     )
                   })}
                 </List>
@@ -281,9 +279,9 @@ export default function VersionHistory(): JSX.Element {
                   &#128640;Improvements
                   {vers.improvements.map((vImp: string) => {
                     return (
-                      <ChangeLI key={vImp.length + Math.random() * 100}>
+                      <ListItem key={vImp.length + Math.random() * 100}>
                         - {vImp}
-                      </ChangeLI>
+                      </ListItem>
                     )
                   })}
                 </List>

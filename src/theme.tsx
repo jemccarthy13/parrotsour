@@ -14,6 +14,14 @@ export const theme = createTheme({
           `,
       },
     },
+    MuiListItem: {
+      styleOverrides: {
+        root: {
+          color: "gray",
+          borderBottom: "0px solid gray",
+        },
+      },
+    },
     MuiSlider: {
       styleOverrides: {
         track: {

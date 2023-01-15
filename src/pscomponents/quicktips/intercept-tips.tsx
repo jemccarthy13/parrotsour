@@ -1,4 +1,3 @@
-/* eslint-disable react/forbid-component-props */
 import React, { ReactElement } from "react"
 import {
   DialogContent,
@@ -32,13 +31,13 @@ export const InterceptQT = (): ReactElement => {
       </DialogContentText>
       <i>Color Code:</i>
       <List dense>
-        <ListItem style={{ border: "none" }}>
+        <ListItem>
           Altitudes are <span style={{ color: "orange" }}>&nbsp;gold</span>
         </ListItem>
-        <ListItem style={{ border: "none" }}>
+        <ListItem>
           Bullseye is <span style={{ color: "black" }}>&nbsp;black</span>
         </ListItem>
-        <ListItem style={{ border: "none" }}>
+        <ListItem>
           BRAA is <span style={{ color: "blue" }}>&nbsp;blue</span>
         </ListItem>
         <br />

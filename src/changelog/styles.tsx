@@ -1,10 +1,5 @@
-import { Accordion, ListItem, Typography } from "@mui/material"
+import { Accordion, Typography } from "@mui/material"
 import styled from "styled-components"
-
-export const ChangeLI = styled(ListItem)`
-  color: gray;
-  border-bottom: 0px solid gray;
-`
 
 export const Column = styled("div")`
   flex-basis: 33.33%;

@@ -1,7 +1,7 @@
 import React from "react"
-import { AccordionSummary, List } from "../utils/muiadapter"
+import { AccordionSummary, List, ListItem } from "../utils/muiadapter"
 import { ExpandMoreIcon } from "../utils/muiiconadapter"
-import { ChangeLI, StyledAccordion } from "./styles"
+import { StyledAccordion } from "./styles"
 
 /**
  * Issue #13 -- allow this to also use a fetch to retrieve the 'images' directory on
@@ -36,9 +36,9 @@ export default function BugList(): JSX.Element {
       <List>
         {bugs.map((bug) => {
           return (
-            <ChangeLI key={`${bug.version}${bug.description.slice(0, 5)}`}>
+            <ListItem key={`${bug.version}${bug.description.slice(0, 5)}`}>
               - ({bug.version}) {bug.description}
-            </ChangeLI>
+            </ListItem>
           )
         })}
       </List>
