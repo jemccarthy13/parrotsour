@@ -13,7 +13,7 @@ describe("StandardSelector", () => {
     const wrapper = render(<StandardSelector {...fakeProps} />)
 
     const alsaBtn = wrapper.getByRole(/radio/, {
-      name: "ALSA ACC",
+      name: /ALSA ACC/,
     }) as HTMLInputElement
 
     expect(alsaBtn.checked).toEqual(true)

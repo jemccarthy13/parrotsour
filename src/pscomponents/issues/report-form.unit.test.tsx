@@ -32,6 +32,10 @@ beforeAll(() => {
 describe("IssueReport_Component", () => {
   const answer = { pic: "2 GROUPS AZIMUTH 12", groups: [] }
 
+  // const featureSelector = /feature/i
+  // const picSelector = /this picture/i
+  const othSelector = /Other/i
+
   const openDialog = async (wrapper: RenderResult) => {
     await userEvent.click(wrapper.getByTestId(/iss-rpt-btn/i))
   }
@@ -165,12 +169,12 @@ describe("IssueReport_Component", () => {
     })
 
     act(() => {
-      userEvent.click(wrapper.getByTestId(/iss-oth-selector/))
+      userEvent.click(wrapper.getByLabelText(othSelector))
     })
 
     await waitFor(() => {
       expect(
-        (wrapper.getByTestId(/iss-oth-selector/) as HTMLInputElement).checked
+        (wrapper.getByLabelText(othSelector) as HTMLInputElement).checked
       ).toEqual(true)
     })
 
@@ -199,7 +203,7 @@ describe("IssueReport_Component", () => {
     userEvent.click(submitBtn)
   }
 
-  it.only("handles_submit_no_network", async () => {
+  it("handles_submit_no_network", async () => {
     const wrapper = render(<IssueReport answer={answer} />)
 
     fetchMock.dontMock()
@@ -220,7 +224,7 @@ describe("IssueReport_Component", () => {
     })
   })
 
-  it.only("handles_submit_good_fetch", async () => {
+  it("handles_submit_good_fetch", async () => {
     const wrapper = render(<IssueReport answer={answer} />)
 
     fetchMock.enableMocks()
@@ -244,7 +248,7 @@ describe("IssueReport_Component", () => {
     expect(fetchMock).toHaveBeenCalled()
   })
 
-  it.only("handles_submit_failed_fetch", async () => {
+  it("handles_submit_failed_fetch", async () => {
     const wrapper = render(<IssueReport answer={answer} />)
 
     fetchMock.enableMocks()
@@ -271,7 +275,7 @@ describe("IssueReport_Component", () => {
     expect(fetchMock).toHaveBeenCalled()
   })
 
-  it.only("handles_submit_invalid_email", async () => {
+  it("handles_submit_invalid_email", async () => {
     const wrapper = render(<IssueReport answer={answer} />)
 
     fetchMock.enableMocks()
