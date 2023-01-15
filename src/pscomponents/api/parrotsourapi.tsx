@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useCallback, useEffect, useRef, useState } from "react"
 import {
   Checkbox,
   FormControlLabel,
@@ -14,6 +14,8 @@ import { SensorType } from "../../classes/aircraft/datatrail/sensortype"
 import { FORMAT } from "../../classes/supportedformats"
 import { theme } from "../../theme"
 import { snackActions } from "../alert/psalert"
+import { HiddenCanvas } from "./styles"
+import { validAccessCode } from "./utils"
 
 export function ParrotSourAPI(): JSX.Element {
   const config = {
@@ -84,21 +86,10 @@ export function ParrotSourAPI(): JSX.Element {
     document.body.removeChild(element)
   }
 
-  async function validAccessCode() {
-    const resp = await fetch(
-      `${process.env.PUBLIC_URL}/database/codes/${accessCode}.php`,
-      {
-        method: "POST",
-      }
-    )
-
-    return resp.status === 202
-  }
-
   const canvas = new PictureCanvas({ ...config })
 
   async function onClick() {
-    const isValidCode = await validAccessCode()
+    const isValidCode = await validAccessCode(accessCode)
 
     if (isValidCode) {
       const answers = []
@@ -122,34 +113,27 @@ export function ParrotSourAPI(): JSX.Element {
     }
   }
 
-  const style = {
-    touchAction: "none",
-    backgroundColor: "white",
-    width: "500px",
-    height: "400px",
-    border: "1px solid #000000",
-  }
+  const onChange = useCallback(
+    (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+      const i = parseInt(event.currentTarget.value)
 
-  function onChange(
-    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-  ) {
-    const i = parseInt(event.currentTarget.value)
-    const itoUse = Number.isNaN(i) ? 0 : i
+      setNumPics(i)
+    },
+    []
+  )
 
-    setNumPics(itoUse)
-  }
+  const onChangeCode = useCallback(
+    (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+      const code = event.currentTarget.value
 
-  function onChangeCode(
-    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-  ) {
-    const code = event.currentTarget.value
+      setCode(code)
+    },
+    []
+  )
 
-    setCode(code)
-  }
-
-  function changeIncludeGroups() {
-    setIncludeGroups(!includeGroups)
-  }
+  const changeIncludeGroups = useCallback(() => {
+    setIncludeGroups((prev) => !prev)
+  }, [])
 
   return (
     <ThemeProvider theme={theme}>
@@ -188,17 +172,7 @@ export function ParrotSourAPI(): JSX.Element {
               labelPlacement="start"
             />
           </FormGroup>
-          <canvas
-            id="pscanvas"
-            style={{
-              ...style,
-              gridColumn: "2",
-              gridRow: "1",
-              left: "0px",
-              display: "none",
-            }}
-            ref={canvasRef}
-          />
+          <HiddenCanvas id="pscanvas" ref={canvasRef} />
           <button
             data-testid="download-results"
             id="downloadBtn"

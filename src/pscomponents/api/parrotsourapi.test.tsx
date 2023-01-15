@@ -1,11 +1,77 @@
 import React from "react"
-import { render } from "@testing-library/react"
+import { fireEvent, render, waitFor } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
+import { act } from "react-dom/test-utils"
+import { snackActions } from "../alert/psalert"
 import { ParrotSourAPI } from "./parrotsourapi"
+import * as utils from "./utils"
+
+jest.mock("../alert/psalert", () => ({
+  snackActions: {
+    warning: jest.fn(),
+    error: jest.fn(),
+    toast: jest.fn(),
+    info: jest.fn(),
+  },
+}))
 
 describe("psapi", () => {
-  it("renders", () => {
+  it("handles_change_numpics", async () => {
     const apiPage = render(<ParrotSourAPI />)
 
-    expect(apiPage.getAllByRole(/button/).length).toBeGreaterThan(0)
+    const numPics = apiPage.getByRole(/spinbutton/)
+
+    fireEvent.change(numPics, { target: { value: 6 } })
+    await waitFor(() => {
+      expect((numPics as HTMLInputElement).value).toEqual("6")
+    })
+  })
+
+  it("handles_change_include_group_info", async () => {
+    const apiPage = render(<ParrotSourAPI />)
+
+    const includeGrps = apiPage.getByRole(/checkbox/)
+
+    act(() => {
+      userEvent.click(includeGrps)
+    })
+
+    await waitFor(() => {
+      expect((includeGrps as HTMLInputElement).checked).toEqual(false)
+    })
+  })
+
+  it("handles_change_code", async () => {
+    const apiPage = render(<ParrotSourAPI />)
+
+    const codeInpt = apiPage.getByRole(/textbox/)
+
+    act(() => {
+      fireEvent.change(codeInpt, { target: { value: "accesscode" } })
+    })
+
+    await waitFor(() => {
+      expect((codeInpt as HTMLInputElement).value).toEqual("accesscode")
+    })
+  })
+
+  it("download_checks_accesscode", async () => {
+    const snackSpy = jest.spyOn(snackActions, "warning")
+
+    const apiPage = render(<ParrotSourAPI />)
+
+    const submitBtn = apiPage.getByRole(/button/, { name: "Download" })
+
+    jest
+      .spyOn(utils, "validAccessCode")
+      .mockImplementation(() => Promise.resolve(false))
+
+    act(() => {
+      userEvent.click(submitBtn)
+    })
+
+    await waitFor(() => {
+      expect(snackSpy).toHaveBeenCalled()
+    })
   })
 })

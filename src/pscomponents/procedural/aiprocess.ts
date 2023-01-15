@@ -54,7 +54,7 @@ function _findAndReplaceCGRS(msgText: string): {
 function _checkForAsset(
   processedText: string,
   groups: AircraftGroup[],
-  sendResponse: (s1: string, s2: string) => void
+  sendResponse: (sender: string, msg: string) => void
 ): AircraftGroup | undefined {
   const nl = AIProcessor.process(processedText)
   const assetMsg = nl.match("[<cs>#Noun] *").first()
@@ -62,8 +62,12 @@ function _checkForAsset(
   const callsign = cs ? cs.text().toUpperCase() : "SYSTEM"
   const asset = getAsset(groups, callsign)
 
+  if (callsign === "SYSTEM") {
+    sendResponse("SYSTEM", "I don't understand")
+  }
+
   if (!asset) {
-    sendResponse("SYSTEM", "No such callsign.")
+    sendResponse("SYSTEM", "No such callsign")
   }
 
   return asset

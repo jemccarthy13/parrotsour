@@ -34,7 +34,10 @@ export default function VersionHistory(): JSX.Element {
     {
       version: "4.2.0",
       date: "15 Jan 2023",
-      features: ["Added maintenance splash page for down times"],
+      features: [
+        "Added maintenance splash page for down times",
+        "Added secure 'https' route and force traffic to use SSL",
+      ],
       fixes: [
         "Upgrade underlying frameworks and FOSS toolkits",
         "Added more tests and test coverage",
