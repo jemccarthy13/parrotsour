@@ -67,6 +67,7 @@ export const Home = () => {
                 element={<Navigate to="/changelog" />}
               />
               <Route path="/api" element={<ParrotSour type="api" />} />
+              <Route path="/api.html" element={<Navigate to="/api" />} />
               <Route
                 path="/parrotsour.html"
                 element={<Navigate to="/chooser" />}
