@@ -130,5 +130,35 @@ export const theme = createTheme({
         },
       },
     },
+    MuiToggleButtonGroup: {
+      styleOverrides: {
+        root: {
+          padding: "4px",
+          marginTop: "10px",
+          marginBottom: "15px",
+          "&.Mui-selected": {
+            border: "4px solid #52d869",
+            color: "white",
+          },
+        },
+      },
+    },
+    MuiToggleButton: {
+      styleOverrides: {
+        root: {
+          paddingTop: "4px",
+          paddingBottom: "4px",
+          paddingLeft: "16px",
+          paddingRight: "16px",
+          "&.Mui-selected": {
+            border: "2px solid #52d869",
+            color: "white",
+          },
+          "&.Mui-selected&.MuiToggleButtonGroup-grouped&:not(:first-of-type)": {
+            borderLeft: "2px solid #52d869",
+          },
+        },
+      },
+    },
   },
 })

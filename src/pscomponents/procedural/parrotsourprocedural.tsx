@@ -1,6 +1,4 @@
 import React, { lazy, ReactElement, Suspense } from "react"
-import "../../css/toggle.css"
-import "../../css/togglebuttongroup.css"
 import {
   BlueInThe,
   PictureAnswer,

@@ -1,5 +1,4 @@
 import React, { lazy, ReactElement, Suspense } from "react"
-import "../../css/toggle.css"
 import { Typography } from "@mui/material"
 import {
   BlueInThe,

@@ -10,7 +10,6 @@ import { FORMAT } from "../../classes/supportedformats"
 import PSCookies from "../../utils/cookies"
 import { InterceptQT } from "../help/intercept-tips"
 import CloseCommandBox from "./commandbox"
-import "../../css/toggle.css"
 
 const ParrotSourHeader = lazy(() => import("../header/header"))
 const ParrotSourControls = lazy(() => import("../header/controls"))

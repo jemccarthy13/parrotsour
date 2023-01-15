@@ -31,42 +31,11 @@ export default class DifficultySelector extends React.PureComponent<
         value={difficulty}
         exclusive
         onChange={this.handlePicTypeChange}
-        classes={{
-          root: "buttongroup",
-        }}
       >
-        <ToggleButton
-          value="easy"
-          classes={{
-            root: "muitoggle",
-          }}
-        >
-          Easy
-        </ToggleButton>
-        <ToggleButton
-          value="med"
-          classes={{
-            root: "muitoggle",
-          }}
-        >
-          Med
-        </ToggleButton>
-        <ToggleButton
-          value="hard"
-          classes={{
-            root: "muitoggle",
-          }}
-        >
-          Hard
-        </ToggleButton>
-        <ToggleButton
-          value="insane"
-          classes={{
-            root: "muitoggle",
-          }}
-        >
-          XHard
-        </ToggleButton>
+        <ToggleButton value="easy">Easy</ToggleButton>
+        <ToggleButton value="med">Med</ToggleButton>
+        <ToggleButton value="hard">Hard</ToggleButton>
+        <ToggleButton value="insane">XHard</ToggleButton>
       </ToggleButtonGroup>
     )
   }
