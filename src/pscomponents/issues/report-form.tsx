@@ -92,8 +92,6 @@ export default function IssueReport({
         formData.append("comments", realText + " \n\n" + answer)
         formData.append("problemtype", selection)
 
-        console.log(realEmail, selection)
-
         if (selection === "picprob")
           formData.append("image", canvas.toDataURL("image/png"))
 
