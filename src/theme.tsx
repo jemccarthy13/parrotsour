@@ -14,6 +14,37 @@ export const theme = createTheme({
           `,
       },
     },
+    MuiSlider: {
+      styleOverrides: {
+        track: {
+          backgroundColor: "#a0a1a0",
+          border: "none",
+        },
+        rail: {
+          backgroundColor: "#d3d3d3",
+        },
+        thumb: {
+          backgroundColor: "#52d869",
+          height: "24px",
+          width: "24px",
+          border: " 2px solid #52d869",
+          "&:focus, &:hover, &.Mui-active, &.Mui-focusVisible": {
+            boxShadow: "none",
+          },
+          "&:before": {
+            display: "none",
+          },
+        },
+        root: {
+          width: "60%",
+          alignSelf: "center",
+          display: "inline-flex",
+          padding: "unset",
+          marginLeft: "auto",
+        },
+      },
+      defaultProps: {},
+    },
     MuiSwitch: {
       styleOverrides: {
         root: {

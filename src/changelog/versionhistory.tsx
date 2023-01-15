@@ -34,6 +34,21 @@ export default function VersionHistory(): JSX.Element {
   // the order in this list === display order
   const versionHistory: VersionList = [
     {
+      version: "4.2.0",
+      date: "15 Jan 2023",
+      features: ["Added maintenance splash page for down times"],
+      fixes: [
+        "Upgrade underlying frameworks and FOSS toolkits",
+        "Added more tests and test coverage",
+        "Squashed some bugs",
+        "Reduced bundle size (faster loading times)",
+      ],
+      improvements: [
+        "Upgraded some internals to latest development patterns",
+        "API v2",
+      ],
+    },
+    {
       version: "4.1.2",
       date: "7 Mar 2021",
       features: [],
@@ -216,7 +231,7 @@ export default function VersionHistory(): JSX.Element {
   ]
 
   return (
-    <StyledAccordion>
+    <StyledAccordion defaultExpanded>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         Version History/Change Log
       </AccordionSummary>
@@ -243,7 +258,7 @@ export default function VersionHistory(): JSX.Element {
                   {vers.features.map((vFeat: string) => {
                     return (
                       <ChangeLI key={vFeat.length + Math.random() * 100}>
-                        {vFeat}
+                        - {vFeat}
                       </ChangeLI>
                     )
                   })}
@@ -255,7 +270,7 @@ export default function VersionHistory(): JSX.Element {
                   {vers.fixes.map((vFix: string) => {
                     return (
                       <ChangeLI key={vFix.length + Math.random() * 100}>
-                        {vFix}
+                        - {vFix}
                       </ChangeLI>
                     )
                   })}
@@ -267,7 +282,7 @@ export default function VersionHistory(): JSX.Element {
                   {vers.improvements.map((vImp: string) => {
                     return (
                       <ChangeLI key={vImp.length + Math.random() * 100}>
-                        {vImp}
+                        - {vImp}
                       </ChangeLI>
                     )
                   })}

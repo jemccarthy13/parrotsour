@@ -1,7 +1,7 @@
 import React from "react"
 import { render, waitFor } from "@testing-library/react"
 import { createHashHistory } from "history"
-import { Home } from "./Home"
+import { Home } from "./home"
 
 describe("Home", () => {
   it("should_render_default", async () => {

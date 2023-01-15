@@ -2,10 +2,12 @@
 import React, { Suspense } from "react"
 import { CookieConsent, Cookies } from "react-cookie-consent"
 import ReactDOM from "react-dom"
-import { Home } from "./Home"
 import { DismissAction } from "./pscomponents/alert/dismissaction"
 import GlobalSnackbarProvider from "./pscomponents/alert/globalalertprovider"
 import { snackActions } from "./pscomponents/alert/psalert"
+import { Home } from "./pscomponents/home/home"
+import "./css/body.css"
+import "./css/fonts.css"
 
 export default ReactDOM.render(
   <React.StrictMode>
@@ -17,7 +19,7 @@ export default ReactDOM.render(
         <Home />
       </GlobalSnackbarProvider>
     </Suspense>
-    <CookieConsent location="top" containerClasses="consent-banner">
+    <CookieConsent location="top">
       This website uses cookies to enhance the user experience. To learn more,
       please see the release notes.
     </CookieConsent>

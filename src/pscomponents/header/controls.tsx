@@ -1,4 +1,4 @@
-import React, { ChangeEvent, ReactElement } from "react"
+import React, { ReactElement } from "react"
 import PSCookies from "../../utils/cookies"
 import {
   FormControlLabel,
@@ -6,6 +6,7 @@ import {
   DialogContentText,
   Dialog,
   Switch,
+  Slider,
 } from "../../utils/muiadapter"
 
 export interface PSCProps {
@@ -56,8 +57,8 @@ export default class ParrotSourControls extends React.PureComponent<
    * Called when the slider changes speed
    * @param evt - a ChangeEvent containing the new speed value
    */
-  handleSliderChange = (evt: ChangeEvent<HTMLInputElement>): void => {
-    const val = parseInt(evt.currentTarget.value)
+  handleSliderChange = (_evt: Event, value: number | number[]): void => {
+    const val = Array.isArray(value) ? value[0] : value
 
     this.setState({ speedSliderValue: val })
 
@@ -173,16 +174,17 @@ export default class ParrotSourControls extends React.PureComponent<
             Pause
           </button>
           <div
-            style={{ display: "inline", marginLeft: "50px" }}
-            className="slidecontainer"
+            style={{
+              display: "inline-flex",
+              paddingLeft: "16px",
+              width: "40%",
+            }}
           >
             <label htmlFor="speedSlider"> Animation Speed: </label>
-            <input
-              type="range"
-              min="1"
-              max="100"
+            <Slider
+              min={1}
+              max={100}
               value={speedSliderValue}
-              className="slider-color"
               id="speedSlider"
               onChange={this.handleSliderChange}
               onMouseUp={this.handleSliderMouseUp}

@@ -1,8 +1,5 @@
 import React from "react"
-import {
-  AccordionSummary,
-  List,
-} from "../utils/muiadapter"
+import { AccordionSummary, List } from "../utils/muiadapter"
 import { ExpandMoreIcon } from "../utils/muiiconadapter"
 import { ChangeLI, StyledAccordion } from "./styles"
 
@@ -13,7 +10,6 @@ import { ChangeLI, StyledAccordion } from "./styles"
  * @returns Material-ui accordion of known bugs
  */
 export default function BugList(): JSX.Element {
-
   const bugs = [
     {
       version: "4.1.0",
@@ -33,16 +29,14 @@ export default function BugList(): JSX.Element {
   ]
 
   return (
-    <StyledAccordion defaultExpanded >
+    <StyledAccordion>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         Known Bugs
       </AccordionSummary>
       <List>
         {bugs.map((bug) => {
           return (
-            <ChangeLI
-              key={bug.version + Math.random() * 100}
-            >
+            <ChangeLI key={`${bug.version}${bug.description.slice(0, 5)}`}>
               - ({bug.version}) {bug.description}
             </ChangeLI>
           )

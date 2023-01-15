@@ -10,7 +10,6 @@ import { FORMAT } from "../../classes/supportedformats"
 import PSCookies from "../../utils/cookies"
 import { InterceptQT } from "../quicktips/intercept-tips"
 import CloseCommandBox from "./commandbox"
-import "../../css/slider.css"
 import "../../css/parrotsour.css"
 import "../../css/toggle.css"
 

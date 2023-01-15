@@ -1,5 +1,4 @@
 import React, { lazy, ReactElement, Suspense } from "react"
-import "../../css/slider.css"
 import "../../css/parrotsour.css"
 import "../../css/toggle.css"
 import {

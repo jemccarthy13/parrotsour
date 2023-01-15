@@ -10,7 +10,7 @@ import VersionHistory from "./versionhistory"
  */
 export default function ChangeLog(): JSX.Element {
   return (
-    <div style={{ paddingBottom: "200px" }}>
+    <div style={{ paddingBottom: "100px" }}>
       <BugList />
       <FeatureList />
       <VersionHistory />
