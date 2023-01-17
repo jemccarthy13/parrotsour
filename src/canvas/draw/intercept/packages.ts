@@ -161,10 +161,10 @@ export default class DrawPackage extends DrawPic {
       .map((grp) => {
         return grp.getStrength()
       })
-      .reduce((a, b) => a + b)
+      .reduce((a, b) => a + b, 0)
     const sPkgContacts = this.pictures[1].groups
       .map((grp) => grp.getStrength())
-      .reduce((a, b) => a + b)
+      .reduce((a, b) => a + b, 0)
     const nCts = nPkgContacts + sPkgContacts
 
     PaintBrush.clearCanvas()
