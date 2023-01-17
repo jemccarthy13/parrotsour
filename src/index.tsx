@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 import React, { Suspense } from "react"
 import { CookieConsent, Cookies } from "react-cookie-consent"
-import ReactDOM from "react-dom"
+import { createRoot } from "react-dom/client"
 import { DismissAction } from "./pscomponents/alert/dismissaction"
 import GlobalSnackbarProvider from "./pscomponents/alert/globalalertprovider"
 import { snackActions } from "./pscomponents/alert/psalert"
@@ -9,7 +9,11 @@ import { Home } from "./pscomponents/home/home"
 import "./css/body.css"
 import "./css/fonts.css"
 
-export default ReactDOM.render(
+const container = document.getElementById("root")
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+const root = createRoot(container!)
+
+root.render(
   <React.StrictMode>
     <Suspense fallback={<div>Loading...</div>}>
       <GlobalSnackbarProvider
@@ -23,10 +27,10 @@ export default ReactDOM.render(
       This website uses cookies to enhance the user experience. To learn more,
       please see the release notes.
     </CookieConsent>
-  </React.StrictMode>,
-  document.getElementById("root")
+  </React.StrictMode>
 )
 
+// TODO -- move to a null-returning Component, and put after CookieConsent above?
 export const version = process.env.REACT_APP_VERSION
 const cookieIsNotSet =
   Cookies.get(version + "Notify") === undefined ||

@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import { styled } from "@mui/system"
 
 export const HiddenCanvas = styled("canvas")`
   touch-action: none;

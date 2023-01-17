@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import { styled } from "@mui/system"
 
 export const HomePanel = styled("div")`
   height: 100%;

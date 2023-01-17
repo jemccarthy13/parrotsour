@@ -1,5 +1,5 @@
 import { Button } from "@mui/material"
-import styled from "styled-components"
+import { styled } from "@mui/system"
 
 export { Button }
 
