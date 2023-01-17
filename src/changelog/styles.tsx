@@ -1,5 +1,5 @@
 import { Accordion, Typography } from "@mui/material"
-import styled from "styled-components"
+import { styled } from "@mui/system"
 
 export const Column = styled("div")`
   flex-basis: 33.33%;

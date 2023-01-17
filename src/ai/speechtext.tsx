@@ -1,62 +1,29 @@
-import "../css/microphone.css"
-import React, { ReactElement, useRef, useState } from "react"
+import React, { ReactElement, useCallback, useEffect, useState } from "react"
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition"
+import { normalizeSpeech } from "./process-speech"
+import { MicrophoneContainer, MicrophoneIcon, MicrophoneStatus } from "./styles"
 
 interface SpeechTextProps {
   handler: (msgText: string) => void
 }
 
 export function SpeechTextControls(props: SpeechTextProps): ReactElement {
-  const { transcript, resetTranscript } = useSpeechRecognition()
+  const { finalTranscript: transcript, resetTranscript } =
+    useSpeechRecognition()
   const [isListening, setIsListening] = useState(false)
-  const microphoneRef: React.LegacyRef<HTMLDivElement> = useRef(null)
 
-  const handleListening = () => {
+  const handleListening = useCallback(() => {
     resetTranscript()
     setIsListening(true)
-    const curRef = microphoneRef.current
 
-    if (curRef) curRef.classList.add("listening")
     SpeechRecognition.startListening({
       continuous: true,
     })
-  }
+  }, [])
 
-  const preProcess = (transcript: string) => {
-    let tmpAnswer = transcript
-
-    tmpAnswer = tmpAnswer
-      .replaceAll("golf", "gulf")
-      .replaceAll("proseed", "proceed")
-      .replaceAll("precede", "proceed")
-    tmpAnswer = tmpAnswer.replaceAll("vapour", "viper")
-    tmpAnswer = tmpAnswer.replaceAll("elevator", "elevate")
-    tmpAnswer = tmpAnswer.replaceAll("positive", "posit")
-
-    tmpAnswer = tmpAnswer.replaceAll("flight level", "FL")
-    tmpAnswer = tmpAnswer.replaceAll("flight Level", "FL")
-
-    // TODO - less capture, then [0], [-1] to get first and last characters to build vcs
-    // eslint-disable-next-line regexp/optimal-quantifier-concatenation
-    const re = new RegExp(/^([A-Za-z])[A-Za-z]*([A-Za-z]) *(\d)\d*(\d)/)
-    const match = tmpAnswer.match(re)
-
-    if (match) {
-      const let1 = match[1]
-      const let2 = match[2]
-      const num1 = match[3]
-      const num2 = match[4]
-      const vcs = let1 + let2 + num1 + num2
-
-      tmpAnswer = tmpAnswer.replace(match[0], vcs.toUpperCase())
-    }
-
-    return tmpAnswer
-  }
-
-  const stopListening = () => {
+  const stopListening = useCallback(() => {
     if (!isListening) {
       return
     }
@@ -65,44 +32,32 @@ export function SpeechTextControls(props: SpeechTextProps): ReactElement {
       return new Promise((resolve) => setTimeout(resolve, ms))
     }
 
-    sleep(1200).then(() => {
+    sleep(1000).then(() => {
       SpeechRecognition.stopListening()
-      const curRef = microphoneRef.current
-
-      if (curRef) curRef.classList.remove("listening")
-      let tmpAnswer = transcript
-
-      tmpAnswer = preProcess(transcript)
-      const { handler } = props
-
-      handler(tmpAnswer)
     })
-  }
+  }, [isListening])
 
-  const listeningProps = {
-    ref: microphoneRef,
-    onMouseDown: handleListening,
-    onMouseUp: stopListening,
-    onMouseLeave: stopListening,
-  }
+  useEffect(() => {
+    const tmpAnswer = normalizeSpeech(transcript)
+    const { handler } = props
+
+    handler(tmpAnswer)
+  }, [transcript])
 
   return (
-    <div className="microphone-wrapper">
-      <div className="mircophone-container">
-        <div className="microphone-icon-container" {...listeningProps}>
-          {false && <img src="." className="microphone-icon" />}
-        </div>
-        <div className="microphone-status">
-          {isListening && <div className="active-listening">Active</div>}
-          {!isListening && <div>Active </div>}
+    <div>
+      <MicrophoneContainer>
+        <MicrophoneIcon
+          isListening={isListening}
+          onMouseDown={handleListening}
+          onMouseUp={stopListening}
+          onMouseLeave={stopListening}
+        />
+        <div>
+          <MicrophoneStatus isListening={isListening}>Active</MicrophoneStatus>
           <div> Push to talk</div>
         </div>
-      </div>
-      {transcript && (
-        <div className="microphone-result-container">
-          <div className="microphone-result-text">{transcript}</div>
-        </div>
-      )}
+      </MicrophoneContainer>
     </div>
   )
 }
