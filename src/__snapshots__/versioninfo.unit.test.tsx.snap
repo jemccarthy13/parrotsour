@@ -25,7 +25,7 @@ exports[`VersionInfo has_version 1`] = `
     Version: 
     <a
       href="/#/changelog"
-      style="color: rgb(121, 120, 253);"
+      style="color: rgb(66, 165, 245);"
     >
       4.2.0
     </a>

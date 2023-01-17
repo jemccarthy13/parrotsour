@@ -10,6 +10,7 @@ import {
   RadioGroup,
 } from "../../utils/muiadapter"
 import { AlsaHelp } from "../help/alsa-tips"
+import { HelpButton } from "../help/help-button"
 
 export type StandardSelectorProps = {
   onChange: (val: FORMAT) => void
@@ -34,8 +35,8 @@ export const StandardSelector = (props: StandardSelectorProps) => {
   )
 
   return (
-    <div className="pscontainer">
-      <div style={{ display: "inline-flex", paddingBottom: "24px" }}>
+    <>
+      <div style={{ display: "inline-flex", paddingBottom: "16px" }}>
         <div style={{ margin: "auto", marginRight: "8px" }}>Standard:</div>
         <RadioGroup
           aria-labelledby="standard-selector-radio-buttons"
@@ -52,15 +53,12 @@ export const StandardSelector = (props: StandardSelectorProps) => {
             label={
               <>
                 ALSA ACC
-                <button
-                  style={{ padding: "0px", alignSelf: "center" }}
-                  className="helpicon"
-                  id="alsaQTBtn"
-                  type="button"
+                <HelpButton
+                  data-testid="alsaQTBtn"
                   onClick={handleToggleAlsaQT}
                 >
                   ?
-                </button>
+                </HelpButton>
               </>
             }
           />
@@ -86,14 +84,18 @@ export const StandardSelector = (props: StandardSelectorProps) => {
           </IconButton>
           <DialogContentText>
             Download the pub&nbsp;
-            <a target="_window" href="https://www.alsa.mil/MTTPs/ACC/">
+            <a
+              style={{ color: "#42a5f5" }}
+              target="_window"
+              href="https://www.alsa.mil/MTTPs/ACC/"
+            >
               here!
             </a>
           </DialogContentText>
         </DialogTitle>
         <AlsaHelp />
       </Dialog>
-    </div>
+    </>
   )
 }
 

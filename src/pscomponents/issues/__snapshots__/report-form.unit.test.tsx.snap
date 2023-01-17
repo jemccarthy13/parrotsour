@@ -11,15 +11,27 @@ Object {
     >
       <div
         data-testid="iss-rpt-form"
-        style="width: 25%;"
+        style="width: 100%;"
       >
         <button
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium css-1vbcspm-MuiButtonBase-root-MuiButton-root"
           data-testid="iss-rpt-btn"
-          id="showFormBtn"
-          style="margin-left: 5%; top: 5px;"
+          tabindex="0"
           type="button"
         >
           Report Issue
+          <span
+            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+          >
+            <span
+              class="css-y4cjyz-MuiTouchRipple-ripple MuiTouchRipple-ripple MuiTouchRipple-rippleVisible"
+              style="width: 2.8284271247461903px; height: 2.8284271247461903px; top: -1.4142135623730951px; left: -1.4142135623730951px;"
+            >
+              <span
+                class="MuiTouchRipple-child MuiTouchRipple-childLeaving"
+              />
+            </span>
+          </span>
         </button>
       </div>
     </div>
@@ -51,9 +63,7 @@ Object {
             <div
               class="MuiDialogContent-root css-ypiqx9-MuiDialogContent-root"
             >
-              <div
-                class="pscontainer"
-              >
+              <div>
                 <h2>
                   <u>
                     Problem:
@@ -62,9 +72,11 @@ Object {
                 <div
                   style="margin-bottom: 24px;"
                 >
-                  See a list of 
+                  See a list of
+                   
                   <a
                     href="/#/changelog.html"
+                    style="color: rgb(66, 165, 245);"
                   >
                     known issues
                   </a>
@@ -234,26 +246,17 @@ Object {
               </div>
             </div>
             <div
-              class="sc-bcXHqe glSujZ"
+              class="sc-bcXHqe jregSp"
             >
-              <div
-                class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
+              <label
+                class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-animated MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-animated css-9npbnl-MuiFormLabel-root-MuiInputLabel-root"
+                for="email"
               >
-                <label
-                  class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
-                  data-shrink="false"
-                  for="email"
-                  id="email-label"
-                >
-                  Email
-                  <span
-                    aria-hidden="true"
-                    class="MuiFormLabel-asterisk MuiInputLabel-asterisk css-wgai2y-MuiFormLabel-asterisk"
-                  >
-                     
-                    *
-                  </span>
-                </label>
+                Email*
+              </label>
+              <div
+                class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1ti9y07-MuiFormControl-root-MuiTextField-root"
+              >
                 <div
                   class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-md26zr-MuiInputBase-root-MuiOutlinedInput-root"
                 >
@@ -270,35 +273,26 @@ Object {
                     class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
                   >
                     <legend
-                      class="css-yjsfm1"
+                      class="css-ihdtdm"
                     >
-                      <span>
-                        Email
-                         
-                        *
+                      <span
+                        class="notranslate"
+                      >
+                        ​
                       </span>
                     </legend>
                   </fieldset>
                 </div>
               </div>
+              <label
+                class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-animated MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-animated css-9npbnl-MuiFormLabel-root-MuiInputLabel-root"
+                for="issue"
+              >
+                Issue Description*
+              </label>
               <div
                 class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
               >
-                <label
-                  class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
-                  data-shrink="false"
-                  for="issue"
-                  id="issue-label"
-                >
-                  Issue Description
-                  <span
-                    aria-hidden="true"
-                    class="MuiFormLabel-asterisk MuiInputLabel-asterisk css-wgai2y-MuiFormLabel-asterisk"
-                  >
-                     
-                    *
-                  </span>
-                </label>
                 <div
                   class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-multiline css-8ewcdo-MuiInputBase-root-MuiOutlinedInput-root"
                 >
@@ -322,12 +316,12 @@ Object {
                     class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
                   >
                     <legend
-                      class="css-yjsfm1"
+                      class="css-ihdtdm"
                     >
-                      <span>
-                        Issue Description
-                         
-                        *
+                      <span
+                        class="notranslate"
+                      >
+                        ​
                       </span>
                     </legend>
                   </fieldset>
@@ -335,7 +329,7 @@ Object {
               </div>
             </div>
             <div
-              class="MuiDialogActions-root MuiDialogActions-spacing css-hlj6pa-MuiDialogActions-root"
+              class="MuiDialogActions-root MuiDialogActions-spacing css-g41feg-MuiDialogActions-root"
             >
               <button
                 class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium css-1e6y48t-MuiButtonBase-root-MuiButton-root"
@@ -374,15 +368,27 @@ Object {
   >
     <div
       data-testid="iss-rpt-form"
-      style="width: 25%;"
+      style="width: 100%;"
     >
       <button
+        class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium css-1vbcspm-MuiButtonBase-root-MuiButton-root"
         data-testid="iss-rpt-btn"
-        id="showFormBtn"
-        style="margin-left: 5%; top: 5px;"
+        tabindex="0"
         type="button"
       >
         Report Issue
+        <span
+          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+        >
+          <span
+            class="css-y4cjyz-MuiTouchRipple-ripple MuiTouchRipple-ripple MuiTouchRipple-rippleVisible"
+            style="width: 2.8284271247461903px; height: 2.8284271247461903px; top: -1.4142135623730951px; left: -1.4142135623730951px;"
+          >
+            <span
+              class="MuiTouchRipple-child MuiTouchRipple-childLeaving"
+            />
+          </span>
+        </span>
       </button>
     </div>
   </div>,
@@ -451,15 +457,27 @@ Object {
     >
       <div
         data-testid="iss-rpt-form"
-        style="width: 25%;"
+        style="width: 100%;"
       >
         <button
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium css-1vbcspm-MuiButtonBase-root-MuiButton-root"
           data-testid="iss-rpt-btn"
-          id="showFormBtn"
-          style="margin-left: 5%; top: 5px;"
+          tabindex="0"
           type="button"
         >
           Report Issue
+          <span
+            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+          >
+            <span
+              class="css-y4cjyz-MuiTouchRipple-ripple MuiTouchRipple-ripple MuiTouchRipple-rippleVisible"
+              style="width: 2.8284271247461903px; height: 2.8284271247461903px; top: -1.4142135623730951px; left: -1.4142135623730951px;"
+            >
+              <span
+                class="MuiTouchRipple-child MuiTouchRipple-childLeaving"
+              />
+            </span>
+          </span>
         </button>
       </div>
     </div>
@@ -491,9 +509,7 @@ Object {
             <div
               class="MuiDialogContent-root css-ypiqx9-MuiDialogContent-root"
             >
-              <div
-                class="pscontainer"
-              >
+              <div>
                 <h2>
                   <u>
                     Problem:
@@ -502,9 +518,11 @@ Object {
                 <div
                   style="margin-bottom: 24px;"
                 >
-                  See a list of 
+                  See a list of
+                   
                   <a
                     href="/#/changelog.html"
+                    style="color: rgb(66, 165, 245);"
                   >
                     known issues
                   </a>
@@ -674,26 +692,17 @@ Object {
               </div>
             </div>
             <div
-              class="sc-bcXHqe glSujZ"
+              class="sc-bcXHqe jregSp"
             >
-              <div
-                class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
+              <label
+                class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-animated MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-animated css-9npbnl-MuiFormLabel-root-MuiInputLabel-root"
+                for="email"
               >
-                <label
-                  class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
-                  data-shrink="false"
-                  for="email"
-                  id="email-label"
-                >
-                  Email
-                  <span
-                    aria-hidden="true"
-                    class="MuiFormLabel-asterisk MuiInputLabel-asterisk css-wgai2y-MuiFormLabel-asterisk"
-                  >
-                     
-                    *
-                  </span>
-                </label>
+                Email*
+              </label>
+              <div
+                class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1ti9y07-MuiFormControl-root-MuiTextField-root"
+              >
                 <div
                   class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-md26zr-MuiInputBase-root-MuiOutlinedInput-root"
                 >
@@ -710,35 +719,26 @@ Object {
                     class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
                   >
                     <legend
-                      class="css-yjsfm1"
+                      class="css-ihdtdm"
                     >
-                      <span>
-                        Email
-                         
-                        *
+                      <span
+                        class="notranslate"
+                      >
+                        ​
                       </span>
                     </legend>
                   </fieldset>
                 </div>
               </div>
+              <label
+                class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-animated MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-animated css-9npbnl-MuiFormLabel-root-MuiInputLabel-root"
+                for="issue"
+              >
+                Issue Description*
+              </label>
               <div
                 class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
               >
-                <label
-                  class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
-                  data-shrink="false"
-                  for="issue"
-                  id="issue-label"
-                >
-                  Issue Description
-                  <span
-                    aria-hidden="true"
-                    class="MuiFormLabel-asterisk MuiInputLabel-asterisk css-wgai2y-MuiFormLabel-asterisk"
-                  >
-                     
-                    *
-                  </span>
-                </label>
                 <div
                   class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-multiline css-8ewcdo-MuiInputBase-root-MuiOutlinedInput-root"
                 >
@@ -762,12 +762,12 @@ Object {
                     class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
                   >
                     <legend
-                      class="css-yjsfm1"
+                      class="css-ihdtdm"
                     >
-                      <span>
-                        Issue Description
-                         
-                        *
+                      <span
+                        class="notranslate"
+                      >
+                        ​
                       </span>
                     </legend>
                   </fieldset>
@@ -775,7 +775,7 @@ Object {
               </div>
             </div>
             <div
-              class="MuiDialogActions-root MuiDialogActions-spacing css-hlj6pa-MuiDialogActions-root"
+              class="MuiDialogActions-root MuiDialogActions-spacing css-g41feg-MuiDialogActions-root"
             >
               <button
                 class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium css-1e6y48t-MuiButtonBase-root-MuiButton-root"
@@ -814,15 +814,27 @@ Object {
   >
     <div
       data-testid="iss-rpt-form"
-      style="width: 25%;"
+      style="width: 100%;"
     >
       <button
+        class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium css-1vbcspm-MuiButtonBase-root-MuiButton-root"
         data-testid="iss-rpt-btn"
-        id="showFormBtn"
-        style="margin-left: 5%; top: 5px;"
+        tabindex="0"
         type="button"
       >
         Report Issue
+        <span
+          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+        >
+          <span
+            class="css-y4cjyz-MuiTouchRipple-ripple MuiTouchRipple-ripple MuiTouchRipple-rippleVisible"
+            style="width: 2.8284271247461903px; height: 2.8284271247461903px; top: -1.4142135623730951px; left: -1.4142135623730951px;"
+          >
+            <span
+              class="MuiTouchRipple-child MuiTouchRipple-childLeaving"
+            />
+          </span>
+        </span>
       </button>
     </div>
   </div>,

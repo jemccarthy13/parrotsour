@@ -38,7 +38,7 @@ export const InterceptQT = (): ReactElement => {
           Bullseye is <span style={{ color: "black" }}>&nbsp;black</span>
         </ListItem>
         <ListItem>
-          BRAA is <span style={{ color: "blue" }}>&nbsp;blue</span>
+          BRAA is <span style={{ color: "#42a5f5" }}>&nbsp;blue</span>
         </ListItem>
         <br />
       </List>

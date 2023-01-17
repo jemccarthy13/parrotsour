@@ -29,7 +29,7 @@ export default class VersionInfo extends React.PureComponent {
         </div>
         <div style={{ paddingLeft: "40px", marginBottom: "4px" }}>
           Version:&nbsp;
-          <a style={{ color: "#7978FD" }} href="/#/changelog">
+          <a style={{ color: "#42a5f5" }} href="/#/changelog">
             {`${process.env.REACT_APP_VERSION}`}
           </a>
         </div>

@@ -139,15 +139,18 @@ export abstract class AnimationHandler {
     state.blueAir.draw(props.dataStyle)
 
     // get slider speed/default speed
-    const slider: HTMLInputElement = document.getElementById(
-      "speedSlider"
-    ) as HTMLInputElement
+    const sliderValue: number | undefined = parseInt(
+      `${
+        document.getElementById("speedSlider")?.getElementsByTagName("input")[0]
+          .value
+      }`
+    )
     let speed = props.sliderSpeed
 
-    if (slider && slider.value) speed = parseInt(slider.value)
+    if (sliderValue && !Number.isNaN(sliderValue)) speed = sliderValue
 
     // delay is proportion of 5000ms based on current slider setting
-    const delay = 5000 * ((100 - speed) / 100)
+    const delay = 5000 * ((100 - speed + 1) / 100)
 
     // use the sleep utility to create a new Promise with an animation function call
     if (this.continueAnimate) {

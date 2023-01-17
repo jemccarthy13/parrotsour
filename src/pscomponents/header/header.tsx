@@ -1,6 +1,6 @@
 import React, { ReactElement, useCallback, useState } from "react"
 import { PictureAnswer } from "../../canvas/canvastypes"
-import { Dialog } from "../../utils/muiadapter"
+import { Button, Dialog } from "../../utils/muiadapter"
 import IssueReport from "../issues/report-form"
 
 interface PSHeaderProps {
@@ -28,15 +28,9 @@ export const ParrotSourHeader = ({
   return (
     <div>
       <div style={{ display: "flex" }}>
-        <button
-          data-testid="tips-btn"
-          id="quickTipBtn"
-          type="button"
-          style={{ width: "25%", top: "5px" }}
-          onClick={handleToggleQT}
-        >
+        <Button data-testid="tips-btn" onClick={handleToggleQT}>
           Quick Tips
-        </button>
+        </Button>
         {isShowQT && (
           <Dialog id="quickTipDialog" open={isShowQT} onClose={handleToggleQT}>
             {comp}

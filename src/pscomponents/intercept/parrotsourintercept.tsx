@@ -8,7 +8,7 @@ import {
 import { SensorType } from "../../classes/aircraft/datatrail/sensortype"
 import { FORMAT } from "../../classes/supportedformats"
 import PSCookies from "../../utils/cookies"
-import { SelectChangeEvent } from "../../utils/muiadapter"
+import { Button, SelectChangeEvent } from "../../utils/muiadapter"
 import { ExpandMoreIcon, ExpandLessIcon } from "../../utils/muiiconadapter"
 import { InterceptQT } from "../help/intercept-tips"
 import ContactSelector from "./contactselector"
@@ -238,16 +238,6 @@ export default class ParrotSourIntercept extends React.PureComponent<
         </Suspense>
 
         <Suspense fallback={<div />}>
-          <PicTypeSelector
-            handleChangePicType={this.onChangePicType}
-            picType={picType}
-            handleToggleHardMode={this.onToggleHardMode}
-            handleNewPic={this.onNewPic}
-            handleToggleMeasurements={this.onToggleMeasurements}
-          />
-        </Suspense>
-
-        <Suspense fallback={<div />}>
           <ParrotSourControls
             handleSliderChange={this.onSliderChange}
             modifyCanvas={this.modifyCanvas}
@@ -262,12 +252,22 @@ export default class ParrotSourIntercept extends React.PureComponent<
 
         <br />
 
-        <button
-          type="button"
-          style={{ width: "25%", height: "38px", borderRadius: "0px" }}
+        <Suspense fallback={<div />}>
+          <PicTypeSelector
+            handleChangePicType={this.onChangePicType}
+            picType={picType}
+            handleToggleHardMode={this.onToggleHardMode}
+            handleNewPic={this.onNewPic}
+            handleToggleMeasurements={this.onToggleMeasurements}
+          />
+        </Suspense>
+
+        <Button
+          sx={{ width: "25%", height: "38px", borderRadius: "0px" }}
           onClick={this.handleRevealPic}
+          disableRipple
         >
-          <span style={{ display: "flex", height: "100%" }}>
+          <span style={{ display: "contents", height: "100%" }}>
             Reveal Pic
             <Typography
               sx={{
@@ -282,7 +282,7 @@ export default class ParrotSourIntercept extends React.PureComponent<
               )}
             </Typography>
           </span>
-        </button>
+        </Button>
 
         {showAnswer && (
           <AnswerContainer>{answer ? answer.pic : <div />}</AnswerContainer>

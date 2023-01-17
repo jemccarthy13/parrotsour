@@ -6,6 +6,7 @@ import {
   Select,
   SelectChangeEvent,
   Checkbox,
+  Button,
 } from "../../utils/muiadapter"
 
 export type POBSelProps = {
@@ -62,49 +63,46 @@ export default class PicOptionsBar extends React.PureComponent<
     const { isWantMeasureChecked, isHardModeChecked } = this.state
 
     return (
-      <div style={{ display: "flex" }}>
-        <div style={{ paddingRight: "16px", width: "25%" }}>
-          <Select
-            sx={{
-              backgroundColor: "#eee",
-              color: "#444",
-              height: "24px",
-              padding: "unset",
-            }}
-            size="small"
-            fullWidth
-            labelId="picSelLabel"
-            id="pictureType"
-            value={picType}
-            onChange={handleChangePicType}
-          >
-            <MenuItem value="random">Select Picture</MenuItem>
-            <MenuItem value="random">RANDOM</MenuItem>
-            <MenuItem value="azimuth">AZIMUTH</MenuItem>
-            <MenuItem value="range">RANGE</MenuItem>
-            <MenuItem value="wall">WALL</MenuItem>
-            <MenuItem value="ladder">LADDER</MenuItem>
-            <MenuItem value="champagne">CHAMPAGNE</MenuItem>
-            <MenuItem value="vic">VIC</MenuItem>
-            <MenuItem value="cap">CAP</MenuItem>
-            <MenuItem value="leading edge">LEADING EDGE</MenuItem>
-            <MenuItem value="package">PACKAGES</MenuItem>
-            <MenuItem value="threat">THREAT</MenuItem>
-            <MenuItem value="ea">EA / BOGEY DOPE</MenuItem>
-            <MenuItem value="pod">PICTURE OF THE DAY</MenuItem>
-            {process.env.NODE_ENV === "development" && (
-              <MenuItem value="singlegroup">SINGLE</MenuItem>
-            )}
-          </Select>
-        </div>
-        <button
-          type="button"
-          id="newpicbtn"
-          style={{ height: "min-content", width: "25%", marginBottom: "20px" }}
+      <div style={{ display: "flex", marginBottom: "16px" }}>
+        <Select
+          sx={{
+            backgroundColor: "#eee",
+            color: "#444",
+            height: "36px !important",
+            padding: "unset",
+            width: "25%",
+          }}
+          size="small"
+          labelId="picSelLabel"
+          id="pictureType"
+          value={picType}
+          onChange={handleChangePicType}
+        >
+          <MenuItem value="random">Select Picture</MenuItem>
+          <MenuItem value="random">RANDOM</MenuItem>
+          <MenuItem value="azimuth">AZIMUTH</MenuItem>
+          <MenuItem value="range">RANGE</MenuItem>
+          <MenuItem value="wall">WALL</MenuItem>
+          <MenuItem value="ladder">LADDER</MenuItem>
+          <MenuItem value="champagne">CHAMPAGNE</MenuItem>
+          <MenuItem value="vic">VIC</MenuItem>
+          <MenuItem value="cap">CAP</MenuItem>
+          <MenuItem value="leading edge">LEADING EDGE</MenuItem>
+          <MenuItem value="package">PACKAGES</MenuItem>
+          <MenuItem value="threat">THREAT</MenuItem>
+          <MenuItem value="ea">EA / BOGEY DOPE</MenuItem>
+          <MenuItem value="pod">PICTURE OF THE DAY</MenuItem>
+          {process.env.NODE_ENV === "development" && (
+            <MenuItem value="singlegroup">SINGLE</MenuItem>
+          )}
+        </Select>
+        <Button
+          sx={{ marginLeft: "16px" }}
+          data-testid="newpicbtn"
           onClick={handleNewPic}
         >
           New Pic
-        </button>
+        </Button>
 
         <FormControlLabel
           control={<Checkbox defaultChecked={isWantMeasureChecked} />}

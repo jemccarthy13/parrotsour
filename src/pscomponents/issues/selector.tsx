@@ -12,13 +12,17 @@ const IssueSelector = ({
   value = "picprob",
 }: IssueSelectorProps): ReactElement => {
   return (
-    <div className="pscontainer">
+    <div>
       <h2>
         <u>Problem:</u>
       </h2>
       {/* Issue #13 - ISSUE_REPORTS -- change this to /issues.html and use php to read from reported issues */}
       <div style={{ marginBottom: "24px" }}>
-        See a list of <a href="/#/changelog.html">known issues</a>.
+        See a list of{" "}
+        <a style={{ color: "#42a5f5" }} href="/#/changelog.html">
+          known issues
+        </a>
+        .
       </div>
 
       <RadioGroup

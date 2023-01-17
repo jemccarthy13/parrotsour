@@ -5,6 +5,27 @@ export const theme = createTheme({
     mode: "dark",
   },
   components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          textTransform: "unset",
+          backgroundColor: "#eee",
+          color: "#444",
+          cursor: "pointer",
+          padding: "10px",
+          border: "none",
+          textAlign: "left",
+          outline: "none",
+          fontSize: "15px",
+          width: "25%",
+          borderRadius: "10px",
+          height: "36px",
+        },
+      },
+      defaultProps: {
+        size: "small",
+      },
+    },
     MuiCheckbox: {
       styleOverrides: {
         root: {
@@ -17,6 +38,15 @@ export const theme = createTheme({
       },
       defaultProps: {
         disableRipple: true,
+      },
+    },
+    MuiDialogContentText: {
+      styleOverrides: {
+        root: {
+          "&:not(:last-of-type)": {
+            marginBottom: "16px",
+          },
+        },
       },
     },
     MuiInputBase: {
@@ -79,7 +109,7 @@ export const theme = createTheme({
           alignSelf: "center",
           display: "inline-flex",
           padding: "unset",
-          marginLeft: "auto",
+          marginLeft: "16px",
         },
       },
     },
@@ -112,15 +142,31 @@ export const theme = createTheme({
         },
       },
     },
+    MuiInput: {
+      styleOverrides: {
+        input: {
+          paddingTop: "8px",
+          paddingBottom: "4px",
+          paddingRight: "16px",
+          paddingLeft: "4px",
+        },
+      },
+    },
     MuiTextField: {
       styleOverrides: {
-        root: `
-            font-size: 12px;
-            font-family: 'Roboto Mono', monospace;
-            height: auto;
-            transform: unset;
-            padding-bottom: 20px;
-          `,
+        root: {
+          fontSize: "12px",
+          fontFamily: "'Roboto Mono', monospace",
+          height: "100%",
+          transform: "unset",
+          "& .MuiInputBase-input": {
+            height: "100%",
+            paddingTop: "8px",
+            paddingBottom: "4px",
+            paddingRight: "16px",
+            paddingLeft: "8px",
+          },
+        },
       },
       defaultProps: {
         variant: "filled",

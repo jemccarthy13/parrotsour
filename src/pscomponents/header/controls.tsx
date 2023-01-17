@@ -7,7 +7,9 @@ import {
   Dialog,
   Switch,
   Slider,
+  Button,
 } from "../../utils/muiadapter"
+import { HelpButton } from "../help/help-button"
 
 export interface PSCProps {
   handleSliderChange: { (val: number): void }
@@ -152,107 +154,58 @@ export default class ParrotSourControls extends React.PureComponent<
 
     return (
       <div>
-        <div style={{ display: "inline" }}>
-          <button
-            type="button"
-            id="fightsOnBtn"
-            style={{
-              marginBottom: "20px",
-              width: "100px",
-              marginRight: "10px",
-            }}
-            onClick={this.handleFightsOn}
-          >
-            Fights On
-          </button>
-          <button
-            type="button"
-            id="pauseBtn"
-            style={{ marginBottom: "20px", width: "100px" }}
-            onClick={this.handlePauseFight}
-          >
-            Pause
-          </button>
+        <div style={{ display: "inline-flex", marginBottom: "16px" }}>
+          {/** Issue #18 -- ORIENTATION -- Support 'blue in the' N/S/E/W */}
+          <FormControlLabel
+            control={
+              <Switch
+                checked={isOrientNS}
+                onChange={this.handleOrientationChange}
+                name="Orientation"
+              />
+            }
+            label="Orientation:"
+            labelPlacement="start"
+          />
           <div
             style={{
-              display: "inline-flex",
-              paddingLeft: "16px",
-              width: "40%",
+              width: "50px",
+              margin: "auto",
+              marginLeft: "15px",
+              textAlign: "center",
             }}
           >
-            <label htmlFor="speedSlider"> Animation Speed: </label>
-            <Slider
-              min={1}
-              max={100}
-              value={speedSliderValue}
-              id="speedSlider"
-              onChange={this.handleSliderChange}
-              onMouseUp={this.handleSliderMouseUp}
-            />
+            {isOrientNS ? "N/S" : "E/W"}
           </div>
-        </div>
+          <FormControlLabel
+            control={
+              <Switch
+                id="cursordispToggle"
+                checked={isBraaFirst}
+                onChange={this.handleDisplayFirstChanged}
+                name="BRAA"
+              />
+            }
+            label="Display First:"
+            labelPlacement="start"
+          />
+          <div
+            style={{
+              width: "50px",
+              margin: "auto",
+              marginLeft: "15px",
+              textAlign: "center",
+            }}
+          >
+            {isBraaFirst ? "BRAA" : "BULL"}
+          </div>
+          <HelpButton
+            data-testid="displayFirstHelp"
+            onClick={this.handleToggleHelp}
+          >
+            ?
+          </HelpButton>
 
-        <br />
-
-        <div style={{ display: "inline-flex", marginBottom: "10px" }}>
-          <div style={{ display: "flex" }}>
-            {/** Issue #18 -- ORIENTATION -- Support 'blue in the' N/S/E/W */}
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={isOrientNS}
-                  onChange={this.handleOrientationChange}
-                  name="Orientation"
-                />
-              }
-              label="Orientation:"
-              labelPlacement="start"
-            />
-            <div
-              style={{
-                width: "50px",
-                margin: "auto",
-                marginLeft: "15px",
-                textAlign: "center",
-              }}
-            >
-              {isOrientNS ? "N/S" : "E/W"}
-            </div>
-          </div>
-          <div style={{ display: "inline-flex" }}>
-            <FormControlLabel
-              control={
-                <Switch
-                  id="cursordispToggle"
-                  checked={isBraaFirst}
-                  onChange={this.handleDisplayFirstChanged}
-                  name="BRAA"
-                />
-              }
-              label="Display First:"
-              labelPlacement="start"
-            />
-            <div
-              style={{
-                width: "50px",
-                margin: "auto",
-                marginLeft: "15px",
-                textAlign: "center",
-              }}
-            >
-              {isBraaFirst ? "BRAA" : "BULL"}
-            </div>
-            <button
-              style={{ padding: "0px", margin: "5px", float: "right" }}
-              className="helpicon"
-              id="btnDisplayFirstHelp"
-              type="button"
-              data-testid="displayFirstHelp"
-              onClick={this.handleToggleHelp}
-            >
-              ?
-            </button>
-          </div>
           <div style={{ display: "inline-flex", marginLeft: "50px" }}>
             <FormControlLabel
               control={
@@ -276,16 +229,49 @@ export default class ParrotSourControls extends React.PureComponent<
             >
               {dataStyleIsRadar ? "Radar" : "Arrow"}
             </div>
-            <button
-              style={{ padding: "0px", margin: "5px", float: "right" }}
-              className="helpicon"
-              id="btnDisplayDatatrailHelp"
+
+            <HelpButton
               data-testid="dataTrailHelp"
-              type="button"
               onClick={this.handleToggleArrowHelp}
             >
               ?
-            </button>
+            </HelpButton>
+          </div>
+        </div>{" "}
+        <div style={{ marginBottom: "16px" }}>
+          <Button
+            id="fightsOnBtn"
+            sx={{
+              width: "12%",
+              marginRight: "1%",
+            }}
+            onClick={this.handleFightsOn}
+          >
+            Fights On
+          </Button>
+          <Button
+            id="pauseBtn"
+            sx={{ width: "12%" }}
+            onClick={this.handlePauseFight}
+          >
+            Pause
+          </Button>
+          <div
+            style={{
+              display: "inline-flex",
+              paddingLeft: "16px",
+              width: "40%",
+            }}
+          >
+            <label htmlFor="speedSlider"> Animation Speed: </label>
+            <Slider
+              min={1}
+              max={100}
+              value={speedSliderValue}
+              id="speedSlider"
+              onChange={this.handleSliderChange}
+              onMouseUp={this.handleSliderMouseUp}
+            />
           </div>
         </div>
         <Dialog

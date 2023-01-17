@@ -5,6 +5,7 @@ import React, {
   useRef,
   useState,
 } from "react"
+import { InputLabel } from "@mui/material"
 import { PictureAnswer } from "../../canvas/canvastypes"
 import {
   Button,
@@ -15,7 +16,6 @@ import {
 } from "../../utils/muiadapter"
 import { snackActions } from "../alert/psalert"
 import IssueSelector from "./selector"
-import "../../css/collapsible.css"
 import { FormFieldContainer } from "./styles"
 
 type IRProps = {
@@ -129,16 +129,15 @@ export default function IssueReport({
   )
 
   return (
-    <div data-testid="iss-rpt-form" style={{ width: "25%" }}>
-      <button
+    <div data-testid="iss-rpt-form" style={{ width: "100%" }}>
+      <Button
         data-testid="iss-rpt-btn"
-        id="showFormBtn"
-        type="button"
-        style={{ marginLeft: "5%", top: "5px" }}
+        sx={{ marginLeft: "16px" }}
         onClick={handleToggleIssueForm}
       >
         Report Issue
-      </button>
+      </Button>
+
       <Dialog
         sx={{ width: "100%", margin: "auto" }}
         fullScreen={false}
@@ -150,19 +149,20 @@ export default function IssueReport({
             <IssueSelector value={selection} onChange={onIssueSelChanged} />
           </DialogContent>
           <FormFieldContainer>
+            <InputLabel htmlFor="email">Email*</InputLabel>
             <TextField
               required
               id="email"
-              label="Email"
               fullWidth
+              sx={{ height: "56px !important" }}
               type="text"
               onChange={handleEmailChange}
             />
+            <InputLabel htmlFor="issue">Issue Description*</InputLabel>
             <TextField
               required
               id="issue"
               name="issuetxt"
-              label="Issue Description"
               fullWidth
               type="text"
               multiline
@@ -170,7 +170,7 @@ export default function IssueReport({
             />
           </FormFieldContainer>
 
-          <DialogActions>
+          <DialogActions sx={{ justifyContent: "center" }}>
             <Button
               id="submitIssueReport"
               onClick={handleBtnSubmit}

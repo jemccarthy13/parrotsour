@@ -5,9 +5,7 @@ Object {
   "asFragment": [Function],
   "baseElement": <body>
     <div>
-      <div
-        class="pscontainer"
-      >
+      <div>
         <h2>
           <u>
             Problem:
@@ -16,9 +14,11 @@ Object {
         <div
           style="margin-bottom: 24px;"
         >
-          See a list of 
+          See a list of
+           
           <a
             href="/#/changelog.html"
+            style="color: rgb(66, 165, 245);"
           >
             known issues
           </a>
@@ -189,9 +189,7 @@ Object {
     </div>
   </body>,
   "container": <div>
-    <div
-      class="pscontainer"
-    >
+    <div>
       <h2>
         <u>
           Problem:
@@ -200,9 +198,11 @@ Object {
       <div
         style="margin-bottom: 24px;"
       >
-        See a list of 
+        See a list of
+         
         <a
           href="/#/changelog.html"
+          style="color: rgb(66, 165, 245);"
         >
           known issues
         </a>

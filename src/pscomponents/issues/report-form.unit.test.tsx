@@ -35,6 +35,8 @@ describe("IssueReport_Component", () => {
   // const featureSelector = /feature/i
   // const picSelector = /this picture/i
   const othSelector = /Other/i
+  const issDescrLabel = "Issue Description*"
+  const emailLabel = "Email*"
 
   const openDialog = async (wrapper: RenderResult) => {
     await userEvent.click(wrapper.getByTestId(/iss-rpt-btn/i))
@@ -130,7 +132,7 @@ describe("IssueReport_Component", () => {
       expect(wrapper.getByText(/Cancel/)).not.toEqual(null)
     })
 
-    const emailBox = wrapper.getByRole(/textbox/, { name: "Email" })
+    const emailBox = wrapper.getByRole(/textbox/, { name: emailLabel })
 
     emailBox.focus()
 
@@ -152,7 +154,9 @@ describe("IssueReport_Component", () => {
       expect(wrapper.getByText(/Cancel/)).not.toEqual(null)
     })
 
-    const emailBox = wrapper.getByRole(/textbox/, { name: "Issue Description" })
+    const emailBox = wrapper.getByRole(/textbox/, {
+      name: "Issue Description*",
+    })
 
     emailBox.focus()
 
@@ -178,11 +182,11 @@ describe("IssueReport_Component", () => {
       ).toEqual(true)
     })
 
-    const emailBox = wrapper.getByRole(/textbox/, { name: "Email" })
+    const emailBox = wrapper.getByRole(/textbox/, { name: emailLabel })
 
     fireEvent.change(emailBox, { target: { value: email } })
 
-    const issTxt = wrapper.getByRole(/textbox/, { name: "Issue Description" })
+    const issTxt = wrapper.getByRole(/textbox/, { name: issDescrLabel })
 
     fireEvent.change(issTxt, { target: { value: text } })
 
@@ -190,7 +194,7 @@ describe("IssueReport_Component", () => {
       expect(
         (
           wrapper.getByRole(/textbox/, {
-            name: "Issue Description",
+            name: issDescrLabel,
           }) as HTMLInputElement
         ).value
       ).toEqual(text)
