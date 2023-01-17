@@ -6,6 +6,7 @@ import ChatBox, { CBProps } from "./chatbox"
 jest.mock("react-speech-recognition", () => ({
   useSpeechRecognition: () => ({
     transcript: "",
+    finalTranscript: "",
     setTranscript: jest.fn(),
   }),
 }))
