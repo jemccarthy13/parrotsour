@@ -9,6 +9,7 @@
 [![codecov](https://codecov.io/gh/jemccarthy13/parrotsour/branch/main/graph/badge.svg?token=QFWAC2CEQT)](https://codecov.io/gh/jemccarthy13/parrotsour)
 
 ### Dev Badges
+
 [![devtests](https://img.shields.io/github/actions/workflow/status/jemccarthy13/parrotsour/tests.yml?branch=ps-dev&label=Devtests&style=for-the-badge)](https://github.com/jemccarthy13/parrotsour/actions/workflows/tests.yml)
 
 [![devcoverage](https://codecov.io/gh/jemccarthy13/parrotsour/branch/ps-dev/graph/badge.svg?token=QFWAC2CEQT)](https://app.codecov.io/gh/jemccarthy13/parrotsour/branch/ps-dev)
@@ -66,7 +67,7 @@ on a webserver. Designed for offline app functionality.
 
 ### `yarn clint` || `npm run clint`
 
-Execute the linter and provide feedback based on pscomponents ruleset.
+Execute the linter and provide feedback based on custom ruleset.
 
 ### `yarn eject` || `npm run eject`
 

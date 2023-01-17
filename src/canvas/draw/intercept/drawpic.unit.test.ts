@@ -1,13 +1,13 @@
 import { AircraftGroup } from "../../../classes/groups/group"
 import { Point } from "../../../classes/point"
-import { snackActions } from "../../../pscomponents/alert/psalert"
+import { snackActions } from "../../../components/alert/psalert"
 import TestCanvas from "../../../testutils/testcanvas"
 import { PictureCanvasState } from "../../canvastypes"
 import { PaintBrush } from "../paintbrush"
 import DrawAzimuth from "./azimuth"
 import { testProps } from "./mockutils.unit.test"
 
-jest.mock("../../../pscomponents/alert/psalert", () => ({
+jest.mock("../../../components/alert/psalert", () => ({
   snackActions: {
     success: jest.fn(),
     warning: jest.fn(),

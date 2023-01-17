@@ -103,8 +103,8 @@
       "./src/testutils/canvas-serializer.ts"
     ],
     "coveragePathIgnorePatterns": [
-      "./src/pscomponents/procedural/ai.js",
-      "./src/pscomponents/procedural/aiprocess.js",
+      "./src/components/procedural/ai.js",
+      "./src/components/procedural/aiprocess.js",
       "./src/ai/*"
     ]
   }

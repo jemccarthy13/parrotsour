@@ -2,7 +2,7 @@
 import { ACType } from "../../classes/aircraft/aircraft"
 import { SensorType } from "../../classes/aircraft/datatrail/sensortype"
 import { AircraftGroup } from "../../classes/groups/group"
-import { convertToCGRS } from "../../pscomponents/procedural/cgrshelpers"
+import { convertToCGRS } from "../../components/procedural/cgrshelpers"
 import { AIProcessor, ProcessResult } from "./nlprocessor"
 
 /**

@@ -5,7 +5,7 @@ import {
 } from "../../../canvas/canvastypes"
 import { SensorType } from "../../../classes/aircraft/datatrail/sensortype"
 import { AircraftGroup } from "../../../classes/groups/group"
-import { snackActions } from "../../../pscomponents/alert/psalert"
+import { snackActions } from "../../../components/alert/psalert"
 import { randomNumber } from "../../../utils/math"
 import { PaintBrush } from "../paintbrush"
 
