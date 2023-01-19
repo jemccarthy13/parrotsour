@@ -89,7 +89,10 @@ export default function IssueReport({
         const formData = new FormData()
 
         formData.append("email", realEmail)
-        formData.append("comments", realText + " \n\n" + answer)
+        formData.append(
+          "comments",
+          realText + " \n\n" + JSON.stringify(answer, null, 2)
+        )
         formData.append("problemtype", selection)
 
         if (selection === "picprob")

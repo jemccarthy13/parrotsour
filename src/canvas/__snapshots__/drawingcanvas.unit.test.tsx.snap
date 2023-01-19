@@ -13,7 +13,7 @@ exports[`drawingCanvas click_and_drag 1`] = `
 
 exports[`drawingCanvas mousemove_multiple 1`] = `
 <canvas
-  data-snapshot-image="80fd0c31d539a3a888166b4b1886dc6aae048e06091a055187b90b879f77091d063eed75cf1af5855023804dbd20fc1f91a1087c73295178f42345c436edb1b4"
+  data-snapshot-image="62d4773ef95fd6003f7ba6fcb72f6e115ce6ce9bd619321f0bd72d2f90979a66abe0f9197a64844ca3514109bf274e16092f495ea33a05011848bf9af98ace08"
   data-testid="mousecanvas"
   height="400"
   id="mousecanvas"
