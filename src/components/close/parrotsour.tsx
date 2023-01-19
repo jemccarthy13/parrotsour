@@ -6,7 +6,7 @@ import { FORMAT } from "../../classes/supportedformats"
 import { useAnimationSettings } from "../../hooks/use-animation-settings"
 import { useDisplaySettings } from "../../hooks/use-display-settings"
 import { InterceptQT } from "../help/intercept-tips"
-import CloseCommandBox from "./commandbox"
+import { CloseCommandBox } from "./commandbox"
 
 const ParrotSourHeader = lazy(() => import("../header/header"))
 

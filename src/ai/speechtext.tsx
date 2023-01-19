@@ -1,25 +1,44 @@
 import React, { ReactElement, useCallback, useEffect, useState } from "react"
+import { SxProps, Theme } from "@mui/material"
+import { MUIStyledCommonProps } from "@mui/system"
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition"
+import { sleep } from "../utils/time"
 import { normalizeSpeech } from "./process-speech"
 import { MicrophoneContainer, MicrophoneIcon, MicrophoneStatus } from "./styles"
 
-interface SpeechTextProps {
+type SpeechTextProps = MUIStyledCommonProps<Theme> & {
   handler: (msgText: string) => void
+  sx?: SxProps<Theme>
 }
 
+// eslint-disable-next-line react/require-default-props
 export function SpeechTextControls(props: SpeechTextProps): ReactElement {
   const { finalTranscript: transcript, resetTranscript } =
     useSpeechRecognition()
   const [isListening, setIsListening] = useState(false)
 
+  const dialTone = new Audio("/dial-phone-tone.wav")
+  const beepTone = new Audio("/censorship-beep.wav")
+
   const handleListening = useCallback(() => {
     resetTranscript()
-    setIsListening(true)
 
     SpeechRecognition.startListening({
       continuous: true,
+    })
+    setIsListening(true)
+
+    dialTone.play()
+    sleep(400, () => {
+      dialTone.pause()
+      beepTone.play()
+      sleep(250, () => {
+        beepTone.pause()
+      })
+      dialTone.currentTime = 0
+      beepTone.currentTime = 0
     })
   }, [])
 
@@ -44,8 +63,12 @@ export function SpeechTextControls(props: SpeechTextProps): ReactElement {
     handler(tmpAnswer)
   }, [transcript])
 
+  const { sx } = props
+
+  const style = sx as React.CSSProperties
+
   return (
-    <div>
+    <div style={style}>
       <MicrophoneContainer>
         <MicrophoneIcon
           isListening={isListening}

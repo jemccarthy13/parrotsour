@@ -371,22 +371,14 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
     width: "500px",
     height: "400px",
     border: "1px solid #000000",
+    gridColumn: "2",
+    gridRow: "1",
+    left: "0px",
   }
 
   return (
     <div style={{ display: "grid", position: "relative" }}>
-      <canvas
-        id="pscanvas"
-        onMouseDown={canvasMouseStart}
-        onMouseMove={canvasMouseMove}
-        onMouseUp={handleMouseUp}
-        onTouchStart={canvasTouchStart}
-        onTouchMove={canvasTouchMove}
-        onTouchEnd={canvasTouchEnd}
-        onMouseLeave={onMouseLeave}
-        style={{ ...style, gridColumn: "2", gridRow: "1", left: "0px" }}
-        ref={canvasRef}
-      />
+      <canvas id="pscanvas" style={{ ...style }} ref={canvasRef} />
       <canvas
         id="mousecanvas"
         data-testid="mousecanvas"
@@ -399,10 +391,7 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
         onMouseLeave={onMouseLeave}
         style={{
           ...style,
-          gridColumn: "2",
-          gridRow: "1",
           position: "absolute",
-          left: "0px",
           backgroundColor: "transparent",
         }}
         ref={mouseCanvasRef}

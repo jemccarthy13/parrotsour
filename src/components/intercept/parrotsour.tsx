@@ -1,5 +1,6 @@
 import React, { lazy, Suspense, useCallback, useState } from "react"
 import { Typography } from "@mui/material"
+import { SpeechTextControls } from "../../ai/speechtext"
 import { PictureAnswer } from "../../canvas/canvastypes"
 import { FORMAT } from "../../classes/supportedformats"
 import { useAnimationSettings } from "../../hooks/use-animation-settings"
@@ -43,6 +44,8 @@ export const ParrotSourIntercept = () => {
     pic: "",
     groups: [],
   })
+
+  const [userAnswer, setUserAnswer] = useState<string>("")
 
   const { state: displaySettings, toggles: displayToggles } =
     useDisplaySettings()
@@ -89,6 +92,10 @@ export const ParrotSourIntercept = () => {
     setPicType(`${e.target.value}`)
   }, [])
 
+  const handleMessage = useCallback((text: string): void => {
+    setUserAnswer(text)
+  }, [])
+
   return (
     <div>
       <Suspense fallback={<div>Loading...</div>}>
@@ -121,30 +128,56 @@ export const ParrotSourIntercept = () => {
       </Suspense>
 
       <div style={{ marginBottom: "24px" }}>
-        <Button
-          sx={{ width: "25%", height: "38px", borderRadius: "0px" }}
-          onClick={handleRevealPic}
-          disableRipple
-        >
-          <span style={{ display: "contents", height: "100%" }}>
-            Reveal Pic
-            <Typography
-              sx={{
-                alignSelf: "center",
-                marginLeft: "auto",
-              }}
-            >
-              {showAnswer ? (
-                <ExpandLessIcon sx={{ display: "block", height: "100%" }} />
-              ) : (
-                <ExpandMoreIcon sx={{ display: "block", height: "100%" }} />
-              )}
-            </Typography>
-          </span>
-        </Button>
+        <div style={{ display: "flex" }}>
+          <Button
+            sx={{ width: "25%", height: "38px", borderRadius: "0px" }}
+            onClick={handleRevealPic}
+            disableRipple
+          >
+            <span style={{ display: "contents", height: "100%" }}>
+              Reveal Pic
+              <Typography
+                sx={{
+                  alignSelf: "center",
+                  marginLeft: "auto",
+                }}
+              >
+                {showAnswer ? (
+                  <ExpandLessIcon sx={{ display: "block", height: "100%" }} />
+                ) : (
+                  <ExpandMoreIcon sx={{ display: "block", height: "100%" }} />
+                )}
+              </Typography>
+            </span>
+          </Button>
 
+          {process.env.REACT_APP_SUPPORTS_WEBSPEECH === "true" && (
+            <SpeechTextControls
+              sx={{
+                padding: "0px",
+                margin: "0px",
+                marginLeft: "24px",
+                marginBottom: "4px",
+              }}
+              handler={handleMessage}
+            />
+          )}
+        </div>
         {showAnswer && (
-          <AnswerContainer>{answer ? answer.pic : <div />}</AnswerContainer>
+          <AnswerContainer>
+            <>
+              {answer.pic}
+
+              {userAnswer && (
+                <>
+                  <br />
+                  <br />
+                  You said: <br />
+                  {userAnswer}
+                </>
+              )}
+            </>
+          </AnswerContainer>
         )}
       </div>
 

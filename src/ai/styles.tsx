@@ -4,7 +4,6 @@ export const MicrophoneContainer = styled("div")`
   display: flex;
   align-items: center;
   width: 100%;
-  margin: 10%;
 `
 
 type MicrophoneIconProps = React.DetailedHTMLProps<
