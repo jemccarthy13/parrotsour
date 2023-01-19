@@ -43,7 +43,8 @@ describe("drawingCanvas", () => {
     const moveEvent: CanvasMouseEvent = {
       clientX: 50,
       clientY: 50,
-      getModifierState: () => false,
+      // @ts-expect-error for testing
+      srcEvent: { getModifierState: () => false },
     }
 
     const mouseCanvas = drawingCanvas.getByTestId("mousecanvas")
@@ -59,12 +60,13 @@ describe("drawingCanvas", () => {
     const moveEvent: CanvasMouseEvent = {
       clientX: 50,
       clientY: 50,
-      getModifierState: () => false,
+      // @ts-expect-error for testing
+      srcEvent: { getModifierState: () => false },
     }
     const moveEvent2: CanvasMouseEvent = {
       clientX: 75,
-      clientY: 50,
-      getModifierState: () => false,
+      // @ts-expect-error for testing
+      srcEvent: { getModifierState: () => false },
     }
 
     const mouseCanvas = drawingCanvas.getByTestId("mousecanvas")
@@ -82,12 +84,14 @@ describe("drawingCanvas", () => {
     const moveEvent: CanvasMouseEvent = {
       clientX: 50,
       clientY: 50,
-      getModifierState: () => false,
+      // @ts-expect-error for testing
+      srcEvent: { getModifierState: () => false },
     }
     const moveEvent2: CanvasMouseEvent = {
       clientX: 75,
       clientY: 50,
-      getModifierState: () => false,
+      // @ts-expect-error for testing
+      srcEvent: { getModifierState: () => false },
     }
 
     const mouseCanvas = drawingCanvas.getByTestId("mousecanvas")

@@ -16,7 +16,7 @@ import { PaintBrush } from "./draw/paintbrush"
 export interface CanvasMouseEvent {
   clientX: number
   clientY: number
-  getModifierState: (key: string) => boolean
+  srcEvent: React.MouseEvent | React.PointerEvent | TouchEvent
 }
 
 /**
@@ -256,7 +256,8 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
     }
 
     const isCapsLock =
-      e.getModifierState("CapsLock") || e.getModifierState("Shift")
+      e.srcEvent.getModifierState("CapsLock") ||
+      e.srcEvent.getModifierState("Shift")
 
     drawMouse(mouseStart, mousePos)
 
@@ -306,7 +307,7 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
     handleMouseDown({
       clientX: touch.clientX,
       clientY: touch.clientY,
-      getModifierState: () => false,
+      srcEvent: e,
     })
   }
 
@@ -321,7 +322,7 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
     handleMouseMove({
       clientX: touch.clientX,
       clientY: touch.clientY,
-      getModifierState: () => false,
+      srcEvent: e,
     })
   }
 
@@ -345,7 +346,7 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
     handleMouseDown({
       clientX: e.clientX,
       clientY: e.clientY,
-      getModifierState: () => false,
+      srcEvent: e,
     })
   }
 
@@ -360,7 +361,7 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
     handleMouseMove({
       clientX: e.clientX,
       clientY: e.clientY,
-      getModifierState: () => false,
+      srcEvent: e,
     })
   }
 
@@ -372,28 +373,30 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
     border: "1px solid #000000",
   }
 
-  const moveProps = {
-    onMouseDown: canvasMouseStart,
-    onMouseMove: canvasMouseMove,
-    onMouseUp: handleMouseUp,
-    onTouchStart: canvasTouchStart,
-    onTouchMove: canvasTouchMove,
-    onTouchEnd: canvasTouchEnd,
-    onMouseLeave: onMouseLeave,
-  }
-
   return (
     <div style={{ display: "grid", position: "relative" }}>
       <canvas
         id="pscanvas"
-        {...moveProps}
+        onMouseDown={canvasMouseStart}
+        onMouseMove={canvasMouseMove}
+        onMouseUp={handleMouseUp}
+        onTouchStart={canvasTouchStart}
+        onTouchMove={canvasTouchMove}
+        onTouchEnd={canvasTouchEnd}
+        onMouseLeave={onMouseLeave}
         style={{ ...style, gridColumn: "2", gridRow: "1", left: "0px" }}
         ref={canvasRef}
       />
       <canvas
         id="mousecanvas"
         data-testid="mousecanvas"
-        {...moveProps}
+        onMouseDown={canvasMouseStart}
+        onMouseMove={canvasMouseMove}
+        onMouseUp={handleMouseUp}
+        onTouchStart={canvasTouchStart}
+        onTouchMove={canvasTouchMove}
+        onTouchEnd={canvasTouchEnd}
+        onMouseLeave={onMouseLeave}
         style={{
           ...style,
           gridColumn: "2",
