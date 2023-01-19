@@ -82,15 +82,14 @@ export class AircraftGroup extends Array<Aircraft> {
       // 90 deg perpendicular)
       const vectors = headingToRadians(p.hdg)
 
-      const isBlue = p.id === IDMatrix.FRIEND
+      // ISSUE #
+      // const isBlue = p.id === IDMatrix.FRIEND
 
-      p.sx +=
-        2 * PIXELS_TO_NM * Math.cos(vectors.offset) +
-        (isBlue ? 0 : randomNumber(-1.5 * PIXELS_TO_NM, 1.5 * PIXELS_TO_NM))
+      p.sx += 2 * PIXELS_TO_NM * Math.cos(vectors.offset)
+      // + (isBlue ? 0 : randomNumber(-1.5 * PIXELS_TO_NM, 1.5 * PIXELS_TO_NM))
 
-      p.sy +=
-        2 * PIXELS_TO_NM * -Math.sin(vectors.offset) +
-        (isBlue ? 0 : randomNumber(-1.5 * PIXELS_TO_NM, 1.5 * PIXELS_TO_NM))
+      p.sy += 2 * PIXELS_TO_NM * -Math.sin(vectors.offset)
+      // + (isBlue ? 0 : randomNumber(-1.5 * PIXELS_TO_NM, 1.5 * PIXELS_TO_NM))
     }
 
     // Issue #2 -- MANEUVER -- % chance of 2 maneuvers (i.e. flank turn back hot)
