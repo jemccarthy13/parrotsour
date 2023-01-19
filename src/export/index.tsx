@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 import DrawingCanvas from "../canvas/drawingcanvas"
 import PictureCanvas from "../canvas/intercept"
-import ParrotSourControls from "../components/header/display-controls"
+import { DisplayControls } from "../components/header/display-controls"
 import { ParrotSourHeader } from "../components/header/header"
 import { AlsaHelp } from "../components/help/alsa-tips"
 import { InterceptQT } from "../components/help/intercept-tips"
@@ -24,7 +24,7 @@ export {
   InterceptQT,
   PsQT,
   ParrotSour,
-  ParrotSourControls,
+  DisplayControls,
   ParrotSourHeader,
   ParrotSourChooser,
 }

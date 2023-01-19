@@ -5,7 +5,7 @@ import { FORMAT } from "../../classes/supportedformats"
 import { useAnimationSettings } from "../../hooks/use-animation-settings"
 import { useDisplaySettings } from "../../hooks/use-display-settings"
 import { ProceduralQT } from "../help/procedural-tips"
-import ChatBox from "./chatbox"
+import { ChatBox } from "./chatbox"
 import { DifficultySelector } from "./difficultyselector"
 
 const ParrotSourHeader = lazy(() => import("../header/header"))

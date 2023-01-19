@@ -1,4 +1,10 @@
-import React, { ReactElement, KeyboardEvent } from "react"
+import React, {
+  KeyboardEvent,
+  useState,
+  useRef,
+  useEffect,
+  useCallback,
+} from "react"
 import { SpeechTextControls } from "../../ai/speechtext"
 import { PictureAnswer } from "../../canvas/canvastypes"
 import { formatAlt } from "../../canvas/draw/formatutils"
@@ -8,73 +14,44 @@ import { getTimeStamp } from "../../utils/time"
 import { aiProcess } from "./aiprocess"
 import { convertToCGRS } from "./cgrshelpers"
 
-type CBState = {
-  text: string
-  sender: string
-}
-
 export type CBProps = {
   answer: PictureAnswer
 }
 
-export default class ChatBox extends React.PureComponent<CBProps, CBState> {
-  constructor(props: CBProps) {
-    super(props)
-    this.state = {
-      text:
-        "*** CONNECTED TO PARROTSOUR CHAT SERVER ***\r\n" +
-        "*** /help to display help information\r\n" +
-        "*** /handover to simulate a handover message\r\n",
-      sender: "UR_CALLSIGN",
-    }
-  }
+export const ChatBox = (props: CBProps) => {
+  const [text, setText] = useState(
+    "*** CONNECTED TO PARROTSOUR CHAT SERVER ***\r\n" +
+      "*** /help to display help information\r\n" +
+      "*** /handover to simulate a handover message\r\n"
+  )
+  const [sender, setSender] = useState("UR_CALLSIGN")
 
-  componentDidUpdate(): void {
-    const msgBox: HTMLTextAreaElement | null = this.chatroomRef.current
+  const chatRoomRef = useRef<HTMLTextAreaElement>(null)
+  const inputRef = useRef<HTMLTextAreaElement>(null)
+
+  const { answer } = props
+
+  useEffect(() => {
+    const msgBox: HTMLTextAreaElement | null = chatRoomRef.current
 
     if (msgBox !== null) msgBox.scrollTop = msgBox.scrollHeight
+  }, [chatRoomRef.current])
+
+  const clearTextBox = (): void => {
+    const current: HTMLTextAreaElement | null = inputRef.current
+
+    if (current !== null) current.value = ""
   }
 
-  inputRef: React.MutableRefObject<HTMLTextAreaElement | null> =
-    React.createRef<HTMLTextAreaElement>()
-  chatroomRef: React.MutableRefObject<HTMLTextAreaElement | null> =
-    React.createRef<HTMLTextAreaElement>()
-
-  handleInputKeypress = (event: KeyboardEvent<HTMLTextAreaElement>): void => {
-    const key = event.key
-
-    if (key === "Enter") {
-      event.preventDefault()
-      const text = event.currentTarget.value.toString()
-
-      this.sendChatMessage(text)
-      //document.getElementById("chatInput")
-    }
-  }
-
-  handleSendBtnClick = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  const sendMessage = (
+    sender: string,
+    message: string,
+    voice?: boolean
   ): void => {
-    const text = event.currentTarget.value.toString()
-
-    this.sendChatMessage(text)
-  }
-
-  sendSystemMsg = async (msg: string): Promise<void> => {
-    const { text } = this.state
-
-    await this.setState({
-      text: text + getTimeStamp() + " *** " + msg + "\r\n",
-    })
-  }
-
-  sendMessage = (sender: string, message: string, voice?: boolean): void => {
-    const { text } = this.state
-
     if (!voice) {
-      this.setState({
-        text: text + getTimeStamp() + " <" + sender + "> " + message + "\n",
-      })
+      setText(
+        (prev) => prev + getTimeStamp() + " <" + sender + "> " + message + "\n"
+      )
     } else {
       const msg = new SpeechSynthesisUtterance()
 
@@ -83,27 +60,23 @@ export default class ChatBox extends React.PureComponent<CBProps, CBState> {
     }
   }
 
-  _clearTextBox = (): void => {
-    const current: HTMLTextAreaElement | null = this.inputRef.current
-
-    if (current !== null) current.value = ""
+  const sendSystemMsg = (msg: string) => {
+    setText((prev) => prev + getTimeStamp() + " *** " + msg + "\r\n")
   }
 
-  sendChatMessage = async (msg: string): Promise<void> => {
+  const sendChatMessage = (msg: string) => {
     if (msg.indexOf("/") === 0) {
       if (msg.indexOf("/nick") === 0) {
         const newCs = msg.replace("/nick", "").trim()
 
-        this.setState({ sender: newCs })
-        this.sendSystemMsg("changed nick to " + newCs)
+        setSender(newCs)
+        sendSystemMsg("changed nick to " + newCs)
       } else if (msg.indexOf("/handover") === 0) {
-        const { answer } = this.props
-
-        await this.sendSystemMsg("BMA Rundown")
+        sendSystemMsg("BMA Rundown")
         answer.groups.forEach((grp: AircraftGroup) => {
           const pos = grp.getCenterOfMass(SensorType.ARROW)
 
-          this.sendSystemMsg(
+          sendSystemMsg(
             grp.getLabel() +
               " / " +
               convertToCGRS(pos.x, pos.y) +
@@ -111,9 +84,9 @@ export default class ChatBox extends React.PureComponent<CBProps, CBState> {
               formatAlt(grp.getAltitude())
           )
         })
-        await this.sendSystemMsg("End rundown")
+        sendSystemMsg("End rundown")
       } else if (msg.indexOf("/help") === 0) {
-        this.sendSystemMsg(
+        sendSystemMsg(
           "*** Use /nick to set your callsign. ***\r\n" +
             "*** This chatroom simulates an airspace control room.\r\n" +
             "*** Here you can give transit instructions to assets.\n" +
@@ -128,63 +101,76 @@ export default class ChatBox extends React.PureComponent<CBProps, CBState> {
             "----------------------------------------\r\n"
         )
       } else {
-        this.sendSystemMsg("*** Unknown command")
+        sendSystemMsg("*** Unknown command")
       }
     } else {
-      const { sender } = this.state
-      const { answer } = this.props
-
-      await this.sendMessage(sender, msg)
-      aiProcess({ text: msg, voice: false }, answer, this.sendMessage)
+      sendMessage(sender, msg)
+      aiProcess({ text: msg, voice: false }, answer, sendMessage)
     }
 
-    this._clearTextBox()
+    clearTextBox()
   }
 
-  handleMessage = (text: string): void => {
-    const { answer } = this.props
+  const handleInputKeypress = (
+    event: KeyboardEvent<HTMLTextAreaElement>
+  ): void => {
+    const key = event.key
 
-    aiProcess({ text, voice: true }, answer, this.sendMessage)
+    if (key === "Enter") {
+      event.preventDefault()
+      const text = event.currentTarget.value.toString()
+
+      sendChatMessage(text)
+    }
   }
 
-  render(): ReactElement {
-    const handler = this.handleMessage
-    const { text } = this.state
+  const handleSendBtnClick = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ): void => {
+    const text = event.currentTarget.value.toString()
 
-    return (
-      <div
-        id="chat"
-        style={{
-          width: "33%",
-          marginLeft: "auto",
-          marginRight: "auto",
-          minHeight: "100%",
-        }}
-      >
+    sendChatMessage(text)
+  }
+
+  const handleMessage = useCallback((text: string): void => {
+    aiProcess({ text, voice: true }, answer, sendMessage)
+  }, [])
+
+  return (
+    <div
+      id="chat"
+      style={{
+        width: "33%",
+        marginLeft: "auto",
+        marginRight: "auto",
+        minHeight: "100%",
+      }}
+    >
+      <textarea
+        ref={chatRoomRef}
+        id="chatroom"
+        style={{ width: "100%", height: "50%" }}
+        readOnly
+        value={text}
+      />
+      <div style={{ display: "inline-flex", width: "100%" }}>
         <textarea
-          ref={this.chatroomRef}
-          id="chatroom"
-          style={{ width: "100%", height: "50%" }}
-          readOnly
-          value={text}
+          ref={inputRef}
+          id="chatInput"
+          style={{ width: "80%", height: "10%" }}
+          onKeyPress={handleInputKeypress}
         />
-        <div style={{ display: "inline-flex", width: "100%" }}>
-          <textarea
-            ref={this.inputRef}
-            id="chatInput"
-            style={{ width: "80%", height: "10%" }}
-            onKeyPress={this.handleInputKeypress}
-          />
-          <button
-            type="button"
-            style={{ marginLeft: "5px", width: "20%" }}
-            onClick={this.handleSendBtnClick}
-          >
-            Send
-          </button>
-        </div>
-        <SpeechTextControls handler={handler} />
+        <button
+          type="button"
+          style={{ marginLeft: "5px", width: "20%" }}
+          onClick={handleSendBtnClick}
+        >
+          Send
+        </button>
       </div>
-    )
-  }
+      <SpeechTextControls handler={handleMessage} />
+    </div>
+  )
 }
+
+export default ChatBox

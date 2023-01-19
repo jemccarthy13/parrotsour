@@ -1,7 +1,7 @@
 import React from "react"
 import { render } from "@testing-library/react"
 import { AircraftGroup } from "../../classes/groups/group"
-import ChatBox, { CBProps } from "./chatbox"
+import { ChatBox, CBProps } from "./chatbox"
 
 jest.mock("react-speech-recognition", () => ({
   useSpeechRecognition: () => ({

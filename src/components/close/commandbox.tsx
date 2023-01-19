@@ -51,7 +51,7 @@ export const CloseCommandBox = (props: CBProps) => {
       const msg = new SpeechSynthesisUtterance()
 
       msg.text = message
-      window.speechSynthesis.speak(msg)
+      if (window.speechSynthesis) window.speechSynthesis.speak(msg)
     }
   }
 
@@ -114,13 +114,11 @@ export const CloseCommandBox = (props: CBProps) => {
     []
   )
 
-  const handleMessage = (text: string): void => {
+  const handleMessage = useCallback((text: string): void => {
     const { answer } = props
 
     aiProcess({ text, voice: true }, answer, sendMessage)
-  }
-
-  const handler = handleMessage
+  }, [])
 
   return (
     <div
@@ -154,7 +152,7 @@ export const CloseCommandBox = (props: CBProps) => {
           Send
         </button>
       </div>
-      <SpeechTextControls handler={handler} />
+      <SpeechTextControls handler={handleMessage} />
     </div>
   )
 }
