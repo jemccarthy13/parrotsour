@@ -1,5 +1,4 @@
-import React, { useCallback } from "react"
-import { useCookieBoolState } from "../../hooks/use-cookie-bool-state"
+import React from "react"
 import {
   MenuItem,
   Select,
@@ -12,7 +11,9 @@ export type POBSelProps = {
   picType: string
   handleChangePicType: (e: SelectChangeEvent<string>) => void
   handleToggleMeasurements: () => void
+  isHardModeChecked: boolean
   handleToggleHardMode: () => void
+  isWantMeasureChecked: boolean
   handleNewPic: () => void
 }
 
@@ -21,27 +22,14 @@ export type POBSelProps = {
  */
 export const PicOptionsBar = (props: POBSelProps) => {
   const {
-    cookieValue: isWantMeasureChecked,
-    toggleCookie: toggleWantMeasureChecked,
-  } = useCookieBoolState("UserWantMeasure")
-  const { cookieValue: isHardModeChecked, toggleCookie: toggleHardMode } =
-    useCookieBoolState("UserWantHardMode")
-
-  const handleToggleMeasurements = useCallback((): void => {
-    const { handleToggleMeasurements } = props
-
-    handleToggleMeasurements()
-    toggleWantMeasureChecked()
-  }, [toggleWantMeasureChecked])
-
-  const handleToggleHardMode = useCallback((): void => {
-    const { handleToggleHardMode } = props
-
-    handleToggleHardMode()
-    toggleHardMode()
-  }, [toggleHardMode])
-
-  const { picType, handleChangePicType, handleNewPic } = props
+    picType,
+    handleChangePicType,
+    handleNewPic,
+    handleToggleHardMode,
+    isHardModeChecked,
+    handleToggleMeasurements,
+    isWantMeasureChecked,
+  } = props
 
   return (
     <div style={{ display: "flex", marginBottom: "16px" }}>

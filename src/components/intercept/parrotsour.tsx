@@ -113,7 +113,9 @@ export const ParrotSourIntercept = () => {
           handleChangePicType={onChangePicType}
           picType={picType}
           handleToggleHardMode={toggleHardMode}
+          isHardModeChecked={isHardMode}
           handleToggleMeasurements={toggleShowMeasure}
+          isWantMeasureChecked={userWantsToMeasure}
           handleNewPic={onNewPic}
         />
       </Suspense>

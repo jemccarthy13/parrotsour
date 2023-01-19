@@ -2,13 +2,15 @@ import React from "react"
 import { render, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { act } from "react-dom/test-utils"
-import PicOptionsBar, { POBSelProps } from "./picoptionsbar"
+import { PicOptionsBar, POBSelProps } from "./picoptions"
 
 const fakeProps: POBSelProps = {
   picType: "azimuth",
   handleChangePicType: jest.fn(),
   handleToggleHardMode: jest.fn(),
+  isHardModeChecked: false,
   handleToggleMeasurements: jest.fn(),
+  isWantMeasureChecked: false,
   handleNewPic: jest.fn(),
 }
 

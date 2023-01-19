@@ -9,7 +9,7 @@ import { PsQT } from "../components/help/ps-tips"
 import { ParrotSourChooser } from "../components/home/chooser"
 import { ParrotSour } from "../components/home/parrotsour"
 import { ParrotSourIntercept } from "../components/intercept/parrotsour"
-import PicOptionsBar from "../components/intercept/picoptionsbar"
+import { PicOptionsBar } from "../components/intercept/picoptions"
 import { StandardSelector } from "../components/intercept/standardselector"
 import { ParrotSourProcedural } from "../components/procedural/parrotsour"
 
