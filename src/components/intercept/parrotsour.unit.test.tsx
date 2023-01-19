@@ -1,6 +1,6 @@
 import React from "react"
 import { render } from "@testing-library/react"
-import ParrotSourIntercept from "./parrotsourintercept"
+import { ParrotSourIntercept } from "./parrotsour"
 
 describe("ParrotSourIntercept", () => {
   it("renders", () => {

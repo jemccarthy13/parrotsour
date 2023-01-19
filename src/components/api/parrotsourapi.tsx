@@ -9,7 +9,7 @@ import {
 } from "@mui/material"
 import { BlueInThe } from "../../canvas/canvastypes"
 import { PaintBrush } from "../../canvas/draw/paintbrush"
-import PictureCanvas from "../../canvas/picturecanvas"
+import PictureCanvas from "../../canvas/intercept"
 import { SensorType } from "../../classes/aircraft/datatrail/sensortype"
 import { FORMAT } from "../../classes/supportedformats"
 import { theme } from "../../theme"

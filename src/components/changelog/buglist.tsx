@@ -1,6 +1,6 @@
 import React from "react"
-import { AccordionSummary, List, ListItem } from "../utils/muiadapter"
-import { ExpandMoreIcon } from "../utils/muiiconadapter"
+import { AccordionSummary, List, ListItem } from "../../utils/muiadapter"
+import { ExpandMoreIcon } from "../../utils/muiiconadapter"
 import { StyledAccordion } from "./styles"
 
 /**
@@ -9,7 +9,7 @@ import { StyledAccordion } from "./styles"
  *
  * @returns Material-ui accordion of known bugs
  */
-export default function BugList(): JSX.Element {
+export default function BugList() {
   const bugs = [
     {
       version: "4.1.0",

@@ -8,6 +8,7 @@ import {
   IconButton,
   Radio,
   RadioGroup,
+  Typography,
 } from "../../utils/muiadapter"
 import { AlsaHelp } from "../help/alsa-tips"
 import { HelpButton } from "../help/help-button"
@@ -35,11 +36,16 @@ export const StandardSelector = (props: StandardSelectorProps) => {
   )
 
   return (
-    <>
-      <div style={{ display: "inline-flex", paddingBottom: "16px" }}>
-        <div style={{ margin: "auto", marginRight: "8px" }}>Standard:</div>
+    <div style={{ paddingBottom: "16px" }}>
+      <div style={{ display: "inline-flex" }}>
+        <label
+          htmlFor="std-sel-radios"
+          style={{ margin: "auto", marginRight: "8px" }}
+        >
+          Standard:
+        </label>
         <RadioGroup
-          aria-labelledby="standard-selector-radio-buttons"
+          id="std-sel-radios"
           name="standard-selection"
           onChange={handleRadioChange}
           defaultValue="alsa"
@@ -66,11 +72,13 @@ export const StandardSelector = (props: StandardSelectorProps) => {
       </div>
       <Dialog open={isShowAlsaQT} onClose={handleToggleAlsaQT}>
         <DialogTitle
-          sx={{ paddingBottom: "5px", borderBottom: "1px solid black" }}
+          sx={{ paddingBottom: "48x", borderBottom: "1px solid black" }}
         >
-          ALSA
-          <br />
-          <br />
+          <Typography
+            sx={{ fontSize: "22px", marginBottom: "24px", marginTop: "8px" }}
+          >
+            ALSA
+          </Typography>
           <IconButton
             onClick={handleToggleAlsaQT}
             sx={{
@@ -95,7 +103,7 @@ export const StandardSelector = (props: StandardSelectorProps) => {
         </DialogTitle>
         <AlsaHelp />
       </Dialog>
-    </>
+    </div>
   )
 }
 

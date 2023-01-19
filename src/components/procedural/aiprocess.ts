@@ -67,7 +67,7 @@ function _checkForAsset(
   }
 
   if (!asset) {
-    sendResponse("SYSTEM", "No such callsign")
+    sendResponse("SYSTEM", `No such callsign (${callsign})`)
   }
 
   return asset

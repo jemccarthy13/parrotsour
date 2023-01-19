@@ -38,6 +38,7 @@ export const ParrotSourHeader = ({
         )}
         <IssueReport answer={answer} />
       </div>
+      <hr />
     </div>
   )
 }

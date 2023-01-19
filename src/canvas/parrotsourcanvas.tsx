@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react"
-import { AnimationHandler } from "../animation/animationhandler"
-import { PicAnimationHandler } from "../animation/picanimator"
+import { AnimationHandler } from "../animation/handler"
+import { PicAnimationHandler } from "../animation/intercept"
 import {
   PictureAnswer,
   PictureCanvasProps,

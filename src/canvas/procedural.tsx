@@ -1,15 +1,15 @@
 /* istanbul ignore file */
 import React, { ReactElement } from "react"
-import { ProceduralAnimationHandler } from "../../../animation/proceduralanimator"
-import { PictureAnswer, PictureCanvasProps } from "../../../canvas/canvastypes"
-import { getStartPos } from "../../../canvas/draw/intercept/pictureclamp"
-import { IDMatrix } from "../../../classes/aircraft/id"
-import { AircraftGroup } from "../../../classes/groups/group"
-import { Point } from "../../../classes/point"
-import { PIXELS_TO_NM, randomNumber } from "../../../utils/math"
-import DrawingCanvas from "../../drawingcanvas"
-import ParrotSourCanvas from "../../parrotsourcanvas"
-import { PaintBrush } from "../paintbrush"
+import { ProceduralAnimationHandler } from "../animation/procedural"
+import { IDMatrix } from "../classes/aircraft/id"
+import { AircraftGroup } from "../classes/groups/group"
+import { Point } from "../classes/point"
+import { PIXELS_TO_NM, randomNumber } from "../utils/math"
+import { PictureAnswer, PictureCanvasProps } from "./canvastypes"
+import { getStartPos } from "./draw/intercept/pictureclamp"
+import { PaintBrush } from "./draw/paintbrush"
+import DrawingCanvas from "./drawingcanvas"
+import ParrotSourCanvas from "./parrotsourcanvas"
 
 /**
  * This component is the main control for drawing pictures for procedural control

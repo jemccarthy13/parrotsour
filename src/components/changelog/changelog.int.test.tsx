@@ -1,7 +1,7 @@
 import React from "react"
 import { ThemeProvider } from "@mui/material"
 import { render } from "@testing-library/react"
-import { theme } from "../theme"
+import { theme } from "../../theme"
 import ChangeLog from "./changelog"
 
 /**

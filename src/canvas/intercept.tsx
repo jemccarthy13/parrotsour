@@ -1,17 +1,17 @@
+import { IDMatrix } from "../classes/aircraft/id"
+import { AircraftGroup } from "../classes/groups/group"
+import { Point } from "../classes/point"
+import { randomNumber } from "../utils/math"
 import {
   BlueInThe,
   PictureAnswer,
   PictureCanvasState,
   PictureCanvasProps,
-} from "../canvas/canvastypes"
-import ParrotSourCanvas from "../canvas/parrotsourcanvas"
-import { IDMatrix } from "../classes/aircraft/id"
-import { AircraftGroup } from "../classes/groups/group"
-import { Point } from "../classes/point"
-import { randomNumber } from "../utils/math"
+} from "./canvastypes"
 import { DrawPic } from "./draw/intercept/drawpic"
 import { PictureFactory } from "./draw/intercept/picturefactory"
 import { PaintBrush } from "./draw/paintbrush"
+import ParrotSourCanvas from "./parrotsourcanvas"
 
 /**
  * This component is the main control for drawing pictures for intercepts.

@@ -1,6 +1,6 @@
 import React from "react"
-import { AccordionSummary, List, ListItem } from "../utils/muiadapter"
-import { ExpandMoreIcon } from "../utils/muiiconadapter"
+import { AccordionSummary, List, ListItem } from "../../utils/muiadapter"
+import { ExpandMoreIcon } from "../../utils/muiiconadapter"
 import { StyledAccordionChild } from "./styles"
 
 /**

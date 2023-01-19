@@ -2,7 +2,7 @@ import { PictureCanvasState } from "../canvas/canvastypes"
 import { PaintBrush } from "../canvas/draw/paintbrush"
 import { SensorType } from "../classes/aircraft/datatrail/sensortype"
 import { AircraftGroup } from "../classes/groups/group"
-import { AnimationHandler } from "./animationhandler"
+import { AnimationHandler } from "./handler"
 
 /**
  * This Handler implements applyLogic to drive aircraft towards

@@ -1,11 +1,13 @@
 import React from "react"
 import { fireEvent, render, waitFor } from "@testing-library/react"
-import ContactSelector from "./contactselector"
+import { NumberSelector } from "./number-selector"
 
-describe("Contact Selector", () => {
-  it("notifies_parent_new_redair_count", async () => {
+describe("Number Selector", () => {
+  it("notifies_parent_new_count", async () => {
     const mockUpdateCount = jest.fn()
-    const wrapper = render(<ContactSelector updateCount={mockUpdateCount} />)
+    const wrapper = render(
+      <NumberSelector id="numContacts" updateCount={mockUpdateCount} />
+    )
 
     const redCount = wrapper.getByRole(/spinbutton/) as HTMLInputElement
 
@@ -16,10 +18,12 @@ describe("Contact Selector", () => {
     })
   })
 
-  it("notifies_parent_normalized_redair_count", async () => {
+  it("notifies_parent_normalized_count", async () => {
     // any red air count < 0 is normalized back to 0 (random)
     const mockUpdateCount = jest.fn()
-    const wrapper = render(<ContactSelector updateCount={mockUpdateCount} />)
+    const wrapper = render(
+      <NumberSelector id="numContacts" updateCount={mockUpdateCount} />
+    )
 
     const redCount = wrapper.getByRole(/spinbutton/) as HTMLInputElement
 

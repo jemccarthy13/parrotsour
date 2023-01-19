@@ -45,7 +45,7 @@ describe("AI Processing", () => {
     )
 
     expect(send).toHaveBeenCalled()
-    expect(send).toHaveBeenCalledWith("SYSTEM", "No such callsign")
+    expect(send).toHaveBeenCalledWith("SYSTEM", "No such callsign (VR02)")
   })
 
   it("processes_text_no_asset", () => {

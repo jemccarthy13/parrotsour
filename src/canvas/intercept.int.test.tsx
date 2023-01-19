@@ -1,16 +1,14 @@
 import React from "react"
-
-import { FORMAT } from "../classes/supportedformats"
-import { AircraftGroup } from "../classes/groups/group"
-import PictureCanvas from "./picturecanvas"
-import { SensorType } from "../classes/aircraft/datatrail/sensortype"
-import { BlueInThe, PictureCanvasProps } from "./canvastypes"
-
-import { PicAnimationHandler } from "../animation/picanimator"
 import { render, waitFor } from "@testing-library/react"
 import { act } from "react-dom/test-utils"
+import { PicAnimationHandler } from "../animation/intercept"
+import { SensorType } from "../classes/aircraft/datatrail/sensortype"
+import { AircraftGroup } from "../classes/groups/group"
+import { FORMAT } from "../classes/supportedformats"
+import { BlueInThe, PictureCanvasProps } from "./canvastypes"
+import PictureCanvas from "./intercept"
 
-jest.mock("../animation/picanimator")
+jest.mock("../animation/intercept")
 
 const mockDraw = jest
   .spyOn(AircraftGroup.prototype, "draw")
@@ -55,6 +53,7 @@ describe("PictureCanvas", () => {
 
   it("full_renders_mouse_and_pic_canvas", async () => {
     const wrapper = render(<PictureCanvas {...testProps} />)
+
     await waitFor(() => {
       expect(wrapper).toBeDefined()
     })
@@ -72,6 +71,7 @@ describe("PictureCanvas", () => {
         }}
       />
     )
+
     await waitFor(() => {
       expect(wrapper.getByTestId(/mousecanvas/)).toBeDefined()
     })
@@ -79,6 +79,7 @@ describe("PictureCanvas", () => {
 
   it("renders_leadedge_forced", async () => {
     const wrapper = render(<PictureCanvas {...testProps} />)
+
     await waitFor(() => {
       expect(wrapper.getByTestId("mousecanvas")).toBeDefined()
     })
@@ -88,6 +89,7 @@ describe("PictureCanvas", () => {
     const wrapper = render(<PictureCanvas {...testProps} />)
 
     const { rerender } = wrapper
+
     act(() => {
       rerender(<PictureCanvas {...testProps} isHardMode />)
     })
@@ -100,6 +102,7 @@ describe("PictureCanvas", () => {
   it("stops_animate_when_picType_changed", async () => {
     const wrapper = render(<PictureCanvas {...testProps} />)
     const { rerender } = wrapper
+
     act(() => {
       rerender(<PictureCanvas {...testProps} picType="range" />)
     })
@@ -179,6 +182,7 @@ describe("PictureCanvas", () => {
     )
 
     const { rerender } = wrapper
+
     act(() => {
       rerender(
         <PictureCanvas

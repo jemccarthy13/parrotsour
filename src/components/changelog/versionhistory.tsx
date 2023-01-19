@@ -4,8 +4,8 @@ import {
   AccordionSummary,
   List,
   ListItem,
-} from "../utils/muiadapter"
-import { ExpandMoreIcon } from "../utils/muiiconadapter"
+} from "../../utils/muiadapter"
+import { ExpandMoreIcon } from "../../utils/muiiconadapter"
 import { Column, Heading, SecondaryHeading, StyledAccordion } from "./styles"
 
 /**
@@ -39,13 +39,15 @@ export default function VersionHistory(): JSX.Element {
         "Added secure 'https' route and force traffic to use SSL",
       ],
       fixes: [
-        "Upgrade underlying frameworks and FOSS toolkits",
+        "Upgrade to latest version of underlying frameworks and FOSS toolkits",
         "Added more tests and test coverage",
         "Squashed some bugs",
         "Reduced bundle size (faster loading times)",
       ],
       improvements: [
         "Upgraded some internals to latest development patterns",
+        "Improved reusability of serveral code modules",
+        "Redued code complexity in some areas (performance and maintenance benefits)",
         "API v2",
       ],
     },

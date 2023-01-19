@@ -3,10 +3,13 @@ import { TextField, Tooltip } from "../../utils/muiadapter"
 import { HelpButton } from "../help/help-button"
 
 interface CSProps {
+  id: string
   updateCount: (count: number) => void
 }
 
-export default function ContactSelector(props: CSProps): JSX.Element {
+export const NumberSelector = (props: CSProps) => {
+  const { id } = props
+
   const [count, setCount] = useState(0)
 
   const updateCount = (val: number) => {
@@ -19,7 +22,7 @@ export default function ContactSelector(props: CSProps): JSX.Element {
     updateCount(val)
   }
 
-  function contactCounterChange() {
+  function onCounterChange() {
     return (event: React.ChangeEvent<HTMLInputElement>) => {
       updateCount(parseInt(event.target.value))
     }
@@ -27,31 +30,29 @@ export default function ContactSelector(props: CSProps): JSX.Element {
 
   return (
     <div style={{ display: "inline-flex", paddingBottom: "16px" }}>
-      <label style={{ padding: "5px" }} htmlFor="numContacts">
+      <label style={{ padding: "5px" }} htmlFor={`${id}`}>
         Fight: 4 v
       </label>
 
       <TextField
-        id="numContacts"
+        id={`${id}`}
         sx={{
-          // backgroundColor: "#eee",
           color: "#444",
           paddingBottom: "unset",
           paddingTop: "unset",
           textAlign: "center",
           width: "25%",
           minWidth: "50px",
-          // height: "12px",
         }}
         type="number"
         name="clicks"
         size="small"
         value={count}
-        onChange={contactCounterChange()}
+        onChange={onCounterChange()}
       />
 
       <Tooltip title="# of red contacts; 0 = random">
-        <HelpButton data-testid="alsaQTBtn">?</HelpButton>
+        <HelpButton data-testid={`${id}-help-btn`}>?</HelpButton>
       </Tooltip>
     </div>
   )

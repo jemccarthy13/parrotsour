@@ -3,14 +3,10 @@ import { ThemeProvider } from "@mui/material"
 import { theme } from "../../theme"
 import { ParrotSourChooser } from "./chooser"
 
-const ParrotSourIntercept = lazy(
-  () => import("../intercept/parrotsourintercept")
-)
-const ParrotSourProcedural = lazy(
-  () => import("../procedural/parrotsourprocedural")
-)
+const ParrotSourIntercept = lazy(() => import("../intercept/parrotsour"))
+const ParrotSourProcedural = lazy(() => import("../procedural/parrotsour"))
 const ParrotSourAPI = lazy(() => import("../api/parrotsourapi"))
-const ParrotSourClose = lazy(() => import("../close/parrotsourclose"))
+const ParrotSourClose = lazy(() => import("../close/parrotsour"))
 
 type PSProps = {
   type: string

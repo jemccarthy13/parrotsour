@@ -1,0 +1,6 @@
+export const SliderCookie = "SavedSpeedSlider"
+export const BraaFirstCookie = "UserWantBraaFirst"
+export const DataStyleCookie = "DataStyleIsRadar"
+export const OrientCookie = "Orientation"
+export const HardModeCookie = "UserWantHardMode"
+export const WantMeasureCookie = "UserWantMeasure"

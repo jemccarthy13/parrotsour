@@ -1,42 +1,31 @@
-import React, { ReactElement } from "react"
+import React, { useCallback, useState } from "react"
 import { ToggleButton, ToggleButtonGroup } from "../../utils/muiadapter"
 
-type DSState = {
-  difficulty: string
-}
+type DifficultyOptions = "easy" | "med" | "hard" | "insane"
 
-export default class DifficultySelector extends React.PureComponent<
-  Record<string, unknown>,
-  DSState
-> {
-  constructor(props: Record<string, unknown>) {
-    super(props)
-    this.state = {
-      difficulty: "easy",
-    }
-  }
+export const DifficultySelector = () => {
+  const [difficulty, setDifficulty] = useState<DifficultyOptions>("easy")
 
-  handlePicTypeChange = (
-    _event: React.MouseEvent<HTMLElement, MouseEvent>,
-    value: string
-  ): void => {
-    if (value !== null) this.setState({ difficulty: value })
-  }
+  const handleDifficultyChange = useCallback(
+    (
+      _event: React.MouseEvent<HTMLElement, MouseEvent>,
+      value: DifficultyOptions
+    ): void => {
+      if (value !== null) setDifficulty(value)
+    },
+    []
+  )
 
-  render(): ReactElement {
-    const { difficulty } = this.state
-
-    return (
-      <ToggleButtonGroup
-        value={difficulty}
-        exclusive
-        onChange={this.handlePicTypeChange}
-      >
-        <ToggleButton value="easy">Easy</ToggleButton>
-        <ToggleButton value="med">Med</ToggleButton>
-        <ToggleButton value="hard">Hard</ToggleButton>
-        <ToggleButton value="insane">XHard</ToggleButton>
-      </ToggleButtonGroup>
-    )
-  }
+  return (
+    <ToggleButtonGroup
+      value={difficulty}
+      exclusive
+      onChange={handleDifficultyChange}
+    >
+      <ToggleButton value="easy">Easy</ToggleButton>
+      <ToggleButton value="med">Med</ToggleButton>
+      <ToggleButton value="hard">Hard</ToggleButton>
+      <ToggleButton value="insane">XHard</ToggleButton>
+    </ToggleButtonGroup>
+  )
 }

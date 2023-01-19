@@ -1,79 +1,52 @@
 /* istanbul ignore file */
-import React, { ReactElement, KeyboardEvent } from "react"
+import React, {
+  KeyboardEvent,
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+} from "react"
 import { SpeechTextControls } from "../../ai/speechtext"
 import { PictureAnswer } from "../../canvas/canvastypes"
 import { getTimeStamp } from "../../utils/time"
 import { aiProcess } from "../procedural/aiprocess"
 
-type CBState = {
-  text: string
-  sender: string
-}
-
 type CBProps = {
   answer: PictureAnswer
 }
 
-export default class CloseCommandBox extends React.PureComponent<
-  CBProps,
-  CBState
-> {
-  constructor(props: CBProps) {
-    super(props)
-    this.state = {
-      text:
-        "*** CONNECTED TO PARROTSOUR CHAT SERVER ***\r\n" +
-        "*** /help to display help information\r\n",
-      sender: "UR_CALLSIGN",
-    }
-  }
+export const CloseCommandBox = (props: CBProps) => {
+  const [text, setText] = useState(
+    "*** CONNECTED TO PARROTSOUR CHAT SERVER ***\r\n" +
+      "*** /help to display help information\r\n"
+  )
 
-  componentDidUpdate(): void {
-    const msgBox: HTMLTextAreaElement | null = this.chatroomRef.current
+  const [sender, setSender] = useState("UR_CALLSIGN")
+
+  const chatRoomRef = useRef<HTMLTextAreaElement>(null)
+  const inputRef = useRef<HTMLTextAreaElement>(null)
+
+  useEffect(() => {
+    const msgBox: HTMLTextAreaElement | null = chatRoomRef.current
 
     if (msgBox !== null) msgBox.scrollTop = msgBox.scrollHeight
+  }, [chatRoomRef.current])
+
+  const _clearTextBox = (): void => {
+    const current: HTMLTextAreaElement | null = inputRef.current
+
+    if (current) current.value = ""
   }
 
-  inputRef: React.MutableRefObject<HTMLTextAreaElement | null> =
-    React.createRef<HTMLTextAreaElement>()
-  chatroomRef: React.MutableRefObject<HTMLTextAreaElement | null> =
-    React.createRef<HTMLTextAreaElement>()
-
-  handleInputKeypress = (event: KeyboardEvent<HTMLTextAreaElement>): void => {
-    const key = event.key
-
-    if (key === "Enter") {
-      event.preventDefault()
-      const text = event.currentTarget.value.toString()
-
-      this.sendChatMessage(text)
-      //document.getElementById("chatInput")
-    }
-  }
-
-  handleSendBtnClick = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  const sendMessage = (
+    sender: string,
+    message: string,
+    voice?: boolean
   ): void => {
-    const text = event.currentTarget.value.toString()
-
-    this.sendChatMessage(text)
-  }
-
-  sendSystemMsg = async (msg: string): Promise<void> => {
-    const { text } = this.state
-
-    await this.setState({
-      text: text + getTimeStamp() + " *** " + msg + "\r\n",
-    })
-  }
-
-  sendMessage = (sender: string, message: string, voice?: boolean): void => {
-    const { text } = this.state
-
     if (!voice) {
-      this.setState({
-        text: text + getTimeStamp() + " <" + sender + "> " + message + "\n",
-      })
+      setText(
+        (prev) => prev + getTimeStamp() + " <" + sender + "> " + message + "\n"
+      )
     } else {
       const msg = new SpeechSynthesisUtterance()
 
@@ -82,21 +55,19 @@ export default class CloseCommandBox extends React.PureComponent<
     }
   }
 
-  _clearTextBox = (): void => {
-    const current: HTMLTextAreaElement | null = this.inputRef.current
-
-    if (current !== null) current.value = ""
+  const sendSystemMsg = (msg: string) => {
+    setText((prev) => prev + getTimeStamp() + " *** " + msg + "\r\n")
   }
 
-  sendChatMessage = async (msg: string): Promise<void> => {
+  const sendChatMessage = (msg: string) => {
     if (msg.indexOf("/") === 0) {
       if (msg.indexOf("/nick") === 0) {
         const newCs = msg.replace("/nick", "").trim()
 
-        this.setState({ sender: newCs })
-        this.sendSystemMsg("changed nick to " + newCs)
+        setSender(newCs)
+        sendSystemMsg("changed nick to " + newCs)
       } else if (msg.indexOf("/help") === 0) {
-        this.sendSystemMsg(
+        sendSystemMsg(
           "*** Use /nick to set your callsign. ***\r\n" +
             "*** This chatroom allows you to give L/R turns and\r\n" +
             "*** climb or descend commands.\n" +
@@ -111,60 +82,81 @@ export default class CloseCommandBox extends React.PureComponent<
         )
       }
     } else {
-      const { sender } = this.state
-      const { answer } = this.props
+      const { answer } = props
 
-      await this.sendMessage(sender, msg)
-      aiProcess({ text: msg, voice: false }, answer, this.sendMessage)
+      sendMessage(sender, msg)
+      aiProcess({ text: msg, voice: false }, answer, sendMessage)
     }
 
-    this._clearTextBox()
+    _clearTextBox()
   }
 
-  handleMessage = (text: string): void => {
-    const { answer } = this.props
+  const handleInputKeypress = useCallback(
+    (event: KeyboardEvent<HTMLTextAreaElement>): void => {
+      const key = event.key
 
-    aiProcess({ text, voice: true }, answer, this.sendMessage)
+      if (key === "Enter") {
+        event.preventDefault()
+        const text = event.currentTarget.value.toString()
+
+        sendChatMessage(text)
+      }
+    },
+    []
+  )
+
+  const handleSendBtnClick = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
+      const text = event.currentTarget.value.toString()
+
+      sendChatMessage(text)
+    },
+    []
+  )
+
+  const handleMessage = (text: string): void => {
+    const { answer } = props
+
+    aiProcess({ text, voice: true }, answer, sendMessage)
   }
 
-  render(): ReactElement {
-    const handler = this.handleMessage
-    const { text } = this.state
+  const handler = handleMessage
 
-    return (
-      <div
-        id="chat"
-        style={{
-          width: "33%",
-          marginLeft: "auto",
-          marginRight: "auto",
-          minHeight: "100%",
-        }}
-      >
+  return (
+    <div
+      id="chat"
+      style={{
+        width: "33%",
+        marginLeft: "auto",
+        marginRight: "auto",
+        minHeight: "100%",
+      }}
+    >
+      <textarea
+        ref={chatRoomRef}
+        id="chatroom"
+        style={{ width: "100%", height: "50%" }}
+        readOnly
+        value={text}
+      />
+      <div style={{ display: "inline-flex", width: "100%" }}>
         <textarea
-          ref={this.chatroomRef}
-          id="chatroom"
-          style={{ width: "100%", height: "50%" }}
-          readOnly
-          value={text}
+          ref={inputRef}
+          id="chatInput"
+          style={{ width: "80%", height: "10%" }}
+          onKeyPress={handleInputKeypress}
         />
-        <div style={{ display: "inline-flex", width: "100%" }}>
-          <textarea
-            ref={this.inputRef}
-            id="chatInput"
-            style={{ width: "80%", height: "10%" }}
-            onKeyPress={this.handleInputKeypress}
-          />
-          <button
-            type="button"
-            style={{ marginLeft: "5px", width: "20%" }}
-            onClick={this.handleSendBtnClick}
-          >
-            Send
-          </button>
-        </div>
-        <SpeechTextControls handler={handler} />
+        <button
+          type="button"
+          style={{ marginLeft: "5px", width: "20%" }}
+          onClick={handleSendBtnClick}
+        >
+          Send
+        </button>
       </div>
-    )
-  }
+      <SpeechTextControls handler={handler} />
+    </div>
+  )
 }
+
+export default CloseCommandBox

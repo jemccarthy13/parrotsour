@@ -1,16 +1,16 @@
 import React from "react"
 import { render, waitFor } from "@testing-library/react"
 import { act } from "react-dom/test-utils"
-import { AnimationHandler } from "../animation/animationhandler"
+import { AnimationHandler } from "../animation/handler"
 import { SensorType } from "../classes/aircraft/datatrail/sensortype"
 import { FORMAT } from "../classes/supportedformats"
 import TestCanvas from "../testutils/testcanvas"
 import { BlueInThe, PictureCanvasProps } from "./canvastypes"
 import { PaintBrush } from "./draw/paintbrush"
+import PictureCanvas from "./intercept"
 import ParrotSourCanvas from "./parrotsourcanvas"
-import PictureCanvas from "./picturecanvas"
 
-jest.mock("../animation/animationhandler")
+jest.mock("../animation/handler")
 const animatorAnimate = jest.spyOn(AnimationHandler.prototype, "animate")
 const animatorPause = jest.spyOn(AnimationHandler.prototype, "pauseFight")
 

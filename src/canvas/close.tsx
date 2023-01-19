@@ -1,5 +1,5 @@
 /* istanbul ignore file */
-import { CloseAnimationHandler } from "../animation/closeanimator"
+import { CloseAnimationHandler } from "../animation/close"
 import { SensorType } from "../classes/aircraft/datatrail/sensortype"
 import { IDMatrix } from "../classes/aircraft/id"
 import { AircraftGroup } from "../classes/groups/group"

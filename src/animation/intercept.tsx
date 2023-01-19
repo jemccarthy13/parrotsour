@@ -3,7 +3,7 @@ import { PaintBrush } from "../canvas/draw/paintbrush"
 import { SensorType } from "../classes/aircraft/datatrail/sensortype"
 import { AircraftGroup } from "../classes/groups/group"
 import { randomNumber } from "../utils/math"
-import { AnimationHandler } from "./animationhandler"
+import { AnimationHandler } from "./handler"
 
 /**
  * This Handler implements applyLogic to drive towards a desired point

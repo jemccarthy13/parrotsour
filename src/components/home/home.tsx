@@ -1,7 +1,7 @@
 import React, { Suspense, lazy } from "react"
 import { Navigate, Route, Routes } from "react-router"
 import { HashRouter } from "react-router-dom"
-import ChangeLog from "../../changelog/changelog"
+import ChangeLog from "../changelog/changelog"
 import { Maintenance } from "./maintenance"
 import { HomePanel } from "./styles"
 
