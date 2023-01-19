@@ -30,7 +30,7 @@ export const VersionNotification = () => {
   }, [])
 
   useEffect(() => {
-    if (cookieIsNotSet) {
+    if (cookieIsNotSet && process.env.REACT_APP_MAINTENANCE !== "true") {
       snackActions.info("Check out the newest release of ParrotSour!", {
         style: { pointerEvents: "all" },
         autoHideDuration: 10000,
