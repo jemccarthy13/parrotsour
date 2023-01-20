@@ -40,7 +40,7 @@ export class CloseAnimationHandler extends AnimationHandler {
    * @param dataStyle Current DataTrail style
    * @param resetCallback (Optional) call back to perform on animate pause
    */
-  applyLogic(
+  applyRedLogic(
     grp: AircraftGroup,
     state: PictureCanvasState,
     dataStyle: SensorType,

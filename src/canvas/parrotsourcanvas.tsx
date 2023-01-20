@@ -41,7 +41,8 @@ export default abstract class ParrotSourCanvas extends React.PureComponent<
     this._componentDidUpdate(prevProps)
   }
 
-  checkAnimate = (prevProps: PictureCanvasProps): void => {
+  // Expose lifecycle to subclasses
+  _componentDidUpdate = (prevProps: PictureCanvasProps): void => {
     const oldAnimate = prevProps.animationSettings.isAnimate
     const { animationSettings, animationHandlers } = this.props
     const { isAnimate } = animationSettings
@@ -78,11 +79,6 @@ export default abstract class ParrotSourCanvas extends React.PureComponent<
         }
       }
     }
-  }
-
-  // Expose lifecycle to subclass
-  _componentDidUpdate = (prevProps: PictureCanvasProps): void => {
-    this.checkAnimate(prevProps)
   }
 
   animationHandler: AnimationHandler

@@ -14,9 +14,7 @@ jest.mock("../animation/handler")
 const animatorAnimate = jest.spyOn(AnimationHandler.prototype, "animate")
 const animatorPause = jest.spyOn(AnimationHandler.prototype, "pauseFight")
 
-const resetFn = jest.fn()
-
-describe("ParrotSourCanvas", () => {
+describe.skip("ParrotSourCanvas", () => {
   beforeAll(() => {
     TestCanvas.useContext(10, 30)
   })

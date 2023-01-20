@@ -49,14 +49,10 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
   const { draw, displaySettings, bullseye, picType, isHardMode, newPic } = props
   const { canvasConfig } = displaySettings
 
-  // useEffect is a React hook called when any of the trigger props changes
   useEffect(() => {
-    // only render when we have both references available
     if (canvasRef.current !== null && mouseCanvasRef.current !== null) {
       const canvas: HTMLCanvasElement = canvasRef.current
       const mouseCanvas: HTMLCanvasElement = mouseCanvasRef.current
-
-      const ctx = canvas.getContext("2d")
 
       mouseCanvasContext.current = mouseCanvas.getContext("2d")
       canvas.height = canvasConfig.height
@@ -68,9 +64,13 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
       mouseCanvas.width = canvasConfig.width
       mouseCanvas.style.width = canvasConfig.width + "px"
       mouseCanvas.style.height = canvasConfig.height + "px"
-
-      if (draw && ctx) draw(ctx)
     }
+  }, [canvasConfig.height, canvasConfig.width])
+
+  // draw when pic type changed, hard mode toggled, or new pic button pressed
+  useEffect(() => {
+    PaintBrush.clearCanvas()
+    draw(PaintBrush.getContext())
   }, [
     draw,
     canvasConfig.width,
@@ -90,13 +90,10 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
     evt: CanvasMouseEvent
   ): Point => {
     const rect = canvas?.getBoundingClientRect()
-    let pos = Point.DEFAULT
 
-    if (rect) {
-      pos = new Point(evt.clientX - rect.left, evt.clientY - rect.top)
-    }
-
-    return pos
+    return rect
+      ? new Point(evt.clientX - rect.left, evt.clientY - rect.top)
+      : Point.DEFAULT
   }
 
   /**
@@ -275,24 +272,20 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
     //
     // draw the range ring & "stack" boot
     //
-    if (isCapsLock && mouseCanvasContext.current && canvasRef.current) {
-      const rect = canvasRef.current.getBoundingClientRect()
+    if (isCapsLock && mouseCanvasContext.current) {
+      mouseCanvasContext.current.strokeStyle = "green"
+      mouseCanvasContext.current.lineWidth = 1
+      mouseCanvasContext.current.beginPath()
+      mouseCanvasContext.current.arc(
+        mousePos.x + 50,
+        mousePos.y,
+        5 * PIXELS_TO_NM,
+        0,
+        360
+      )
+      mouseCanvasContext.current.stroke()
 
-      if (rect) {
-        mouseCanvasContext.current.strokeStyle = "green"
-        mouseCanvasContext.current.lineWidth = 1
-        mouseCanvasContext.current.beginPath()
-        mouseCanvasContext.current.arc(
-          mousePos.x + 50,
-          mousePos.y,
-          5 * PIXELS_TO_NM,
-          0,
-          360
-        )
-        mouseCanvasContext.current.stroke()
-
-        drawBoot(mousePos)
-      }
+      drawBoot(mousePos)
     } else {
       // on cur over...
       drawCursorInfo(mousePos)
@@ -382,22 +375,14 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
     width: "500px",
     height: "400px",
     border: "1px solid #000000",
+    gridColumn: "2",
+    gridRow: "1",
+    left: "0px",
   }
 
   return (
     <div style={{ display: "grid", position: "relative" }}>
-      <canvas
-        id="pscanvas"
-        onMouseDown={canvasMouseStart}
-        onMouseMove={canvasMouseMove}
-        onMouseUp={handleMouseUp}
-        onTouchStart={canvasTouchStart}
-        onTouchMove={canvasTouchMove}
-        onTouchEnd={canvasTouchEnd}
-        onMouseLeave={onMouseLeave}
-        style={{ ...style, gridColumn: "2", gridRow: "1", left: "0px" }}
-        ref={canvasRef}
-      />
+      <canvas id="pscanvas" style={{ ...style }} ref={canvasRef} />
       <canvas
         id="mousecanvas"
         data-testid="mousecanvas"
@@ -410,10 +395,7 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
         onMouseLeave={onMouseLeave}
         style={{
           ...style,
-          gridColumn: "2",
-          gridRow: "1",
           position: "absolute",
-          left: "0px",
           backgroundColor: "transparent",
         }}
         ref={mouseCanvasRef}

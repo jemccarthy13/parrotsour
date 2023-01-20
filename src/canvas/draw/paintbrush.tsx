@@ -3,7 +3,6 @@ import { Braaseye } from "../../classes/braaseye"
 import { AircraftGroup } from "../../classes/groups/group"
 import { Point } from "../../classes/point"
 import { PIXELS_TO_NM, randomNumber } from "../../utils/math"
-import { PictureCanvasProps, PictureCanvasState } from "../canvastypes"
 import { clampInContext } from "./drawutils"
 import { formatAlt } from "./formatutils"
 

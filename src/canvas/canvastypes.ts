@@ -1,3 +1,4 @@
+import { Animator } from "../animation/use-animator"
 import { AircraftGroup } from "../classes/groups/group"
 import { Point } from "../classes/point"
 import { FORMAT } from "../classes/supportedformats"
@@ -34,6 +35,30 @@ export type CanvasProps = {
   picType: string
   animationSettings: AnimationSettings
   animationHandlers: AnimationHandlers
+}
+
+export type PicCanvasProps = PSCanvasProps & {
+  format: FORMAT
+  setAnswer: { (answer: PictureAnswer): void }
+  desiredNumContacts: number
+  animator: Animator
+}
+
+export type PSCanvasProps = {
+  displaySettings: DisplaySettings
+  showMeasurements: boolean
+  isHardMode: boolean
+  newPic: boolean
+  picType: string
+  bullseye: Point
+  answer: PictureAnswer
+  animateCanvas?: ImageData
+  blueAir: AircraftGroup
+  animationSettings: AnimationSettings
+  animationHandlers: AnimationHandlers
+  reDraw: () => PictureAnswer
+  draw: () => Promise<void>
+  animator: Animator
 }
 
 export type PictureAnswer = {

@@ -4,6 +4,7 @@ import { SensorType } from "../classes/aircraft/datatrail/sensortype"
 import { AircraftGroup } from "../classes/groups/group"
 import { randomNumber } from "../utils/math"
 import { AnimationHandler } from "./handler"
+import { isNearBounds as isNearBounds } from "./utils"
 
 /**
  * This Handler implements applyLogic to drive towards a desired point
@@ -44,7 +45,7 @@ export class PicAnimationHandler extends AnimationHandler {
    * @param dataStyle Current DataTrail style
    * @param resetCallback (Optional) call back to perform on animate pause
    */
-  applyLogic(
+  applyRedLogic(
     grp: AircraftGroup,
     state: PictureCanvasState,
     dataStyle: SensorType,
@@ -92,7 +93,7 @@ export class PicAnimationHandler extends AnimationHandler {
 
       PaintBrush.drawAltitudes(grpPos, grp.getAltitudes())
 
-      if (this._isNearBounds(grp, dataStyle)) {
+      if (isNearBounds(grp, dataStyle)) {
         grp.updateIntent({
           desiredHeading: grpPos.getBR(bluePos).bearingNum,
         })

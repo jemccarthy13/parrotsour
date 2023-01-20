@@ -1,6 +1,5 @@
 import React, { lazy, Suspense, useState } from "react"
 import { PictureAnswer } from "../../canvas/canvastypes"
-import { SensorType } from "../../classes/aircraft/datatrail/sensortype"
 import { FORMAT } from "../../classes/supportedformats"
 import { useAnimationSettings } from "../../hooks/use-animation-settings"
 import { useDisplaySettings } from "../../hooks/use-display-settings"

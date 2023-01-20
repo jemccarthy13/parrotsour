@@ -45,27 +45,6 @@ export abstract class AnimationHandler {
   }
 
   /**
-   * Internal function to see if a group is near the canvas boundary.
-   *
-   * Used to change group logic when approaching the edge of the canvas
-   * @param group The group to check against boundaries
-   * @param dataStyle The current DataTrail type
-   */
-  public _isNearBounds(group: AircraftGroup, dataStyle: SensorType): boolean {
-    const buffer = 40
-    const sX = group.getCenterOfMass(dataStyle).x
-    const sY = group.getCenterOfMass(dataStyle).y
-    const ctx = PaintBrush.getContext()
-
-    return (
-      sX < buffer ||
-      sX > ctx.canvas.width - buffer ||
-      sY < buffer ||
-      sY > ctx.canvas.height - buffer
-    )
-  }
-
-  /**
    * Update blue air intent as required. Same rules as with applyLogic.
    *
    * @param grp Group to check intent for
@@ -91,7 +70,7 @@ export abstract class AnimationHandler {
    * @param state Current state of canvas
    * @param dataStyle Current DataTrail type
    */
-  abstract applyLogic(
+  abstract applyRedLogic(
     grp: AircraftGroup,
     state: PictureCanvasState,
     dataStyle: SensorType,
@@ -113,13 +92,13 @@ export abstract class AnimationHandler {
    * @param animateCanvas a snapshot of canvas imagery
    * @param resetCallback optional function to perform at the end of animation
    */
-  async animate(
+  animate(
     props: PictureCanvasProps,
     state: PictureCanvasState,
     groups: AircraftGroup[],
     animateCanvas?: ImageData,
     resetCallback?: () => void
-  ): Promise<void> {
+  ) {
     if (!state.blueAir || !animateCanvas) return
     PaintBrush.getContext().putImageData(animateCanvas, 0, 0)
 
@@ -136,7 +115,7 @@ export abstract class AnimationHandler {
     for (const grp of groups) {
       grp.move()
       grp.draw(dataStyle)
-      this.applyLogic(grp, state, dataStyle, resetCallback)
+      this.applyRedLogic(grp, state, dataStyle, resetCallback)
     }
 
     state.blueAir.move()

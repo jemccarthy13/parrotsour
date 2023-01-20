@@ -51,7 +51,7 @@ export class ProceduralAnimationHandler extends AnimationHandler {
    * @param dataStyle current SensorType (datatrail)
    * @param resetCallback callback for when end state is met; unused as procedural has no end state
    */
-  applyLogic(
+  applyRedLogic(
     grp: AircraftGroup,
     state: PictureCanvasState,
     dataStyle: SensorType

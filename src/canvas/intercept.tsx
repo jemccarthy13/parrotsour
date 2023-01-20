@@ -168,8 +168,8 @@ export default class PictureCanvas extends ParrotSourCanvas {
       id: IDMatrix.FRIEND,
     })
 
-    this.setState({ blueAir, bullseye })
-    this.setState({ blueAir, bullseye })
+    await this.setState({ blueAir, bullseye })
+    await this.setState({ blueAir, bullseye })
 
     const blueOnly = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height)
 
