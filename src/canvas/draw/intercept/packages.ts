@@ -39,7 +39,7 @@ export default class DrawPackage extends DrawPic {
   getPictureInfo(): PictureInfo {
     this.isRange = randomNumber(0, 100) < 50
 
-    const isNS = FightAxis.isNS(this.props.orientation.orient)
+    const isNS = FightAxis.isNS(this.props.displaySettings.canvasConfig.orient)
 
     let s1x = 0
     let s1y = 0
@@ -118,22 +118,22 @@ export default class DrawPackage extends DrawPic {
 
   _getPicBull = (groups: AircraftGroup[]): Point => {
     const { blueAir } = this.state
-    const { dataStyle, orientation } = this.props
+    const { dataStyle, canvasConfig } = this.props.displaySettings
     let closestGroup = groups[0]
 
     let closestRng = 9999
     let sum = 0
     const bPos = blueAir.getCenterOfMass(dataStyle)
 
-    const isNS = FightAxis.isNS(orientation.orient)
+    const isNS = FightAxis.isNS(canvasConfig.orient)
 
-    for (let x = 0; x < groups.length; x++) {
-      const gPos = groups[x].getCenterOfMass(dataStyle)
+    for (const grp of groups) {
+      const gPos = grp.getCenterOfMass(dataStyle)
 
       const BRAA = bPos.getBR(gPos)
 
       if (BRAA.range < closestRng) {
-        closestGroup = groups[x]
+        closestGroup = grp
         closestRng = BRAA.range
       }
 
@@ -169,7 +169,7 @@ export default class DrawPackage extends DrawPic {
 
     PaintBrush.clearCanvas()
     PaintBrush.drawBullseye(this.state.bullseye)
-    this.state.blueAir.draw(this.props.dataStyle)
+    this.state.blueAir.draw(this.props.displaySettings.dataStyle)
 
     return this.draw(false, nCts)
   }
@@ -208,7 +208,7 @@ export default class DrawPackage extends DrawPic {
   }
 
   formatDimensions(): string {
-    const isNS = FightAxis.isNS(this.props.orientation.orient)
+    const isNS = FightAxis.isNS(this.props.displaySettings.canvasConfig.orient)
 
     const bullPt1 = this.packages[0].getBullseyePt()
     const bullPt2 = this.packages[1].getBullseyePt()
@@ -236,7 +236,7 @@ export default class DrawPackage extends DrawPic {
   }
 
   applyLabels(): void {
-    const isNS = FightAxis.isNS(this.props.orientation.orient)
+    const isNS = FightAxis.isNS(this.props.displaySettings.canvasConfig.orient)
 
     let nLbl = isNS ? "EAST" : "NORTH"
     let sLbl = isNS ? "WEST" : "SOUTH"
@@ -256,7 +256,9 @@ export default class DrawPackage extends DrawPic {
   }
 
   checkAnchor = (): void => {
-    const bPos = this.state.blueAir.getCenterOfMass(this.props.dataStyle)
+    const bPos = this.state.blueAir.getCenterOfMass(
+      this.props.displaySettings.dataStyle
+    )
 
     const isAnchNorth = this._isAnchorNPkg(
       bPos.getBR(this.packages[0].getBullseyePt()).range,

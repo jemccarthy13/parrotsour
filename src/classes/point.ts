@@ -1,4 +1,4 @@
-import { BlueInThe } from "../canvas/canvastypes"
+import { BlueInThe, FightAxis } from "../canvas/canvastypes"
 import { PIXELS_TO_NM, toDegrees } from "../utils/math"
 import { BRAA } from "./braa"
 
@@ -53,9 +53,7 @@ export class Point {
   public straightDistNM(toPoint: Point, orientation: BlueInThe): number {
     return Math.floor(
       Math.abs(
-        orientation === BlueInThe.NORTH || orientation === BlueInThe.SOUTH
-          ? this.y - toPoint.y
-          : this.x - toPoint.x
+        FightAxis.isNS(orientation) ? this.y - toPoint.y : this.x - toPoint.x
       ) / PIXELS_TO_NM
     )
   }

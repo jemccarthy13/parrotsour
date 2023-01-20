@@ -36,13 +36,13 @@ describe("DrawChamp", () => {
       alts: [20, 20, 20, 20],
     }
 
-    testProps.orientation.orient = BlueInThe.EAST
+    testProps.displaySettings.canvasConfig.orient = BlueInThe.EAST
     champ = new DrawChampange()
     champ.initialize(testProps, testState)
   })
 
   beforeAll(() => {
-    testProps.orientation.orient = BlueInThe.EAST
+    testProps.displaySettings.canvasConfig.orient = BlueInThe.EAST
   })
 
   beforeEach(() => {
@@ -73,7 +73,7 @@ describe("DrawChamp", () => {
   it("champ_labels_EW", () => {
     const updatedProps = { ...testProps }
 
-    updatedProps.orientation.orient = BlueInThe.NORTH
+    updatedProps.displaySettings.canvasConfig.orient = BlueInThe.NORTH
 
     champ.initialize(updatedProps, testState)
 
@@ -189,7 +189,7 @@ describe("DrawChamp", () => {
   })
 
   it("creates_groups_NS", () => {
-    testProps.orientation.orient = BlueInThe.NORTH
+    testProps.displaySettings.canvasConfig.orient = BlueInThe.NORTH
     const updatedProps = { ...testProps }
 
     champ.initialize(updatedProps, testState)

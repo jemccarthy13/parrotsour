@@ -94,12 +94,9 @@ export const getRestrictedStartPos = (
     uBound = (limitLine - minNMFromBlue * PIXELS_TO_NM) / canvasSize
   }
 
-  const isNS =
-    orientation === BlueInThe.NORTH || orientation === BlueInThe.SOUTH
-
   let mults = { lowX: lBound, hiX: uBound, lowY: 0.2, hiY: 0.8 }
 
-  if (isNS) {
+  if (FightAxis.isNS(orientation)) {
     mults = { lowX: 0.2, hiX: 0.8, lowY: lBound, hiY: uBound }
   }
 
@@ -135,7 +132,7 @@ export const getStartPos = (
   const ctx = PaintBrush.getContext()
   let canvasSize = ctx.canvas.width
 
-  if (orientation === BlueInThe.NORTH || orientation === BlueInThe.SOUTH) {
+  if (FightAxis.isNS(orientation)) {
     canvasSize = ctx.canvas.height
   }
 

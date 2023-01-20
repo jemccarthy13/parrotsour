@@ -1,7 +1,11 @@
-import { SensorType } from "../classes/aircraft/datatrail/sensortype"
 import { AircraftGroup } from "../classes/groups/group"
 import { Point } from "../classes/point"
 import { FORMAT } from "../classes/supportedformats"
+import {
+  AnimationHandlers,
+  AnimationSettings,
+} from "../hooks/use-animation-settings"
+import { DisplaySettings } from "../hooks/use-display-settings"
 
 export enum BlueInThe {
   NORTH,
@@ -22,42 +26,14 @@ export class CanvasOrient {
   orient = BlueInThe.EAST
 }
 
-export interface CanvasProps {
-  orientation: CanvasOrient
-  picType: string
-  braaFirst: boolean
-  dataStyle: SensorType
+export type CanvasProps = {
+  displaySettings: DisplaySettings
   showMeasurements: boolean
   isHardMode: boolean
   newPic: boolean
-  animate: boolean
-  resetCallback?: () => void
-  animateCallback: () => void
-}
-
-export interface PictureCanvasState {
-  bullseye: Point
-  blueAir: AircraftGroup
-  answer: PictureAnswer
-  reDraw: PictureReDrawFunction
-  animateCanvas?: ImageData
-}
-
-export interface CanvasDrawFunction {
-  (context: CanvasRenderingContext2D): Promise<void>
-}
-
-export interface DrawCanvasProps extends CanvasProps {
-  draw: CanvasDrawFunction
-  bullseye: Point
-  answer: PictureAnswer
-}
-
-export interface PictureCanvasProps extends CanvasProps {
-  format: FORMAT
-  setAnswer: { (answer: PictureAnswer): void }
-  sliderSpeed: number
-  desiredNumContacts: number
+  picType: string
+  animationSettings: AnimationSettings
+  animationHandlers: AnimationHandlers
 }
 
 export type PictureAnswer = {
@@ -65,17 +41,22 @@ export type PictureAnswer = {
   groups: AircraftGroup[]
 }
 
-export interface PictureDrawFunction {
-  (
-    context: CanvasRenderingContext2D,
-    props: PictureCanvasProps,
-    state: PictureCanvasState,
-    hasCaps: boolean,
-    desiredNumContacts: number,
-    start?: Point
-  ): PictureAnswer
+export type PictureCanvasProps = CanvasProps & {
+  format: FORMAT
+  setAnswer: { (answer: PictureAnswer): void }
+  desiredNumContacts: number
 }
 
-export interface PictureReDrawFunction {
-  (forced?: boolean, start?: Point, hasCaps?: boolean): PictureAnswer
+export interface PictureCanvasState {
+  bullseye: Point
+  blueAir: AircraftGroup
+  answer: PictureAnswer
+  reDraw: (forced?: boolean, start?: Point, hasCaps?: boolean) => PictureAnswer
+  animateCanvas?: ImageData
+}
+
+export interface DrawCanvasProps extends CanvasProps {
+  draw: (context: CanvasRenderingContext2D) => Promise<void>
+  bullseye: Point
+  answer: PictureAnswer
 }

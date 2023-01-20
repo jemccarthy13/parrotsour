@@ -38,19 +38,33 @@ export default class CloseCanvas extends ParrotSourCanvas {
     let animateImage = undefined
     const ctx = PaintBrush.getContext()
 
-    if (prevProps.orientation !== this.props.orientation) {
-      if (this.props.resetCallback) this.props.resetCallback()
+    const {
+      displaySettings: prevDisplaySettings,
+      showMeasurements: prevShowMeasurements,
+    } = prevProps
+    const {
+      displaySettings: curDisplaySettings,
+      showMeasurements: curShowMeasurements,
+    } = this.props
+
+    const { dataStyle: curDatastyle, isBraaFirst: curIsBraaFirst } =
+      curDisplaySettings
+    const { dataStyle: prevDataStyle, isBraaFirst: prevIsBraaFirst } =
+      prevDisplaySettings
+
+    const { orient: prevOrient } = prevDisplaySettings.canvasConfig
+    const { orient: curOrient } = curDisplaySettings.canvasConfig
+
+    if (prevOrient !== curOrient) {
+      this.props.animationHandlers.pauseAnimate()
     }
 
     if (
-      prevProps.dataStyle !== this.props.dataStyle ||
-      prevProps.showMeasurements !== this.props.showMeasurements ||
-      prevProps.braaFirst !== this.props.braaFirst
+      prevDataStyle !== curDatastyle ||
+      prevShowMeasurements !== curShowMeasurements ||
+      prevIsBraaFirst !== curIsBraaFirst
     ) {
-      if (
-        this.props.animate === prevProps.animate &&
-        prevProps.animate === true
-      ) {
+      if (this.props.animationSettings.isAnimate) {
         this.animationHandler.pauseFight()
       }
       PaintBrush.clearCanvas()
@@ -58,20 +72,26 @@ export default class CloseCanvas extends ParrotSourCanvas {
       animateImage = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height)
 
       this.state.answer.groups.forEach((grp) => {
-        grp.draw(this.props.dataStyle)
+        grp.draw(curDatastyle)
       })
-      this.state.blueAir.draw(this.props.dataStyle)
-      PaintBrush.drawFullInfo(this.state, this.props, this.state.answer.groups)
-      if (
-        this.props.animate === prevProps.animate &&
-        prevProps.animate === true
-      ) {
+      this.state.blueAir.draw(curDatastyle)
+
+      PaintBrush.drawFullInfo(
+        this.state.blueAir,
+        this.state.bullseye,
+        this.state.answer.groups,
+        this.props.displaySettings.dataStyle,
+        this.props.displaySettings.isBraaFirst,
+        this.props.showMeasurements
+      )
+
+      if (this.props.animationSettings.isAnimate) {
         this.animationHandler.animate(
           this.props,
           this.state,
           this.state.answer.groups,
           animateImage,
-          this.props.resetCallback
+          this.props.animationHandlers.pauseAnimate
         )
       }
     }
@@ -93,9 +113,9 @@ export default class CloseCanvas extends ParrotSourCanvas {
     )
     let heading = 270
 
-    const { orientation } = this.props
+    const { orient } = this.props.displaySettings.canvasConfig
 
-    if (orientation.orient === BlueInThe.NORTH) {
+    if (orient === BlueInThe.NORTH) {
       xPos = randomNumber(
         context.canvas.width * 0.33,
         context.canvas.width * 0.66

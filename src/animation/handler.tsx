@@ -123,6 +123,11 @@ export abstract class AnimationHandler {
     if (!state.blueAir || !animateCanvas) return
     PaintBrush.getContext().putImageData(animateCanvas, 0, 0)
 
+    const { displaySettings, animationSettings } = props
+
+    const { dataStyle } = displaySettings
+    const { speedSliderValue } = animationSettings
+
     // For each group:
     //   - draw current arrows
     //   - 'move' drawn arrows based on current heading
@@ -130,27 +135,16 @@ export abstract class AnimationHandler {
     //   - apply decision-making logic
     for (const grp of groups) {
       grp.move()
-      grp.draw(props.dataStyle)
-      this.applyLogic(grp, state, props.dataStyle, resetCallback)
+      grp.draw(dataStyle)
+      this.applyLogic(grp, state, dataStyle, resetCallback)
     }
 
     state.blueAir.move()
-    this.applyBlueLogic(state.blueAir, groups, props.dataStyle)
-    state.blueAir.draw(props.dataStyle)
-
-    // get slider speed/default speed
-    const sliderValue: number | undefined = parseInt(
-      `${
-        document.getElementById("speedSlider")?.getElementsByTagName("input")[0]
-          .value
-      }`
-    )
-    let speed = props.sliderSpeed
-
-    if (sliderValue && !Number.isNaN(sliderValue)) speed = sliderValue
+    this.applyBlueLogic(state.blueAir, groups, dataStyle)
+    state.blueAir.draw(dataStyle)
 
     // delay is proportion of 5000ms based on current slider setting
-    const delay = 5000 * ((100 - speed + 1) / 100)
+    const delay = 5000 * ((100 - speedSliderValue + 1) / 100)
 
     // use the sleep utility to create a new Promise with an animation function call
     if (this.continueAnimate) {

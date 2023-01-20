@@ -50,19 +50,15 @@ export const ParrotSourClose = () => {
       <Suspense fallback={<div />}>
         <div style={{ display: "inline-flex", width: "100%" }}>
           <CloseCanvas
+            displaySettings={displaySettings}
+            animationSettings={animationSettings}
+            animationHandlers={animationHandlers}
             setAnswer={setAnswer}
             showMeasurements
             isHardMode={false}
-            orientation={displaySettings.canvasConfig}
-            braaFirst={displaySettings.isBraaFirst}
             picType="random"
             format={FORMAT.ALSA}
             newPic={false}
-            sliderSpeed={animationSettings.speedSliderValue}
-            animate={animationSettings.isAnimate}
-            animateCallback={animationHandlers.startAnimate}
-            resetCallback={animationHandlers.pauseAnimate}
-            dataStyle={SensorType.RAW}
             desiredNumContacts={0}
           />
 

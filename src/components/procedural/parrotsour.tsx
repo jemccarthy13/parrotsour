@@ -49,19 +49,15 @@ export const ParrotSourProcedural = () => {
       <Suspense fallback={<div />}>
         <div style={{ display: "inline-flex", width: "100%" }}>
           <ProceduralCanvas
-            orientation={displaySettings.canvasConfig}
-            braaFirst={displaySettings.isBraaFirst}
+            displaySettings={displaySettings}
+            animationSettings={animationSettings}
+            animationHandlers={animationHandlers}
             picType="random"
             format={FORMAT.ALSA}
             showMeasurements
             isHardMode
             setAnswer={setAnswer}
             newPic
-            sliderSpeed={animationSettings.speedSliderValue}
-            animate={animationSettings.isAnimate}
-            animateCallback={animationHandlers.startAnimate}
-            resetCallback={animationHandlers.pauseAnimate}
-            dataStyle={SensorType.ARROW}
             desiredNumContacts={0}
           />
 

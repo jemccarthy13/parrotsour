@@ -19,6 +19,7 @@ jest.mock("../../utils/math", () => {
 })
 
 const randomPt = new Point(25, 25)
+
 jest.mock("../../canvas/draw/intercept/pictureclamp", () => {
   return {
     getStartPos: () => {
@@ -33,17 +34,24 @@ describe("GroupFactory", () => {
   const fakeProps: PictureCanvasProps = {
     format: FORMAT.ALSA,
     setAnswer: jest.fn(),
-    sliderSpeed: 50,
-    orientation: { height: 400, width: 400, orient: BlueInThe.NORTH },
+    displaySettings: {
+      canvasConfig: { height: 400, width: 400, orient: BlueInThe.NORTH },
+      dataStyle: SensorType.ARROW,
+      isBraaFirst: true,
+    },
+    animationSettings: {
+      speedSliderValue: 50,
+      isAnimate: false,
+    },
+    animationHandlers: {
+      startAnimate: jest.fn(),
+      pauseAnimate: jest.fn(),
+      onSliderChange: jest.fn(),
+    },
     picType: "azimuth",
-    braaFirst: true,
-    dataStyle: SensorType.ARROW,
     showMeasurements: true,
     isHardMode: false,
     newPic: false,
-    animate: false,
-    resetCallback: jest.fn(),
-    animateCallback: jest.fn(),
     desiredNumContacts: 0,
   }
 

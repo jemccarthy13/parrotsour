@@ -1,3 +1,4 @@
+import { SensorType } from "../../classes/aircraft/datatrail/sensortype"
 import { Braaseye } from "../../classes/braaseye"
 import { AircraftGroup } from "../../classes/groups/group"
 import { Point } from "../../classes/point"
@@ -174,21 +175,23 @@ export class PaintBrush {
   }
 
   public static drawFullInfo(
-    state: PictureCanvasState,
-    props: PictureCanvasProps,
-    groups: AircraftGroup[]
+    blueAir: AircraftGroup,
+    bullseye: Point,
+    groups: AircraftGroup[],
+    dataStyle: SensorType,
+    isBraaFirst: boolean,
+    showMeasurements: boolean
   ): void {
-    for (let y = 0; y < groups.length; y++) {
-      const grpPos = groups[y].getCenterOfMass(props.dataStyle)
+    for (const grp of groups) {
+      const grpPos = grp.getCenterOfMass(dataStyle)
 
-      if (props.showMeasurements) {
-        new Braaseye(
-          grpPos,
-          state.blueAir.getCenterOfMass(props.dataStyle),
-          state.bullseye
-        ).draw(true, props.braaFirst)
+      if (showMeasurements) {
+        new Braaseye(grpPos, blueAir.getCenterOfMass(dataStyle), bullseye).draw(
+          true,
+          isBraaFirst
+        )
       }
-      PaintBrush.drawAltitudes(grpPos, groups[y].getAltitudes())
+      PaintBrush.drawAltitudes(grpPos, grp.getAltitudes())
     }
   }
 }

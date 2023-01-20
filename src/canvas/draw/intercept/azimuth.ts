@@ -27,8 +27,8 @@ export default class DrawAzimuth extends DrawPic {
       wide: drawDistance,
       start: getStartPos(
         this.state.blueAir,
-        this.props.orientation.orient,
-        this.props.dataStyle,
+        this.props.displaySettings.canvasConfig.orient,
+        this.props.displaySettings.dataStyle,
         {
           deep: 7 * PIXELS_TO_NM,
           wide: drawDistance,
@@ -39,7 +39,7 @@ export default class DrawAzimuth extends DrawPic {
   }
 
   createGroups = (startPos: Point, contactList: number[]): AircraftGroup[] => {
-    const isNS = FightAxis.isNS(this.props.orientation.orient)
+    const isNS = FightAxis.isNS(this.props.displaySettings.canvasConfig.orient)
 
     // Create the first group
     const ng = GroupFactory.randomGroupAtLoc(
@@ -61,7 +61,7 @@ export default class DrawAzimuth extends DrawPic {
       sx: isNS ? ngStPos.x + this.dimensions.wide : ngStPos.x,
       sy: isNS ? ngStPos.y : ngStPos.y + this.dimensions.wide,
       hdg: heading,
-      dataTrailType: this.props.dataStyle,
+      dataTrailType: this.props.displaySettings.dataStyle,
       nContacts: contactList[1],
     })
 
@@ -69,8 +69,11 @@ export default class DrawAzimuth extends DrawPic {
   }
 
   drawInfo(): void {
-    const { dataStyle, showMeasurements, braaFirst } = this.props
+    const { showMeasurements, displaySettings } = this.props
+    const { dataStyle, isBraaFirst } = displaySettings
     const { blueAir, bullseye } = this.state
+
+    console.log("drawinfo bullseye", bullseye)
 
     const ng = this.groups[0]
     const sg = this.groups[1]
@@ -79,7 +82,7 @@ export default class DrawAzimuth extends DrawPic {
     const sPos = sg.getCenterOfMass(dataStyle)
     const bluePos = blueAir.getCenterOfMass(dataStyle)
 
-    const isNS = FightAxis.isNS(this.props.orientation.orient)
+    const isNS = FightAxis.isNS(this.props.displaySettings.canvasConfig.orient)
     let offsetX = 0
     let offsetY = 0
     let offsetX2 = 0
@@ -104,12 +107,12 @@ export default class DrawAzimuth extends DrawPic {
     ng.setBraaseye(new Braaseye(nPos, bluePos, bullseye))
     sg.setBraaseye(new Braaseye(sPos, bluePos, bullseye))
 
-    ng.getBraaseye().draw(showMeasurements, braaFirst, offsetX, offsetY)
-    sg.getBraaseye().draw(showMeasurements, braaFirst, offsetX2, offsetY2)
+    ng.getBraaseye().draw(showMeasurements, isBraaFirst, offsetX, offsetY)
+    sg.getBraaseye().draw(showMeasurements, isBraaFirst, offsetX2, offsetY2)
   }
 
   applyLabels(): void {
-    const isNS = FightAxis.isNS(this.props.orientation.orient)
+    const isNS = FightAxis.isNS(this.props.displaySettings.canvasConfig.orient)
 
     // if Anchor N and NS, SG = "EAST", NG = "WEST"
     let firstGroup = this.groups[1]

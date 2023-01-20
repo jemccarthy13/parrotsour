@@ -5,8 +5,8 @@ import { randomNumber } from "../utils/math"
 import {
   BlueInThe,
   PictureAnswer,
-  PictureCanvasState,
   PictureCanvasProps,
+  PictureCanvasState,
 } from "./canvastypes"
 import { DrawPic } from "./draw/intercept/drawpic"
 import { PictureFactory } from "./draw/intercept/picturefactory"
@@ -29,23 +29,36 @@ export default class PictureCanvas extends ParrotSourCanvas {
     let animateImage = undefined
     const ctx = PaintBrush.getContext()
 
+    const {
+      displaySettings: prevDisplaySettings,
+      isHardMode: prevIsHard,
+      picType: prevPicType,
+      showMeasurements: prevShowMeasurements,
+    } = prevProps
+    const {
+      displaySettings: curDisplaySettings,
+      isHardMode,
+      picType,
+      showMeasurements,
+    } = this.props
+
+    const prevOrientation = prevDisplaySettings.canvasConfig.orient
+    const curOrientation = curDisplaySettings.canvasConfig.orient
+
     if (
-      prevProps.isHardMode !== this.props.isHardMode ||
-      prevProps.orientation !== this.props.orientation ||
-      prevProps.picType !== this.props.picType
+      prevIsHard !== isHardMode ||
+      prevOrientation !== curOrientation ||
+      prevPicType !== picType
     ) {
-      if (this.props.resetCallback) this.props.resetCallback()
+      this.props.animationHandlers.pauseAnimate()
     }
 
     if (
-      prevProps.dataStyle !== this.props.dataStyle ||
-      prevProps.showMeasurements !== this.props.showMeasurements ||
-      prevProps.braaFirst !== this.props.braaFirst
+      prevDisplaySettings.dataStyle !== curDisplaySettings.dataStyle ||
+      prevShowMeasurements !== showMeasurements ||
+      prevDisplaySettings.isBraaFirst !== curDisplaySettings.isBraaFirst
     ) {
-      if (
-        this.props.animate === prevProps.animate &&
-        prevProps.animate === true
-      ) {
+      if (this.props.animationSettings.isAnimate) {
         this.animationHandler.pauseFight()
       }
       ctx.fillStyle = "white"
@@ -54,20 +67,30 @@ export default class PictureCanvas extends ParrotSourCanvas {
       animateImage = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height)
 
       this.state.answer.groups.forEach((grp) => {
-        grp.draw(this.props.dataStyle)
+        grp.draw(this.props.displaySettings.dataStyle)
       })
-      this.state.blueAir.draw(this.props.dataStyle)
-      PaintBrush.drawFullInfo(this.state, this.props, this.state.answer.groups)
+      this.state.blueAir.draw(this.props.displaySettings.dataStyle)
+
+      PaintBrush.drawFullInfo(
+        this.state.blueAir,
+        this.state.bullseye,
+        this.state.answer.groups,
+        this.props.displaySettings.dataStyle,
+        this.props.displaySettings.isBraaFirst,
+        this.props.showMeasurements
+      )
+
       if (
-        this.props.animate === prevProps.animate &&
-        prevProps.animate === true
+        this.props.animationSettings.isAnimate ===
+          prevProps.animationSettings.isAnimate &&
+        prevProps.animationSettings.isAnimate === true
       ) {
         this.animationHandler.animate(
           this.props,
           this.state,
           this.state.answer.groups,
           animateImage,
-          this.props.resetCallback
+          this.props.animationHandlers.pauseAnimate
         )
       }
     }
@@ -95,7 +118,7 @@ export default class PictureCanvas extends ParrotSourCanvas {
     const answer = drawFunc.draw(picType === "cap", desiredNumContacts, start)
 
     const { blueAir } = this.state
-    const { dataStyle } = this.props
+    const { dataStyle } = this.props.displaySettings
     const bluePos = blueAir.getCenterOfMass(dataStyle)
 
     blueAir.updateIntent({
@@ -128,9 +151,10 @@ export default class PictureCanvas extends ParrotSourCanvas {
     let yPos = randomNumber(ctx.canvas.height * 0.33, ctx.canvas.height * 0.66)
     let heading = 270
 
-    const { orientation } = this.props
+    const { displaySettings } = this.props
+    const { canvasConfig, dataStyle } = displaySettings
 
-    if (orientation.orient === BlueInThe.NORTH) {
+    if (canvasConfig.orient === BlueInThe.NORTH) {
       xPos = randomNumber(ctx.canvas.width * 0.33, ctx.canvas.width * 0.66)
       yPos = 20
       heading = 180
@@ -145,6 +169,7 @@ export default class PictureCanvas extends ParrotSourCanvas {
     })
 
     this.setState({ blueAir, bullseye })
+    this.setState({ blueAir, bullseye })
 
     const blueOnly = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height)
 
@@ -152,7 +177,7 @@ export default class PictureCanvas extends ParrotSourCanvas {
 
     this.props.setAnswer(answer)
 
-    blueAir.draw(this.props.dataStyle)
+    blueAir.draw(dataStyle)
 
     this.setState({ answer, animateCanvas: blueOnly })
   }

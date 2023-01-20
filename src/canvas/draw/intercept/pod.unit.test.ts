@@ -26,7 +26,7 @@ describe("DrawPackages", () => {
       reDraw: jest.fn(),
     }
 
-    testProps.orientation.orient = BlueInThe.EAST
+    testProps.displaySettings.canvasConfig.orient = BlueInThe.EAST
 
     le = PictureFactory.getPictureDraw("pod") as DrawPOD
     le.initialize(testProps, testState)

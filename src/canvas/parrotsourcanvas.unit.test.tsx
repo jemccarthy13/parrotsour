@@ -27,21 +27,28 @@ describe("ParrotSourCanvas", () => {
   const testProps: PictureCanvasProps = {
     format: FORMAT.ALSA,
     setAnswer: jest.fn(),
-    sliderSpeed: 100,
-    orientation: {
-      height: 200,
-      width: 200,
-      orient: BlueInThe.SOUTH,
+    displaySettings: {
+      dataStyle: SensorType.ARROW,
+      isBraaFirst: true,
+      canvasConfig: {
+        height: 200,
+        width: 200,
+        orient: BlueInThe.SOUTH,
+      },
+    },
+    animationSettings: {
+      speedSliderValue: 100,
+      isAnimate: true,
+    },
+    animationHandlers: {
+      startAnimate: jest.fn(),
+      pauseAnimate: jest.fn(),
+      onSliderChange: jest.fn(),
     },
     picType: "azimuth",
-    braaFirst: true,
-    dataStyle: SensorType.ARROW,
     showMeasurements: true,
     isHardMode: false,
     newPic: false,
-    animate: true,
-    animateCallback: jest.fn(),
-    resetCallback: resetFn,
     desiredNumContacts: 4,
   }
 
@@ -58,8 +65,11 @@ describe("ParrotSourCanvas", () => {
     expect(animatorPause).not.toHaveBeenCalled()
     const { rerender } = wrapper
 
+    const updatedProps = { ...testProps }
+
+    updatedProps.animationSettings.isAnimate = false
     act(() => {
-      rerender(<ParrotSourCanvas {...testProps} animate={false} />)
+      rerender(<ParrotSourCanvas {...updatedProps} />)
     })
 
     await waitFor(() => {
@@ -87,7 +97,10 @@ describe("ParrotSourCanvas", () => {
   })
 
   it("handles_animation_toggled_true", async () => {
-    const wrapper = render(<PictureCanvas {...testProps} animate={false} />)
+    const updatedProps = { ...testProps }
+
+    updatedProps.animationSettings.isAnimate = false
+    const wrapper = render(<PictureCanvas {...updatedProps} />)
 
     expect(animatorAnimate).not.toHaveBeenCalled()
     expect(animatorPause).not.toHaveBeenCalled()
@@ -95,15 +108,23 @@ describe("ParrotSourCanvas", () => {
     const { rerender } = wrapper
 
     act(() => {
-      rerender(<PictureCanvas {...testProps} animate={false} />)
+      rerender(<PictureCanvas {...updatedProps} />)
     })
 
-    act(() => {
-      rerender(<PictureCanvas {...testProps} showMeasurements={false} />)
-    })
+    const updProps2 = { ...updatedProps }
+
+    updProps2.showMeasurements = false
 
     act(() => {
-      rerender(<PictureCanvas {...testProps} animate />)
+      rerender(<PictureCanvas {...updProps2} />)
+    })
+
+    const updProps3 = { ...updProps2 }
+
+    updProps3.animationSettings.isAnimate = true
+
+    act(() => {
+      rerender(<PictureCanvas {...updProps3} />)
     })
 
     await waitFor(() => {
@@ -113,14 +134,18 @@ describe("ParrotSourCanvas", () => {
   })
 
   it("no_change_when_no_previous_imagedata", () => {
-    const wrapper = render(<ParrotSourCanvas {...testProps} animate={false} />)
+    const updProps = { ...testProps }
+
+    updProps.animationSettings.isAnimate = false
+    const wrapper = render(<ParrotSourCanvas {...updProps} />)
 
     expect(animatorAnimate).not.toHaveBeenCalled()
     expect(animatorPause).not.toHaveBeenCalled()
     const { rerender } = wrapper
 
+    updProps.animationSettings.isAnimate = true
     act(() => {
-      rerender(<ParrotSourCanvas {...testProps} animate />)
+      rerender(<ParrotSourCanvas {...updProps} />)
     })
     expect(animatorAnimate).not.toHaveBeenCalled()
     expect(animatorPause).not.toHaveBeenCalled()

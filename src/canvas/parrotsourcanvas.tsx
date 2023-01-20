@@ -42,15 +42,16 @@ export default abstract class ParrotSourCanvas extends React.PureComponent<
   }
 
   checkAnimate = (prevProps: PictureCanvasProps): void => {
-    const oldAnimate = prevProps.animate
-    const { animate } = this.props
+    const oldAnimate = prevProps.animationSettings.isAnimate
+    const { animationSettings, animationHandlers } = this.props
+    const { isAnimate } = animationSettings
+    const { pauseAnimate } = animationHandlers
 
-    if (oldAnimate !== animate) {
-      const { animate, resetCallback } = this.props
+    if (oldAnimate !== isAnimate) {
       const { animateCanvas, answer } = this.state
 
       if (PaintBrush.getContext()) {
-        if (animate) {
+        if (isAnimate) {
           if (animateCanvas) {
             this.animationHandler.continueAnimate = true
             this.animationHandler.animate(
@@ -58,14 +59,22 @@ export default abstract class ParrotSourCanvas extends React.PureComponent<
               this.state,
               answer.groups,
               animateCanvas,
-              resetCallback
+              pauseAnimate
             )
           }
         } else {
           this.animationHandler.pauseFight()
-          const { answer } = this.state
+          const { answer, blueAir, bullseye } = this.state
+          const { displaySettings, showMeasurements } = this.props
 
-          PaintBrush.drawFullInfo(this.state, this.props, answer.groups)
+          PaintBrush.drawFullInfo(
+            blueAir,
+            bullseye,
+            answer.groups,
+            displaySettings.dataStyle,
+            displaySettings.isBraaFirst,
+            showMeasurements
+          )
         }
       }
     }
@@ -84,34 +93,28 @@ export default abstract class ParrotSourCanvas extends React.PureComponent<
 
   render(): ReactElement {
     const {
-      orientation,
-      braaFirst,
-      picType,
+      displaySettings,
       showMeasurements,
       isHardMode,
       newPic,
-      resetCallback,
-      animateCallback,
-      animate,
-      dataStyle,
+      picType,
+      animationSettings,
+      animationHandlers,
     } = this.props
     const { bullseye, answer } = this.state
 
     return (
       <DrawingCanvas
+        displaySettings={displaySettings}
+        animationSettings={animationSettings}
+        animationHandlers={animationHandlers}
         answer={answer}
         draw={this.draw}
-        orientation={orientation}
-        braaFirst={braaFirst}
         bullseye={bullseye}
         picType={picType}
         showMeasurements={showMeasurements}
         isHardMode={isHardMode}
         newPic={newPic}
-        resetCallback={resetCallback}
-        animate={animate}
-        animateCallback={animateCallback}
-        dataStyle={dataStyle}
       />
     )
   }

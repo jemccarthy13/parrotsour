@@ -99,7 +99,7 @@ describe("DrawAzimuth", () => {
   it("labels_EW", () => {
     const updatedProps = testProps
 
-    updatedProps.orientation.orient = BlueInThe.NORTH
+    updatedProps.displaySettings.canvasConfig.orient = BlueInThe.NORTH
 
     azimuth.initialize(updatedProps, testState)
 
@@ -124,7 +124,7 @@ describe("DrawAzimuth", () => {
   it("EW_anchor_pris", () => {
     const updatedProps = testProps
 
-    updatedProps.orientation.orient = BlueInThe.NORTH
+    updatedProps.displaySettings.canvasConfig.orient = BlueInThe.NORTH
 
     const updatedState = testState
 
@@ -233,7 +233,7 @@ describe("DrawAzimuth", () => {
   it("creates_groups_ns", () => {
     const updatedProps = { ...testProps }
 
-    updatedProps.orientation.orient = BlueInThe.NORTH
+    updatedProps.displaySettings.canvasConfig.orient = BlueInThe.NORTH
     const startPos = new Point(100, 100)
 
     azimuth.dimensions.wide = 40

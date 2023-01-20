@@ -64,7 +64,7 @@ export abstract class DrawPic {
     checkCaps(hasCaps, this.groups)
 
     this.groups.forEach((grp) => {
-      grp.draw(this.props.dataStyle)
+      grp.draw(this.props.displaySettings.dataStyle)
     })
 
     this.drawInfo()
@@ -116,13 +116,15 @@ export abstract class DrawPic {
    * @param {AircraftGroup} nonPriGroup The non-priority group
    */
   isEchelon = (priGroup: AircraftGroup, nonPriGroup: AircraftGroup): string => {
-    const nPos = priGroup.getCenterOfMass(this.props.dataStyle)
-    const sPos = nonPriGroup.getCenterOfMass(this.props.dataStyle)
+    const nPos = priGroup.getCenterOfMass(this.props.displaySettings.dataStyle)
+    const sPos = nonPriGroup.getCenterOfMass(
+      this.props.displaySettings.dataStyle
+    )
 
     const ngBraaseye = priGroup.getBraaseye()
     const sgBraaseye = nonPriGroup.getBraaseye()
 
-    const isNS = FightAxis.isNS(this.props.orientation.orient)
+    const isNS = FightAxis.isNS(this.props.displaySettings.canvasConfig.orient)
     const isEchX = !isNS && nPos.getBR(new Point(sPos.x, nPos.y)).range > 5
     const isEchY = isNS && nPos.getBR(new Point(nPos.x, sPos.y)).range > 5
     let ech = ""
@@ -150,7 +152,8 @@ export abstract class DrawPic {
     let answer = "" // set default return
 
     const { blueAir } = this.state
-    const { dataStyle, format } = this.props
+    const { displaySettings, format } = this.props
+    const { dataStyle } = displaySettings
 
     // determine if all groups track same direction
     const trackDir: string | undefined = this.groups[0].getTrackDir()

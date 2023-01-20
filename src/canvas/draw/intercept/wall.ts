@@ -48,8 +48,8 @@ export default class DrawWall extends DrawPic {
 
     const startPos: Point = getRestrictedStartPos(
       this.state.blueAir,
-      this.props.orientation.orient,
-      this.props.dataStyle,
+      this.props.displaySettings.canvasConfig.orient,
+      this.props.displaySettings.dataStyle,
       45,
       200,
       { start, wide, deep }
@@ -59,7 +59,7 @@ export default class DrawWall extends DrawPic {
   }
 
   createGroups = (startPos: Point, contactList: number[]): AircraftGroup[] => {
-    const isNS = FightAxis.isNS(this.props.orientation.orient)
+    const isNS = FightAxis.isNS(this.props.displaySettings.canvasConfig.orient)
 
     let heading = randomHeading(
       this.props.format,
@@ -95,8 +95,11 @@ export default class DrawWall extends DrawPic {
   }
 
   drawInfo(): void {
-    const isNS = FightAxis.isNS(this.props.orientation.orient)
-    const { dataStyle, showMeasurements, braaFirst } = this.props
+    const { displaySettings, showMeasurements } = this.props
+
+    const { dataStyle, isBraaFirst, canvasConfig } = displaySettings
+
+    const isNS = FightAxis.isNS(canvasConfig.orient)
 
     const bluePos = this.state.blueAir.getCenterOfMass(dataStyle)
 
@@ -121,7 +124,7 @@ export default class DrawWall extends DrawPic {
       grp.setBraaseye(new Braaseye(grpPos, bluePos, this.state.bullseye))
       grp
         .getBraaseye()
-        .draw(showMeasurements, braaFirst, altOffsetX, altOffsetY)
+        .draw(showMeasurements, isBraaFirst, altOffsetX, altOffsetY)
     }
 
     const prevGpPos =
@@ -142,7 +145,7 @@ export default class DrawWall extends DrawPic {
   }
 
   applyLabels(): void {
-    const isNS = FightAxis.isNS(this.props.orientation.orient)
+    const isNS = FightAxis.isNS(this.props.displaySettings.canvasConfig.orient)
     const nLbl = isNS ? "WEST" : "NORTH"
     const sLbl = isNS ? "EAST" : "SOUTH"
 

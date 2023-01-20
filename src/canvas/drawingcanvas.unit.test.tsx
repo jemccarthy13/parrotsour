@@ -16,14 +16,22 @@ const drawMock = async (): Promise<void> => {
 const testProps: DrawCanvasProps = {
   draw: drawMock,
   bullseye: new Point(0, 0),
-  orientation: { height: 400, width: 400, orient: BlueInThe.NORTH },
+  displaySettings: {
+    canvasConfig: { height: 400, width: 400, orient: BlueInThe.NORTH },
+    isBraaFirst: true,
+    dataStyle: SensorType.ARROW,
+  },
+  animationSettings: {
+    isAnimate: false,
+    speedSliderValue: 50,
+  },
+  animationHandlers: {
+    pauseAnimate: jest.fn(),
+    startAnimate: jest.fn(),
+    onSliderChange: jest.fn(),
+  },
   picType: "azimith",
-  braaFirst: true,
-  dataStyle: SensorType.ARROW,
   newPic: false,
-  animate: false,
-  resetCallback: jest.fn(),
-  animateCallback: jest.fn(),
   answer: { pic: "2 GRPS AZ", groups: [] },
   showMeasurements: true,
   isHardMode: false,

@@ -38,7 +38,7 @@ describe("DrawPackages", () => {
       alts: [20, 20, 20, 20],
     }
 
-    testProps.orientation.orient = BlueInThe.EAST
+    testProps.displaySettings.canvasConfig.orient = BlueInThe.EAST
 
     pkg = PictureFactory.getPictureDraw("package") as DrawPackage
     pkg.initialize(testProps, testState)

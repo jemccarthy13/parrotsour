@@ -37,8 +37,8 @@ export default class DrawLeadEdge extends DrawPic {
     // // Draw the first picture (i.e. the leading edge)
     const pic1StartPos = getRestrictedStartPos(
       this.state.blueAir,
-      this.props.orientation.orient,
-      this.props.dataStyle,
+      this.props.displaySettings.canvasConfig.orient,
+      this.props.displaySettings.dataStyle,
       45,
       100,
       { start }
@@ -59,7 +59,7 @@ export default class DrawLeadEdge extends DrawPic {
   }
 
   createGroups = (startPos: Point, contactList: number[]): AircraftGroup[] => {
-    const { dataStyle } = this.props
+    const { dataStyle, canvasConfig } = this.props.displaySettings
     const { blueAir } = this.state
 
     const leadGrps = this.leadEdge.createGroups(
@@ -87,7 +87,7 @@ export default class DrawLeadEdge extends DrawPic {
 
     const pic2StartPos = getRestrictedStartPos(
       furthestPic1Group,
-      this.props.orientation.orient,
+      canvasConfig.orient,
       dataStyle,
       25,
       40
@@ -122,7 +122,7 @@ export default class DrawLeadEdge extends DrawPic {
     PaintBrush.clearCanvas()
 
     PaintBrush.drawBullseye(this.state.bullseye)
-    this.state.blueAir.draw(this.props.dataStyle)
+    this.state.blueAir.draw(this.props.displaySettings.dataStyle)
 
     return this.draw(false, nCts)
   }
@@ -136,7 +136,7 @@ export default class DrawLeadEdge extends DrawPic {
    * "follow on" groups
    */
   formatDimensions(): string {
-    const { dataStyle } = this.props
+    const { dataStyle, canvasConfig } = this.props.displaySettings
     const { blueAir } = this.state
     const groups2 = this.followOn.groups
 
@@ -157,10 +157,7 @@ export default class DrawLeadEdge extends DrawPic {
     const pic2Pos = closestFollowOn.getCenterOfMass(dataStyle)
     const pic1Pos = this.furthestLeadGroup.getCenterOfMass(dataStyle)
 
-    const rngBack = pic1Pos.straightDistNM(
-      pic2Pos,
-      this.props.orientation.orient
-    )
+    const rngBack = pic1Pos.straightDistNM(pic2Pos, canvasConfig.orient)
 
     this.rngBack = rngBack
 

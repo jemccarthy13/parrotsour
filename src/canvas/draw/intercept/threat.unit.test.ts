@@ -49,6 +49,7 @@ describe("DrawThreat", () => {
       hdg: 90,
       alts: [20],
     }
+
     dThreat.groups = [new AircraftGroup({ ...p })]
 
     dThreat.drawInfo()
@@ -67,6 +68,7 @@ describe("DrawThreat", () => {
       hdg: 90,
       alts: [20],
     }
+
     dThreat.groups = [new AircraftGroup({ ...p })]
 
     dThreat.drawInfo()
@@ -86,6 +88,7 @@ describe("DrawThreat", () => {
       hdg: 110,
       alts: [20],
     }
+
     dThreat.groups = [new AircraftGroup({ ...p })]
 
     dThreat.drawInfo()
@@ -105,6 +108,7 @@ describe("DrawThreat", () => {
       hdg: 10,
       alts: [20],
     }
+
     dThreat.groups = [new AircraftGroup({ ...p })]
 
     dThreat.drawInfo()
@@ -124,6 +128,7 @@ describe("DrawThreat", () => {
       hdg: 170,
       alts: [20],
     }
+
     dThreat.groups = [new AircraftGroup({ ...p })]
 
     dThreat.drawInfo()
@@ -143,6 +148,7 @@ describe("DrawThreat", () => {
       hdg: 270,
       alts: [20],
     }
+
     dThreat.groups = [new AircraftGroup({ ...p })]
 
     dThreat.drawInfo()
@@ -168,6 +174,7 @@ describe("DrawThreat", () => {
   it("tests_getPictureInfo_with_start", () => {
     const startPt = new Point(100, 100)
     const pInfo: PictureInfo = dThreat.getPictureInfo(startPt)
+
     expect(pInfo.start).toEqual(startPt)
     expect(pInfo.deep).toEqual(5 * PIXELS_TO_NM)
     expect(pInfo.wide).toEqual(5 * PIXELS_TO_NM)
@@ -176,29 +183,36 @@ describe("DrawThreat", () => {
   it("tests_getPictureInfo_random_start", () => {
     const pInfo: PictureInfo = dThreat.getPictureInfo()
 
-    const bPos = testState.blueAir.getCenterOfMass(testProps.dataStyle)
+    const bPos = testState.blueAir.getCenterOfMass(
+      testProps.displaySettings.dataStyle
+    )
 
     const start = pInfo.start
 
     expect(start).toBeDefined()
     if (start) {
       const startBraa = bPos.getBR(start)
+
       expect(startBraa.range).toBeLessThanOrEqual(35)
     }
   })
 
   it("tests_getPictureInfo_random_start_NS", () => {
     const newProps = { ...testProps }
-    newProps.orientation.orient = BlueInThe.NORTH
+
+    newProps.displaySettings.canvasConfig.orient = BlueInThe.NORTH
     dThreat.initialize(newProps, testState)
 
     const pInfo: PictureInfo = dThreat.getPictureInfo()
-    const bPos = testState.blueAir.getCenterOfMass(testProps.dataStyle)
+    const bPos = testState.blueAir.getCenterOfMass(
+      testProps.displaySettings.dataStyle
+    )
     const start = pInfo.start
 
     expect(start).toBeDefined()
     if (start) {
       const startBraa = bPos.getBR(start)
+
       expect(startBraa.range).toBeLessThanOrEqual(40)
     }
   })

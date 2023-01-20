@@ -22,7 +22,7 @@ describe("DrawWall", () => {
   function setBlueInTheNorth() {
     const updatedProps = { ...testProps }
 
-    updatedProps.orientation.orient = BlueInThe.NORTH
+    updatedProps.displaySettings.canvasConfig.orient = BlueInThe.NORTH
     const updatedState = {
       ...testState,
       blueAir: new AircraftGroup({ sx: 200, sy: 50, hdg: 180, nContacts: 4 }),
@@ -53,7 +53,7 @@ describe("DrawWall", () => {
       alts: [20, 20, 20, 20],
     }
 
-    testProps.orientation.orient = BlueInThe.EAST
+    testProps.displaySettings.canvasConfig.orient = BlueInThe.EAST
     wall = new DrawWall()
     wall.initialize(testProps, testState)
 

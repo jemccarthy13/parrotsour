@@ -34,8 +34,8 @@ export class GroupFactory {
   ): AircraftGroup {
     const startLoc = getStartPos(
       state.blueAir,
-      props.orientation.orient,
-      props.dataStyle
+      props.displaySettings.canvasConfig.orient,
+      props.displaySettings.dataStyle
     )
 
     return this.randomGroupAtLoc(props, state, startLoc, heading, numContacts)

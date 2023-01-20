@@ -46,7 +46,8 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
   const [mousePressed, setMousePressed] = useState(false)
 
   // These values are watched by useEffect to trigger a 'draw'
-  const { draw, orientation, bullseye, picType, isHardMode, newPic } = props
+  const { draw, displaySettings, bullseye, picType, isHardMode, newPic } = props
+  const { canvasConfig } = displaySettings
 
   // useEffect is a React hook called when any of the trigger props changes
   useEffect(() => {
@@ -58,19 +59,26 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
       const ctx = canvas.getContext("2d")
 
       mouseCanvasContext.current = mouseCanvas.getContext("2d")
-      canvas.height = orientation.height
-      canvas.width = orientation.width
-      canvas.style.width = orientation.width + "px"
-      canvas.style.height = orientation.height + "px"
+      canvas.height = canvasConfig.height
+      canvas.width = canvasConfig.width
+      canvas.style.width = canvasConfig.width + "px"
+      canvas.style.height = canvasConfig.height + "px"
 
-      mouseCanvas.height = orientation.height
-      mouseCanvas.width = orientation.width
-      mouseCanvas.style.width = orientation.width + "px"
-      mouseCanvas.style.height = orientation.height + "px"
+      mouseCanvas.height = canvasConfig.height
+      mouseCanvas.width = canvasConfig.width
+      mouseCanvas.style.width = canvasConfig.width + "px"
+      mouseCanvas.style.height = canvasConfig.height + "px"
 
       if (draw && ctx) draw(ctx)
     }
-  }, [draw, orientation, picType, newPic, isHardMode])
+  }, [
+    draw,
+    canvasConfig.width,
+    canvasConfig.height,
+    picType,
+    newPic,
+    isHardMode,
+  ])
 
   /**
    * Get the mouse position given the event relative to canvas
@@ -112,15 +120,16 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
     if (end.y < 20) end.y = 20
     end.x -= 50
 
-    const { braaFirst } = props
+    const { displaySettings } = props
+    const { isBraaFirst } = displaySettings
     // determine draw locations based on BRAA/bull first setting
     const drawBEPos = {
       x: end.x,
-      y: braaFirst ? end.y : end.y - 11,
+      y: isBraaFirst ? end.y : end.y - 11,
     }
     const drawBRPos = {
       x: end.x,
-      y: braaFirst ? end.y - 11 : end.y,
+      y: isBraaFirst ? end.y - 11 : end.y,
     }
 
     if (mouseCanvasContext.current) {
@@ -170,7 +179,8 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
    * @param mousePos Current mouse position in the canvas
    */
   const drawBoot = (mousePos: Point) => {
-    const { answer, dataStyle } = props
+    const { answer, displaySettings } = props
+    const { dataStyle } = displaySettings
 
     const alts: number[] = []
 
@@ -211,7 +221,8 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
   // Display 'baseball card' in upper left
   //
   const drawCursorInfo = (mousePos: Point) => {
-    const { answer, dataStyle } = props
+    const { answer, displaySettings } = props
+    const { dataStyle } = displaySettings
     const grps: Aircraft[] = []
 
     answer.groups.forEach((grp) => {

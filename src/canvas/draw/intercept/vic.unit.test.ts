@@ -28,7 +28,7 @@ describe("DrawVic", () => {
   function setBlueInTheNorth() {
     const updatedProps = { ...testProps }
 
-    updatedProps.orientation.orient = BlueInThe.NORTH
+    updatedProps.displaySettings.canvasConfig.orient = BlueInThe.NORTH
     const updatedState = {
       ...testState,
       blueAir: new AircraftGroup({ sx: 200, sy: 50, hdg: 180, nContacts: 4 }),
@@ -60,7 +60,7 @@ describe("DrawVic", () => {
       alts: [20, 20, 20, 20],
     }
 
-    testProps.orientation.orient = BlueInThe.EAST
+    testProps.displaySettings.canvasConfig.orient = BlueInThe.EAST
     vic = new DrawVic()
     vic.initialize(testProps, testState)
 
@@ -234,7 +234,7 @@ describe("DrawVic", () => {
 
     const updatedProps: PictureCanvasProps = { ...testProps }
 
-    updatedProps.orientation.orient = BlueInThe.NORTH
+    updatedProps.displaySettings.canvasConfig.orient = BlueInThe.NORTH
 
     vic.initialize(updatedProps, testState)
     vic.numGroupsToCreate = 3

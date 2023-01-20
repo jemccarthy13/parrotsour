@@ -69,15 +69,15 @@ export default class DrawEA extends DrawPic {
     let closestRng = 9999
     let braa = new BRAA(0, 0)
 
-    for (let x = 0; x < this.groups.length; x++) {
+    for (const grp of this.groups) {
       const tmpBraa = this.state.blueAir
-        .getCenterOfMass(this.props.dataStyle)
-        .getBR(this.groups[x].getCenterOfMass(this.props.dataStyle))
+        .getCenterOfMass(this.props.displaySettings.dataStyle)
+        .getBR(grp.getCenterOfMass(this.props.displaySettings.dataStyle))
 
       if (tmpBraa.range < closestRng) {
         braa = tmpBraa
         closestRng = braa.range
-        closestGrp = this.groups[x]
+        closestGrp = grp
       }
     }
 
@@ -97,7 +97,7 @@ export default class DrawEA extends DrawPic {
    */
   private _initializeEAInfo(): void {
     const { blueAir } = this.state
-    const { dataStyle } = this.props
+    const { dataStyle } = this.props.displaySettings
     const bluePos = blueAir.getCenterOfMass(dataStyle)
 
     const grpIdx = randomNumber(0, this.groups.length - 1)
@@ -163,7 +163,10 @@ export default class DrawEA extends DrawPic {
   formatStrobe(): string {
     const { grp } = this.eaInfo
     const altStack = grp.getAltStack(this.props.format)
-    const aspectH = this.state.blueAir.getAspect(grp, this.props.dataStyle)
+    const aspectH = this.state.blueAir.getAspect(
+      grp,
+      this.props.displaySettings.dataStyle
+    )
     const trackDir = toCardinal(grp.getHeading())
 
     return (
@@ -182,14 +185,16 @@ export default class DrawEA extends DrawPic {
    * Return a formatted BRAA response
    */
   formatBRAA(): string {
+    const { displaySettings } = this.props
+    const { dataStyle } = displaySettings
     const cGrp = this._getClosestGroup()
     const braa = this.state.blueAir
-      .getCenterOfMass(this.props.dataStyle)
-      .getBR(cGrp.getCenterOfMass(this.props.dataStyle))
+      .getCenterOfMass(dataStyle)
+      .getBR(cGrp.getCenterOfMass(dataStyle))
 
     const altStack = cGrp.getAltStack(this.props.format)
 
-    const aspectH = this.state.blueAir.getAspect(cGrp, this.props.dataStyle)
+    const aspectH = this.state.blueAir.getAspect(cGrp, dataStyle)
 
     let aspect = aspectH.toString() + " "
 

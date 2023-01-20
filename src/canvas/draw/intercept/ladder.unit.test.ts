@@ -48,7 +48,7 @@ describe("DrawLadder", () => {
       alts: [20, 20, 20, 20],
     }
 
-    testProps.orientation.orient = BlueInThe.EAST
+    testProps.displaySettings.canvasConfig.orient = BlueInThe.EAST
     ladder = new DrawLadder()
     ladder.initialize(testProps, testState)
 
@@ -116,6 +116,7 @@ describe("DrawLadder", () => {
     ladder.drawInfo()
 
     const updatedProps = { ...testProps, format: FORMAT.IPE }
+
     ladder.initialize(updatedProps, testState)
 
     expect(ladder.getAnswer()).toEqual(
@@ -128,7 +129,8 @@ describe("DrawLadder", () => {
 
   it("ladder_labels_EW", () => {
     const updatedProps = { ...testProps }
-    updatedProps.orientation.orient = BlueInThe.NORTH
+
+    updatedProps.displaySettings.canvasConfig.orient = BlueInThe.NORTH
 
     ladder.initialize(updatedProps, testState)
 
@@ -156,7 +158,7 @@ describe("DrawLadder", () => {
   })
 
   it("ladder_4_grps", () => {
-    testProps.orientation.orient = BlueInThe.EAST
+    testProps.displaySettings.canvasConfig.orient = BlueInThe.EAST
     ladder.initialize(testProps, testState)
 
     const lg = new AircraftGroup({ ...p })
@@ -191,7 +193,7 @@ describe("DrawLadder", () => {
   })
 
   it("ladder_5_grps", () => {
-    testProps.orientation.orient = BlueInThe.EAST
+    testProps.displaySettings.canvasConfig.orient = BlueInThe.EAST
     ladder.initialize(testProps, testState)
 
     const lg = new AircraftGroup({ ...p })
@@ -235,6 +237,7 @@ describe("DrawLadder", () => {
   it("gets_picture_info", () => {
     ladder.numGroupsToCreate = 3
     const pInfo = ladder.getPictureInfo()
+
     expect(pInfo.deep).toBeLessThan(45 * PSMath.PIXELS_TO_NM)
     expect(pInfo.deep).toBeLessThan(45 * PSMath.PIXELS_TO_NM)
     expect(pInfo.wide).toEqual(5 * PSMath.PIXELS_TO_NM)
@@ -247,6 +250,7 @@ describe("DrawLadder", () => {
     ladder.seps = [40, 40, 40]
     const startPos = new Point(100, 100)
     const groups = ladder.createGroups(startPos, [1, 1, 1]) // three single contact groups
+
     expect(groups[0].getHeading()).toEqual(91)
     expect(groups[1].getHeading()).toEqual(91)
     expect(groups[2].getHeading()).toEqual(91)
@@ -267,11 +271,13 @@ describe("DrawLadder", () => {
     jest.spyOn(PSMath, "randomNumber").mockReturnValue(1)
 
     const updatedProps: PictureCanvasProps = { ...testProps, isHardMode: true }
+
     ladder.initialize(updatedProps, testState)
     ladder.numGroupsToCreate = 3
     ladder.seps = [40, 40, 40]
     const startPos = new Point(100, 100)
     const groups = ladder.createGroups(startPos, [1, 1, 1]) // three single contact groups
+
     expect(groups[0].getHeading()).toEqual(121)
     expect(groups[1].getHeading()).toEqual(81)
     expect(groups[2].getHeading()).toEqual(136)
@@ -285,13 +291,15 @@ describe("DrawLadder", () => {
     jest.spyOn(PSMath, "randomNumber").mockReturnValue(1)
 
     const updatedProps: PictureCanvasProps = { ...testProps }
-    updatedProps.orientation.orient = BlueInThe.NORTH
+
+    updatedProps.displaySettings.canvasConfig.orient = BlueInThe.NORTH
 
     ladder.initialize(updatedProps, testState)
     ladder.numGroupsToCreate = 3
     ladder.seps = [40, 40, 40]
     const startPos = new Point(100, 100)
     const groups = ladder.createGroups(startPos, [1, 1, 1]) // three single contact groups
+
     expect(groups[0].getHeading()).toEqual(91)
     expect(groups[1].getHeading()).toEqual(91)
     expect(groups[2].getHeading()).toEqual(91)

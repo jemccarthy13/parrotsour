@@ -54,7 +54,6 @@ export function useAnimationSettings(answer: PictureAnswer): {
     },
     handlers: {
       onSliderChange,
-      //   setAnimate,
       startAnimate,
       pauseAnimate,
     },

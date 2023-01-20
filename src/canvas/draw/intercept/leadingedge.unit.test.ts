@@ -37,7 +37,7 @@ describe("DrawPackages", () => {
       alts: [20, 20, 20, 20],
     }
 
-    testProps.orientation.orient = BlueInThe.EAST
+    testProps.displaySettings.canvasConfig.orient = BlueInThe.EAST
 
     le = PictureFactory.getPictureDraw("leading edge") as DrawLeadEdge
     le.initialize(testProps, testState)

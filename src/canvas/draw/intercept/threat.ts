@@ -20,8 +20,10 @@ export default class DrawThreat extends DrawPic {
   }
 
   getPictureInfo(start?: Point): PictureInfo {
-    const isNS = FightAxis.isNS(this.props.orientation.orient)
-    const bPos = this.state.blueAir.getCenterOfMass(this.props.dataStyle)
+    const isNS = FightAxis.isNS(this.props.displaySettings.canvasConfig.orient)
+    const bPos = this.state.blueAir.getCenterOfMass(
+      this.props.displaySettings.dataStyle
+    )
 
     if (start === undefined) {
       start = new Point(
@@ -59,7 +61,8 @@ export default class DrawThreat extends DrawPic {
     const sg = this.groups[0]
 
     const { blueAir, bullseye } = this.state
-    const { dataStyle, showMeasurements, braaFirst } = this.props
+    const { showMeasurements, displaySettings } = this.props
+    const { dataStyle, isBraaFirst } = displaySettings
 
     const sgPos = sg.getCenterOfMass(dataStyle)
     const bluePos = blueAir.getCenterOfMass(dataStyle)
@@ -67,7 +70,7 @@ export default class DrawThreat extends DrawPic {
     PaintBrush.drawAltitudes(sgPos, sg.getAltitudes())
 
     sg.setBraaseye(new Braaseye(sgPos, bluePos, bullseye))
-    sg.getBraaseye().draw(showMeasurements, braaFirst)
+    sg.getBraaseye().draw(showMeasurements, isBraaFirst)
   }
 
   formatPicTitle(): string {
@@ -92,7 +95,7 @@ export default class DrawThreat extends DrawPic {
     this.applyLabels()
 
     const { blueAir } = this.state
-    const { dataStyle } = this.props
+    const { dataStyle } = this.props.displaySettings
 
     let aspectH = blueAir.getAspect(sg, dataStyle).toString()
     const trackDir = sg.getTrackDir()

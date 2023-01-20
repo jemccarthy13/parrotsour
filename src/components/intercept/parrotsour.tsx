@@ -150,19 +150,15 @@ export const ParrotSourIntercept = () => {
 
       <Suspense fallback={<div />}>
         <PictureCanvas
-          orientation={displaySettings.canvasConfig}
-          braaFirst={displaySettings.isBraaFirst}
-          dataStyle={displaySettings.dataStyle}
+          displaySettings={displaySettings}
           picType={picType}
           format={format}
           showMeasurements={!userWantsToMeasure}
           isHardMode={isHardMode}
           setAnswer={setAnswer}
           newPic={isNewPic}
-          sliderSpeed={animationSettings.speedSliderValue}
-          animate={animationSettings.isAnimate}
-          animateCallback={animationHandlers.startAnimate}
-          resetCallback={animationHandlers.pauseAnimate}
+          animationSettings={animationSettings}
+          animationHandlers={animationHandlers}
           desiredNumContacts={desiredNumContacts}
         />
       </Suspense>

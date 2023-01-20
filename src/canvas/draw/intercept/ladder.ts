@@ -44,8 +44,8 @@ export default class DrawLadder extends DrawPic {
 
     const startPos = getRestrictedStartPos(
       this.state.blueAir,
-      this.props.orientation.orient,
-      this.props.dataStyle,
+      this.props.displaySettings.canvasConfig.orient,
+      this.props.displaySettings.dataStyle,
       45 + this.dimensions.deep / PIXELS_TO_NM,
       200,
       { start, deep, wide }
@@ -61,7 +61,7 @@ export default class DrawLadder extends DrawPic {
   }
 
   createGroups = (startPos: Point, contactList: number[]): AircraftGroup[] => {
-    const isNS = FightAxis.isNS(this.props.orientation.orient)
+    const isNS = FightAxis.isNS(this.props.displaySettings.canvasConfig.orient)
 
     let heading = randomHeading(
       this.props.format,
@@ -97,9 +97,12 @@ export default class DrawLadder extends DrawPic {
   }
 
   drawInfo(): void {
-    const isNS = FightAxis.isNS(this.props.orientation.orient)
+    const { displaySettings, showMeasurements } = this.props
 
-    const { dataStyle, showMeasurements, braaFirst } = this.props
+    const { canvasConfig, dataStyle, isBraaFirst } = displaySettings
+
+    const isNS = FightAxis.isNS(canvasConfig.orient)
+
     const { blueAir, bullseye } = this.state
     const bluePos = blueAir.getCenterOfMass(dataStyle)
 
@@ -113,7 +116,7 @@ export default class DrawLadder extends DrawPic {
       }
 
       const grp = this.groups[x]
-      const grpPos = grp.getCenterOfMass(this.props.dataStyle)
+      const grpPos = grp.getCenterOfMass(dataStyle)
 
       PaintBrush.drawAltitudes(
         grpPos,
@@ -124,7 +127,7 @@ export default class DrawLadder extends DrawPic {
       grp.setBraaseye(new Braaseye(grpPos, bluePos, bullseye))
       grp
         .getBraaseye()
-        .draw(showMeasurements, braaFirst, altOffsetX, altOffsetY)
+        .draw(showMeasurements, isBraaFirst, altOffsetX, altOffsetY)
     }
 
     let actualDeep
@@ -196,10 +199,13 @@ export default class DrawLadder extends DrawPic {
     answer += this.formatDimensions() + " "
     answer += this.picTrackDir() + " "
 
-    const nonPriPos = this.groups[1].getCenterOfMass(this.props.dataStyle)
-    const priPos = this.groups[0].getCenterOfMass(this.props.dataStyle)
+    const { displaySettings } = this.props
+    const { dataStyle, canvasConfig } = displaySettings
 
-    const isNS = FightAxis.isNS(this.props.orientation.orient)
+    const nonPriPos = this.groups[1].getCenterOfMass(dataStyle)
+    const priPos = this.groups[0].getCenterOfMass(dataStyle)
+
+    const isNS = FightAxis.isNS(canvasConfig.orient)
 
     let nonPriPt = new Point(nonPriPos.x, priPos.y)
 

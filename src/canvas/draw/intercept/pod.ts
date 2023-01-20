@@ -35,17 +35,19 @@ export default class DrawPOD extends DrawPic {
   }
 
   drawInfo(): void {
-    const bPos = this.state.blueAir.getCenterOfMass(this.props.dataStyle)
+    const { showMeasurements, displaySettings } = this.props
+
+    const { dataStyle, isBraaFirst } = displaySettings
+
+    const bPos = this.state.blueAir.getCenterOfMass(dataStyle)
 
     PaintBrush.drawText('"DARKSTAR, EAGLE01, PICTURE"', bPos.x - 200, 20)
 
-    const { showMeasurements, braaFirst } = this.props
-
     this.groups.forEach((grp) => {
-      const grpPos = grp.getCenterOfMass(this.props.dataStyle)
+      const grpPos = grp.getCenterOfMass(dataStyle)
 
       grp.setBraaseye(new Braaseye(grpPos, bPos, this.state.bullseye))
-      grp.getBraaseye().draw(showMeasurements, braaFirst)
+      grp.getBraaseye().draw(showMeasurements, isBraaFirst)
       PaintBrush.drawAltitudes(grpPos, grp.getAltitudes())
     })
   }
@@ -67,7 +69,7 @@ export default class DrawPOD extends DrawPic {
   }
 
   getAnswer(): string {
-    const { dataStyle } = this.props
+    const { dataStyle } = this.props.displaySettings
     const { blueAir } = this.state
 
     this.applyLabels()
@@ -80,7 +82,9 @@ export default class DrawPOD extends DrawPic {
       return aBR.range > bBR.range ? 1 : -1
     }
 
-    const closestGroups = this.groups.sort(sortFun).slice(0, 3)
+    this.groups.sort(sortFun)
+
+    const closestGroups = this.groups.slice(0, 3)
 
     let response = this.groups.length + " GROUPS, "
 

@@ -7,7 +7,7 @@ import {
   TextField,
   ThemeProvider,
 } from "@mui/material"
-import { BlueInThe } from "../../canvas/canvastypes"
+import { BlueInThe, PictureCanvasProps } from "../../canvas/canvastypes"
 import { PaintBrush } from "../../canvas/draw/paintbrush"
 import PictureCanvas from "../../canvas/intercept"
 import { SensorType } from "../../classes/aircraft/datatrail/sensortype"
@@ -18,38 +18,33 @@ import { HiddenCanvas } from "./styles"
 import { validAccessCode } from "./utils"
 
 export function ParrotSourAPI(): JSX.Element {
-  const config = {
-    showAnswer: false,
+  const config: PictureCanvasProps = {
     showMeasurements: true,
     isHardMode: true,
     format: FORMAT.ALSA,
-    speedSliderValue: 50,
-    canvasConfig: {
-      height: 600,
-      width: 700,
-      orient: BlueInThe.NORTH,
+    displaySettings: {
+      canvasConfig: {
+        height: 600,
+        width: 700,
+        orient: BlueInThe.NORTH,
+      },
+      isBraaFirst: true,
+      dataStyle: SensorType.RAW,
     },
-    braaFirst: true,
+    animationSettings: {
+      speedSliderValue: 50,
+      isAnimate: false,
+    },
+    animationHandlers: {
+      pauseAnimate: jest.fn(),
+      startAnimate: jest.fn(),
+      onSliderChange: jest.fn(),
+    },
     picType: "random",
-    answer: {
-      pic: "",
-      groups: [],
-    },
     newPic: false,
-    animate: false,
-    dataStyle: SensorType.RAW,
     desiredNumContacts: 0,
     setAnswer: () => {
       // do nothing
-    },
-    sliderSpeed: 50,
-    orientation: {
-      height: 600,
-      width: 700,
-      orient: BlueInThe.NORTH,
-    },
-    animateCallback: () => {
-      //nothing
     },
   }
 

@@ -22,8 +22,8 @@ export default class DrawChampagne extends DrawPic {
     const deep = randomNumber(7 * PIXELS_TO_NM, 35 * PIXELS_TO_NM)
     const startPos = getRestrictedStartPos(
       this.state.blueAir,
-      this.props.orientation.orient,
-      this.props.dataStyle,
+      this.props.displaySettings.canvasConfig.orient,
+      this.props.displaySettings.dataStyle,
       45 + deep,
       100,
       { wide, deep, start }
@@ -33,7 +33,7 @@ export default class DrawChampagne extends DrawPic {
   }
 
   createGroups = (startPos: Point, contactList: number[]): AircraftGroup[] => {
-    const isNS = FightAxis.isNS(this.props.orientation.orient)
+    const isNS = FightAxis.isNS(this.props.displaySettings.canvasConfig.orient)
 
     let heading: number = randomHeading(
       this.props.format,
@@ -105,17 +105,18 @@ export default class DrawChampagne extends DrawPic {
   }
 
   drawInfo(): void {
-    const isNS = FightAxis.isNS(this.props.orientation.orient)
+    const { displaySettings, showMeasurements } = this.props
+    const { canvasConfig, dataStyle, isBraaFirst } = displaySettings
 
-    const { showMeasurements } = this.props
+    const isNS = FightAxis.isNS(canvasConfig.orient)
 
     const tg = this.groups[0]
     const nlg = this.groups[1]
     const slg = this.groups[2]
 
-    const nlgPos = nlg.getCenterOfMass(this.props.dataStyle)
-    const slgPos = slg.getCenterOfMass(this.props.dataStyle)
-    const tgPos = tg.getCenterOfMass(this.props.dataStyle)
+    const nlgPos = nlg.getCenterOfMass(dataStyle)
+    const slgPos = slg.getCenterOfMass(dataStyle)
+    const tgPos = tg.getCenterOfMass(dataStyle)
 
     let wPt = new Point(nlgPos.x, slgPos.y)
     let dPt = new Point(nlgPos.x, tgPos.y)
@@ -148,20 +149,19 @@ export default class DrawChampagne extends DrawPic {
     PaintBrush.drawAltitudes(nlgPos, nlg.getAltitudes(), offsetXNL)
 
     const { blueAir, bullseye } = this.state
-    const { dataStyle, braaFirst } = this.props
     const bluePos = blueAir.getCenterOfMass(dataStyle)
 
     tg.setBraaseye(new Braaseye(tgPos, bluePos, bullseye))
     nlg.setBraaseye(new Braaseye(nlgPos, bluePos, bullseye))
     slg.setBraaseye(new Braaseye(slgPos, bluePos, bullseye))
 
-    tg.getBraaseye().draw(showMeasurements, braaFirst, offsetXTrail)
-    nlg.getBraaseye().draw(showMeasurements, braaFirst, offsetXNL)
-    slg.getBraaseye().draw(showMeasurements, braaFirst)
+    tg.getBraaseye().draw(showMeasurements, isBraaFirst, offsetXTrail)
+    nlg.getBraaseye().draw(showMeasurements, isBraaFirst, offsetXNL)
+    slg.getBraaseye().draw(showMeasurements, isBraaFirst)
   }
 
   applyLabels(): void {
-    const isNS = FightAxis.isNS(this.props.orientation.orient)
+    const isNS = FightAxis.isNS(this.props.displaySettings.canvasConfig.orient)
     const nLbl = isNS ? "WEST" : "NORTH"
     const sLbl = isNS ? "EAST" : "SOUTH"
 
@@ -184,10 +184,11 @@ export default class DrawChampagne extends DrawPic {
   }
 
   formatWeighted(): string {
-    const isNS = FightAxis.isNS(this.props.orientation.orient)
-    const grp0Pos = this.groups[0].getCenterOfMass(this.props.dataStyle)
-    const grp1Pos = this.groups[1].getCenterOfMass(this.props.dataStyle)
-    const grp2Pos = this.groups[2].getCenterOfMass(this.props.dataStyle)
+    const { displaySettings } = this.props
+    const isNS = FightAxis.isNS(displaySettings.canvasConfig.orient)
+    const grp0Pos = this.groups[0].getCenterOfMass(displaySettings.dataStyle)
+    const grp1Pos = this.groups[1].getCenterOfMass(displaySettings.dataStyle)
+    const grp2Pos = this.groups[2].getCenterOfMass(displaySettings.dataStyle)
     // determine if weighted
     let frmNPt = new Point(grp0Pos.x, grp2Pos.y)
     let fromSPt = new Point(grp1Pos.x, grp2Pos.y)
@@ -240,8 +241,8 @@ export default class DrawChampagne extends DrawPic {
     answer += this.formatWeighted() + " "
     answer += this.picTrackDir() + " "
 
-    for (let x = 0; x < this.groups.length; x++) {
-      answer += this.groups[x].format(this.props.format) + " "
+    for (const grp of this.groups) {
+      answer += grp.format(this.props.format) + " "
     }
 
     return answer.replace(/\s+/g, " ").trim()

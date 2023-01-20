@@ -26,8 +26,8 @@ export default class DrawRange extends DrawPic {
       wide: -1,
       start: getRestrictedStartPos(
         this.state.blueAir,
-        this.props.orientation.orient,
-        this.props.dataStyle,
+        this.props.displaySettings.canvasConfig.orient,
+        this.props.displaySettings.dataStyle,
         45 + drawDistance / PIXELS_TO_NM,
         100,
         {
@@ -39,7 +39,7 @@ export default class DrawRange extends DrawPic {
   }
 
   createGroups = (startPos: Point, contactList: number[]): AircraftGroup[] => {
-    const isNS = FightAxis.isNS(this.props.orientation.orient)
+    const isNS = FightAxis.isNS(this.props.displaySettings.canvasConfig.orient)
     const tg = GroupFactory.randomGroupAtLoc(
       this.props,
       this.state,
@@ -58,7 +58,7 @@ export default class DrawRange extends DrawPic {
       sx: isNS ? startPos.x : startPos.x + this.dimensions.deep,
       sy: isNS ? startPos.y + this.dimensions.deep : startPos.y,
       hdg: heading,
-      dataTrailType: this.props.dataStyle,
+      dataTrailType: this.props.displaySettings.dataStyle,
       nContacts: contactList[1],
     })
 
@@ -69,7 +69,8 @@ export default class DrawRange extends DrawPic {
     const tg = this.groups[0]
     const lg = this.groups[1]
 
-    const { dataStyle, orientation, showMeasurements, braaFirst } = this.props
+    const { showMeasurements, displaySettings } = this.props
+    const { dataStyle, canvasConfig, isBraaFirst } = displaySettings
     const { blueAir, bullseye } = this.state
 
     const lPos = lg.getCenterOfMass(dataStyle)
@@ -79,7 +80,7 @@ export default class DrawRange extends DrawPic {
     let offsetY = 0
     let offsetX2 = 0
     let offsetY2 = 0
-    const isNS = FightAxis.isNS(orientation.orient)
+    const isNS = FightAxis.isNS(canvasConfig.orient)
 
     if (isNS) {
       m2 = new Point(tPos.x, lg.getCenterOfMass(dataStyle).y)
@@ -102,8 +103,8 @@ export default class DrawRange extends DrawPic {
     lg.setBraaseye(new Braaseye(lPos, bluePos, bullseye))
     tg.setBraaseye(new Braaseye(tPos, bluePos, bullseye))
 
-    lg.getBraaseye().draw(showMeasurements, braaFirst, offsetX, offsetY)
-    tg.getBraaseye().draw(showMeasurements, braaFirst, offsetX2, offsetY2)
+    lg.getBraaseye().draw(showMeasurements, isBraaFirst, offsetX, offsetY)
+    tg.getBraaseye().draw(showMeasurements, isBraaFirst, offsetX2, offsetY2)
   }
 
   formatPicTitle(): string {
@@ -142,10 +143,11 @@ export default class DrawRange extends DrawPic {
   }
 
   isEchelon = (grp1: AircraftGroup, grp2: AircraftGroup): string => {
+    const { canvasConfig, dataStyle } = this.props.displaySettings
     let answer = ""
-    const isNS = FightAxis.isNS(this.props.orientation.orient)
-    const tgPos = grp2.getCenterOfMass(this.props.dataStyle)
-    const lgPos = grp1.getCenterOfMass(this.props.dataStyle)
+    const isNS = FightAxis.isNS(canvasConfig.orient)
+    const tgPos = grp2.getCenterOfMass(dataStyle)
+    const lgPos = grp1.getCenterOfMass(dataStyle)
 
     if (
       (!isNS && new Point(tgPos.x, lgPos.y).getBR(tgPos).range > 5) ||

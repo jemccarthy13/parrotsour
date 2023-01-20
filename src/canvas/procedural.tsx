@@ -43,12 +43,13 @@ export default class ProceduralCanvas extends ParrotSourCanvas {
    * @param start (optional) start position for the picture
    */
   drawPicture = (forced?: boolean, start?: Point): PictureAnswer => {
-    const { orientation, dataStyle } = this.props
+    const { displaySettings } = this.props
+    const { canvasConfig, dataStyle } = displaySettings
     const { blueAir } = this.state
 
     blueAir.setCapping(true)
 
-    const startPos = getStartPos(blueAir, orientation.orient, dataStyle, {
+    const startPos = getStartPos(blueAir, canvasConfig.orient, dataStyle, {
       start,
     })
 
@@ -164,34 +165,28 @@ export default class ProceduralCanvas extends ParrotSourCanvas {
 
   render(): ReactElement {
     const {
-      orientation,
-      braaFirst,
       picType,
       showMeasurements,
       isHardMode,
       newPic,
-      resetCallback,
-      animateCallback,
-      animate,
-      dataStyle,
+      displaySettings,
+      animationHandlers,
+      animationSettings,
     } = this.props
     const { bullseye, answer } = this.state
 
     return (
       <DrawingCanvas
+        displaySettings={displaySettings}
+        animationHandlers={animationHandlers}
+        animationSettings={animationSettings}
         answer={answer}
         draw={this.draw}
-        orientation={orientation}
-        braaFirst={braaFirst}
         bullseye={bullseye}
         picType={picType}
         showMeasurements={showMeasurements}
         isHardMode={isHardMode}
         newPic={newPic}
-        resetCallback={resetCallback}
-        animate={animate}
-        animateCallback={animateCallback}
-        dataStyle={dataStyle}
       />
     )
   }

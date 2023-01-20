@@ -22,8 +22,8 @@ export default class DrawVic extends DrawPic {
     const deep = randomNumber(7 * PIXELS_TO_NM, 30 * PIXELS_TO_NM)
     const startPos = getRestrictedStartPos(
       this.state.blueAir,
-      this.props.orientation.orient,
-      this.props.dataStyle,
+      this.props.displaySettings.canvasConfig.orient,
+      this.props.displaySettings.dataStyle,
       45 + deep,
       100,
       { start, wide, deep }
@@ -40,7 +40,7 @@ export default class DrawVic extends DrawPic {
     const { format, isHardMode } = this.props
     const { blueAir } = this.state
 
-    const isNS = FightAxis.isNS(this.props.orientation.orient)
+    const isNS = FightAxis.isNS(this.props.displaySettings.canvasConfig.orient)
     // start with trail groups (because clamp)
     let sx = startPos.x
     let sy = startPos.y
@@ -87,9 +87,10 @@ export default class DrawVic extends DrawPic {
   }
 
   drawInfo(): void {
-    const { dataStyle, showMeasurements, braaFirst } = this.props
+    const { showMeasurements, displaySettings } = this.props
+    const { canvasConfig, dataStyle, isBraaFirst } = displaySettings
     const { blueAir, bullseye } = this.state
-    const isNS = FightAxis.isNS(this.props.orientation.orient)
+    const isNS = FightAxis.isNS(canvasConfig.orient)
 
     const lg = this.groups[0]
     const ntg = this.groups[1]
@@ -126,9 +127,9 @@ export default class DrawVic extends DrawPic {
     stg.setBraaseye(new Braaseye(stgPos, bluePos, bullseye))
     ntg.setBraaseye(new Braaseye(ntgPos, bluePos, bullseye))
 
-    lg.getBraaseye().draw(showMeasurements, braaFirst)
-    stg.getBraaseye().draw(showMeasurements, braaFirst)
-    ntg.getBraaseye().draw(showMeasurements, braaFirst, offsetX)
+    lg.getBraaseye().draw(showMeasurements, isBraaFirst)
+    stg.getBraaseye().draw(showMeasurements, isBraaFirst)
+    ntg.getBraaseye().draw(showMeasurements, isBraaFirst, offsetX)
   }
 
   formatPicTitle(): string {
@@ -151,12 +152,12 @@ export default class DrawVic extends DrawPic {
   formatWeighted(): string {
     // nothing
     let answer = ""
-    const { dataStyle } = this.props
+    const { dataStyle, canvasConfig } = this.props.displaySettings
     const lgPos = this.groups[0].getCenterOfMass(dataStyle)
     const ntgPos = this.groups[1].getCenterOfMass(dataStyle)
     const stgPos = this.groups[2].getCenterOfMass(dataStyle)
 
-    const isNS = FightAxis.isNS(this.props.orientation.orient)
+    const isNS = FightAxis.isNS(canvasConfig.orient)
 
     const ntgStraightPos = isNS
       ? new Point(ntgPos.x, lgPos.y)
@@ -181,7 +182,7 @@ export default class DrawVic extends DrawPic {
   }
 
   applyLabels(): void {
-    const isNS = FightAxis.isNS(this.props.orientation.orient)
+    const isNS = FightAxis.isNS(this.props.displaySettings.canvasConfig.orient)
 
     let nLbl = "NORTH"
     let sLbl = "SOUTH"

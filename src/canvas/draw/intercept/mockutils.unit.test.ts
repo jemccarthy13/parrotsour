@@ -11,19 +11,27 @@ export const drawMock = async (): Promise<void> => {
 }
 
 export const testProps: PictureCanvasProps = {
-  braaFirst: true,
-  dataStyle: SensorType.ARROW,
+  displaySettings: {
+    isBraaFirst: true,
+    dataStyle: SensorType.ARROW,
+    canvasConfig: new CanvasOrient(),
+  },
+  animationSettings: {
+    isAnimate: false,
+    speedSliderValue: 50,
+  },
+  animationHandlers: {
+    startAnimate: jest.fn(),
+    pauseAnimate: jest.fn(),
+    onSliderChange: jest.fn(),
+  },
   showMeasurements: true,
   isHardMode: false,
   format: FORMAT.ALSA,
   setAnswer: jest.fn(),
-  sliderSpeed: 50,
   desiredNumContacts: 4,
-  orientation: new CanvasOrient(),
   picType: "azimuth",
   newPic: true,
-  animate: false,
-  animateCallback: jest.fn(),
 }
 
 describe("mock_utils_dummy_test", () => {
