@@ -102,10 +102,9 @@ export abstract class AnimationHandler {
     if (!state.blueAir || !animateCanvas) return
     PaintBrush.getContext().putImageData(animateCanvas, 0, 0)
 
-    const { displaySettings, animationSettings } = props
+    const { displaySettings } = props
 
     const { dataStyle } = displaySettings
-    const { speedSliderValue } = animationSettings
 
     // For each group:
     //   - draw current arrows
@@ -122,6 +121,15 @@ export abstract class AnimationHandler {
     this.applyBlueLogic(state.blueAir, groups, dataStyle)
     state.blueAir.draw(dataStyle)
 
+    const speedSliderVal = (
+      document
+        .getElementById("speedSlider")
+        ?.getElementsByTagName("input")[0] as HTMLInputElement
+    ).value
+
+    const speedSliderValue = parseInt(speedSliderVal)
+
+    console.log(speedSliderValue)
     // delay is proportion of 5000ms based on current slider setting
     const delay = 5000 * ((100 - speedSliderValue + 1) / 100)
 

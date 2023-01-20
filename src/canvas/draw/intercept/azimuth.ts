@@ -73,8 +73,6 @@ export default class DrawAzimuth extends DrawPic {
     const { dataStyle, isBraaFirst } = displaySettings
     const { blueAir, bullseye } = this.state
 
-    console.log("drawinfo bullseye", bullseye)
-
     const ng = this.groups[0]
     const sg = this.groups[1]
 
