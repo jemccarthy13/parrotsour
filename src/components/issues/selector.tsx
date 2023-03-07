@@ -19,7 +19,7 @@ const IssueSelector = ({
       {/* Issue #13 - ISSUE_REPORTS -- change this to /issues.html and use php to read from reported issues */}
       <div style={{ marginBottom: "24px" }}>
         See a list of{" "}
-        <a style={{ color: "#42a5f5" }} href="/#/changelog.html">
+        <a style={{ color: "#42a5f5" }} href="/#/changelog">
           known issues
         </a>
         .

@@ -18,7 +18,7 @@ describe("Home", () => {
   it("should_render_with_procedural", async () => {
     const history = createHashHistory()
 
-    history.push("/procedural.html")
+    history.push("/procedural")
     const home = render(<Home />)
 
     await waitFor(
@@ -32,7 +32,7 @@ describe("Home", () => {
   it("should_render_with_intercept", async () => {
     const history = createHashHistory()
 
-    history.push("/intercept.html")
+    history.push("/intercept")
     const home = render(<Home />)
 
     expect(home).toBeDefined()
@@ -48,7 +48,7 @@ describe("Home", () => {
   it("should_render_with_close", async () => {
     const history = createHashHistory()
 
-    history.push("/close.html")
+    history.push("/close")
     const home = render(<Home />)
 
     expect(home).toBeDefined()
@@ -64,7 +64,7 @@ describe("Home", () => {
   it("should_render_with_api", async () => {
     const history = createHashHistory()
 
-    history.push("/api.html")
+    history.push("/api")
     const home = render(<Home />)
 
     expect(home).toBeDefined()
@@ -80,7 +80,7 @@ describe("Home", () => {
   it("should_render_with_chooser", async () => {
     const history = createHashHistory()
 
-    history.push("/parrotsour.html")
+    history.push("/parrotsour")
     const home = render(<Home />)
 
     await waitFor(

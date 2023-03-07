@@ -11,7 +11,7 @@ export const VersionNotification = () => {
 
   const confirm = useCallback(() => {
     Cookies.set(version + "Notify", true, { expires: 365 })
-    window.location.href = `#/changelog.html#${process.env.REACT_APP_VERSION}`
+    window.location.href = `#/changelog#${process.env.REACT_APP_VERSION}`
   }, [version])
 
   const cancel = useCallback(() => {

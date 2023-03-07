@@ -1,6 +1,7 @@
 import React, { Suspense, lazy } from "react"
 import { Navigate, Route, Routes } from "react-router"
 import { HashRouter } from "react-router-dom"
+import { APIUsage } from "../api/usage"
 import ChangeLog from "../changelog/changelog"
 import { Maintenance } from "./maintenance"
 import { HomePanel } from "./styles"
@@ -33,9 +34,9 @@ export const Home = () => {
               element={
                 <ParrotSour
                   type="chooser"
-                  interceptLink="/#/intercept.html"
-                  proceduralLink="/#/procedural.html"
-                  apiLink="/#/api.html"
+                  interceptLink="/#/intercept"
+                  proceduralLink="/#/procedural"
+                  apiLink="/#/api"
                 />
               }
             />
@@ -64,6 +65,7 @@ export const Home = () => {
               element={<Navigate to="/changelog" />}
             />
             <Route path="/api" element={<ParrotSour type="api" />} />
+            <Route path="/api/usage" element={<APIUsage />} />
             <Route path="/api.html" element={<Navigate to="/api" />} />
             <Route
               path="/parrotsour.html"

@@ -1,4 +1,5 @@
 import React, { lazy, ReactElement } from "react"
+import { Button } from "@mui/material"
 import { PsQT } from "../help/ps-tips"
 
 const ParrotSourHeader = lazy(() => import("../header/header"))
@@ -31,23 +32,23 @@ export const ParrotSourChooser = ({
       <br />
       <hr />
       <div style={{ textAlign: "center" }}>
-        <button
-          style={buttonStyle}
+        <Button
+          sx={buttonStyle}
           type="button"
           onClick={navigate(interceptLink)}
         >
           Intercept
-        </button>
-        <button
-          style={buttonStyle}
+        </Button>
+        <Button
+          sx={buttonStyle}
           type="button"
           onClick={navigate(proceduralLink)}
         >
           Procedural
-        </button>
-        <button style={buttonStyle} type="button" onClick={navigate(apiLink)}>
+        </Button>
+        <Button sx={buttonStyle} type="button" onClick={navigate(apiLink)}>
           API
-        </button>
+        </Button>
       </div>
     </div>
   )

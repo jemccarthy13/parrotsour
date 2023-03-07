@@ -1,8 +1,10 @@
 import React, { useCallback, useEffect, useRef, useState } from "react"
 import {
+  Button,
   Checkbox,
   FormControlLabel,
   FormGroup,
+  InputLabel,
   Stack,
   TextField,
   ThemeProvider,
@@ -108,6 +110,16 @@ export function ParrotSourAPI(): JSX.Element {
         }
       }
       download("data.json", JSON.stringify(answers))
+
+      const formData = new FormData()
+
+      formData.append("code", accessCode)
+      formData.append("num_pics", String(numPics))
+
+      await fetch(process.env.PUBLIC_URL + "/database/api/usage.php", {
+        method: "POST",
+        body: formData,
+      })
     } else {
       snackActions.warning("Invalid access code.")
     }
@@ -143,16 +155,22 @@ export function ParrotSourAPI(): JSX.Element {
           direction="column"
           width="50%"
         >
+          <InputLabel htmlFor="numpictures" sx={{ marginRight: "auto" }}>
+            # of pictures?
+          </InputLabel>
           <TextField
-            label="# of pictures?"
             type="number"
+            id="numpictures"
             fullWidth
             value={numPics}
             variant="filled"
+            sx={{ height: "48px" }}
             onChange={onChange}
           />
+          <InputLabel htmlFor="numpictures" sx={{ marginRight: "auto" }}>
+            Access code:
+          </InputLabel>
           <TextField
-            label="Access code"
             type="text"
             fullWidth
             value={accessCode}
@@ -173,15 +191,15 @@ export function ParrotSourAPI(): JSX.Element {
             />
           </FormGroup>
           <HiddenCanvas id="pscanvas" ref={canvasRef} />
-          <button
+          <Button
             data-testid="download-results"
             id="downloadBtn"
             type="button"
             onClick={onClick}
-            style={{ marginBottom: "20px" }}
+            sx={{ margin: "auto", marginBottom: "24px" }}
           >
             Download
-          </button>
+          </Button>
           Note: this downloads a text file (JSON) whose size will scale to the
           number of pictures requested.
         </Stack>

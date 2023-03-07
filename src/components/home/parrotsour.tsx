@@ -20,9 +20,9 @@ type PSProps = {
  */
 export const ParrotSour = ({
   type,
-  interceptLink = "#/intercept.html",
-  proceduralLink = "#/procedural.html",
-  apiLink = "#/api.html",
+  interceptLink = "#/intercept",
+  proceduralLink = "#/procedural",
+  apiLink = "#/api",
 }: PSProps): ReactElement => {
   let comp = (
     <ParrotSourChooser
