@@ -1,6 +1,7 @@
 import { SensorType } from "../../../classes/aircraft/datatrail/sensortype"
 import { BRAA } from "../../../classes/braa"
 import { Braaseye } from "../../../classes/braaseye"
+import { Bullseye } from "../../../classes/bullseye/bullseye"
 import { AircraftGroup, GroupParams } from "../../../classes/groups/group"
 import { Point } from "../../../classes/point"
 import TestCanvas from "../../../testutils/testcanvas"
@@ -31,8 +32,9 @@ describe("DrawEA", () => {
       alts: [20, 20, 20, 20],
     }
 
+    Bullseye.generate(new Point(400, 400))
+
     testState = {
-      bullseye: new Point(400, 400),
       blueAir: new AircraftGroup({ sx: 600, sy: 400, hdg: 270, nContacts: 4 }),
       answer: { pic: "2 grps az", groups: [] },
       reDraw: jest.fn(),
@@ -101,9 +103,8 @@ describe("DrawEA", () => {
   it("music_singlegroup_singlecontact", () => {
     const sg = new AircraftGroup({ ...p, hdg: 5, alts: [10], nContacts: 1 })
 
-    sg.setBraaseye(
-      new Braaseye(new Point(50, 50), new Point(50, 50), new Point(100, 50))
-    )
+    Bullseye.generate(new Point(100, 50))
+    sg.setBraaseye(new Braaseye(new Point(50, 50), new Point(50, 50)))
     sg.setLabel("SINGLE GROUP")
     draw.groups = [sg]
     draw.eaInfo = {
@@ -141,9 +142,8 @@ describe("DrawEA", () => {
   it("music_singlegroup_multicontact", () => {
     const sg = new AircraftGroup({ ...p, hdg: 5, alts: [10, 15], nContacts: 2 })
 
-    sg.setBraaseye(
-      new Braaseye(new Point(50, 50), new Point(50, 50), new Point(100, 50))
-    )
+    Bullseye.generate(new Point(100, 50))
+    sg.setBraaseye(new Braaseye(new Point(50, 50), new Point(50, 50)))
     sg.setLabel("SINGLE GROUP")
     draw.groups = [sg]
     draw.eaInfo = {

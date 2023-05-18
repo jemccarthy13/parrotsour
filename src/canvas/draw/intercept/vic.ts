@@ -88,7 +88,7 @@ export default class DrawVic extends DrawPic {
 
   drawInfo(): void {
     const { dataStyle, showMeasurements, braaFirst } = this.props
-    const { blueAir, bullseye } = this.state
+    const { blueAir } = this.state
     const isNS = FightAxis.isNS(this.props.orientation.orient)
 
     const lg = this.groups[0]
@@ -122,9 +122,9 @@ export default class DrawVic extends DrawPic {
     PaintBrush.drawAltitudes(stgPos, stg.getAltitudes())
     PaintBrush.drawAltitudes(ntgPos, ntg.getAltitudes(), offsetX)
 
-    lg.setBraaseye(new Braaseye(lgPos, bluePos, bullseye))
-    stg.setBraaseye(new Braaseye(stgPos, bluePos, bullseye))
-    ntg.setBraaseye(new Braaseye(ntgPos, bluePos, bullseye))
+    lg.setBraaseye(new Braaseye(lgPos, bluePos))
+    stg.setBraaseye(new Braaseye(stgPos, bluePos))
+    ntg.setBraaseye(new Braaseye(ntgPos, bluePos))
 
     lg.getBraaseye().draw(showMeasurements, braaFirst)
     stg.getBraaseye().draw(showMeasurements, braaFirst)

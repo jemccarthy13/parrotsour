@@ -70,7 +70,7 @@ export default class DrawAzimuth extends DrawPic {
 
   drawInfo(): void {
     const { dataStyle, showMeasurements, braaFirst } = this.props
-    const { blueAir, bullseye } = this.state
+    const { blueAir } = this.state
 
     const ng = this.groups[0]
     const sg = this.groups[1]
@@ -101,8 +101,8 @@ export default class DrawAzimuth extends DrawPic {
     PaintBrush.drawAltitudes(nPos, ng.getAltitudes(), offsetX, offsetY)
     PaintBrush.drawAltitudes(sPos, sg.getAltitudes(), offsetX2, offsetY2)
 
-    ng.setBraaseye(new Braaseye(nPos, bluePos, bullseye))
-    sg.setBraaseye(new Braaseye(sPos, bluePos, bullseye))
+    ng.setBraaseye(new Braaseye(nPos, bluePos))
+    sg.setBraaseye(new Braaseye(sPos, bluePos))
 
     ng.getBraaseye().draw(showMeasurements, braaFirst, offsetX, offsetY)
     sg.getBraaseye().draw(showMeasurements, braaFirst, offsetX2, offsetY2)

@@ -100,7 +100,7 @@ export default class DrawLadder extends DrawPic {
     const isNS = FightAxis.isNS(this.props.orientation.orient)
 
     const { dataStyle, showMeasurements, braaFirst } = this.props
-    const { blueAir, bullseye } = this.state
+    const { blueAir } = this.state
     const bluePos = blueAir.getCenterOfMass(dataStyle)
 
     for (let x = 0; x < this.groups.length; x++) {
@@ -121,7 +121,7 @@ export default class DrawLadder extends DrawPic {
         altOffsetX,
         altOffsetY
       )
-      grp.setBraaseye(new Braaseye(grpPos, bluePos, bullseye))
+      grp.setBraaseye(new Braaseye(grpPos, bluePos))
       grp
         .getBraaseye()
         .draw(showMeasurements, braaFirst, altOffsetX, altOffsetY)

@@ -121,7 +121,7 @@ export default class DrawLeadEdge extends DrawPic {
 
     PaintBrush.clearCanvas()
 
-    PaintBrush.drawBullseye(this.state.bullseye)
+    PaintBrush.drawBullseye()
     this.state.blueAir.draw(this.props.dataStyle)
 
     return this.draw(false, nCts)

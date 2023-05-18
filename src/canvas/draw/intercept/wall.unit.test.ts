@@ -33,7 +33,6 @@ describe("DrawWall", () => {
 
   beforeEach(() => {
     testState = {
-      bullseye: new Point(400, 400),
       blueAir: new AircraftGroup({
         sx: 600,
         sy: 400,

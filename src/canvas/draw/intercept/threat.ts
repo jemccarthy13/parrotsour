@@ -58,7 +58,7 @@ export default class DrawThreat extends DrawPic {
   drawInfo(): void {
     const sg = this.groups[0]
 
-    const { blueAir, bullseye } = this.state
+    const { blueAir } = this.state
     const { dataStyle, showMeasurements, braaFirst } = this.props
 
     const sgPos = sg.getCenterOfMass(dataStyle)
@@ -66,7 +66,7 @@ export default class DrawThreat extends DrawPic {
 
     PaintBrush.drawAltitudes(sgPos, sg.getAltitudes())
 
-    sg.setBraaseye(new Braaseye(sgPos, bluePos, bullseye))
+    sg.setBraaseye(new Braaseye(sgPos, bluePos))
     sg.getBraaseye().draw(showMeasurements, braaFirst)
   }
 

@@ -118,7 +118,7 @@ export default class DrawWall extends DrawPic {
         altOffsetX,
         altOffsetY
       )
-      grp.setBraaseye(new Braaseye(grpPos, bluePos, this.state.bullseye))
+      grp.setBraaseye(new Braaseye(grpPos, bluePos))
       grp
         .getBraaseye()
         .draw(showMeasurements, braaFirst, altOffsetX, altOffsetY)

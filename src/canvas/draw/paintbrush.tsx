@@ -1,7 +1,8 @@
 import { Braaseye } from "../../classes/braaseye"
+import { Bullseye } from "../../classes/bullseye/bullseye"
 import { AircraftGroup } from "../../classes/groups/group"
 import { Point } from "../../classes/point"
-import { PIXELS_TO_NM, randomNumber } from "../../utils/math"
+import { PIXELS_TO_NM } from "../../utils/math"
 import { PictureCanvasProps, PictureCanvasState } from "../canvastypes"
 import { clampInContext } from "./drawutils"
 import { formatAlt } from "./formatutils"
@@ -135,7 +136,7 @@ export class PaintBrush {
     )
   }
 
-  public static drawBullseye(bull?: Point, color?: string): Point {
+  public static drawBullseye(color?: string): Point {
     const context = PaintBrush.ctx
 
     color = color || "black"
@@ -143,34 +144,22 @@ export class PaintBrush {
     context.fillStyle = color
     context.strokeStyle = color
 
-    const centerPointX = bull
-      ? bull.x
-      : randomNumber(context.canvas.width * 0.33, context.canvas.width * 0.66)
-    const centerPointY = bull
-      ? bull.y
-      : randomNumber(context.canvas.height * 0.33, context.canvas.height * 0.66)
+    const bull = Bullseye.get()
 
     context.beginPath()
-    context.arc(
-      centerPointX,
-      centerPointY,
-      PIXELS_TO_NM / 2,
-      0,
-      2 * Math.PI,
-      true
-    )
+    context.arc(bull.x, bull.y, PIXELS_TO_NM / 2, 0, 2 * Math.PI, true)
     context.stroke()
     context.fill()
 
-    context.moveTo(centerPointX, centerPointY + PIXELS_TO_NM * 2)
-    context.lineTo(centerPointX, centerPointY - PIXELS_TO_NM * 2)
+    context.moveTo(bull.x, bull.y + PIXELS_TO_NM * 2)
+    context.lineTo(bull.x, bull.y - PIXELS_TO_NM * 2)
     context.stroke()
 
-    context.moveTo(centerPointX + PIXELS_TO_NM * 2, centerPointY)
-    context.lineTo(centerPointX - PIXELS_TO_NM * 2, centerPointY)
+    context.moveTo(bull.x + PIXELS_TO_NM * 2, bull.y)
+    context.lineTo(bull.x - PIXELS_TO_NM * 2, bull.y)
     context.stroke()
 
-    return new Point(centerPointX, centerPointY)
+    return new Point(bull.x, bull.y)
   }
 
   public static drawFullInfo(
@@ -178,17 +167,16 @@ export class PaintBrush {
     props: PictureCanvasProps,
     groups: AircraftGroup[]
   ): void {
-    for (let y = 0; y < groups.length; y++) {
-      const grpPos = groups[y].getCenterOfMass(props.dataStyle)
+    for (const grp of groups) {
+      const grpPos = grp.getCenterOfMass(props.dataStyle)
 
       if (props.showMeasurements) {
         new Braaseye(
           grpPos,
-          state.blueAir.getCenterOfMass(props.dataStyle),
-          state.bullseye
+          state.blueAir.getCenterOfMass(props.dataStyle)
         ).draw(true, props.braaFirst)
       }
-      PaintBrush.drawAltitudes(grpPos, groups[y].getAltitudes())
+      PaintBrush.drawAltitudes(grpPos, grp.getAltitudes())
     }
   }
 }

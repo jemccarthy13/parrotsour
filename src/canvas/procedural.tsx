@@ -18,7 +18,6 @@ export default class ProceduralCanvas extends ParrotSourCanvas {
   constructor(props: PictureCanvasProps) {
     super(props)
     this.state = {
-      bullseye: Point.DEFAULT,
       blueAir: new AircraftGroup({ sx: -1000, sy: -1000 }),
       reDraw: this.drawPicture,
       answer: { pic: "", groups: [] },
@@ -141,7 +140,7 @@ export default class ProceduralCanvas extends ParrotSourCanvas {
 
   /**
    * Draw function to be called from the Canvas component - handles pre-picture logic
-   * (i.e. blue arrows, bullseye, and image 'snap' for mouse draw)
+   * (i.e. blue arrows and image 'snap' for mouse draw)
    * @param context the drawing context to draw in
    */
   draw = async (): Promise<void> => {
@@ -175,7 +174,7 @@ export default class ProceduralCanvas extends ParrotSourCanvas {
       animate,
       dataStyle,
     } = this.props
-    const { bullseye, answer } = this.state
+    const { answer } = this.state
 
     return (
       <DrawingCanvas
@@ -183,7 +182,6 @@ export default class ProceduralCanvas extends ParrotSourCanvas {
         draw={this.draw}
         orientation={orientation}
         braaFirst={braaFirst}
-        bullseye={bullseye}
         picType={picType}
         showMeasurements={showMeasurements}
         isHardMode={isHardMode}

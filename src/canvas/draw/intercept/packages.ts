@@ -1,4 +1,5 @@
 import { BRAA } from "../../../classes/braa"
+import { Bullseye } from "../../../classes/bullseye/bullseye"
 import { AircraftGroup } from "../../../classes/groups/group"
 import { Point } from "../../../classes/point"
 import { randomNumber } from "../../../utils/math"
@@ -127,13 +128,13 @@ export default class DrawPackage extends DrawPic {
 
     const isNS = FightAxis.isNS(orientation.orient)
 
-    for (let x = 0; x < groups.length; x++) {
-      const gPos = groups[x].getCenterOfMass(dataStyle)
+    for (const grp of groups) {
+      const gPos = grp.getCenterOfMass(dataStyle)
 
       const BRAA = bPos.getBR(gPos)
 
       if (BRAA.range < closestRng) {
-        closestGroup = groups[x]
+        closestGroup = grp
         closestRng = BRAA.range
       }
 
@@ -168,7 +169,7 @@ export default class DrawPackage extends DrawPic {
     const nCts = nPkgContacts + sPkgContacts
 
     PaintBrush.clearCanvas()
-    PaintBrush.drawBullseye(this.state.bullseye)
+    PaintBrush.drawBullseye()
     this.state.blueAir.draw(this.props.dataStyle)
 
     return this.draw(false, nCts)
@@ -213,8 +214,10 @@ export default class DrawPackage extends DrawPic {
     const bullPt1 = this.packages[0].getBullseyePt()
     const bullPt2 = this.packages[1].getBullseyePt()
 
-    this.packages[0].setBullseye(this.state.bullseye.getBR(bullPt1))
-    this.packages[1].setBullseye(this.state.bullseye.getBR(bullPt2))
+    const bullseye = Bullseye.get()
+
+    this.packages[0].setBullseye(bullseye.getBR(bullPt1))
+    this.packages[1].setBullseye(bullseye.getBR(bullPt2))
 
     // default deep
     this.rngBack = isNS

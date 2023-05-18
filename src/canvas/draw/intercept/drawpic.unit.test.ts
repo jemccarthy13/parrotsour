@@ -1,3 +1,4 @@
+import { Bullseye } from "../../../classes/bullseye/bullseye"
 import { AircraftGroup } from "../../../classes/groups/group"
 import { Point } from "../../../classes/point"
 import { snackActions } from "../../../components/alert/psalert"
@@ -20,8 +21,9 @@ jest.mock("../../../components/alert/psalert", () => ({
 describe("DrawPic", () => {
   const draw = new DrawAzimuth()
 
+  Bullseye.generate(new Point(100, 100))
+
   const testState: PictureCanvasState = {
-    bullseye: new Point(100, 100),
     blueAir: new AircraftGroup({ sx: 400, sy: 400, nContacts: 1 }),
     answer: { pic: "", groups: [] },
     reDraw: jest.fn(),

@@ -8,7 +8,6 @@ import {
 } from "../canvas/canvastypes"
 import DrawingCanvas from "../canvas/drawingcanvas"
 import { AircraftGroup } from "../classes/groups/group"
-import { Point } from "../classes/point"
 import { PaintBrush } from "./draw/paintbrush"
 
 /**
@@ -21,7 +20,6 @@ export default abstract class ParrotSourCanvas extends React.PureComponent<
   constructor(props: PictureCanvasProps) {
     super(props)
     this.state = {
-      bullseye: Point.DEFAULT,
       blueAir: new AircraftGroup(),
       reDraw: (): PictureAnswer => {
         throw new Error("Should not use parent reDraw")
@@ -95,7 +93,7 @@ export default abstract class ParrotSourCanvas extends React.PureComponent<
       animate,
       dataStyle,
     } = this.props
-    const { bullseye, answer } = this.state
+    const { answer } = this.state
 
     return (
       <DrawingCanvas
@@ -103,7 +101,6 @@ export default abstract class ParrotSourCanvas extends React.PureComponent<
         draw={this.draw}
         orientation={orientation}
         braaFirst={braaFirst}
-        bullseye={bullseye}
         picType={picType}
         showMeasurements={showMeasurements}
         isHardMode={isHardMode}

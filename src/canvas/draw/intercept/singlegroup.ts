@@ -64,7 +64,7 @@ export default class DrawSingleGroup extends DrawPic {
     const sg = this.groups[0]
     const isNS = FightAxis.isNS(this.props.orientation.orient)
 
-    const { blueAir, bullseye } = this.state
+    const { blueAir } = this.state
     const bluePos = blueAir.getCenterOfMass(this.props.dataStyle)
 
     let offsetX = 0
@@ -79,7 +79,7 @@ export default class DrawSingleGroup extends DrawPic {
 
     PaintBrush.drawAltitudes(sgPos, sg.getAltitudes(), offsetX, offsetY)
 
-    sg.setBraaseye(new Braaseye(sgPos, bluePos, bullseye))
+    sg.setBraaseye(new Braaseye(sgPos, bluePos))
 
     sg.getBraaseye().draw(
       this.props.showMeasurements,

@@ -44,7 +44,7 @@ export default class DrawPOD extends DrawPic {
     this.groups.forEach((grp) => {
       const grpPos = grp.getCenterOfMass(this.props.dataStyle)
 
-      grp.setBraaseye(new Braaseye(grpPos, bPos, this.state.bullseye))
+      grp.setBraaseye(new Braaseye(grpPos, bPos))
       grp.getBraaseye().draw(showMeasurements, braaFirst)
       PaintBrush.drawAltitudes(grpPos, grp.getAltitudes())
     })

@@ -1,4 +1,5 @@
 import { IDMatrix } from "../classes/aircraft/id"
+import { Bullseye } from "../classes/bullseye/bullseye"
 import { AircraftGroup } from "../classes/groups/group"
 import { Point } from "../classes/point"
 import { randomNumber } from "../utils/math"
@@ -50,7 +51,12 @@ export default class PictureCanvas extends ParrotSourCanvas {
       }
       ctx.fillStyle = "white"
       ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height)
-      PaintBrush.drawBullseye(this.state.bullseye)
+
+      Bullseye.generate()
+
+      console.log(Bullseye.get())
+      PaintBrush.drawBullseye()
+
       animateImage = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height)
 
       this.state.answer.groups.forEach((grp) => {
@@ -121,8 +127,6 @@ export default class PictureCanvas extends ParrotSourCanvas {
    * @param context the Context to draw in
    */
   draw = async (): Promise<void> => {
-    const bullseye = PaintBrush.drawBullseye()
-
     const ctx = PaintBrush.getContext()
     let xPos = ctx.canvas.width - 20
     let yPos = randomNumber(ctx.canvas.height * 0.33, ctx.canvas.height * 0.66)
@@ -144,7 +148,7 @@ export default class PictureCanvas extends ParrotSourCanvas {
       id: IDMatrix.FRIEND,
     })
 
-    this.setState({ blueAir, bullseye })
+    this.setState({ blueAir })
 
     const blueOnly = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height)
 

@@ -16,7 +16,6 @@ beforeAll(() => {
   TestCanvas.useContext(800, 500)
 
   testState = {
-    bullseye: new Point(400, 400),
     blueAir: new AircraftGroup({ sx: 600, sy: 400, hdg: 270, nContacts: 4 }),
     answer: { pic: "2 grps az", groups: [] },
     reDraw: jest.fn(),

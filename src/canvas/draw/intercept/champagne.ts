@@ -147,13 +147,13 @@ export default class DrawChampagne extends DrawPic {
     PaintBrush.drawAltitudes(slgPos, slg.getAltitudes())
     PaintBrush.drawAltitudes(nlgPos, nlg.getAltitudes(), offsetXNL)
 
-    const { blueAir, bullseye } = this.state
+    const { blueAir } = this.state
     const { dataStyle, braaFirst } = this.props
     const bluePos = blueAir.getCenterOfMass(dataStyle)
 
-    tg.setBraaseye(new Braaseye(tgPos, bluePos, bullseye))
-    nlg.setBraaseye(new Braaseye(nlgPos, bluePos, bullseye))
-    slg.setBraaseye(new Braaseye(slgPos, bluePos, bullseye))
+    tg.setBraaseye(new Braaseye(tgPos, bluePos))
+    nlg.setBraaseye(new Braaseye(nlgPos, bluePos))
+    slg.setBraaseye(new Braaseye(slgPos, bluePos))
 
     tg.getBraaseye().draw(showMeasurements, braaFirst, offsetXTrail)
     nlg.getBraaseye().draw(showMeasurements, braaFirst, offsetXNL)

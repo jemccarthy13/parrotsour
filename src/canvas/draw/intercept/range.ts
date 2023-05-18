@@ -70,7 +70,7 @@ export default class DrawRange extends DrawPic {
     const lg = this.groups[1]
 
     const { dataStyle, orientation, showMeasurements, braaFirst } = this.props
-    const { blueAir, bullseye } = this.state
+    const { blueAir } = this.state
 
     const lPos = lg.getCenterOfMass(dataStyle)
     const tPos = tg.getCenterOfMass(dataStyle)
@@ -99,8 +99,8 @@ export default class DrawRange extends DrawPic {
 
     const bluePos = blueAir.getCenterOfMass(dataStyle)
 
-    lg.setBraaseye(new Braaseye(lPos, bluePos, bullseye))
-    tg.setBraaseye(new Braaseye(tPos, bluePos, bullseye))
+    lg.setBraaseye(new Braaseye(lPos, bluePos))
+    tg.setBraaseye(new Braaseye(tPos, bluePos))
 
     lg.getBraaseye().draw(showMeasurements, braaFirst, offsetX, offsetY)
     tg.getBraaseye().draw(showMeasurements, braaFirst, offsetX2, offsetY2)

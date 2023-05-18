@@ -1,4 +1,5 @@
 import { SensorType } from "../../../classes/aircraft/datatrail/sensortype"
+import { Bullseye } from "../../../classes/bullseye/bullseye"
 import { AircraftGroup, GroupParams } from "../../../classes/groups/group"
 import { Point } from "../../../classes/point"
 import TestCanvas from "../../../testutils/testcanvas"
@@ -21,8 +22,9 @@ describe("DrawPackages", () => {
     jest.restoreAllMocks()
     TestCanvas.useContext(800, 500)
 
+    Bullseye.generate(new Point(400, 400))
+
     testState = {
-      bullseye: new Point(400, 400),
       blueAir: new AircraftGroup({ sx: 600, sy: 200, hdg: 270, nContacts: 4 }),
       answer: { pic: "3 grp ladder", groups: [] },
       reDraw: jest.fn(),

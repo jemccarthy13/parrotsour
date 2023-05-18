@@ -36,7 +36,6 @@ export interface CanvasProps {
 }
 
 export interface PictureCanvasState {
-  bullseye: Point
   blueAir: AircraftGroup
   answer: PictureAnswer
   reDraw: PictureReDrawFunction
@@ -49,7 +48,6 @@ export interface CanvasDrawFunction {
 
 export interface DrawCanvasProps extends CanvasProps {
   draw: CanvasDrawFunction
-  bullseye: Point
   answer: PictureAnswer
 }
 
