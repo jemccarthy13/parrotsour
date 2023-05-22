@@ -1,3 +1,4 @@
+import { BlueAir } from "../../../classes/aircraft/blueair"
 import { SensorType } from "../../../classes/aircraft/datatrail/sensortype"
 import { Bullseye } from "../../../classes/bullseye/bullseye"
 import { AircraftGroup, GroupParams } from "../../../classes/groups/group"
@@ -36,10 +37,11 @@ describe("DrawLadder", () => {
     Bullseye.generate(new Point(400, 400))
 
     testState = {
-      blueAir: new AircraftGroup({ sx: 600, sy: 400, hdg: 270, nContacts: 4 }),
       answer: { pic: "3 grp ladder", groups: [] },
       reDraw: jest.fn(),
     }
+
+    BlueAir.set(new AircraftGroup({ sx: 600, sy: 400, hdg: 270, nContacts: 4 }))
 
     p = {
       dataTrailType: SensorType.ARROW,
@@ -118,6 +120,7 @@ describe("DrawLadder", () => {
     ladder.drawInfo()
 
     const updatedProps = { ...testProps, format: FORMAT.IPE }
+
     ladder.initialize(updatedProps, testState)
 
     expect(ladder.getAnswer()).toEqual(
@@ -130,6 +133,7 @@ describe("DrawLadder", () => {
 
   it("ladder_labels_EW", () => {
     const updatedProps = { ...testProps }
+
     updatedProps.orientation.orient = BlueInThe.NORTH
 
     ladder.initialize(updatedProps, testState)
@@ -237,6 +241,7 @@ describe("DrawLadder", () => {
   it("gets_picture_info", () => {
     ladder.numGroupsToCreate = 3
     const pInfo = ladder.getPictureInfo()
+
     expect(pInfo.deep).toBeLessThan(45 * PSMath.PIXELS_TO_NM)
     expect(pInfo.deep).toBeLessThan(45 * PSMath.PIXELS_TO_NM)
     expect(pInfo.wide).toEqual(5 * PSMath.PIXELS_TO_NM)
@@ -249,6 +254,7 @@ describe("DrawLadder", () => {
     ladder.seps = [40, 40, 40]
     const startPos = new Point(100, 100)
     const groups = ladder.createGroups(startPos, [1, 1, 1]) // three single contact groups
+
     expect(groups[0].getHeading()).toEqual(91)
     expect(groups[1].getHeading()).toEqual(91)
     expect(groups[2].getHeading()).toEqual(91)
@@ -269,11 +275,13 @@ describe("DrawLadder", () => {
     jest.spyOn(PSMath, "randomNumber").mockReturnValue(1)
 
     const updatedProps: PictureCanvasProps = { ...testProps, isHardMode: true }
+
     ladder.initialize(updatedProps, testState)
     ladder.numGroupsToCreate = 3
     ladder.seps = [40, 40, 40]
     const startPos = new Point(100, 100)
     const groups = ladder.createGroups(startPos, [1, 1, 1]) // three single contact groups
+
     expect(groups[0].getHeading()).toEqual(121)
     expect(groups[1].getHeading()).toEqual(81)
     expect(groups[2].getHeading()).toEqual(136)
@@ -287,6 +295,7 @@ describe("DrawLadder", () => {
     jest.spyOn(PSMath, "randomNumber").mockReturnValue(1)
 
     const updatedProps: PictureCanvasProps = { ...testProps }
+
     updatedProps.orientation.orient = BlueInThe.NORTH
 
     ladder.initialize(updatedProps, testState)
@@ -294,6 +303,7 @@ describe("DrawLadder", () => {
     ladder.seps = [40, 40, 40]
     const startPos = new Point(100, 100)
     const groups = ladder.createGroups(startPos, [1, 1, 1]) // three single contact groups
+
     expect(groups[0].getHeading()).toEqual(91)
     expect(groups[1].getHeading()).toEqual(91)
     expect(groups[2].getHeading()).toEqual(91)

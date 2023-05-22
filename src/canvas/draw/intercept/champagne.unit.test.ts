@@ -1,3 +1,4 @@
+import { BlueAir } from "../../../classes/aircraft/blueair"
 import { SensorType } from "../../../classes/aircraft/datatrail/sensortype"
 import { Bullseye } from "../../../classes/bullseye/bullseye"
 import { AircraftGroup, GroupParams } from "../../../classes/groups/group"
@@ -23,8 +24,8 @@ describe("DrawChamp", () => {
 
     Bullseye.generate(new Point(400, 400))
 
+    BlueAir.set(new AircraftGroup({ sx: 600, sy: 400, hdg: 270, nContacts: 4 }))
     testState = {
-      blueAir: new AircraftGroup({ sx: 600, sy: 400, hdg: 270, nContacts: 4 }),
       answer: { pic: "3 grp champ", groups: [] },
       reDraw: jest.fn(),
     }

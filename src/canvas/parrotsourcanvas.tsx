@@ -7,7 +7,6 @@ import {
   PictureCanvasState,
 } from "../canvas/canvastypes"
 import DrawingCanvas from "../canvas/drawingcanvas"
-import { AircraftGroup } from "../classes/groups/group"
 import { PaintBrush } from "./draw/paintbrush"
 
 /**
@@ -20,7 +19,6 @@ export default abstract class ParrotSourCanvas extends React.PureComponent<
   constructor(props: PictureCanvasProps) {
     super(props)
     this.state = {
-      blueAir: new AircraftGroup(),
       reDraw: (): PictureAnswer => {
         throw new Error("Should not use parent reDraw")
       },

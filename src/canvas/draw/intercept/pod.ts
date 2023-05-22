@@ -1,3 +1,4 @@
+import { BlueAir } from "../../../classes/aircraft/blueair"
 import { Braaseye } from "../../../classes/braaseye"
 import { AircraftGroup } from "../../../classes/groups/group"
 import { GroupFactory } from "../../../classes/groups/groupfactory"
@@ -35,7 +36,7 @@ export default class DrawPOD extends DrawPic {
   }
 
   drawInfo(): void {
-    const bPos = this.state.blueAir.getCenterOfMass(this.props.dataStyle)
+    const bPos = BlueAir.get().getCenterOfMass(this.props.dataStyle)
 
     PaintBrush.drawText('"DARKSTAR, EAGLE01, PICTURE"', bPos.x - 200, 20)
 
@@ -68,12 +69,11 @@ export default class DrawPOD extends DrawPic {
 
   getAnswer(): string {
     const { dataStyle } = this.props
-    const { blueAir } = this.state
 
     this.applyLabels()
 
     function sortFun(a: AircraftGroup, b: AircraftGroup) {
-      const bluePos = blueAir.getCenterOfMass(dataStyle)
+      const bluePos = BlueAir.get().getCenterOfMass(dataStyle)
       const aBR = bluePos.getBR(a.getCenterOfMass(dataStyle))
       const bBR = bluePos.getBR(b.getCenterOfMass(dataStyle))
 

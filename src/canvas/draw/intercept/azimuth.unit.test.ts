@@ -1,3 +1,4 @@
+import { BlueAir } from "../../../classes/aircraft/blueair"
 import { SensorType } from "../../../classes/aircraft/datatrail/sensortype"
 import { AircraftGroup, GroupParams } from "../../../classes/groups/group"
 import { Point } from "../../../classes/point"
@@ -15,8 +16,9 @@ let azimuth: DrawAzimuth
 beforeAll(() => {
   TestCanvas.useContext(800, 500)
 
+  BlueAir.set(new AircraftGroup({ sx: 600, sy: 400, hdg: 270, nContacts: 4 }))
+
   testState = {
-    blueAir: new AircraftGroup({ sx: 600, sy: 400, hdg: 270, nContacts: 4 }),
     answer: { pic: "2 grps az", groups: [] },
     reDraw: jest.fn(),
   }
@@ -125,14 +127,14 @@ describe("DrawAzimuth", () => {
 
     updatedProps.orientation.orient = BlueInThe.NORTH
 
-    const updatedState = testState
-
-    updatedState.blueAir = new AircraftGroup({
-      sx: 400,
-      sy: 50,
-      hdg: 270,
-      nContacts: 4,
-    })
+    BlueAir.set(
+      new AircraftGroup({
+        sx: 400,
+        sy: 50,
+        hdg: 270,
+        nContacts: 4,
+      })
+    )
     azimuth.initialize(updatedProps, testState)
 
     const ng = new AircraftGroup({ ...p, sx: 200, sy: 180, hdg: 1 })

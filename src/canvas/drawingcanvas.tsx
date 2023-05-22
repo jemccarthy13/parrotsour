@@ -7,7 +7,6 @@ import React, {
 } from "react"
 import { Aircraft } from "../classes/aircraft/aircraft"
 import { Braaseye } from "../classes/braaseye"
-import { Bullseye } from "../classes/bullseye/bullseye"
 import { Point } from "../classes/point"
 import { PIXELS_TO_NM } from "../utils/math"
 import { DrawCanvasProps } from "./canvastypes"

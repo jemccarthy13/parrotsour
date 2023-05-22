@@ -1,5 +1,6 @@
 /* istanbul ignore file */
 import { CloseAnimationHandler } from "../animation/close"
+import { BlueAir } from "../classes/aircraft/blueair"
 import { SensorType } from "../classes/aircraft/datatrail/sensortype"
 import { IDMatrix } from "../classes/aircraft/id"
 import { Bullseye } from "../classes/bullseye/bullseye"
@@ -61,7 +62,7 @@ export default class CloseCanvas extends ParrotSourCanvas {
       this.state.answer.groups.forEach((grp) => {
         grp.draw(this.props.dataStyle)
       })
-      this.state.blueAir.draw(this.props.dataStyle)
+      BlueAir.get().draw(this.props.dataStyle)
       PaintBrush.drawFullInfo(this.state, this.props, this.state.answer.groups)
       if (
         this.props.animate === prevProps.animate &&
@@ -153,7 +154,7 @@ export default class CloseCanvas extends ParrotSourCanvas {
 
     const blueAir = new AircraftGroup({ sx: -1000, sy: -1000, nContacts: 0 })
 
-    await this.setState({ blueAir })
+    BlueAir.set(blueAir)
 
     const ctx = PaintBrush.getContext()
     const blueOnly = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height)

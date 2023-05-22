@@ -12,6 +12,7 @@ import {
 import { BlueInThe } from "../../canvas/canvastypes"
 import { PaintBrush } from "../../canvas/draw/paintbrush"
 import PictureCanvas from "../../canvas/intercept"
+import { BlueAir } from "../../classes/aircraft/blueair"
 import { SensorType } from "../../classes/aircraft/datatrail/sensortype"
 import { FORMAT } from "../../classes/supportedformats"
 import { theme } from "../../theme"
@@ -101,7 +102,13 @@ export function ParrotSourAPI(): JSX.Element {
           const answer = canvas.drawPicture(true)
           const a = {
             pic: answer.pic,
-            groups: includeGroups ? answer.groups : [],
+            groups: includeGroups
+              ? answer.groups.map(
+                  (grp) =>
+                    (grp.position = grp.getCenterOfMass(SensorType.ARROW))
+                )
+              : [],
+            bluePos: BlueAir.get(),
           }
 
           answers.push(a)

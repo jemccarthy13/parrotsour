@@ -1,3 +1,4 @@
+import { BlueAir } from "../../../classes/aircraft/blueair"
 import { SensorType } from "../../../classes/aircraft/datatrail/sensortype"
 import { Bullseye } from "../../../classes/bullseye/bullseye"
 import { AircraftGroup, GroupParams } from "../../../classes/groups/group"
@@ -47,11 +48,11 @@ describe("DrawVic", () => {
 
     Bullseye.generate(new Point(400, 400))
     testState = {
-      blueAir: new AircraftGroup({ sx: 600, sy: 400, hdg: 270, nContacts: 4 }),
       answer: { pic: "3 grp ladder", groups: [] },
       reDraw: jest.fn(),
     }
 
+    BlueAir.set(new AircraftGroup({ sx: 600, sy: 400, hdg: 270, nContacts: 4 }))
     p = {
       dataTrailType: SensorType.ARROW,
       sx: 200,

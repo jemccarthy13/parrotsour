@@ -1,6 +1,7 @@
 /* istanbul ignore file */
 import React, { ReactElement } from "react"
 import { ProceduralAnimationHandler } from "../animation/procedural"
+import { BlueAir } from "../classes/aircraft/blueair"
 import { IDMatrix } from "../classes/aircraft/id"
 import { AircraftGroup } from "../classes/groups/group"
 import { Point } from "../classes/point"
@@ -18,7 +19,6 @@ export default class ProceduralCanvas extends ParrotSourCanvas {
   constructor(props: PictureCanvasProps) {
     super(props)
     this.state = {
-      blueAir: new AircraftGroup({ sx: -1000, sy: -1000 }),
       reDraw: this.drawPicture,
       answer: { pic: "", groups: [] },
     }
@@ -43,7 +43,8 @@ export default class ProceduralCanvas extends ParrotSourCanvas {
    */
   drawPicture = (forced?: boolean, start?: Point): PictureAnswer => {
     const { orientation, dataStyle } = this.props
-    const { blueAir } = this.state
+
+    const blueAir = BlueAir.get()
 
     blueAir.setCapping(true)
 

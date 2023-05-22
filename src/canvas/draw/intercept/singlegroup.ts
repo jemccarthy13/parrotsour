@@ -1,3 +1,4 @@
+import { BlueAir } from "../../../classes/aircraft/blueair"
 import { Braaseye } from "../../../classes/braaseye"
 import { AircraftGroup } from "../../../classes/groups/group"
 import { GroupFactory } from "../../../classes/groups/groupfactory"
@@ -48,7 +49,7 @@ export default class DrawSingleGroup extends DrawPic {
       deep: -1,
       wide: -1,
       start: getStartPos(
-        this.state.blueAir,
+        BlueAir.get(),
         this.props.orientation.orient,
         this.props.dataStyle,
         {
@@ -64,8 +65,7 @@ export default class DrawSingleGroup extends DrawPic {
     const sg = this.groups[0]
     const isNS = FightAxis.isNS(this.props.orientation.orient)
 
-    const { blueAir } = this.state
-    const bluePos = blueAir.getCenterOfMass(this.props.dataStyle)
+    const bluePos = BlueAir.get().getCenterOfMass(this.props.dataStyle)
 
     let offsetX = 0
     let offsetY = 0

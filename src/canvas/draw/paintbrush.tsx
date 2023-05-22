@@ -1,3 +1,4 @@
+import { BlueAir } from "../../classes/aircraft/blueair"
 import { Braaseye } from "../../classes/braaseye"
 import { Bullseye } from "../../classes/bullseye/bullseye"
 import { AircraftGroup } from "../../classes/groups/group"
@@ -136,8 +137,12 @@ export class PaintBrush {
     )
   }
 
-  public static drawBullseye(color?: string): Point {
+  public static drawBullseye(color?: string) {
     const context = PaintBrush.ctx
+
+    if (!context) {
+      return
+    }
 
     color = color || "black"
     context.lineWidth = 1
@@ -158,8 +163,6 @@ export class PaintBrush {
     context.moveTo(bull.x + PIXELS_TO_NM * 2, bull.y)
     context.lineTo(bull.x - PIXELS_TO_NM * 2, bull.y)
     context.stroke()
-
-    return new Point(bull.x, bull.y)
   }
 
   public static drawFullInfo(
@@ -173,7 +176,7 @@ export class PaintBrush {
       if (props.showMeasurements) {
         new Braaseye(
           grpPos,
-          state.blueAir.getCenterOfMass(props.dataStyle)
+          BlueAir.get().getCenterOfMass(props.dataStyle)
         ).draw(true, props.braaFirst)
       }
       PaintBrush.drawAltitudes(grpPos, grp.getAltitudes())

@@ -1,3 +1,4 @@
+import { BlueAir } from "../../../classes/aircraft/blueair"
 import { Braaseye } from "../../../classes/braaseye"
 import { AircraftGroup } from "../../../classes/groups/group"
 import { GroupFactory } from "../../../classes/groups/groupfactory"
@@ -26,7 +27,7 @@ export default class DrawAzimuth extends DrawPic {
       deep: 7 * PIXELS_TO_NM,
       wide: drawDistance,
       start: getStartPos(
-        this.state.blueAir,
+        BlueAir.get(),
         this.props.orientation.orient,
         this.props.dataStyle,
         {
@@ -53,7 +54,7 @@ export default class DrawAzimuth extends DrawPic {
     // if hard mode and ALSA, we randomize the 2nd groups heading
     // otherwise, pair to first group +/- 10 degrees
     const heading = this.props.isHardMode
-      ? randomHeading(this.props.format, this.state.blueAir.getHeading())
+      ? randomHeading(this.props.format, BlueAir.get().getHeading())
       : ng.getHeading() + randomNumber(-10, 10)
 
     const ngStPos = ng.getStartPos()
@@ -70,7 +71,7 @@ export default class DrawAzimuth extends DrawPic {
 
   drawInfo(): void {
     const { dataStyle, showMeasurements, braaFirst } = this.props
-    const { blueAir } = this.state
+    const blueAir = BlueAir.get()
 
     const ng = this.groups[0]
     const sg = this.groups[1]

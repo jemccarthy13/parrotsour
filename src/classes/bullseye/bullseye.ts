@@ -21,10 +21,7 @@ export class Bullseye {
       )
 
       this.bull = new Point(centerPointX, centerPointY)
-      console.log(this.bull)
-    } // else {
-    //this.bull = new Point(0, 0)
-    //}
+    }
   }
 
   public static get(): Point {

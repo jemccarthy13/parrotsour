@@ -1,3 +1,4 @@
+import { BlueAir } from "../classes/aircraft/blueair"
 import { IDMatrix } from "../classes/aircraft/id"
 import { Bullseye } from "../classes/bullseye/bullseye"
 import { AircraftGroup } from "../classes/groups/group"
@@ -62,7 +63,9 @@ export default class PictureCanvas extends ParrotSourCanvas {
       this.state.answer.groups.forEach((grp) => {
         grp.draw(this.props.dataStyle)
       })
-      this.state.blueAir.draw(this.props.dataStyle)
+
+      BlueAir.get().draw(this.props.dataStyle)
+
       PaintBrush.drawFullInfo(this.state, this.props, this.state.answer.groups)
       if (
         this.props.animate === prevProps.animate &&
@@ -100,7 +103,7 @@ export default class PictureCanvas extends ParrotSourCanvas {
 
     const answer = drawFunc.draw(picType === "cap", desiredNumContacts, start)
 
-    const { blueAir } = this.state
+    const blueAir = BlueAir.get()
     const { dataStyle } = this.props
     const bluePos = blueAir.getCenterOfMass(dataStyle)
 
@@ -148,7 +151,7 @@ export default class PictureCanvas extends ParrotSourCanvas {
       id: IDMatrix.FRIEND,
     })
 
-    this.setState({ blueAir })
+    BlueAir.set(blueAir)
 
     const blueOnly = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height)
 

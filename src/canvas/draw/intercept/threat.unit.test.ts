@@ -1,3 +1,4 @@
+import { BlueAir } from "../../../classes/aircraft/blueair"
 import { SensorType } from "../../../classes/aircraft/datatrail/sensortype"
 import { Bullseye } from "../../../classes/bullseye/bullseye"
 import { AircraftGroup } from "../../../classes/groups/group"
@@ -18,10 +19,11 @@ describe("DrawThreat", () => {
   Bullseye.generate(new Point(400, 400))
 
   let testState: PictureCanvasState = {
-    blueAir: new AircraftGroup({ sx: 600, sy: 200, hdg: 270, nContacts: 4 }),
     answer: { pic: "3 grp ladder", groups: [] },
     reDraw: jest.fn(),
   }
+
+  BlueAir.set(new AircraftGroup({ sx: 600, sy: 200, hdg: 270, nContacts: 4 }))
 
   beforeEach(() => {
     jest.restoreAllMocks()
@@ -31,7 +33,6 @@ describe("DrawThreat", () => {
     dThreat = new DrawThreat()
 
     testState = {
-      blueAir: new AircraftGroup({ sx: 600, sy: 200, hdg: 270, nContacts: 4 }),
       answer: { pic: "3 grp ladder", groups: [] },
       reDraw: jest.fn(),
     }
@@ -50,6 +51,7 @@ describe("DrawThreat", () => {
       hdg: 90,
       alts: [20],
     }
+
     dThreat.groups = [new AircraftGroup({ ...p })]
 
     dThreat.drawInfo()
@@ -68,6 +70,7 @@ describe("DrawThreat", () => {
       hdg: 90,
       alts: [20],
     }
+
     dThreat.groups = [new AircraftGroup({ ...p })]
 
     dThreat.drawInfo()
@@ -87,6 +90,7 @@ describe("DrawThreat", () => {
       hdg: 110,
       alts: [20],
     }
+
     dThreat.groups = [new AircraftGroup({ ...p })]
 
     dThreat.drawInfo()
@@ -106,6 +110,7 @@ describe("DrawThreat", () => {
       hdg: 10,
       alts: [20],
     }
+
     dThreat.groups = [new AircraftGroup({ ...p })]
 
     dThreat.drawInfo()
@@ -125,6 +130,7 @@ describe("DrawThreat", () => {
       hdg: 170,
       alts: [20],
     }
+
     dThreat.groups = [new AircraftGroup({ ...p })]
 
     dThreat.drawInfo()
@@ -144,6 +150,7 @@ describe("DrawThreat", () => {
       hdg: 270,
       alts: [20],
     }
+
     dThreat.groups = [new AircraftGroup({ ...p })]
 
     dThreat.drawInfo()
@@ -169,6 +176,7 @@ describe("DrawThreat", () => {
   it("tests_getPictureInfo_with_start", () => {
     const startPt = new Point(100, 100)
     const pInfo: PictureInfo = dThreat.getPictureInfo(startPt)
+
     expect(pInfo.start).toEqual(startPt)
     expect(pInfo.deep).toEqual(5 * PIXELS_TO_NM)
     expect(pInfo.wide).toEqual(5 * PIXELS_TO_NM)
@@ -177,29 +185,32 @@ describe("DrawThreat", () => {
   it("tests_getPictureInfo_random_start", () => {
     const pInfo: PictureInfo = dThreat.getPictureInfo()
 
-    const bPos = testState.blueAir.getCenterOfMass(testProps.dataStyle)
+    const bPos = BlueAir.get().getCenterOfMass(testProps.dataStyle)
 
     const start = pInfo.start
 
     expect(start).toBeDefined()
     if (start) {
       const startBraa = bPos.getBR(start)
+
       expect(startBraa.range).toBeLessThanOrEqual(35)
     }
   })
 
   it("tests_getPictureInfo_random_start_NS", () => {
     const newProps = { ...testProps }
+
     newProps.orientation.orient = BlueInThe.NORTH
     dThreat.initialize(newProps, testState)
 
     const pInfo: PictureInfo = dThreat.getPictureInfo()
-    const bPos = testState.blueAir.getCenterOfMass(testProps.dataStyle)
+    const bPos = BlueAir.get().getCenterOfMass(testProps.dataStyle)
     const start = pInfo.start
 
     expect(start).toBeDefined()
     if (start) {
       const startBraa = bPos.getBR(start)
+
       expect(startBraa.range).toBeLessThanOrEqual(40)
     }
   })

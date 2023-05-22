@@ -1,3 +1,4 @@
+import { BlueAir } from "../../../classes/aircraft/blueair"
 import { Bullseye } from "../../../classes/bullseye/bullseye"
 import { AircraftGroup } from "../../../classes/groups/group"
 import { Point } from "../../../classes/point"
@@ -23,10 +24,11 @@ describe("DrawPackages", () => {
     Bullseye.generate(new Point(400, 400))
 
     testState = {
-      blueAir: new AircraftGroup({ sx: 600, sy: 200, hdg: 270, nContacts: 4 }),
       answer: { pic: "3 grp ladder", groups: [] },
       reDraw: jest.fn(),
     }
+
+    BlueAir.set(new AircraftGroup({ sx: 600, sy: 200, hdg: 270, nContacts: 4 }))
 
     testProps.orientation.orient = BlueInThe.EAST
 

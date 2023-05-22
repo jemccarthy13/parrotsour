@@ -1,3 +1,4 @@
+import { BlueAir } from "../../../classes/aircraft/blueair"
 import { SensorType } from "../../../classes/aircraft/datatrail/sensortype"
 import { BRAA } from "../../../classes/braa"
 import { Braaseye } from "../../../classes/braaseye"
@@ -35,10 +36,10 @@ describe("DrawEA", () => {
     Bullseye.generate(new Point(400, 400))
 
     testState = {
-      blueAir: new AircraftGroup({ sx: 600, sy: 400, hdg: 270, nContacts: 4 }),
       answer: { pic: "2 grps az", groups: [] },
       reDraw: jest.fn(),
     }
+    BlueAir.set(new AircraftGroup({ sx: 600, sy: 400, hdg: 270, nContacts: 4 }))
 
     draw = PictureFactory.getPictureDraw("ea") as DrawEA
     draw.initialize(testProps, testState)

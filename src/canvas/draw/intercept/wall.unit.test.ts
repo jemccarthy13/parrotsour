@@ -1,3 +1,4 @@
+import { BlueAir } from "../../../classes/aircraft/blueair"
 import { SensorType } from "../../../classes/aircraft/datatrail/sensortype"
 import { AircraftGroup, GroupParams } from "../../../classes/groups/group"
 import { Point } from "../../../classes/point"
@@ -33,15 +34,18 @@ describe("DrawWall", () => {
 
   beforeEach(() => {
     testState = {
-      blueAir: new AircraftGroup({
+      answer: { pic: "3 grp ladder", groups: [] },
+      reDraw: jest.fn(),
+    }
+
+    BlueAir.set(
+      new AircraftGroup({
         sx: 600,
         sy: 400,
         hdg: 270,
         nContacts: 4,
-      }),
-      answer: { pic: "3 grp ladder", groups: [] },
-      reDraw: jest.fn(),
-    }
+      })
+    )
 
     p = {
       dataTrailType: SensorType.ARROW,

@@ -36,7 +36,6 @@ export interface CanvasProps {
 }
 
 export interface PictureCanvasState {
-  blueAir: AircraftGroup
   answer: PictureAnswer
   reDraw: PictureReDrawFunction
   animateCanvas?: ImageData

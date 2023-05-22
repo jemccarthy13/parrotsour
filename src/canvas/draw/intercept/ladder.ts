@@ -1,3 +1,4 @@
+import { BlueAir } from "../../../classes/aircraft/blueair"
 import { Braaseye } from "../../../classes/braaseye"
 import { AircraftGroup } from "../../../classes/groups/group"
 import RangeBack from "../../../classes/groups/rangeback"
@@ -43,7 +44,7 @@ export default class DrawLadder extends DrawPic {
     const wide = 5 * PIXELS_TO_NM
 
     const startPos = getRestrictedStartPos(
-      this.state.blueAir,
+      BlueAir.get(),
       this.props.orientation.orient,
       this.props.dataStyle,
       45 + this.dimensions.deep / PIXELS_TO_NM,
@@ -63,10 +64,7 @@ export default class DrawLadder extends DrawPic {
   createGroups = (startPos: Point, contactList: number[]): AircraftGroup[] => {
     const isNS = FightAxis.isNS(this.props.orientation.orient)
 
-    let heading = randomHeading(
-      this.props.format,
-      this.state.blueAir.getHeading()
-    )
+    let heading = randomHeading(this.props.format, BlueAir.get().getHeading())
 
     let totalArrowOffset = 0
 
@@ -78,10 +76,7 @@ export default class DrawLadder extends DrawPic {
       totalArrowOffset += this.seps[x]
 
       if (this.props.isHardMode)
-        heading = randomHeading(
-          this.props.format,
-          this.state.blueAir.getHeading()
-        )
+        heading = randomHeading(this.props.format, BlueAir.get().getHeading())
 
       const grp = new AircraftGroup({
         sx: isNS ? startPos.x : startPos.x + totalArrowOffset,
@@ -100,8 +95,8 @@ export default class DrawLadder extends DrawPic {
     const isNS = FightAxis.isNS(this.props.orientation.orient)
 
     const { dataStyle, showMeasurements, braaFirst } = this.props
-    const { blueAir } = this.state
-    const bluePos = blueAir.getCenterOfMass(dataStyle)
+
+    const bluePos = BlueAir.get().getCenterOfMass(dataStyle)
 
     for (let x = 0; x < this.groups.length; x++) {
       let altOffsetX = 0

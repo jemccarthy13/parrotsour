@@ -1,3 +1,4 @@
+import { BlueAir } from "../../../classes/aircraft/blueair"
 import { BRAA } from "../../../classes/braa"
 import { Bullseye } from "../../../classes/bullseye/bullseye"
 import { AircraftGroup } from "../../../classes/groups/group"
@@ -118,13 +119,12 @@ export default class DrawPackage extends DrawPic {
   }
 
   _getPicBull = (groups: AircraftGroup[]): Point => {
-    const { blueAir } = this.state
     const { dataStyle, orientation } = this.props
     let closestGroup = groups[0]
 
     let closestRng = 9999
     let sum = 0
-    const bPos = blueAir.getCenterOfMass(dataStyle)
+    const bPos = BlueAir.get().getCenterOfMass(dataStyle)
 
     const isNS = FightAxis.isNS(orientation.orient)
 
@@ -170,7 +170,7 @@ export default class DrawPackage extends DrawPic {
 
     PaintBrush.clearCanvas()
     PaintBrush.drawBullseye()
-    this.state.blueAir.draw(this.props.dataStyle)
+    BlueAir.get().draw(this.props.dataStyle)
 
     return this.draw(false, nCts)
   }
@@ -259,7 +259,7 @@ export default class DrawPackage extends DrawPic {
   }
 
   checkAnchor = (): void => {
-    const bPos = this.state.blueAir.getCenterOfMass(this.props.dataStyle)
+    const bPos = BlueAir.get().getCenterOfMass(this.props.dataStyle)
 
     const isAnchNorth = this._isAnchorNPkg(
       bPos.getBR(this.packages[0].getBullseyePt()).range,

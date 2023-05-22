@@ -1,3 +1,4 @@
+import { BlueAir } from "../../../classes/aircraft/blueair"
 import { Bullseye } from "../../../classes/bullseye/bullseye"
 import { AircraftGroup } from "../../../classes/groups/group"
 import { Point } from "../../../classes/point"
@@ -24,10 +25,11 @@ describe("DrawPic", () => {
   Bullseye.generate(new Point(100, 100))
 
   const testState: PictureCanvasState = {
-    blueAir: new AircraftGroup({ sx: 400, sy: 400, nContacts: 1 }),
     answer: { pic: "", groups: [] },
     reDraw: jest.fn(),
   }
+
+  BlueAir.set(new AircraftGroup({ sx: 400, sy: 400, nContacts: 1 }))
 
   beforeAll(() => {
     TestCanvas.useContext(800, 500)
