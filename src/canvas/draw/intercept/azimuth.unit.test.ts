@@ -55,8 +55,8 @@ describe("DrawAzimuth", () => {
 
     expect(azimuth.getAnswer()).toEqual(
       "TWO GROUPS AZIMUTH 12 " +
-        "SOUTH GROUP BULLSEYE 308/55, 15k HOSTILE HEAVY 4 CONTACTS " +
-        "NORTH GROUP BULLSEYE 317/64, 20k HOSTILE HEAVY 4 CONTACTS"
+        "SOUTH GROUP BULLSEYE 253/61, 15k HOSTILE HEAVY 4 CONTACTS " +
+        "NORTH GROUP BULLSEYE 265/59, 20k HOSTILE HEAVY 4 CONTACTS"
     )
   })
 
@@ -92,7 +92,7 @@ describe("DrawAzimuth", () => {
     azimuth.drawInfo()
     expect(azimuth.getAnswer()).toEqual(
       "TWO GROUPS AZIMUTH 12 " +
-        "SOUTH GROUP BULLSEYE 295/44, 15k TRACK SOUTH HOSTILE HEAVY 4 CONTACTS " +
+        "SOUTH GROUP BULLSEYE 239, 15k TRACK SOUTH HOSTILE HEAVY 4 CONTACTS " +
         "NORTH GROUP BULLSEYE 305/53, 20k TRACK EAST HOSTILE HEAVY 4 CONTACTS"
     )
   })
@@ -179,8 +179,8 @@ describe("DrawAzimuth", () => {
     azimuth.drawInfo()
     expect(azimuth.getAnswer()).toEqual(
       "TWO GROUPS AZIMUTH 11 TRACK NORTH. " +
-        "EAST GROUP BULLSEYE 327/66, STACK 36k AND 24k HOSTILE 2 CONTACTS " +
-        "WEST GROUP BULLSEYE 319/73, STACK 45k 35k AND 25k HOSTILE HEAVY 3 CONTACTS"
+        "EAST GROUP BULLSEYE 297/73, STACK 36k AND 24k HOSTILE 2 CONTACTS " +
+        "WEST GROUP BULLSEYE 296/30, STACK 45k 35k AND 25k HOSTILE HEAVY 3 CONTACTS"
     )
   })
 
@@ -208,7 +208,7 @@ describe("DrawAzimuth", () => {
     azimuth.drawInfo()
     expect(azimuth.getAnswer()).toEqual(
       "TWO GROUPS AZIMUTH 9 TRACK NORTH. " +
-        "EAST GROUP BULLSEYE 326/67, 36k HOSTILE " +
+        "EAST GROUP BULLSEYE 300/72, 36k HOSTILE " +
         "WEST GROUP STACK 46k 35k AND 25k HOSTILE HEAVY 4 CONTACTS 2 HIGH 1 MEDIUM 1 LOW"
     )
   })

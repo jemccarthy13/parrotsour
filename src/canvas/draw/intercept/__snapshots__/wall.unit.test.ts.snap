@@ -2,7 +2,7 @@
 
 exports[`DrawWall draws 1`] = `
 <canvas
-  data-snapshot-image="6d45f1133f988f5d39981757d5ab4f0ae72919e7493a05243aa87c64ee1d2fbf7fc7cd694c3cb1ec21dfe7a50f9eaab070ff92673f1bf43390aa6463f1362fb0"
+  data-snapshot-image="68ffbb31e8937728e2ad5ca452fd4fc50532819d37a9430081090091af4fce3b06498910c2a5b6f061e7012fa2979524f81a76cae2a945fcc032a5b757dec177"
   height="500"
   width="800"
 />
@@ -10,7 +10,7 @@ exports[`DrawWall draws 1`] = `
 
 exports[`DrawWall draws_info 1`] = `
 <canvas
-  data-snapshot-image="b3147372c8b03936d899423d6624f50b4e7d539318ea28cc2b147551562572cb96a33535b80e932e6a4a07556d0754bee04be6c9f95e60a6505abdc586388e35"
+  data-snapshot-image="082d75ead0966ac6c8cd1384b98e63f5c3ebd3b581a5033bd4901ee4d513eb367a1c8f84be1caf8b018c352bfa3ceb7ce3fea9cd6fde415d46b0cfb8fc3a5b03"
   height="500"
   width="800"
 />

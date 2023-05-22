@@ -158,10 +158,10 @@ describe("DrawVic", () => {
     vic.drawInfo()
 
     expect(vic.getAnswer()).toEqual(
-      "3 GROUP VIC 12 DEEP, 11 WIDE, " +
+      "3 GROUP VIC 12 DEEP, 11 WIDE, TRACK NORTH." +
         "LEAD GROUP BULLSEYE 277/47, 20k HOSTILE HEAVY 4 CONTACTS " +
-        "WEST TRAIL GROUP 15k HOSTILE HEAVY 4 CONTACTS " +
-        "EAST TRAIL GROUP 13k HOSTILE HEAVY 4 CONTACTS"
+        "EAST TRAIL GROUP 13k HOSTILE HEAVY 4 CONTACTS " +
+        "WEST TRAIL GROUP 15k HOSTILE HEAVY 4 CONTACTS"
     )
 
     stg.setLabel("EAST")
