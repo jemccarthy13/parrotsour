@@ -2,7 +2,7 @@
 
 exports[`drawingCanvas click_and_drag 1`] = `
 <canvas
-  data-snapshot-image="3f70bed6b2b659c6a38c93cf51e6b6774fbd642e7703650bf168a807d2ddf3183efd0d9a726e96b0821170289279ed96c9c88fe8ef8774f36ff6dfe8d1929169"
+  data-snapshot-image="e1b6e6a133d3f7d56ea5672fba63d6ddbadf277767a1a87139aa713ab313e4bd1d581208d18ffad4e023ab8d8cd485c4a4d2a6c32e9dffcea564a78515055940"
   data-testid="mousecanvas"
   height="400"
   id="mousecanvas"
@@ -13,7 +13,7 @@ exports[`drawingCanvas click_and_drag 1`] = `
 
 exports[`drawingCanvas mousemove_multiple 1`] = `
 <canvas
-  data-snapshot-image="62d4773ef95fd6003f7ba6fcb72f6e115ce6ce9bd619321f0bd72d2f90979a66abe0f9197a64844ca3514109bf274e16092f495ea33a05011848bf9af98ace08"
+  data-snapshot-image="14478fcf3d521023fb54ef0243d09bd7bcbedc0361832bb42a46d2274d739570b4c2165cdfde4a31ca83650c8f12612ebc8644ed8f684259308540a18c392174"
   data-testid="mousecanvas"
   height="400"
   id="mousecanvas"
@@ -24,7 +24,7 @@ exports[`drawingCanvas mousemove_multiple 1`] = `
 
 exports[`drawingCanvas mousemove_singular 1`] = `
 <canvas
-  data-snapshot-image="61dfe89fd77165441639f9b2eebad48b3f542ce1fa7ff569b7811bdd3c9f708bcd3f8c5f61b8fce3c553b202827e3004fae2d2aeb35b49c2fe0886a0122cc942"
+  data-snapshot-image="10d332e8e7bf50779406875b4cd92169f3e4acd40d114021ff1a5a7c7405ca6008bd3df108c07d8e8c448525e6f8f819ca8118620ae8884838a17ebdfef707c0"
   data-testid="mousecanvas"
   height="400"
   id="mousecanvas"

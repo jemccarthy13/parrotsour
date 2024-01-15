@@ -48,8 +48,6 @@ describe("GroupFactory", () => {
   }
 
   const fakeState: PictureCanvasState = {
-    bullseye: new Point(0, 0),
-    blueAir: new AircraftGroup(),
     answer: { pic: "test", groups: [] },
     reDraw: jest.fn(),
   }

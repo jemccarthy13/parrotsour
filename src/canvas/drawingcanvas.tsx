@@ -46,7 +46,9 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
   const [mousePressed, setMousePressed] = useState(false)
 
   // These values are watched by useEffect to trigger a 'draw'
-  const { draw, orientation, bullseye, picType, isHardMode, newPic } = props
+  const { draw, orientation, picType, isHardMode, newPic } = props
+
+  PaintBrush.drawBullseye()
 
   // useEffect is a React hook called when any of the trigger props changes
   useEffect(() => {
@@ -106,7 +108,7 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
       PaintBrush.drawLine(start.x, start.y, end.x, end.y)
     }
 
-    const b = new Braaseye(end, start, bullseye)
+    const b = new Braaseye(end, start)
 
     // clamp to edge of canvas and offset from cursor
     if (end.y < 20) end.y = 20

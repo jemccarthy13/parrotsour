@@ -1,12 +1,15 @@
 import { BRAA } from "../classes/braa"
 import { Point } from "../classes/point"
+import { Bullseye } from "./bullseye/bullseye"
 
 export class Braaseye {
   bull: BRAA
   braa: BRAA
   private drawLoc: Point
 
-  constructor(toPoint: Point, fromPoint: Point, bullseye: Point) {
+  constructor(toPoint: Point, fromPoint: Point) {
+    const bullseye = Bullseye.get()
+
     this.bull = bullseye.getBR(toPoint)
     this.braa = fromPoint.getBR(toPoint)
     this.drawLoc = toPoint

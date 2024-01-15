@@ -4,6 +4,7 @@ import {
 } from "../../canvas/canvastypes"
 import { getStartPos } from "../../canvas/draw/intercept/pictureclamp"
 import { randomHeading } from "../../utils/math"
+import { BlueAir } from "../aircraft/blueair"
 import { Point } from "../point"
 import { AircraftGroup } from "./group"
 
@@ -17,7 +18,7 @@ export class GroupFactory {
   ): AircraftGroup {
     const hdg = heading
       ? heading
-      : randomHeading(props.format, state.blueAir.getHeading())
+      : randomHeading(props.format, BlueAir.get().getHeading())
     const startPos = startLoc
 
     const p = { sx: startPos.x, sy: startPos.y, hdg, nContacts }
@@ -33,7 +34,7 @@ export class GroupFactory {
     numContacts?: number
   ): AircraftGroup {
     const startLoc = getStartPos(
-      state.blueAir,
+      BlueAir.get(),
       props.orientation.orient,
       props.dataStyle
     )

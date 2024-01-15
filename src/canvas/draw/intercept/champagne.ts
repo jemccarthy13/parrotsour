@@ -1,3 +1,4 @@
+import { BlueAir } from "../../../classes/aircraft/blueair"
 import { Braaseye } from "../../../classes/braaseye"
 import { AircraftGroup } from "../../../classes/groups/group"
 import { Point } from "../../../classes/point"
@@ -21,7 +22,7 @@ export default class DrawChampagne extends DrawPic {
     const wide = randomNumber(7 * PIXELS_TO_NM, 35 * PIXELS_TO_NM)
     const deep = randomNumber(7 * PIXELS_TO_NM, 35 * PIXELS_TO_NM)
     const startPos = getRestrictedStartPos(
-      this.state.blueAir,
+      BlueAir.get(),
       this.props.orientation.orient,
       this.props.dataStyle,
       45 + deep,
@@ -37,7 +38,7 @@ export default class DrawChampagne extends DrawPic {
 
     let heading: number = randomHeading(
       this.props.format,
-      this.state.blueAir.getHeading()
+      BlueAir.get().getHeading()
     )
     const tg = new AircraftGroup({
       sx: startPos.x,
@@ -49,10 +50,7 @@ export default class DrawChampagne extends DrawPic {
     tg.setLabel("TRAIL GROUP")
 
     if (this.props.isHardMode)
-      heading = randomHeading(
-        this.props.format,
-        this.state.blueAir.getHeading()
-      )
+      heading = randomHeading(this.props.format, BlueAir.get().getHeading())
 
     let nlg: AircraftGroup
 
@@ -73,10 +71,7 @@ export default class DrawChampagne extends DrawPic {
     }
 
     if (this.props.isHardMode)
-      heading = randomHeading(
-        this.props.format,
-        this.state.blueAir.getHeading()
-      )
+      heading = randomHeading(this.props.format, BlueAir.get().getHeading())
 
     let slg
 
@@ -147,13 +142,12 @@ export default class DrawChampagne extends DrawPic {
     PaintBrush.drawAltitudes(slgPos, slg.getAltitudes())
     PaintBrush.drawAltitudes(nlgPos, nlg.getAltitudes(), offsetXNL)
 
-    const { blueAir, bullseye } = this.state
     const { dataStyle, braaFirst } = this.props
-    const bluePos = blueAir.getCenterOfMass(dataStyle)
+    const bluePos = BlueAir.get().getCenterOfMass(dataStyle)
 
-    tg.setBraaseye(new Braaseye(tgPos, bluePos, bullseye))
-    nlg.setBraaseye(new Braaseye(nlgPos, bluePos, bullseye))
-    slg.setBraaseye(new Braaseye(slgPos, bluePos, bullseye))
+    tg.setBraaseye(new Braaseye(tgPos, bluePos))
+    nlg.setBraaseye(new Braaseye(nlgPos, bluePos))
+    slg.setBraaseye(new Braaseye(slgPos, bluePos))
 
     tg.getBraaseye().draw(showMeasurements, braaFirst, offsetXTrail)
     nlg.getBraaseye().draw(showMeasurements, braaFirst, offsetXNL)

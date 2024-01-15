@@ -1,5 +1,6 @@
 import { PictureCanvasState } from "../canvas/canvastypes"
 import { PaintBrush } from "../canvas/draw/paintbrush"
+import { BlueAir } from "../classes/aircraft/blueair"
 import { SensorType } from "../classes/aircraft/datatrail/sensortype"
 import { AircraftGroup } from "../classes/groups/group"
 import { randomNumber } from "../utils/math"
@@ -50,7 +51,7 @@ export class PicAnimationHandler extends AnimationHandler {
     dataStyle: SensorType,
     resetCallback?: () => void
   ): void {
-    const bluePos = state.blueAir.getCenterOfMass(dataStyle)
+    const bluePos = BlueAir.get().getCenterOfMass(dataStyle)
     const startPos = grp.getCenterOfMass(dataStyle)
 
     // if red is close enough to blue, stop the animation

@@ -48,6 +48,7 @@ export class AircraftGroup extends Array<Aircraft> {
   private maneuvers = 0
   private anchor = false
   private useBull = false
+  public position: Point = new Point(0, 0)
 
   /**
    * Construct an AircraftGroup from the given parameters.Group will initialize

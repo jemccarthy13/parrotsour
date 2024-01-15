@@ -1,3 +1,4 @@
+import { BlueAir } from "../../../classes/aircraft/blueair"
 import { AircraftGroup } from "../../../classes/groups/group"
 import { Point } from "../../../classes/point"
 import { FORMAT } from "../../../classes/supportedformats"
@@ -149,7 +150,7 @@ export abstract class DrawPic {
   picTrackDir = (): string => {
     let answer = "" // set default return
 
-    const { blueAir } = this.state
+    const blueAir = BlueAir.get()
     const { dataStyle, format } = this.props
 
     // determine if all groups track same direction

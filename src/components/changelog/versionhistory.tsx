@@ -32,6 +32,17 @@ export default function VersionHistory(): JSX.Element {
   // the order in this list === display order
   const versionHistory: VersionList = [
     {
+      version: "4.2.1",
+      date: "22 May 2023",
+      features: [],
+      fixes: [
+        "Fixed bullseye and increased stability of bullseye drawing / measuring app-wide",
+        "Fixed BRAA and increased stability of BRAA drawing / measuring app-wide",
+        "Provided center of mass (location) and blue air position on API export",
+      ],
+      improvements: [],
+    },
+    {
       version: "4.2.0",
       date: "15 Jan 2023",
       features: [

@@ -1,3 +1,4 @@
+import { BlueAir } from "../../../classes/aircraft/blueair"
 import { AltStack } from "../../../classes/altstack"
 import { BRAA } from "../../../classes/braa"
 import { AircraftGroup } from "../../../classes/groups/group"
@@ -70,7 +71,7 @@ export default class DrawEA extends DrawPic {
     let braa = new BRAA(0, 0)
 
     for (let x = 0; x < this.groups.length; x++) {
-      const tmpBraa = this.state.blueAir
+      const tmpBraa = BlueAir.get()
         .getCenterOfMass(this.props.dataStyle)
         .getBR(this.groups[x].getCenterOfMass(this.props.dataStyle))
 
@@ -96,9 +97,8 @@ export default class DrawEA extends DrawPic {
    * text, strobe range, and group matching the query
    */
   private _initializeEAInfo(): void {
-    const { blueAir } = this.state
     const { dataStyle } = this.props
-    const bluePos = blueAir.getCenterOfMass(dataStyle)
+    const bluePos = BlueAir.get().getCenterOfMass(dataStyle)
 
     const grpIdx = randomNumber(0, this.groups.length - 1)
     const grp: AircraftGroup = this.groups[grpIdx]
@@ -163,7 +163,7 @@ export default class DrawEA extends DrawPic {
   formatStrobe(): string {
     const { grp } = this.eaInfo
     const altStack = grp.getAltStack(this.props.format)
-    const aspectH = this.state.blueAir.getAspect(grp, this.props.dataStyle)
+    const aspectH = BlueAir.get().getAspect(grp, this.props.dataStyle)
     const trackDir = toCardinal(grp.getHeading())
 
     return (
@@ -183,13 +183,13 @@ export default class DrawEA extends DrawPic {
    */
   formatBRAA(): string {
     const cGrp = this._getClosestGroup()
-    const braa = this.state.blueAir
+    const braa = BlueAir.get()
       .getCenterOfMass(this.props.dataStyle)
       .getBR(cGrp.getCenterOfMass(this.props.dataStyle))
 
     const altStack = cGrp.getAltStack(this.props.format)
 
-    const aspectH = this.state.blueAir.getAspect(cGrp, this.props.dataStyle)
+    const aspectH = BlueAir.get().getAspect(cGrp, this.props.dataStyle)
 
     let aspect = aspectH.toString() + " "
 

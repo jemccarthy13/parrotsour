@@ -1,6 +1,7 @@
 // Classes & Interfaces
 import { PictureCanvasProps, PictureCanvasState } from "../canvas/canvastypes"
 import { PaintBrush } from "../canvas/draw/paintbrush"
+import { BlueAir } from "../classes/aircraft/blueair"
 import { SensorType } from "../classes/aircraft/datatrail/sensortype"
 import { AircraftGroup } from "../classes/groups/group"
 import { sleep } from "../utils/time"
@@ -120,7 +121,7 @@ export abstract class AnimationHandler {
     animateCanvas?: ImageData,
     resetCallback?: () => void
   ): Promise<void> {
-    if (!state.blueAir || !animateCanvas) return
+    if (!BlueAir.get() || !animateCanvas) return
     PaintBrush.getContext().putImageData(animateCanvas, 0, 0)
 
     // For each group:
@@ -134,9 +135,11 @@ export abstract class AnimationHandler {
       this.applyLogic(grp, state, props.dataStyle, resetCallback)
     }
 
-    state.blueAir.move()
-    this.applyBlueLogic(state.blueAir, groups, props.dataStyle)
-    state.blueAir.draw(props.dataStyle)
+    const blueAir = BlueAir.get()
+
+    blueAir.move()
+    this.applyBlueLogic(blueAir, groups, props.dataStyle)
+    blueAir.draw(props.dataStyle)
 
     // get slider speed/default speed
     const sliderValue: number | undefined = parseInt(

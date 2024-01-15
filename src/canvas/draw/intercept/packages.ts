@@ -1,4 +1,6 @@
+import { BlueAir } from "../../../classes/aircraft/blueair"
 import { BRAA } from "../../../classes/braa"
+import { Bullseye } from "../../../classes/bullseye/bullseye"
 import { AircraftGroup } from "../../../classes/groups/group"
 import { Point } from "../../../classes/point"
 import { randomNumber } from "../../../utils/math"
@@ -117,23 +119,22 @@ export default class DrawPackage extends DrawPic {
   }
 
   _getPicBull = (groups: AircraftGroup[]): Point => {
-    const { blueAir } = this.state
     const { dataStyle, orientation } = this.props
     let closestGroup = groups[0]
 
     let closestRng = 9999
     let sum = 0
-    const bPos = blueAir.getCenterOfMass(dataStyle)
+    const bPos = BlueAir.get().getCenterOfMass(dataStyle)
 
     const isNS = FightAxis.isNS(orientation.orient)
 
-    for (let x = 0; x < groups.length; x++) {
-      const gPos = groups[x].getCenterOfMass(dataStyle)
+    for (const grp of groups) {
+      const gPos = grp.getCenterOfMass(dataStyle)
 
       const BRAA = bPos.getBR(gPos)
 
       if (BRAA.range < closestRng) {
-        closestGroup = groups[x]
+        closestGroup = grp
         closestRng = BRAA.range
       }
 
@@ -168,8 +169,8 @@ export default class DrawPackage extends DrawPic {
     const nCts = nPkgContacts + sPkgContacts
 
     PaintBrush.clearCanvas()
-    PaintBrush.drawBullseye(this.state.bullseye)
-    this.state.blueAir.draw(this.props.dataStyle)
+    PaintBrush.drawBullseye()
+    BlueAir.get().draw(this.props.dataStyle)
 
     return this.draw(false, nCts)
   }
@@ -213,8 +214,10 @@ export default class DrawPackage extends DrawPic {
     const bullPt1 = this.packages[0].getBullseyePt()
     const bullPt2 = this.packages[1].getBullseyePt()
 
-    this.packages[0].setBullseye(this.state.bullseye.getBR(bullPt1))
-    this.packages[1].setBullseye(this.state.bullseye.getBR(bullPt2))
+    const bullseye = Bullseye.get()
+
+    this.packages[0].setBullseye(bullseye.getBR(bullPt1))
+    this.packages[1].setBullseye(bullseye.getBR(bullPt2))
 
     // default deep
     this.rngBack = isNS
@@ -256,7 +259,7 @@ export default class DrawPackage extends DrawPic {
   }
 
   checkAnchor = (): void => {
-    const bPos = this.state.blueAir.getCenterOfMass(this.props.dataStyle)
+    const bPos = BlueAir.get().getCenterOfMass(this.props.dataStyle)
 
     const isAnchNorth = this._isAnchorNPkg(
       bPos.getBR(this.packages[0].getBullseyePt()).range,

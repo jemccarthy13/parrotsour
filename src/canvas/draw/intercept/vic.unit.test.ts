@@ -1,4 +1,6 @@
+import { BlueAir } from "../../../classes/aircraft/blueair"
 import { SensorType } from "../../../classes/aircraft/datatrail/sensortype"
+import { Bullseye } from "../../../classes/bullseye/bullseye"
 import { AircraftGroup, GroupParams } from "../../../classes/groups/group"
 import { Point } from "../../../classes/point"
 import { FORMAT } from "../../../classes/supportedformats"
@@ -44,13 +46,13 @@ describe("DrawVic", () => {
   beforeEach(() => {
     TestCanvas.useContext(800, 500)
 
+    Bullseye.generate(new Point(400, 400))
     testState = {
-      bullseye: new Point(400, 400),
-      blueAir: new AircraftGroup({ sx: 600, sy: 400, hdg: 270, nContacts: 4 }),
       answer: { pic: "3 grp ladder", groups: [] },
       reDraw: jest.fn(),
     }
 
+    BlueAir.set(new AircraftGroup({ sx: 600, sy: 400, hdg: 270, nContacts: 4 }))
     p = {
       dataTrailType: SensorType.ARROW,
       sx: 200,
@@ -156,10 +158,10 @@ describe("DrawVic", () => {
     vic.drawInfo()
 
     expect(vic.getAnswer()).toEqual(
-      "3 GROUP VIC 12 DEEP, 11 WIDE, " +
+      "3 GROUP VIC 12 DEEP, 11 WIDE, TRACK NORTH." +
         "LEAD GROUP BULLSEYE 277/47, 20k HOSTILE HEAVY 4 CONTACTS " +
-        "WEST TRAIL GROUP 15k HOSTILE HEAVY 4 CONTACTS " +
-        "EAST TRAIL GROUP 13k HOSTILE HEAVY 4 CONTACTS"
+        "EAST TRAIL GROUP 13k HOSTILE HEAVY 4 CONTACTS " +
+        "WEST TRAIL GROUP 15k HOSTILE HEAVY 4 CONTACTS"
     )
 
     stg.setLabel("EAST")

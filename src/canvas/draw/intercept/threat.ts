@@ -1,3 +1,4 @@
+import { BlueAir } from "../../../classes/aircraft/blueair"
 import { AltStack } from "../../../classes/altstack"
 import { Braaseye } from "../../../classes/braaseye"
 import { AircraftGroup } from "../../../classes/groups/group"
@@ -21,7 +22,7 @@ export default class DrawThreat extends DrawPic {
 
   getPictureInfo(start?: Point): PictureInfo {
     const isNS = FightAxis.isNS(this.props.orientation.orient)
-    const bPos = this.state.blueAir.getCenterOfMass(this.props.dataStyle)
+    const bPos = BlueAir.get().getCenterOfMass(this.props.dataStyle)
 
     if (start === undefined) {
       start = new Point(
@@ -42,7 +43,7 @@ export default class DrawThreat extends DrawPic {
   createGroups = (startPos: Point, contactList: number[]): AircraftGroup[] => {
     const heading: number = randomHeading(
       FORMAT.IPE,
-      this.state.blueAir.getHeading()
+      BlueAir.get().getHeading()
     )
 
     const sg = new AircraftGroup({
@@ -58,15 +59,14 @@ export default class DrawThreat extends DrawPic {
   drawInfo(): void {
     const sg = this.groups[0]
 
-    const { blueAir, bullseye } = this.state
     const { dataStyle, showMeasurements, braaFirst } = this.props
 
     const sgPos = sg.getCenterOfMass(dataStyle)
-    const bluePos = blueAir.getCenterOfMass(dataStyle)
+    const bluePos = BlueAir.get().getCenterOfMass(dataStyle)
 
     PaintBrush.drawAltitudes(sgPos, sg.getAltitudes())
 
-    sg.setBraaseye(new Braaseye(sgPos, bluePos, bullseye))
+    sg.setBraaseye(new Braaseye(sgPos, bluePos))
     sg.getBraaseye().draw(showMeasurements, braaFirst)
   }
 
@@ -91,10 +91,9 @@ export default class DrawThreat extends DrawPic {
 
     this.applyLabels()
 
-    const { blueAir } = this.state
     const { dataStyle } = this.props
 
-    let aspectH = blueAir.getAspect(sg, dataStyle).toString()
+    let aspectH = BlueAir.get().getAspect(sg, dataStyle).toString()
     const trackDir = sg.getTrackDir()
 
     if (aspectH !== Aspect.HOT && trackDir)

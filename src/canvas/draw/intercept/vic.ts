@@ -1,3 +1,4 @@
+import { BlueAir } from "../../../classes/aircraft/blueair"
 import { Braaseye } from "../../../classes/braaseye"
 import { AircraftGroup } from "../../../classes/groups/group"
 import { Point } from "../../../classes/point"
@@ -21,7 +22,7 @@ export default class DrawVic extends DrawPic {
     const wide = randomNumber(7 * PIXELS_TO_NM, 30 * PIXELS_TO_NM)
     const deep = randomNumber(7 * PIXELS_TO_NM, 30 * PIXELS_TO_NM)
     const startPos = getRestrictedStartPos(
-      this.state.blueAir,
+      BlueAir.get(),
       this.props.orientation.orient,
       this.props.dataStyle,
       45 + deep,
@@ -38,13 +39,12 @@ export default class DrawVic extends DrawPic {
 
   createGroups = (startPos: Point, contactList: number[]): AircraftGroup[] => {
     const { format, isHardMode } = this.props
-    const { blueAir } = this.state
 
     const isNS = FightAxis.isNS(this.props.orientation.orient)
     // start with trail groups (because clamp)
     let sx = startPos.x
     let sy = startPos.y
-    let heading: number = randomHeading(format, blueAir.getHeading())
+    let heading: number = randomHeading(format, BlueAir.get().getHeading())
     const ntg = new AircraftGroup({
       sx,
       sy,
@@ -52,7 +52,7 @@ export default class DrawVic extends DrawPic {
       nContacts: contactList[0],
     })
 
-    if (isHardMode) heading = randomHeading(format, blueAir.getHeading())
+    if (isHardMode) heading = randomHeading(format, BlueAir.get().getHeading())
 
     if (isNS) {
       sx = startPos.x + this.dimensions.wide
@@ -67,7 +67,7 @@ export default class DrawVic extends DrawPic {
       nContacts: contactList[1],
     })
 
-    if (isHardMode) heading = randomHeading(format, blueAir.getHeading())
+    if (isHardMode) heading = randomHeading(format, BlueAir.get().getHeading())
     if (isNS) {
       sx = startPos.x + this.dimensions.wide / 2
       sy = startPos.y - this.dimensions.deep
@@ -88,7 +88,7 @@ export default class DrawVic extends DrawPic {
 
   drawInfo(): void {
     const { dataStyle, showMeasurements, braaFirst } = this.props
-    const { blueAir, bullseye } = this.state
+
     const isNS = FightAxis.isNS(this.props.orientation.orient)
 
     const lg = this.groups[0]
@@ -98,7 +98,7 @@ export default class DrawVic extends DrawPic {
     const ntgPos = ntg.getCenterOfMass(dataStyle)
     const stgPos = stg.getCenterOfMass(dataStyle)
     const lgPos = lg.getCenterOfMass(dataStyle)
-    const bluePos = blueAir.getCenterOfMass(dataStyle)
+    const bluePos = BlueAir.get().getCenterOfMass(dataStyle)
 
     let offsetX = 0
     let dPt = new Point(stgPos.x, lgPos.y)
@@ -122,9 +122,9 @@ export default class DrawVic extends DrawPic {
     PaintBrush.drawAltitudes(stgPos, stg.getAltitudes())
     PaintBrush.drawAltitudes(ntgPos, ntg.getAltitudes(), offsetX)
 
-    lg.setBraaseye(new Braaseye(lgPos, bluePos, bullseye))
-    stg.setBraaseye(new Braaseye(stgPos, bluePos, bullseye))
-    ntg.setBraaseye(new Braaseye(ntgPos, bluePos, bullseye))
+    lg.setBraaseye(new Braaseye(lgPos, bluePos))
+    stg.setBraaseye(new Braaseye(stgPos, bluePos))
+    ntg.setBraaseye(new Braaseye(ntgPos, bluePos))
 
     lg.getBraaseye().draw(showMeasurements, braaFirst)
     stg.getBraaseye().draw(showMeasurements, braaFirst)

@@ -1,3 +1,4 @@
+import { BlueAir } from "../../../classes/aircraft/blueair"
 import { Braaseye } from "../../../classes/braaseye"
 import { AircraftGroup } from "../../../classes/groups/group"
 import { GroupFactory } from "../../../classes/groups/groupfactory"
@@ -25,7 +26,7 @@ export default class DrawRange extends DrawPic {
       deep: drawDistance,
       wide: -1,
       start: getRestrictedStartPos(
-        this.state.blueAir,
+        BlueAir.get(),
         this.props.orientation.orient,
         this.props.dataStyle,
         45 + drawDistance / PIXELS_TO_NM,
@@ -51,7 +52,7 @@ export default class DrawRange extends DrawPic {
     // if hard mode and ALSA, we randomize the 2nd groups heading
     // otherwise, pair to first group +/- 10 degrees
     const heading = this.props.isHardMode
-      ? randomHeading(this.props.format, this.state.blueAir.getHeading())
+      ? randomHeading(this.props.format, BlueAir.get().getHeading())
       : tg.getHeading() + randomNumber(-10, 10)
 
     const lg = new AircraftGroup({
@@ -70,7 +71,6 @@ export default class DrawRange extends DrawPic {
     const lg = this.groups[1]
 
     const { dataStyle, orientation, showMeasurements, braaFirst } = this.props
-    const { blueAir, bullseye } = this.state
 
     const lPos = lg.getCenterOfMass(dataStyle)
     const tPos = tg.getCenterOfMass(dataStyle)
@@ -97,10 +97,10 @@ export default class DrawRange extends DrawPic {
     PaintBrush.drawAltitudes(lPos, lg.getAltitudes(), offsetX, offsetY)
     PaintBrush.drawAltitudes(tPos, tg.getAltitudes(), offsetX2, offsetY2)
 
-    const bluePos = blueAir.getCenterOfMass(dataStyle)
+    const bluePos = BlueAir.get().getCenterOfMass(dataStyle)
 
-    lg.setBraaseye(new Braaseye(lPos, bluePos, bullseye))
-    tg.setBraaseye(new Braaseye(tPos, bluePos, bullseye))
+    lg.setBraaseye(new Braaseye(lPos, bluePos))
+    tg.setBraaseye(new Braaseye(tPos, bluePos))
 
     lg.getBraaseye().draw(showMeasurements, braaFirst, offsetX, offsetY)
     tg.getBraaseye().draw(showMeasurements, braaFirst, offsetX2, offsetY2)

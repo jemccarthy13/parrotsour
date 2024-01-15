@@ -1,6 +1,7 @@
 /* istanbul ignore file */
 import React, { ReactElement } from "react"
 import { ProceduralAnimationHandler } from "../animation/procedural"
+import { BlueAir } from "../classes/aircraft/blueair"
 import { IDMatrix } from "../classes/aircraft/id"
 import { AircraftGroup } from "../classes/groups/group"
 import { Point } from "../classes/point"
@@ -18,8 +19,6 @@ export default class ProceduralCanvas extends ParrotSourCanvas {
   constructor(props: PictureCanvasProps) {
     super(props)
     this.state = {
-      bullseye: Point.DEFAULT,
-      blueAir: new AircraftGroup({ sx: -1000, sy: -1000 }),
       reDraw: this.drawPicture,
       answer: { pic: "", groups: [] },
     }
@@ -44,7 +43,8 @@ export default class ProceduralCanvas extends ParrotSourCanvas {
    */
   drawPicture = (forced?: boolean, start?: Point): PictureAnswer => {
     const { orientation, dataStyle } = this.props
-    const { blueAir } = this.state
+
+    const blueAir = BlueAir.get()
 
     blueAir.setCapping(true)
 
@@ -141,7 +141,7 @@ export default class ProceduralCanvas extends ParrotSourCanvas {
 
   /**
    * Draw function to be called from the Canvas component - handles pre-picture logic
-   * (i.e. blue arrows, bullseye, and image 'snap' for mouse draw)
+   * (i.e. blue arrows and image 'snap' for mouse draw)
    * @param context the drawing context to draw in
    */
   draw = async (): Promise<void> => {
@@ -175,7 +175,7 @@ export default class ProceduralCanvas extends ParrotSourCanvas {
       animate,
       dataStyle,
     } = this.props
-    const { bullseye, answer } = this.state
+    const { answer } = this.state
 
     return (
       <DrawingCanvas
@@ -183,7 +183,6 @@ export default class ProceduralCanvas extends ParrotSourCanvas {
         draw={this.draw}
         orientation={orientation}
         braaFirst={braaFirst}
-        bullseye={bullseye}
         picType={picType}
         showMeasurements={showMeasurements}
         isHardMode={isHardMode}

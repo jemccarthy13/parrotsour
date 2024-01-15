@@ -12,6 +12,7 @@ import {
 import { BlueInThe } from "../../canvas/canvastypes"
 import { PaintBrush } from "../../canvas/draw/paintbrush"
 import PictureCanvas from "../../canvas/intercept"
+import { BlueAir } from "../../classes/aircraft/blueair"
 import { SensorType } from "../../classes/aircraft/datatrail/sensortype"
 import { FORMAT } from "../../classes/supportedformats"
 import { theme } from "../../theme"
@@ -56,7 +57,7 @@ export function ParrotSourAPI(): JSX.Element {
   }
 
   const [numPics, setNumPics] = useState<number>(5)
-  const [accessCode, setCode] = useState<string>("")
+  const [accessCode, setAccessCode] = useState<string>("")
   const [includeGroups, setIncludeGroups] = useState<boolean>(true)
 
   // Refs that store References to the current DOM elements
@@ -147,7 +148,7 @@ export function ParrotSourAPI(): JSX.Element {
     (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
       const code = event.currentTarget.value
 
-      setCode(code)
+      setAccessCode(code)
     },
     []
   )

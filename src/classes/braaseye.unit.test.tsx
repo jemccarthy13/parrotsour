@@ -2,6 +2,7 @@ import { PaintBrush } from "../canvas/draw/paintbrush"
 import TestCanvas from "../testutils/testcanvas"
 import { PIXELS_TO_NM } from "../utils/math"
 import { Braaseye } from "./braaseye"
+import { Bullseye } from "./bullseye/bullseye"
 import { Point } from "./point"
 
 describe("Braaseye", () => {
@@ -16,8 +17,10 @@ describe("Braaseye", () => {
   const bullseye = new Point(5, 10)
   const toPoint = new Point(20, 10)
 
+  Bullseye.generate(bullseye)
+
   it("constructs_correctly", () => {
-    const braaseye = new Braaseye(toPoint, bluePos, bullseye)
+    const braaseye = new Braaseye(toPoint, bluePos)
 
     expect(braaseye.braa.bearing).toEqual("090")
     expect(braaseye.braa.bearingNum).toEqual(90)
@@ -28,21 +31,21 @@ describe("Braaseye", () => {
   })
 
   it("draws_correctly_noOffset", () => {
-    const braaseye = new Braaseye(toPoint, bluePos, bullseye)
+    const braaseye = new Braaseye(toPoint, bluePos)
 
     braaseye.draw(true, true)
     expect(TestCanvas.getCanvas()).toMatchSnapshot()
   })
 
   it("draws_correctly_withOffset", () => {
-    const braaseye = new Braaseye(toPoint, bluePos, bullseye)
+    const braaseye = new Braaseye(toPoint, bluePos)
 
     braaseye.draw(true, true, -10, 10)
     expect(TestCanvas.getCanvas()).toMatchSnapshot()
   })
 
   it("draws_correctly_braaFirst", () => {
-    const braaseye = new Braaseye(toPoint, bluePos, bullseye)
+    const braaseye = new Braaseye(toPoint, bluePos)
 
     braaseye.draw(true, false, -10, 10)
     expect(TestCanvas.getCanvas()).toMatchSnapshot()

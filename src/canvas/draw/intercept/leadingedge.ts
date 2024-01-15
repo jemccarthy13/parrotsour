@@ -1,3 +1,4 @@
+import { BlueAir } from "../../../classes/aircraft/blueair"
 import { AircraftGroup } from "../../../classes/groups/group"
 import { Point } from "../../../classes/point"
 import { FORMAT } from "../../../classes/supportedformats"
@@ -36,7 +37,7 @@ export default class DrawLeadEdge extends DrawPic {
   getPictureInfo(start?: Point): PictureInfo {
     // // Draw the first picture (i.e. the leading edge)
     const pic1StartPos = getRestrictedStartPos(
-      this.state.blueAir,
+      BlueAir.get(),
       this.props.orientation.orient,
       this.props.dataStyle,
       45,
@@ -60,7 +61,6 @@ export default class DrawLeadEdge extends DrawPic {
 
   createGroups = (startPos: Point, contactList: number[]): AircraftGroup[] => {
     const { dataStyle } = this.props
-    const { blueAir } = this.state
 
     const leadGrps = this.leadEdge.createGroups(
       startPos,
@@ -75,7 +75,7 @@ export default class DrawLeadEdge extends DrawPic {
     this.leadEdge.groups.forEach((grp) => {
       const grpRange = grp
         .getCenterOfMass(dataStyle)
-        .getBR(blueAir.getCenterOfMass(dataStyle)).range
+        .getBR(BlueAir.get().getCenterOfMass(dataStyle)).range
 
       if (grpRange > furthestRange) {
         furthestPic1Group = grp
@@ -121,8 +121,8 @@ export default class DrawLeadEdge extends DrawPic {
 
     PaintBrush.clearCanvas()
 
-    PaintBrush.drawBullseye(this.state.bullseye)
-    this.state.blueAir.draw(this.props.dataStyle)
+    PaintBrush.drawBullseye()
+    BlueAir.get().draw(this.props.dataStyle)
 
     return this.draw(false, nCts)
   }
@@ -137,7 +137,6 @@ export default class DrawLeadEdge extends DrawPic {
    */
   formatDimensions(): string {
     const { dataStyle } = this.props
-    const { blueAir } = this.state
     const groups2 = this.followOn.groups
 
     let closestFollowOn = groups2[0]
@@ -146,7 +145,7 @@ export default class DrawLeadEdge extends DrawPic {
     groups2.forEach((grp) => {
       const grpRange = grp
         .getCenterOfMass(dataStyle)
-        .getBR(blueAir.getCenterOfMass(dataStyle)).range
+        .getBR(BlueAir.get().getCenterOfMass(dataStyle)).range
 
       if (grpRange < closestRange) {
         closestFollowOn = grp

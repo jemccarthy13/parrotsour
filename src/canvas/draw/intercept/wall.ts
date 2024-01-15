@@ -1,3 +1,4 @@
+import { BlueAir } from "../../../classes/aircraft/blueair"
 import { Braaseye } from "../../../classes/braaseye"
 import { AircraftGroup } from "../../../classes/groups/group"
 import { Point } from "../../../classes/point"
@@ -47,7 +48,7 @@ export default class DrawWall extends DrawPic {
     const deep = 20 * PIXELS_TO_NM
 
     const startPos: Point = getRestrictedStartPos(
-      this.state.blueAir,
+      BlueAir.get(),
       this.props.orientation.orient,
       this.props.dataStyle,
       45,
@@ -61,10 +62,7 @@ export default class DrawWall extends DrawPic {
   createGroups = (startPos: Point, contactList: number[]): AircraftGroup[] => {
     const isNS = FightAxis.isNS(this.props.orientation.orient)
 
-    let heading = randomHeading(
-      this.props.format,
-      this.state.blueAir.getHeading()
-    )
+    let heading = randomHeading(this.props.format, BlueAir.get().getHeading())
 
     let totalArrowOffset = 0
 
@@ -76,10 +74,7 @@ export default class DrawWall extends DrawPic {
       totalArrowOffset += this.seps[x]
 
       if (this.props.isHardMode)
-        heading = randomHeading(
-          this.props.format,
-          this.state.blueAir.getHeading()
-        )
+        heading = randomHeading(this.props.format, BlueAir.get().getHeading())
 
       const grp = new AircraftGroup({
         sx: isNS ? startPos.x + totalArrowOffset : startPos.x,
@@ -98,7 +93,7 @@ export default class DrawWall extends DrawPic {
     const isNS = FightAxis.isNS(this.props.orientation.orient)
     const { dataStyle, showMeasurements, braaFirst } = this.props
 
-    const bluePos = this.state.blueAir.getCenterOfMass(dataStyle)
+    const bluePos = BlueAir.get().getCenterOfMass(dataStyle)
 
     for (let x = 0; x < this.groups.length; x++) {
       let altOffsetX = 30
@@ -118,7 +113,7 @@ export default class DrawWall extends DrawPic {
         altOffsetX,
         altOffsetY
       )
-      grp.setBraaseye(new Braaseye(grpPos, bluePos, this.state.bullseye))
+      grp.setBraaseye(new Braaseye(grpPos, bluePos))
       grp
         .getBraaseye()
         .draw(showMeasurements, braaFirst, altOffsetX, altOffsetY)

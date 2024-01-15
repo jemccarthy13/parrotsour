@@ -15,7 +15,6 @@ const drawMock = async (): Promise<void> => {
 
 const testProps: DrawCanvasProps = {
   draw: drawMock,
-  bullseye: new Point(0, 0),
   orientation: { height: 400, width: 400, orient: BlueInThe.NORTH },
   picType: "azimith",
   braaFirst: true,

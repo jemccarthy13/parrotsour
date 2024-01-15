@@ -1,4 +1,6 @@
+import { BlueAir } from "../classes/aircraft/blueair"
 import { IDMatrix } from "../classes/aircraft/id"
+import { Bullseye } from "../classes/bullseye/bullseye"
 import { AircraftGroup } from "../classes/groups/group"
 import { Point } from "../classes/point"
 import { randomNumber } from "../utils/math"
@@ -50,13 +52,20 @@ export default class PictureCanvas extends ParrotSourCanvas {
       }
       ctx.fillStyle = "white"
       ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height)
-      PaintBrush.drawBullseye(this.state.bullseye)
+
+      Bullseye.generate()
+
+      console.log(Bullseye.get())
+      PaintBrush.drawBullseye()
+
       animateImage = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height)
 
       this.state.answer.groups.forEach((grp) => {
         grp.draw(this.props.dataStyle)
       })
-      this.state.blueAir.draw(this.props.dataStyle)
+
+      BlueAir.get().draw(this.props.dataStyle)
+
       PaintBrush.drawFullInfo(this.state, this.props, this.state.answer.groups)
       if (
         this.props.animate === prevProps.animate &&
@@ -94,7 +103,7 @@ export default class PictureCanvas extends ParrotSourCanvas {
 
     const answer = drawFunc.draw(picType === "cap", desiredNumContacts, start)
 
-    const { blueAir } = this.state
+    const blueAir = BlueAir.get()
     const { dataStyle } = this.props
     const bluePos = blueAir.getCenterOfMass(dataStyle)
 
@@ -121,8 +130,6 @@ export default class PictureCanvas extends ParrotSourCanvas {
    * @param context the Context to draw in
    */
   draw = async (): Promise<void> => {
-    const bullseye = PaintBrush.drawBullseye()
-
     const ctx = PaintBrush.getContext()
     let xPos = ctx.canvas.width - 20
     let yPos = randomNumber(ctx.canvas.height * 0.33, ctx.canvas.height * 0.66)
@@ -144,7 +151,7 @@ export default class PictureCanvas extends ParrotSourCanvas {
       id: IDMatrix.FRIEND,
     })
 
-    this.setState({ blueAir, bullseye })
+    BlueAir.set(blueAir)
 
     const blueOnly = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height)
 
