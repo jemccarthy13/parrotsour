@@ -15,7 +15,7 @@ export function DismissAction({
   dismissText = "Dismiss",
   confirmCallback,
   cancelCallback,
-}: DismissActionProps) {
+}: Readonly<DismissActionProps>) {
   const handleConfirmClick = useCallback(() => {
     confirmCallback()
     snackActions.closeSnackbar(key)

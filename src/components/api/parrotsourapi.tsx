@@ -99,16 +99,25 @@ export function ParrotSourAPI(): JSX.Element {
       for (let x = 0; x < numPics; x++) {
         try {
           const answer = canvas.drawPicture(true)
+
+          answer.groups.forEach((grp) =>
+            grp.forEach(
+              (ac) => (ac.position = grp.getCenterOfMass(SensorType.ARROW))
+            )
+          )
+
           const a = {
             pic: answer.pic,
             groups: includeGroups ? answer.groups : [],
+            bluePos: BlueAir.get(),
           }
 
           answers.push(a)
-        } catch {
-          // nothing
+        } catch (e: unknown) {
+          console.log(e)
         }
       }
+
       download("data.json", JSON.stringify(answers))
 
       const formData = new FormData()

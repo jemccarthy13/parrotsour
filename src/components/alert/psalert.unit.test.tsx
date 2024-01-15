@@ -29,6 +29,7 @@ describe("snackbar_test", () => {
         </GlobalAlertProvider>
       </div>
     )
+
     act(() => {
       snackActions.toast(testTxt)
     })
@@ -83,6 +84,7 @@ describe("snackbar_test", () => {
         </GlobalAlertProvider>
       </div>
     )
+
     act(() => {
       snackActions.toast(testTxt)
     })

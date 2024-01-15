@@ -14,8 +14,8 @@ export function normalizeSpeech(transcript: string) {
 
   // TODO - less capture, then [0], [-1] to get first and last characters to build vcs
   // eslint-disable-next-line regexp/optimal-quantifier-concatenation
-  const re = new RegExp(/^([A-Za-z])[A-Za-z]*([A-Za-z]) *(\d)\d*(\d)/)
-  const match = tmpAnswer.match(re)
+  const re = new RegExp(/^([A-Z])[A-Z]*([A-Z]) *(\d)\d*(\d)/i)
+  const match = RegExp(re).exec(tmpAnswer)
 
   if (match) {
     const let1 = match[1]

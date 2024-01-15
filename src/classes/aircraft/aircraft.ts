@@ -49,6 +49,7 @@ export class Aircraft {
   private type: ACType
 
   private startPos = new Point(0, 0)
+  public position: Point = new Point(0, 0)
 
   private intent = new AircraftIntent()
   private tasking: Tasking | undefined
