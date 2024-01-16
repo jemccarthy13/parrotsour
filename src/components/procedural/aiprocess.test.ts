@@ -37,7 +37,7 @@ describe("AI Processing", () => {
     expect(send).toHaveBeenCalled()
   })
 
-  it.only("processes_text_unknown_asset", () => {
+  it("processes_text_unknown_asset", () => {
     const send = vi.fn()
     const grp = new AircraftGroup()
 

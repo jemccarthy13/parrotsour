@@ -137,7 +137,7 @@ describe("AircraftGroup", () => {
   })
 
   describe("draw_group", () => {
-    it.only("draws_all_groups", () => {
+    it("draws_all_groups", () => {
       const grp = new AircraftGroup({
         sx: 100,
         sy: 100,
