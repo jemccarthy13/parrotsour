@@ -61,13 +61,13 @@ export class Aircraft {
     if (!p) p = {}
 
     // Take given heading/ID/EWI or use default
-    this.heading = p.hdg || 90
-    this.id = p.id || IDMatrix.HOSTILE
-    this.type = p.type || ACType.FTR
+    this.heading = p.hdg ?? 90
+    this.id = p.id ?? IDMatrix.HOSTILE
+    this.type = p.type ?? ACType.FTR
 
     // Set current position
-    this.startPos.x = p.sx || randomNumber(1, 100)
-    this.startPos.y = p.sy || randomNumber(1, 100)
+    this.startPos.x = p.sx ?? randomNumber(1, 100)
+    this.startPos.y = p.sy ?? randomNumber(1, 100)
 
     this.dataTrail = new Map<number, DataTrail>()
 
@@ -91,7 +91,7 @@ export class Aircraft {
       low = 0o5
       hi = 18
     }
-    this.altitude = p.alt || randomNumber(low, hi)
+    this.altitude = p.alt ?? randomNumber(low, hi)
 
     // Current matches desired initially
     this.intent.setDesiredHeading(this.heading)
@@ -122,7 +122,7 @@ export class Aircraft {
     if (this.isCapping()) {
       return this.getStartPos()
     }
-    dataStyle = dataStyle === undefined ? SensorType.ARROW : dataStyle
+    dataStyle = dataStyle ?? SensorType.ARROW
     const dataTrail = this.dataTrail.get(dataStyle)
 
     if (dataTrail) {

@@ -96,7 +96,6 @@ export default class DrawAzimuth extends DrawPic {
     } else {
       m2 = new Point(nPos.x, sPos.y)
     }
-
     this.dimensions.wide = m2.getBR(nPos).range
     PaintBrush.drawMeasurement(nPos, m2, this.dimensions.wide, showMeasurements)
     PaintBrush.drawAltitudes(nPos, ng.getAltitudes(), offsetX, offsetY)

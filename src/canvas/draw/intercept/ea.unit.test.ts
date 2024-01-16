@@ -1,3 +1,12 @@
+import {
+  vi,
+  it,
+  expect,
+  describe,
+  beforeEach,
+  afterAll,
+  afterEach,
+} from "vitest"
 import { BlueAir } from "../../../classes/aircraft/blueair"
 import { SensorType } from "../../../classes/aircraft/datatrail/sensortype"
 import { BRAA } from "../../../classes/braa"
@@ -37,7 +46,7 @@ describe("DrawEA", () => {
 
     testState = {
       answer: { pic: "2 grps az", groups: [] },
-      reDraw: jest.fn(),
+      reDraw: vi.fn(),
     }
     BlueAir.set(new AircraftGroup({ sx: 600, sy: 400, hdg: 270, nContacts: 4 }))
 
@@ -55,25 +64,24 @@ describe("DrawEA", () => {
 
   afterEach(() => {
     PaintBrush.clearCanvas()
-    jest.restoreAllMocks()
+    vi.restoreAllMocks()
   })
 
   afterAll(() => {
-    jest.resetAllMocks()
-    jest.restoreAllMocks()
+    vi.resetAllMocks()
+    vi.restoreAllMocks()
   })
 
   it("draws_request_0", () => {
     PaintBrush.clearCanvas()
-    jest.spyOn(PSMath, "randomNumber").mockReturnValue(0)
+    vi.spyOn(PSMath, "randomNumber").mockReturnValue(0)
     draw.drawInfo() // first time request type = 0
     expect(TestCanvas.getCanvas()).toMatchSnapshot()
   })
 
   it("draws_request_1", () => {
     PaintBrush.clearCanvas()
-    jest
-      .spyOn(PSMath, "randomNumber")
+    vi.spyOn(PSMath, "randomNumber")
       .mockReturnValueOnce(0)
       .mockReturnValueOnce(0)
       .mockReturnValueOnce(1)
@@ -83,8 +91,7 @@ describe("DrawEA", () => {
 
   it("draws_request_2", () => {
     PaintBrush.clearCanvas()
-    jest
-      .spyOn(PSMath, "randomNumber")
+    vi.spyOn(PSMath, "randomNumber")
       .mockReturnValueOnce(0)
       .mockReturnValueOnce(0)
       .mockReturnValueOnce(2)
@@ -205,7 +212,7 @@ describe("DrawEA", () => {
     expect(draw.formatDimensions()).toEqual("")
     expect(draw.formatWeighted()).toEqual("")
 
-    const warn = jest.spyOn(console, "warn").mockImplementation()
+    const warn = vi.spyOn(console, "warn").mockImplementation(vi.fn())
 
     draw.applyLabels()
     expect(warn).toHaveBeenCalledTimes(1)
@@ -215,16 +222,14 @@ describe("DrawEA", () => {
     const sg = new AircraftGroup({ ...p, hdg: 150 })
 
     draw.groups = [sg]
-    jest
-      .spyOn(PSMath, "randomNumber")
+    vi.spyOn(PSMath, "randomNumber")
       .mockReturnValueOnce(0)
       .mockReturnValueOnce(7)
       .mockReturnValueOnce(1)
     draw.drawInfo()
     expect(draw.eaInfo.query).toEqual(sg.getLabel())
 
-    jest
-      .spyOn(PSMath, "randomNumber")
+    vi.spyOn(PSMath, "randomNumber")
       .mockReturnValueOnce(0)
       .mockReturnValueOnce(65)
       .mockReturnValueOnce(1)

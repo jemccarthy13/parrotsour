@@ -1,14 +1,15 @@
 import React from "react"
 import { render } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
-import ParrotSourHeader from "./header"
+import { userEvent } from "@testing-library/user-event"
+import { describe, it, expect } from "vitest"
+import { ParrotSourHeader } from "./header"
 
 describe("ParrotSourHeader", () => {
   it("handles_show_quick_tips", async () => {
     const wrapper = render(
       <ParrotSourHeader answer={{ pic: "2 GROUPS AZ", groups: [] }} />
     )
-    const btns = wrapper.getAllByRole(/button/)
+    const btns = wrapper.getAllByRole("button")
 
     expect(btns.length).toBeGreaterThan(0)
     userEvent.click(btns[0])

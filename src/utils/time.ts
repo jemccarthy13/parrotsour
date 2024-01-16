@@ -39,7 +39,7 @@ export function formatT(time: number): string {
  * Get a HH:mm:ss timestamp (for messages)
  */
 export function getTimeStamp(d?: Date): string {
-  const date = d ? d : new Date()
+  const date = d ?? new Date()
   const fHours = formatT(date.getHours())
   const fMins = formatT(date.getMinutes())
   const fSecs = formatT(date.getSeconds())

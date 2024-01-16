@@ -1,6 +1,7 @@
 import React from "react"
 import { render, waitFor } from "@testing-library/react"
 import { act } from "react-dom/test-utils"
+import { vi } from "vitest"
 import { AnimationHandler } from "../animation/handler"
 import { SensorType } from "../classes/aircraft/datatrail/sensortype"
 import { FORMAT } from "../classes/supportedformats"
@@ -10,11 +11,11 @@ import { PaintBrush } from "./draw/paintbrush"
 import PictureCanvas from "./intercept"
 import ParrotSourCanvas from "./parrotsourcanvas"
 
-jest.mock("../animation/handler")
-const animatorAnimate = jest.spyOn(AnimationHandler.prototype, "animate")
-const animatorPause = jest.spyOn(AnimationHandler.prototype, "pauseFight")
+vi.mock("../animation/handler")
+const animatorAnimate = vi.spyOn(AnimationHandler.prototype, "animate")
+const animatorPause = vi.spyOn(AnimationHandler.prototype, "pauseFight")
 
-const resetFn = jest.fn()
+const resetFn = vi.fn()
 
 describe("ParrotSourCanvas", () => {
   beforeAll(() => {
@@ -26,7 +27,7 @@ describe("ParrotSourCanvas", () => {
   })
   const testProps: PictureCanvasProps = {
     format: FORMAT.ALSA,
-    setAnswer: jest.fn(),
+    setAnswer: vi.fn(),
     sliderSpeed: 100,
     orientation: {
       height: 200,
@@ -40,7 +41,7 @@ describe("ParrotSourCanvas", () => {
     isHardMode: false,
     newPic: false,
     animate: true,
-    animateCallback: jest.fn(),
+    animateCallback: vi.fn(),
     resetCallback: resetFn,
     desiredNumContacts: 4,
   }

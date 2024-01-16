@@ -96,9 +96,7 @@ export function getDegDeltaBetween(
 
   let deltaA = RH
 
-  if (forced === "LEFT") {
-    deltaA = -LH
-  } else if (LH < RH) {
+  if (forced === "LEFT" || LH < RH) {
     deltaA = -LH
   }
 

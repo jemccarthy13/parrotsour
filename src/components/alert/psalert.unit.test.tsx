@@ -1,17 +1,18 @@
 import React from "react"
 import { render, waitFor } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
+import { userEvent } from "@testing-library/user-event"
 import { act } from "react-dom/test-utils"
+import { vi, it, expect, describe, beforeAll } from "vitest"
 import GlobalAlertProvider from "./globalalertprovider"
 import { snackActions } from "./psalert"
 
-jest.setTimeout(10000)
+// vi.setTimeout(10000)
 
 beforeAll(() => {
   console.warn(
     "1/14/2023 - Surpressing console 'Update to ... not wrapped in act.' error msg"
   )
-  jest.spyOn(console, "error").mockImplementation()
+  vi.spyOn(console, "error").mockImplementation(vi.fn())
 })
 
 /**
@@ -34,7 +35,7 @@ describe("snackbar_test", () => {
       snackActions.toast(testTxt)
     })
 
-    if (!wrapper) fail("Failed to mount.")
+    if (!wrapper) expect("").toEqual("Test error - failed to mount")
 
     await waitFor(() => {
       expect(wrapper.getByText(testTxt)).toBeDefined()
@@ -93,7 +94,7 @@ describe("snackbar_test", () => {
       expect(wrapper.getByText(testTxt)).toBeDefined()
     })
 
-    userEvent.click(wrapper.getByRole(/button/))
+    userEvent.click(wrapper.getByRole("button"))
 
     await waitFor(
       () => {

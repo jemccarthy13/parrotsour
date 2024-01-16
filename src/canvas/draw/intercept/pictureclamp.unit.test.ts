@@ -185,7 +185,7 @@ describe("_clampPictureInContext", () => {
   })
 
   it("clamp_warns_no_point_provided", () => {
-    const warnSpy = jest.spyOn(global.console, "warn").mockImplementation()
+    const warnSpy = vi.spyOn(global.console, "warn").mockImplementation()
     const result = _clampPictureInContext({}, BlueInThe.EAST)
 
     expect(warnSpy).toBeCalledTimes(1)

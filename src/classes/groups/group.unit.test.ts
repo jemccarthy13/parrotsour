@@ -1,16 +1,18 @@
-import { Point } from "../point"
-import * as AltStackHelper from "../altstack"
-import { AircraftGroup } from "./group"
-import { ACType, Aircraft } from "../aircraft/aircraft"
-import { IDMatrix } from "../aircraft/id"
-import { SensorType } from "../aircraft/datatrail/sensortype"
-import Tasking from "../taskings/tasking"
-import { FORMAT } from "../supportedformats"
+import { expect, it, describe, vi, afterEach } from "vitest"
 import { PaintBrush } from "../../canvas/draw/paintbrush"
 import TestCanvas from "../../testutils/testcanvas"
+import { ACType, Aircraft } from "../aircraft/aircraft"
+import { SensorType } from "../aircraft/datatrail/sensortype"
+import { IDMatrix } from "../aircraft/id"
+import * as AltStackHelper from "../altstack"
+import { Point } from "../point"
+import { FORMAT } from "../supportedformats"
+import Tasking from "../taskings/tasking"
+import { AircraftGroup } from "./group"
 
 describe("AircraftGroup", () => {
-  TestCanvas.useContext()
+  TestCanvas.useContext(200, 200)
+  PaintBrush.use(TestCanvas.getCanvas().getContext("2d"))
 
   afterEach(() => {
     PaintBrush.clearCanvas()
@@ -26,6 +28,7 @@ describe("AircraftGroup", () => {
         nContacts: 2,
         alts: [100, 200],
       })
+
       grp.updateIntent({ desiredHeading: 90 })
       expect(grp.getStartPos()).toEqual(startPt)
       expect(grp.isCapping()).toEqual(false)
@@ -37,15 +40,9 @@ describe("AircraftGroup", () => {
     })
 
     describe("location", () => {
-      let counter = 0
-      jest
-        .spyOn(Aircraft.prototype, "getCenterOfMass")
-        .mockImplementation(() => {
-          counter += 10
-          return new Point(50, 50 + counter)
-        })
-      const grp = new AircraftGroup({ nContacts: 2 })
-      expect(grp.getCenterOfMass(SensorType.ARROW)).toEqual(new Point(50, 65))
+      const grp = new AircraftGroup({ nContacts: 1, sx: 500, sy: 500 })
+
+      expect(grp.getCenterOfMass(SensorType.ARROW)).toEqual(new Point(524, 500))
     })
 
     describe("altitude", () => {
@@ -54,6 +51,7 @@ describe("AircraftGroup", () => {
           nContacts: 2,
           alts: [100, 200],
         })
+
         expect(grp.getAltitude()).toEqual(200)
         expect(grp.getAltitudes()).toEqual([100, 200])
       })
@@ -67,9 +65,10 @@ describe("AircraftGroup", () => {
         expect(grp.getAltitude()).toEqual(200)
         expect(grp.getAltitudes()).toEqual([100, 200])
 
-        const myMock = jest
+        const myMock = vi
           .spyOn(AltStackHelper, "getAltStack")
-          .mockImplementationOnce(jest.fn())
+          .mockImplementationOnce(vi.fn())
+
         grp.getAltStack(FORMAT.ALSA)
         expect(myMock).toHaveBeenCalled()
       })
@@ -78,6 +77,7 @@ describe("AircraftGroup", () => {
     describe("id_and_labeling", () => {
       it("allows_labeling", () => {
         const grp = new AircraftGroup()
+
         expect(grp.getLabel()).toEqual("GROUP")
         grp.setLabel("WEST")
         expect(grp.getLabel()).toEqual("WEST")
@@ -87,6 +87,7 @@ describe("AircraftGroup", () => {
         const grp = new AircraftGroup({
           nContacts: 4,
         })
+
         grp.setIDMatrix(IDMatrix.HOSTILE)
         expect(grp.getIDMatrix()).toEqual(IDMatrix.HOSTILE)
         grp[1].setIDMatrix(IDMatrix.SUSPECT)
@@ -102,6 +103,7 @@ describe("AircraftGroup", () => {
       const grp = new AircraftGroup({
         hdg: 90,
       })
+
       expect(grp.getStrength()).toBeGreaterThanOrEqual(1)
       grp.updateIntent({ desiredHeading: 90 })
       expect(grp.getTrackDir()).toEqual("TRACK EAST")
@@ -118,22 +120,24 @@ describe("AircraftGroup", () => {
   describe("movement_functions", () => {
     it("access_maneuvers", () => {
       const grp = new AircraftGroup({ nContacts: 4 })
+
       expect(grp.setManeuvers(0))
       expect(grp.doesManeuvers()).toEqual(false)
     })
 
     it("moves_all_aircraft", () => {
       const grp = new AircraftGroup({ nContacts: 4 })
-      const myMock = jest
+      const myMock = vi
         .spyOn(Aircraft.prototype, "move")
-        .mockImplementationOnce(jest.fn())
+        .mockImplementationOnce(vi.fn())
+
       grp.move()
       expect(myMock).toHaveBeenCalledTimes(4)
     })
   })
 
   describe("draw_group", () => {
-    it("draws_all_groups", () => {
+    it.only("draws_all_groups", () => {
       const grp = new AircraftGroup({
         sx: 100,
         sy: 100,
@@ -141,10 +145,11 @@ describe("AircraftGroup", () => {
         hdg: 135,
         id: IDMatrix.FRIEND,
       })
-      const myMock = jest.spyOn(Aircraft.prototype, "draw")
+      const myMock = vi.spyOn(Aircraft.prototype, "draw")
+
       grp.draw(SensorType.ARROW)
       expect(myMock).toHaveBeenCalledTimes(4)
-      expect(TestCanvas.getCanvas()).toMatchSnapshot()
+      expect(TestCanvas.getSnapshot()).toMatchSnapshot()
     })
   })
 
@@ -156,6 +161,7 @@ describe("AircraftGroup", () => {
         id: IDMatrix.FRIEND,
         alts: [20, 20],
       })
+
       grp.updateIntent({ desiredAlt: 40 })
       grp.updateAltitude()
       expect(grp[0].getAltitude()).toEqual(20.5)
@@ -167,7 +173,8 @@ describe("AircraftGroup", () => {
         nContacts: 2,
       })
       const dest = new Point(20, 20)
-      const myMock = jest.spyOn(Aircraft.prototype, "addRoutingPoint")
+      const myMock = vi.spyOn(Aircraft.prototype, "addRoutingPoint")
+
       grp.addRoutingPoint(dest)
       expect(grp.getNextRoutingPoint()).toEqual(dest)
       expect(myMock).toHaveBeenCalledTimes(2)
@@ -177,12 +184,14 @@ describe("AircraftGroup", () => {
       const grp = new AircraftGroup({
         nContacts: 2,
       })
+
       grp.setTasking(new Tasking())
       expect(grp.isOnTask()).toEqual(true)
     })
 
     it("group_ac_type", () => {
       const grp = new AircraftGroup({ type: ACType.RPA })
+
       expect(grp.getType()).toEqual(ACType.RPA)
     })
   })

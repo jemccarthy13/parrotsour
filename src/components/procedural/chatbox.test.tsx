@@ -1,23 +1,24 @@
 import React from "react"
 import { render } from "@testing-library/react"
+import { vi } from "vitest"
 import { AircraftGroup } from "../../classes/groups/group"
 import { ChatBox, CBProps } from "./chatbox"
 
-jest.mock("react-speech-recognition", () => ({
+vi.mock("react-speech-recognition", () => ({
   useSpeechRecognition: () => ({
     transcript: "",
     finalTranscript: "",
-    setTranscript: jest.fn(),
+    setTranscript: vi.fn(),
   }),
 }))
 
-const mockProcess = jest.fn()
+const mockProcess = vi.fn()
 
-jest.mock("./aiprocess", () => ({
+vi.mock("./aiprocess", () => ({
   aiProcess: () => mockProcess(),
 }))
 
-const mockUtter = jest.fn()
+const mockUtter = vi.fn()
 
 window.SpeechSynthesisUtterance = mockUtter
 

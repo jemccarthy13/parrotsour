@@ -141,6 +141,8 @@ export abstract class AnimationHandler {
     this.applyBlueLogic(blueAir, groups, props.dataStyle)
     blueAir.draw(props.dataStyle)
 
+    PaintBrush.drawBullseye()
+
     // get slider speed/default speed
     const sliderValue: number | undefined = parseInt(
       `${

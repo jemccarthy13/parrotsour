@@ -23,7 +23,9 @@ export interface CanvasMouseEvent {
  * This Component is the root wrapper for a Canvas HTML5 element
  * @param props CanvasProps for use by the component
  */
-export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
+export default function DrawingCanvas(
+  props: Readonly<DrawCanvasProps>
+): ReactElement {
   // Refs that store References to the current DOM elements
   const canvasRef: React.RefObject<HTMLCanvasElement> =
     useRef<HTMLCanvasElement>(null)
@@ -42,7 +44,7 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
     useRef(null)
 
   // State variables are used to track mouse position
-  const [mouseStart, setStart] = useState(Point.DEFAULT)
+  const [mouseStart, setMouseStart] = useState(Point.DEFAULT)
   const [mousePressed, setMousePressed] = useState(false)
 
   // These values are watched by useEffect to trigger a 'draw'
@@ -144,7 +146,7 @@ export default function DrawingCanvas(props: DrawCanvasProps): ReactElement {
 
     const mousePos = getMousePos(canvasRef.current, e)
 
-    setStart(mousePos)
+    setMouseStart(mousePos)
   }
 
   /**

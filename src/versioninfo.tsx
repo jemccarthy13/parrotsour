@@ -29,7 +29,7 @@ export const VersionInfo = () => {
         Developed by John McCarthy
       </div>
       <div style={{ paddingLeft: "40px", marginBottom: "4px" }}>
-        Version:&nbsp;
+        Version:{" "}
         <a style={{ color: "#42a5f5" }} href="/#/changelog">
           {`${process.env.REACT_APP_VERSION}`}
         </a>

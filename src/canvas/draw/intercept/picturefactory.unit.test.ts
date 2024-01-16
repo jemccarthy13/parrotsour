@@ -10,7 +10,7 @@ describe("PictureFactory", () => {
   })
 
   it("chooses_pic_high_complexity", () => {
-    jest.spyOn(PSMath, "randomNumber").mockReturnValueOnce(7)
+    vi.spyOn(PSMath, "randomNumber").mockReturnValueOnce(7)
     const pDraw = PictureFactory.getPictureDraw("random", 7)
 
     expect(
@@ -19,7 +19,7 @@ describe("PictureFactory", () => {
   })
 
   it("chooses_pic_random_complex_random_contacts", () => {
-    jest.spyOn(PSMath, "randomNumber").mockReturnValueOnce(7)
+    vi.spyOn(PSMath, "randomNumber").mockReturnValueOnce(7)
     const pDraw = PictureFactory.getPictureDraw("random", 0)
 
     expect(
@@ -28,7 +28,7 @@ describe("PictureFactory", () => {
   })
 
   it("chooses_pic_forced_complexity", () => {
-    jest.spyOn(PSMath, "randomNumber").mockReturnValueOnce(1)
+    vi.spyOn(PSMath, "randomNumber").mockReturnValueOnce(1)
     const pDraw = PictureFactory.getPictureDraw("random", 8, true)
 
     expect(
@@ -37,7 +37,7 @@ describe("PictureFactory", () => {
   })
 
   it("chooses_pic_forced_complexity_default_az_if_unknown", () => {
-    jest.spyOn(PSMath, "randomNumber").mockReturnValueOnce(8)
+    vi.spyOn(PSMath, "randomNumber").mockReturnValueOnce(8)
     const pDraw = PictureFactory.getPictureDraw("random", 8, true)
 
     expect(
@@ -46,35 +46,35 @@ describe("PictureFactory", () => {
   })
 
   it("chooses_high_complexity_when_forced", () => {
-    jest.spyOn(PSMath, "randomNumber").mockReturnValueOnce(8)
+    vi.spyOn(PSMath, "randomNumber").mockReturnValueOnce(8)
     const pDraw = PictureFactory.getPictureDraw("random", -1, true)
 
     expect(pDraw.formatPicTitle().indexOf("PACKAGES")).toBeGreaterThanOrEqual(0)
   })
 
   it("chooses_random_complexity_when_forced", () => {
-    jest.spyOn(PSMath, "randomNumber").mockReturnValueOnce(1)
+    vi.spyOn(PSMath, "randomNumber").mockReturnValueOnce(1)
     const pDraw = PictureFactory.getPictureDraw("random", 0, true)
 
     expect(pDraw.formatPicTitle().indexOf("RANGE")).toBeGreaterThanOrEqual(0)
   })
 
   it("chooses_cap", () => {
-    jest.spyOn(PSMath, "randomNumber").mockReturnValueOnce(1)
+    vi.spyOn(PSMath, "randomNumber").mockReturnValueOnce(1)
     const pDraw = PictureFactory.getPictureDraw("cap", 3, true)
 
     expect(pDraw.formatPicTitle().indexOf("RANGE")).toBeGreaterThanOrEqual(0)
   })
 
   it("chooses_az_when_pictype_unknown", () => {
-    jest.spyOn(PSMath, "randomNumber").mockReturnValueOnce(1)
+    vi.spyOn(PSMath, "randomNumber").mockReturnValueOnce(1)
     const pDraw = PictureFactory.getPictureDraw("unknown", 3, true)
 
     expect(pDraw.formatPicTitle().indexOf("AZIMUTH")).toBeGreaterThanOrEqual(0)
   })
 
   it("defaults_az_when_pictype_unknown", () => {
-    jest.spyOn(PSMath, "randomNumber").mockReturnValueOnce(1)
+    vi.spyOn(PSMath, "randomNumber").mockReturnValueOnce(1)
     const pDraw = PictureFactory.getPictureDraw(undefined, 3, true)
 
     expect(pDraw.formatPicTitle().indexOf("AZIMUTH")).toBeGreaterThanOrEqual(0)

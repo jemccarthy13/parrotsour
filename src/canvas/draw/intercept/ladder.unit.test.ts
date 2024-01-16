@@ -1,3 +1,4 @@
+import { vi } from "vitest"
 import { BlueAir } from "../../../classes/aircraft/blueair"
 import { SensorType } from "../../../classes/aircraft/datatrail/sensortype"
 import { Bullseye } from "../../../classes/bullseye/bullseye"
@@ -19,7 +20,7 @@ let testState: PictureCanvasState
 let p: Partial<GroupParams>
 let ladder: DrawLadder
 
-jest.mock("./cap", () => {
+vi.mock("./cap", () => {
   //nothing
 })
 
@@ -38,7 +39,7 @@ describe("DrawLadder", () => {
 
     testState = {
       answer: { pic: "3 grp ladder", groups: [] },
-      reDraw: jest.fn(),
+      reDraw: vi.fn(),
     }
 
     BlueAir.set(new AircraftGroup({ sx: 600, sy: 400, hdg: 270, nContacts: 4 }))
@@ -56,7 +57,7 @@ describe("DrawLadder", () => {
     ladder = new DrawLadder()
     ladder.initialize(testProps, testState)
 
-    jest.restoreAllMocks()
+    vi.restoreAllMocks()
   })
 
   it("simple_functions", () => {
@@ -69,8 +70,7 @@ describe("DrawLadder", () => {
   })
 
   it("chooses_grps_for_n_contacts", () => {
-    jest
-      .spyOn(PSMath, "randomNumber")
+    vi.spyOn(PSMath, "randomNumber")
       .mockReturnValueOnce(3)
       .mockReturnValueOnce(4)
       .mockReturnValueOnce(5)
@@ -84,7 +84,7 @@ describe("DrawLadder", () => {
     expect(ladder.numGroupsToCreate).toEqual(5)
     ladder.chooseNumGroups(0)
     expect(ladder.numGroupsToCreate).toEqual(5)
-    jest.restoreAllMocks()
+    vi.restoreAllMocks()
   })
 
   it("hot_ladder", () => {
@@ -248,8 +248,8 @@ describe("DrawLadder", () => {
   })
 
   it("creates_groups_vanilla", () => {
-    jest.spyOn(PSMath, "randomHeading").mockReturnValue(90)
-    jest.spyOn(PSMath, "randomNumber").mockReturnValue(1)
+    vi.spyOn(PSMath, "randomHeading").mockReturnValue(90)
+    vi.spyOn(PSMath, "randomNumber").mockReturnValue(1)
     ladder.numGroupsToCreate = 3
     ladder.seps = [40, 40, 40]
     const startPos = new Point(100, 100)
@@ -264,15 +264,14 @@ describe("DrawLadder", () => {
   })
 
   it("creates_groups_hardMode", () => {
-    jest
-      .spyOn(PSMath, "randomHeading")
+    vi.spyOn(PSMath, "randomHeading")
       .mockReturnValueOnce(90)
       .mockReturnValueOnce(120)
       .mockReturnValueOnce(80)
       .mockReturnValueOnce(135)
       .mockReturnValueOnce(15)
       .mockReturnValueOnce(150)
-    jest.spyOn(PSMath, "randomNumber").mockReturnValue(1)
+    vi.spyOn(PSMath, "randomNumber").mockReturnValue(1)
 
     const updatedProps: PictureCanvasProps = { ...testProps, isHardMode: true }
 
@@ -291,8 +290,8 @@ describe("DrawLadder", () => {
   })
 
   it("creates_groups_NS", () => {
-    jest.spyOn(PSMath, "randomHeading").mockReturnValue(90)
-    jest.spyOn(PSMath, "randomNumber").mockReturnValue(1)
+    vi.spyOn(PSMath, "randomHeading").mockReturnValue(90)
+    vi.spyOn(PSMath, "randomNumber").mockReturnValue(1)
 
     const updatedProps: PictureCanvasProps = { ...testProps }
 

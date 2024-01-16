@@ -1,10 +1,11 @@
 import React from "react"
 import { act, fireEvent, render } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
+import { userEvent } from "@testing-library/user-event"
+import { vi } from "vitest"
 import IssueSelector from "./selector"
 
-const mockChangeFn = jest.fn(() => {
-  return jest.fn()
+const mockChangeFn = vi.fn(() => {
+  return vi.fn()
 })
 
 describe("IssueSelector_Component", () => {

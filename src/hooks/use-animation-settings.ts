@@ -19,7 +19,7 @@ export function useAnimationSettings(answer: PictureAnswer): {
   state: AnimationSettings
   handlers: AnimationHandlers
 } {
-  const [isAnimate, setAnimate] = useState(false)
+  const [isAnimate, setIsAnimate] = useState(false)
 
   const { cookieValue: speedSliderValue, setCookie: setSpeedSliderValue } =
     useCookieNumber(SliderCookie)
@@ -37,14 +37,14 @@ export function useAnimationSettings(answer: PictureAnswer): {
    */
   const startAnimate = useCallback(() => {
     answer.groups.forEach((grp) => grp.setCapping(false))
-    setAnimate(true)
+    setIsAnimate(true)
   }, [answer.groups])
 
   /**
    * Called to pause the animation
    */
   const pauseAnimate = useCallback((): void => {
-    setAnimate(false)
+    setIsAnimate(false)
   }, [])
 
   return {

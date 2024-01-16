@@ -24,7 +24,7 @@ type IRProps = {
 
 export default function IssueReport({
   answer = { groups: [], pic: "" },
-}: IRProps): ReactElement {
+}: Readonly<IRProps>): ReactElement {
   const [showIssueForm, setShowIssueForm] = useState(false)
   const [selection, setSelection] = useState("picprob")
   const [submitEnabled, setSubmitEnabled] = useState(true)

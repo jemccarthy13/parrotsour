@@ -1,3 +1,4 @@
+import { vi, describe, it, expect, beforeEach } from "vitest"
 import { BlueAir } from "../../../classes/aircraft/blueair"
 import { SensorType } from "../../../classes/aircraft/datatrail/sensortype"
 import { AircraftGroup, GroupParams } from "../../../classes/groups/group"
@@ -35,7 +36,7 @@ describe("DrawWall", () => {
   beforeEach(() => {
     testState = {
       answer: { pic: "3 grp ladder", groups: [] },
-      reDraw: jest.fn(),
+      reDraw: vi.fn(),
     }
 
     BlueAir.set(
@@ -60,7 +61,7 @@ describe("DrawWall", () => {
     wall = new DrawWall()
     wall.initialize(testProps, testState)
 
-    jest.restoreAllMocks()
+    vi.restoreAllMocks()
   })
 
   it("simple_functions", () => {
@@ -76,8 +77,7 @@ describe("DrawWall", () => {
     expect(wall.numGroupsToCreate).toEqual(3)
     wall.chooseNumGroups(3)
     expect(wall.numGroupsToCreate).toEqual(3)
-    jest
-      .spyOn(PSMath, "randomNumber")
+    vi.spyOn(PSMath, "randomNumber")
       .mockReturnValueOnce(4)
       .mockReturnValueOnce(5)
       .mockReturnValueOnce(3)
@@ -93,7 +93,7 @@ describe("DrawWall", () => {
   })
 
   it("gets_pic_dimensions", () => {
-    jest.spyOn(PSMath, "randomNumber").mockReturnValue(10 * PSMath.PIXELS_TO_NM)
+    vi.spyOn(PSMath, "randomNumber").mockReturnValue(10 * PSMath.PIXELS_TO_NM)
     wall.numGroupsToCreate = 3
     const startPt = new Point(100, 100)
     const pInfo = wall.getPictureInfo(startPt)
@@ -104,8 +104,8 @@ describe("DrawWall", () => {
   })
 
   it("creates_groups", () => {
-    jest.spyOn(PSMath, "randomHeading").mockReturnValue(90)
-    jest.spyOn(PSMath, "randomNumber").mockReturnValue(0)
+    vi.spyOn(PSMath, "randomHeading").mockReturnValue(90)
+    vi.spyOn(PSMath, "randomNumber").mockReturnValue(0)
     wall.seps = [0, 20 * PSMath.PIXELS_TO_NM, 20 * PSMath.PIXELS_TO_NM]
     wall.numGroupsToCreate = 3
     const startPt = new Point(100, 100)
@@ -127,13 +127,12 @@ describe("DrawWall", () => {
 
     updatedProps.isHardMode = true
     wall.initialize(updatedProps, testState)
-    jest
-      .spyOn(PSMath, "randomHeading")
+    vi.spyOn(PSMath, "randomHeading")
       .mockReturnValueOnce(90)
       .mockReturnValueOnce(90)
       .mockReturnValueOnce(120)
       .mockReturnValueOnce(240)
-    jest.spyOn(PSMath, "randomNumber").mockReturnValue(0)
+    vi.spyOn(PSMath, "randomNumber").mockReturnValue(0)
     wall.seps = [0, 20 * PSMath.PIXELS_TO_NM, 20 * PSMath.PIXELS_TO_NM]
     wall.numGroupsToCreate = 3
     const startPt = new Point(100, 100)
@@ -152,8 +151,8 @@ describe("DrawWall", () => {
 
   it("creates_groups_ns", () => {
     setBlueInTheNorth()
-    jest.spyOn(PSMath, "randomHeading").mockReturnValue(90)
-    jest.spyOn(PSMath, "randomNumber").mockReturnValue(0)
+    vi.spyOn(PSMath, "randomHeading").mockReturnValue(90)
+    vi.spyOn(PSMath, "randomNumber").mockReturnValue(0)
     wall.seps = [0, 20 * PSMath.PIXELS_TO_NM, 20 * PSMath.PIXELS_TO_NM]
     wall.numGroupsToCreate = 3
     const startPt = new Point(100, 100)
@@ -188,9 +187,8 @@ describe("DrawWall", () => {
 
   it("draws", () => {
     TestCanvas.useContext()
-    jest.spyOn(PSMath, "randomHeading").mockReturnValue(90)
-    jest
-      .spyOn(PSMath, "randomNumber")
+    vi.spyOn(PSMath, "randomHeading").mockReturnValue(90)
+    vi.spyOn(PSMath, "randomNumber")
       .mockReturnValueOnce(3) // num groups
       .mockReturnValueOnce(1) // 1 contact, first group
       .mockReturnValueOnce(2) // 2 contacts, second group

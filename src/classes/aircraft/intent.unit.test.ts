@@ -1,7 +1,8 @@
+import { vi } from "vitest"
 import { Point } from "../point"
 import { AircraftIntent } from "./intent"
 
-jest.mock("../../utils/math")
+vi.mock("../../utils/math")
 
 describe("Intent", () => {
   describe("alt_aspect_speed", () => {

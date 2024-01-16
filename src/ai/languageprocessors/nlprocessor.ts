@@ -8,8 +8,8 @@ nlp.extend(sentences) // add support for isQuestion
  * Extend compromise with 'tac-chat' specific
  * domain knowledge to make it 'smarter'
  */
-nlp.extend((Doc: nlp.Document, world: nlp.World) => {
-  world.addWords({
+nlp.extend({
+  words: {
     transit: "Verb",
     climb: "Verb",
     elev: "Verb",
@@ -21,10 +21,10 @@ nlp.extend((Doc: nlp.Document, world: nlp.World) => {
     state: "Noun",
     right: "CloseDir",
     left: "CloseDir",
-  })
+  },
 })
 
-type ProcessResult = nlp.DefaultDocument
+type ProcessResult = nlp.nlpView
 export type { ProcessResult }
 
 /**

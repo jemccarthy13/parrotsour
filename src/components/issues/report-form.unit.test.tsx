@@ -6,19 +6,21 @@ import {
   render,
   waitFor,
 } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
+import { userEvent } from "@testing-library/user-event"
+// NOTE -- replace any references to jest?
 import fetchMock from "jest-fetch-mock"
+import { vi, beforeAll, describe, it, expect } from "vitest"
 import { snackActions } from "../alert/psalert"
 import IssueReport from "./report-form"
 
 fetchMock.enableMocks()
 
-jest.mock("../alert/psalert", () => ({
+vi.mock("../alert/psalert", () => ({
   snackActions: {
-    success: jest.fn(),
-    warn: jest.fn(),
-    error: jest.fn(),
-    toast: jest.fn(),
+    success: vi.fn(),
+    warn: vi.fn(),
+    error: vi.fn(),
+    toast: vi.fn(),
   },
 }))
 
@@ -26,7 +28,7 @@ beforeAll(() => {
   console.warn(
     "1/15/2023- Surpressing MUI console.error for failure to wrap transition in act."
   )
-  jest.spyOn(console, "error").mockImplementation()
+  vi.spyOn(console, "error").mockImplementation(vi.fn())
 })
 
 describe("IssueReport_Component", () => {
@@ -53,6 +55,7 @@ describe("IssueReport_Component", () => {
 
     await openDialog(wrapper)
     // open and content present
+    expect("").toEqual("Fragile test... re-examine")
     expect(wrapper).toMatchSnapshot()
   })
 
@@ -132,7 +135,7 @@ describe("IssueReport_Component", () => {
       expect(wrapper.getByText(/Cancel/)).not.toEqual(null)
     })
 
-    const emailBox = wrapper.getByRole(/textbox/, { name: emailLabel })
+    const emailBox = wrapper.getByRole("textbox", { name: emailLabel })
 
     emailBox.focus()
 
@@ -154,7 +157,7 @@ describe("IssueReport_Component", () => {
       expect(wrapper.getByText(/Cancel/)).not.toEqual(null)
     })
 
-    const emailBox = wrapper.getByRole(/textbox/, {
+    const emailBox = wrapper.getByRole("textbox", {
       name: "Issue Description*",
     })
 
@@ -182,18 +185,18 @@ describe("IssueReport_Component", () => {
       ).toEqual(true)
     })
 
-    const emailBox = wrapper.getByRole(/textbox/, { name: emailLabel })
+    const emailBox = wrapper.getByRole("textbox", { name: emailLabel })
 
     fireEvent.change(emailBox, { target: { value: email } })
 
-    const issTxt = wrapper.getByRole(/textbox/, { name: issDescrLabel })
+    const issTxt = wrapper.getByRole("textbox", { name: issDescrLabel })
 
     fireEvent.change(issTxt, { target: { value: text } })
 
     await waitFor(() => {
       expect(
         (
-          wrapper.getByRole(/textbox/, {
+          wrapper.getByRole("textbox", {
             name: issDescrLabel,
           }) as HTMLInputElement
         ).value
@@ -202,7 +205,7 @@ describe("IssueReport_Component", () => {
   }
 
   function submit(wrapper: RenderResult) {
-    const submitBtn = wrapper.getByRole(/button/, { name: "Submit" })
+    const submitBtn = wrapper.getByRole("button", { name: "Submit" })
 
     userEvent.click(submitBtn)
   }
@@ -211,9 +214,7 @@ describe("IssueReport_Component", () => {
     const wrapper = render(<IssueReport answer={answer} />)
 
     fetchMock.dontMock()
-    const snackSpy = jest
-      .spyOn(snackActions, "error")
-      .mockImplementation(jest.fn())
+    const snackSpy = vi.spyOn(snackActions, "error").mockImplementation(vi.fn())
 
     act(() => {
       openDialog(wrapper)
@@ -234,9 +235,9 @@ describe("IssueReport_Component", () => {
     fetchMock.enableMocks()
     fetchMock.mockOnce(JSON.stringify({ ok: true }))
 
-    const snackSpy = jest
+    const snackSpy = vi
       .spyOn(snackActions, "success")
-      .mockImplementation(jest.fn())
+      .mockImplementation(vi.fn())
 
     act(() => {
       openDialog(wrapper)
@@ -261,9 +262,7 @@ describe("IssueReport_Component", () => {
       statusText: undefined,
     })
 
-    const snackSpy = jest
-      .spyOn(snackActions, "error")
-      .mockImplementation(jest.fn())
+    const snackSpy = vi.spyOn(snackActions, "error").mockImplementation(vi.fn())
 
     act(() => {
       openDialog(wrapper)
@@ -288,9 +287,7 @@ describe("IssueReport_Component", () => {
       statusText: undefined,
     })
 
-    const snackSpy = jest
-      .spyOn(snackActions, "error")
-      .mockImplementation(jest.fn())
+    const snackSpy = vi.spyOn(snackActions, "error").mockImplementation(vi.fn())
 
     act(() => {
       openDialog(wrapper)

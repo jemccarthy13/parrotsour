@@ -1,6 +1,7 @@
 import React from "react"
 import { ThemeProvider } from "@mui/material"
 import { render } from "@testing-library/react"
+import { vi } from "vitest"
 import { theme } from "../../theme"
 import ChangeLog from "./changelog"
 
@@ -9,7 +10,7 @@ import ChangeLog from "./changelog"
  */
 describe("ChangeLog", () => {
   beforeAll(() => {
-    window.scrollTo = jest.fn()
+    window.scrollTo = vi.fn()
   })
 
   it("renders_with_children", () => {

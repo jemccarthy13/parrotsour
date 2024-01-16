@@ -1,3 +1,4 @@
+import { it, describe, expect, afterEach } from "vitest"
 import { PaintBrush } from "../../../canvas/draw/paintbrush"
 import TestCanvas from "../../../testutils/testcanvas"
 import { Point } from "../../point"

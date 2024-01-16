@@ -19,7 +19,7 @@ export function convertToXY(cgrs: string): Point {
   // need to maintain capture
   // eslint-disable-next-line regexp/optimal-quantifier-concatenation
   const re = /(\d+)([A-Z])([A-Z])(\d*).*/
-  const match = cgrs.match(re)
+  const match = RegExp(re).exec(cgrs)
   let x = -1
   let y = -1
 

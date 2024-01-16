@@ -1,5 +1,7 @@
+import { vi, describe, it, expect, beforeAll, beforeEach } from "vitest"
 import { BlueAir } from "../../../classes/aircraft/blueair"
 import { SensorType } from "../../../classes/aircraft/datatrail/sensortype"
+import { Bullseye } from "../../../classes/bullseye/bullseye"
 import { AircraftGroup, GroupParams } from "../../../classes/groups/group"
 import { Point } from "../../../classes/point"
 import TestCanvas from "../../../testutils/testcanvas"
@@ -20,7 +22,7 @@ beforeAll(() => {
 
   testState = {
     answer: { pic: "2 grps az", groups: [] },
-    reDraw: jest.fn(),
+    reDraw: vi.fn(),
   }
 
   p = {
@@ -37,6 +39,7 @@ beforeAll(() => {
 })
 
 beforeEach(() => {
+  Bullseye.generate(new Point(300, 300))
   PaintBrush.clearCanvas()
 })
 
@@ -55,8 +58,8 @@ describe("DrawAzimuth", () => {
 
     expect(azimuth.getAnswer()).toEqual(
       "TWO GROUPS AZIMUTH 12 " +
-        "SOUTH GROUP BULLSEYE 253/61, 15k HOSTILE HEAVY 4 CONTACTS " +
-        "NORTH GROUP BULLSEYE 265/59, 20k HOSTILE HEAVY 4 CONTACTS"
+        "SOUTH GROUP BULLSEYE 297/21, 15k HOSTILE HEAVY 4 CONTACTS " +
+        "NORTH GROUP BULLSEYE 319/29, 20k HOSTILE HEAVY 4 CONTACTS"
     )
   })
 
@@ -72,8 +75,26 @@ describe("DrawAzimuth", () => {
     azimuth.groups = [ng, sg]
     azimuth.drawInfo()
     expect(azimuth.getAnswer()).toEqual(
-      "TWO GROUPS AZIMUTH 7 OPENING ECHELON SOUTHWEST, " +
-        "NORTH GROUP BULLSEYE 312/58, 20k TRACK EAST HOSTILE HEAVY 4 CONTACTS " +
+      "TWO GROUPS AZIMUTH 15 OPENING ECHELON SOUTHWEST, " +
+        "NORTH GROUP BULLSEYE 319/29, 20k TRACK EAST HOSTILE HEAVY 4 CONTACTS " +
+        "SOUTH GROUP BULLSEYE 283/28, 15k TRACK SOUTH HOSTILE HEAVY 4 CONTACTS"
+    )
+  })
+
+  it("different_track_dirs_echelon_narrow", () => {
+    const ng = new AircraftGroup(p)
+    const sg = new AircraftGroup({
+      ...p,
+      sy: 211,
+      hdg: 180,
+      alts: [15, 15, 15, 15],
+    })
+
+    azimuth.groups = [ng, sg]
+    azimuth.drawInfo()
+    expect(azimuth.getAnswer()).toEqual(
+      "TWO GROUPS AZIMUTH 5 OPENING ECHELON SOUTHWEST, " +
+        "NORTH GROUP BULLSEYE 319/29, 20k TRACK EAST HOSTILE HEAVY 4 CONTACTS " +
         "SOUTH GROUP 15k TRACK SOUTH HOSTILE HEAVY 4 CONTACTS"
     )
   })
@@ -91,9 +112,9 @@ describe("DrawAzimuth", () => {
     azimuth.groups = [ng, sg]
     azimuth.drawInfo()
     expect(azimuth.getAnswer()).toEqual(
-      "TWO GROUPS AZIMUTH 12 " +
-        "SOUTH GROUP BULLSEYE 239, 15k TRACK SOUTH HOSTILE HEAVY 4 CONTACTS " +
-        "NORTH GROUP BULLSEYE 305/53, 20k TRACK EAST HOSTILE HEAVY 4 CONTACTS"
+      "TWO GROUPS AZIMUTH 28 " +
+        "SOUTH GROUP BULLSEYE 249/16, 15k TRACK SOUTH HOSTILE HEAVY 4 CONTACTS " +
+        "NORTH GROUP BULLSEYE 319/29, 20k TRACK EAST HOSTILE HEAVY 4 CONTACTS"
     )
   })
 
@@ -156,7 +177,11 @@ describe("DrawAzimuth", () => {
   })
 
   it("includes_stacks", () => {
-    azimuth.initialize(testProps, testState)
+    const updatedProps = testProps
+
+    updatedProps.orientation.orient = BlueInThe.NORTH
+
+    azimuth.initialize(updatedProps, testState)
 
     const ng = new AircraftGroup({
       ...p,
@@ -179,13 +204,17 @@ describe("DrawAzimuth", () => {
     azimuth.drawInfo()
     expect(azimuth.getAnswer()).toEqual(
       "TWO GROUPS AZIMUTH 11 TRACK NORTH. " +
-        "EAST GROUP BULLSEYE 297/73, STACK 36k AND 24k HOSTILE 2 CONTACTS " +
-        "WEST GROUP BULLSEYE 296/30, STACK 45k 35k AND 25k HOSTILE HEAVY 3 CONTACTS"
+        "EAST GROUP BULLSEYE 340/33, STACK 36k AND 24k HOSTILE 2 CONTACTS " +
+        "WEST GROUP BULLSEYE 323/38, STACK 45k 35k AND 25k HOSTILE HEAVY 3 CONTACTS"
     )
   })
 
-  it("includes_stacks", () => {
-    azimuth.initialize(testProps, testState)
+  it("includes_stacks_fillins", () => {
+    const updatedProps = testProps
+
+    updatedProps.orientation.orient = BlueInThe.NORTH
+
+    azimuth.initialize(updatedProps, testState)
 
     const ng = new AircraftGroup({
       ...p,
@@ -208,7 +237,7 @@ describe("DrawAzimuth", () => {
     azimuth.drawInfo()
     expect(azimuth.getAnswer()).toEqual(
       "TWO GROUPS AZIMUTH 9 TRACK NORTH. " +
-        "EAST GROUP BULLSEYE 300/72, 36k HOSTILE " +
+        "EAST GROUP BULLSEYE 338/33, 36k HOSTILE " +
         "WEST GROUP STACK 46k 35k AND 25k HOSTILE HEAVY 4 CONTACTS 2 HIGH 1 MEDIUM 1 LOW"
     )
   })
@@ -218,7 +247,7 @@ describe("DrawAzimuth", () => {
     azimuth.chooseNumGroups()
     expect(azimuth.numGroupsToCreate).toEqual(2)
 
-    jest.spyOn(PSMath, "randomNumber").mockReturnValue(10)
+    vi.spyOn(PSMath, "randomNumber").mockReturnValue(10)
     const pInfo = azimuth.getPictureInfo()
 
     expect(pInfo.deep).toEqual(7 * PSMath.PIXELS_TO_NM)

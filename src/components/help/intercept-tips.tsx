@@ -43,16 +43,18 @@ export const InterceptQT = (): ReactElement => {
         <br />
       </List>
       <DialogContentText>
-        <b>Fights On</b>
         <br />
-        This button will animate the red air to simulate an intercept. Red air
-        will turn hot to blue and have a chance to maneuver as they get closer.
+        <i>
+          <b>Fights On</b>
+        </i>{" "}
+        will animate the red air to simulate an intercept. Red air will turn hot
+        to blue and have a chance to maneuver as they get closer.
         <br />
-        <i>Measuring</i> during the fight will suspend the arrows, to asses for
-        and voice maneuvers and/or threats.
-        <br />
-        <i>Pause</i> will let you suspend the arrows to voice progressive
-        maneuver comm.
+        <i>
+          <b>Pause</b>
+        </i>{" "}
+        will let you suspend the arrows to assess for and voice progressive
+        maneuver comm and/or threats.
         <br />
         <br />
       </DialogContentText>

@@ -1,16 +1,17 @@
 import React from "react"
 import { render, waitFor } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
+import { userEvent } from "@testing-library/user-event"
 import { act } from "react-dom/test-utils"
+import { vi, describe, it, expect } from "vitest"
 import { BlueInThe } from "../../canvas/canvastypes"
 import { SensorType } from "../../classes/aircraft/datatrail/sensortype"
 import { DisplayControls, DisplayProps } from "./display-controls"
 
 const fakeProps: DisplayProps = {
   toggles: {
-    toggleDataStyle: jest.fn(),
-    toggleBraaFirst: jest.fn(),
-    toggleCanvasOrient: jest.fn(),
+    toggleDataStyle: vi.fn(),
+    toggleBraaFirst: vi.fn(),
+    toggleCanvasOrient: vi.fn(),
   },
   settings: {
     dataStyle: SensorType.ARROW,
@@ -27,7 +28,7 @@ describe("ParrotSourControls", () => {
   it("alerts_parent_datastyle_change", async () => {
     const wrapper = render(<DisplayControls {...fakeProps} />)
 
-    const dataStyle = wrapper.getByRole(/checkbox/, { name: "Data Trail:" })
+    const dataStyle = wrapper.getByRole("checkbox", { name: "Data Trail:" })
 
     act(() => {
       userEvent.click(dataStyle)
@@ -41,7 +42,7 @@ describe("ParrotSourControls", () => {
   it("alerts_parent_displayfirst_change", async () => {
     const wrapper = render(<DisplayControls {...fakeProps} />)
 
-    const bullFirst = wrapper.getByRole(/checkbox/, { name: "Display First:" })
+    const bullFirst = wrapper.getByRole("checkbox", { name: "Display First:" })
 
     act(() => {
       userEvent.click(bullFirst)

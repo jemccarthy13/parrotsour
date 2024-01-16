@@ -1,3 +1,4 @@
+import { vi, describe, it, expect, beforeAll, afterEach } from "vitest"
 import { BlueAir } from "../../../classes/aircraft/blueair"
 import { Bullseye } from "../../../classes/bullseye/bullseye"
 import { AircraftGroup } from "../../../classes/groups/group"
@@ -9,13 +10,13 @@ import { PaintBrush } from "../paintbrush"
 import DrawAzimuth from "./azimuth"
 import { testProps } from "./mockutils.unit.test"
 
-jest.mock("../../../components/alert/psalert", () => ({
+vi.mock("../../../components/alert/psalert", () => ({
   snackActions: {
-    success: jest.fn(),
-    warning: jest.fn(),
-    info: jest.fn(),
-    error: jest.fn(),
-    toast: jest.fn(),
+    success: vi.fn(),
+    warning: vi.fn(),
+    info: vi.fn(),
+    error: vi.fn(),
+    toast: vi.fn(),
   },
 }))
 
@@ -26,7 +27,7 @@ describe("DrawPic", () => {
 
   const testState: PictureCanvasState = {
     answer: { pic: "", groups: [] },
-    reDraw: jest.fn(),
+    reDraw: vi.fn(),
   }
 
   BlueAir.set(new AircraftGroup({ sx: 400, sy: 400, nContacts: 1 }))
@@ -41,16 +42,14 @@ describe("DrawPic", () => {
 
   it("simple_functions", () => {
     expect(draw.getNumGroups()).toEqual(0)
-    jest.mock("../../../classes/groups/group")
     draw.groups = [new AircraftGroup()]
     expect(draw.getNumGroups()).toEqual(1)
-    jest.restoreAllMocks()
   })
 
   it("assigns_contacts_too_few_contacts", () => {
-    const snackSpy = jest
+    const snackSpy = vi
       .spyOn(snackActions, "warning")
-      .mockImplementation(jest.fn())
+      .mockImplementation(vi.fn())
 
     const nCts = draw.assignContacts(2, 1)
 

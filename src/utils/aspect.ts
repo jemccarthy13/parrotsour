@@ -8,7 +8,7 @@ export enum Aspect {
 }
 
 export function aspectFromCATA(cata: number): Aspect {
-  let aspectH = Aspect.MANEUVER
+  let aspectH: Aspect
 
   if (cata < 30) {
     aspectH = Aspect.HOT

@@ -1,3 +1,4 @@
+import { vi } from "vitest"
 import { BlueAir } from "../../../classes/aircraft/blueair"
 import { SensorType } from "../../../classes/aircraft/datatrail/sensortype"
 import { Bullseye } from "../../../classes/bullseye/bullseye"
@@ -19,7 +20,7 @@ let testState: PictureCanvasState
 let p: Partial<GroupParams>
 let vic: DrawVic
 
-jest.mock("./cap", () => {
+vi.mock("./cap", () => {
   //nothing
 })
 
@@ -49,7 +50,7 @@ describe("DrawVic", () => {
     Bullseye.generate(new Point(400, 400))
     testState = {
       answer: { pic: "3 grp ladder", groups: [] },
-      reDraw: jest.fn(),
+      reDraw: vi.fn(),
     }
 
     BlueAir.set(new AircraftGroup({ sx: 600, sy: 400, hdg: 270, nContacts: 4 }))
@@ -66,7 +67,7 @@ describe("DrawVic", () => {
     vic = new DrawVic()
     vic.initialize(testProps, testState)
 
-    jest.restoreAllMocks()
+    vi.restoreAllMocks()
   })
 
   it("simple_functions", () => {
@@ -186,8 +187,8 @@ describe("DrawVic", () => {
   })
 
   it("creates_groups_vanilla", () => {
-    jest.spyOn(PSMath, "randomHeading").mockReturnValue(90)
-    jest.spyOn(PSMath, "randomNumber").mockReturnValue(20)
+    vi.spyOn(PSMath, "randomHeading").mockReturnValue(90)
+    vi.spyOn(PSMath, "randomNumber").mockReturnValue(20)
     vic.numGroupsToCreate = 3
     vic.dimensions = vic.getPictureInfo()
     const startPos = new Point(100, 100)
@@ -202,14 +203,12 @@ describe("DrawVic", () => {
   })
 
   it("creates_groups_hardMode", () => {
-    jest
-      .spyOn(PSMath, "randomHeading")
+    vi.spyOn(PSMath, "randomHeading")
       .mockReturnValueOnce(90)
       .mockReturnValueOnce(80)
       .mockReturnValueOnce(125)
 
-    jest
-      .spyOn(PSMath, "randomNumber")
+    vi.spyOn(PSMath, "randomNumber")
       .mockReturnValueOnce(20)
       .mockReturnValueOnce(20)
       .mockReturnValue(1)
@@ -231,8 +230,8 @@ describe("DrawVic", () => {
   })
 
   it("creates_groups_NS", () => {
-    jest.spyOn(PSMath, "randomHeading").mockReturnValue(90)
-    jest.spyOn(PSMath, "randomNumber").mockReturnValue(1)
+    vi.spyOn(PSMath, "randomHeading").mockReturnValue(90)
+    vi.spyOn(PSMath, "randomNumber").mockReturnValue(1)
 
     const updatedProps: PictureCanvasProps = { ...testProps }
 

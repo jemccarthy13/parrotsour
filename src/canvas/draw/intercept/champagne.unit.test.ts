@@ -1,3 +1,4 @@
+import { vi } from "vitest"
 import { BlueAir } from "../../../classes/aircraft/blueair"
 import { SensorType } from "../../../classes/aircraft/datatrail/sensortype"
 import { Bullseye } from "../../../classes/bullseye/bullseye"
@@ -27,7 +28,7 @@ describe("DrawChamp", () => {
     BlueAir.set(new AircraftGroup({ sx: 600, sy: 400, hdg: 270, nContacts: 4 }))
     testState = {
       answer: { pic: "3 grp champ", groups: [] },
-      reDraw: jest.fn(),
+      reDraw: vi.fn(),
     }
 
     p = {

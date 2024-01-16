@@ -27,7 +27,7 @@ function _findAndReplaceCGRS(msgText: string): {
 } {
   let textToParse = msgText.toUpperCase()
   const re = /(\d+[A-Z]+\d*)/
-  const matches = textToParse.match(re)
+  const matches = RegExp(re).exec(textToParse)
   const cgrs: string[] = []
 
   if (matches) {
@@ -57,9 +57,9 @@ function _checkForAsset(
   sendResponse: (sender: string, msg: string) => void
 ): AircraftGroup | undefined {
   const nl = AIProcessor.process(processedText)
-  const assetMsg = nl.match("[<cs>#Noun] *").first()
-  const cs = assetMsg.groups().cs
-  const callsign = cs ? cs.text().toUpperCase() : "SYSTEM"
+  const assetMsg = nl.match("#Noun").first()
+  const cs = assetMsg.text()
+  const callsign = cs ? cs.toUpperCase() : "SYSTEM"
   const asset = getAsset(groups, callsign)
 
   if (callsign === "SYSTEM") {

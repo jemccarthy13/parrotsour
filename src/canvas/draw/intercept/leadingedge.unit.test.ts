@@ -1,3 +1,4 @@
+import { vi } from "vitest"
 import { BlueAir } from "../../../classes/aircraft/blueair"
 import { SensorType } from "../../../classes/aircraft/datatrail/sensortype"
 import { Bullseye } from "../../../classes/bullseye/bullseye"
@@ -20,14 +21,14 @@ describe("DrawPackages", () => {
   })
 
   beforeEach(() => {
-    jest.restoreAllMocks()
+    vi.restoreAllMocks()
     TestCanvas.useContext(800, 500)
 
     Bullseye.generate(new Point(400, 400))
 
     testState = {
       answer: { pic: "3 grp ladder", groups: [] },
-      reDraw: jest.fn(),
+      reDraw: vi.fn(),
     }
 
     BlueAir.set(new AircraftGroup({ sx: 600, sy: 200, hdg: 270, nContacts: 4 }))

@@ -1,6 +1,7 @@
 import React from "react"
 import { render, waitFor } from "@testing-library/react"
 import { act } from "react-dom/test-utils"
+import { vi, describe, it, expect, beforeAll, afterEach } from "vitest"
 import { PicAnimationHandler } from "../animation/intercept"
 import { SensorType } from "../classes/aircraft/datatrail/sensortype"
 import { AircraftGroup } from "../classes/groups/group"
@@ -8,21 +9,19 @@ import { FORMAT } from "../classes/supportedformats"
 import { BlueInThe, PictureCanvasProps } from "./canvastypes"
 import PictureCanvas from "./intercept"
 
-jest.mock("../animation/intercept")
+vi.mock("../animation/intercept")
 
-const mockDraw = jest
+const mockDraw = vi
   .spyOn(AircraftGroup.prototype, "draw")
-  .mockImplementation(() => {
-    console.log("hello")
-  })
-const animatorAnimate = jest.spyOn(PicAnimationHandler.prototype, "animate")
-const animatorPause = jest.spyOn(PicAnimationHandler.prototype, "pauseFight")
+  .mockImplementation(vi.fn())
+const animatorAnimate = vi.spyOn(PicAnimationHandler.prototype, "animate")
+const animatorPause = vi.spyOn(PicAnimationHandler.prototype, "pauseFight")
 
-const resetFn = jest.fn()
+const resetFn = vi.fn()
 
 describe("PictureCanvas", () => {
   beforeAll(() => {
-    jest.spyOn(global.console, "warn").mockImplementation()
+    vi.spyOn(global.console, "warn").mockImplementation(vi.fn())
   })
 
   afterEach(() => {
@@ -33,7 +32,7 @@ describe("PictureCanvas", () => {
   const testProps: PictureCanvasProps = {
     picType: "azimuth",
     format: FORMAT.ALSA,
-    setAnswer: jest.fn(),
+    setAnswer: vi.fn(),
     resetCallback: resetFn,
     sliderSpeed: 100,
     braaFirst: true,
@@ -42,7 +41,7 @@ describe("PictureCanvas", () => {
     isHardMode: false,
     newPic: false,
     animate: false,
-    animateCallback: jest.fn(),
+    animateCallback: vi.fn(),
     orientation: {
       height: 200,
       width: 200,

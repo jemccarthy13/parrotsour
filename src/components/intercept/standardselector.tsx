@@ -18,12 +18,12 @@ export type StandardSelectorProps = {
 }
 
 export const StandardSelector = (props: StandardSelectorProps) => {
-  const [isShowAlsaQT, setShowAlsaQT] = useState(false)
+  const [isShowAlsaQT, setIsShowAlsaQT] = useState(false)
 
   const { onChange } = props
 
   function handleToggleAlsaQT() {
-    setShowAlsaQT((prev) => !prev)
+    setIsShowAlsaQT((prev) => !prev)
   }
 
   const handleRadioChange = useCallback(
@@ -91,7 +91,7 @@ export const StandardSelector = (props: StandardSelectorProps) => {
             X
           </IconButton>
           <DialogContentText>
-            Download the pub&nbsp;
+            Download the pub{" "}
             <a
               style={{ color: "#42a5f5" }}
               target="_window"

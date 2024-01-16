@@ -22,7 +22,7 @@ export const ParrotSourChooser = ({
 
   function navigate(link?: string): () => void {
     return () => {
-      window.location.href = link ? link : "#"
+      window.location.href = link ?? "#"
     }
   }
 

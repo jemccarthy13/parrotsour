@@ -65,13 +65,13 @@ export const ChatBox = (props: CBProps) => {
   }
 
   const sendChatMessage = (msg: string) => {
-    if (msg.indexOf("/") === 0) {
-      if (msg.indexOf("/nick") === 0) {
+    if (msg.startsWith("/")) {
+      if (msg.startsWith("/nick")) {
         const newCs = msg.replace("/nick", "").trim()
 
         setSender(newCs)
         sendSystemMsg("changed nick to " + newCs)
-      } else if (msg.indexOf("/handover") === 0) {
+      } else if (msg.startsWith("/handover")) {
         sendSystemMsg("BMA Rundown")
         answer.groups.forEach((grp: AircraftGroup) => {
           const pos = grp.getCenterOfMass(SensorType.ARROW)
@@ -85,7 +85,7 @@ export const ChatBox = (props: CBProps) => {
           )
         })
         sendSystemMsg("End rundown")
-      } else if (msg.indexOf("/help") === 0) {
+      } else if (msg.startsWith("/help")) {
         sendSystemMsg(
           "*** Use /nick to set your callsign. ***\r\n" +
             "*** This chatroom simulates an airspace control room.\r\n" +

@@ -122,8 +122,8 @@ export class PaintBrush {
     offX?: number,
     offY?: number
   ): void {
-    const offsetX = offX || 0
-    const offsetY = offY || 0
+    const offsetX = offX ?? 0
+    const offsetY = offY ?? 0
     const formattedAlts: string[] = alts.map((a: number) => {
       return formatAlt(a)
     })
@@ -144,7 +144,7 @@ export class PaintBrush {
       return
     }
 
-    color = color || "black"
+    color = color ?? "black"
     context.lineWidth = 1
     context.fillStyle = color
     context.strokeStyle = color

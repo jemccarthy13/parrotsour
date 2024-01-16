@@ -1,11 +1,12 @@
+import { expect, it, describe } from "vitest"
 import { BlueInThe } from "../canvas/canvastypes"
 import { PIXELS_TO_NM } from "../utils/math"
 import { Point } from "./point"
 
 // Come back to this to self-contain 100% coverage in unit tests
 // // mock BRAA to self-contain intent tests
-// const mockFn = jest.fn()
-// jest.mock("./braa", () => {
+// const mockFn = vi.fn()
+// vi.mock("./braa", () => {
 //   return function (x: number, y: number) {
 //     return {
 //       x,
@@ -16,7 +17,7 @@ import { Point } from "./point"
 //   }
 // })
 // // import { BRAA } from "./braa"
-// jest.mock("./braa")
+// vi.mock("./braa")
 
 describe("point", () => {
   it("has_XY", () => {

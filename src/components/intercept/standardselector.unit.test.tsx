@@ -1,10 +1,11 @@
 import React from "react"
 import { render, waitFor } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
+import { userEvent } from "@testing-library/user-event"
+import { vi, describe, it, expect } from "vitest"
 import { StandardSelector, StandardSelectorProps } from "./standardselector"
 
 describe("StandardSelector", () => {
-  const mockSelChg = jest.fn()
+  const mockSelChg = vi.fn()
   const fakeProps: StandardSelectorProps = {
     onChange: mockSelChg,
   }
@@ -12,13 +13,13 @@ describe("StandardSelector", () => {
   it("handles_format_standard_change", async () => {
     const wrapper = render(<StandardSelector {...fakeProps} />)
 
-    const alsaBtn = wrapper.getByRole(/radio/, {
+    const alsaBtn = wrapper.getByRole("radio", {
       name: /ALSA ACC/,
     }) as HTMLInputElement
 
     expect(alsaBtn.checked).toEqual(true)
 
-    const ipeBtn = wrapper.getByRole(/radio/, {
+    const ipeBtn = wrapper.getByRole("radio", {
       name: "3-3 IPE",
     }) as HTMLInputElement
 
@@ -32,7 +33,7 @@ describe("StandardSelector", () => {
   it("handles_toggle_alsa_tips", async () => {
     const wrapper = render(<StandardSelector {...fakeProps} />)
 
-    userEvent.click(wrapper.getByRole(/button/))
+    userEvent.click(wrapper.getByRole("button"))
 
     await waitFor(() => {
       expect(wrapper.getByText(/Download the pub/)).toBeDefined()

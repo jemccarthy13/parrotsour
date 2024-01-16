@@ -36,7 +36,7 @@ export const ParrotSourIntercept = () => {
 
   const [format, setFormat] = useState(FORMAT.ALSA)
   const [picType, setPicType] = useState("random")
-  const [isNewPic, setNewPic] = useState(false)
+  const [isNewPic, setIsNewPic] = useState(false)
   const [desiredNumContacts, setDesiredNumContacts] = useState(0)
 
   const [answer, setAnswer] = useState<PictureAnswer>({
@@ -55,7 +55,7 @@ export const ParrotSourIntercept = () => {
    */
   const onNewPic = useCallback((): void => {
     animationHandlers.pauseAnimate()
-    setNewPic((prev) => !prev)
+    setIsNewPic((prev) => !prev)
   }, [])
 
   /**

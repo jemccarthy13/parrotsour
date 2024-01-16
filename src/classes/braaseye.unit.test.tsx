@@ -1,3 +1,4 @@
+import { afterEach, expect, it, describe } from "vitest"
 import { PaintBrush } from "../canvas/draw/paintbrush"
 import TestCanvas from "../testutils/testcanvas"
 import { PIXELS_TO_NM } from "../utils/math"

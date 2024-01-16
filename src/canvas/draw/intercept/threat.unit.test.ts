@@ -1,3 +1,4 @@
+import { vi, it, expect, describe, beforeEach } from "vitest"
 import { BlueAir } from "../../../classes/aircraft/blueair"
 import { SensorType } from "../../../classes/aircraft/datatrail/sensortype"
 import { Bullseye } from "../../../classes/bullseye/bullseye"
@@ -20,13 +21,13 @@ describe("DrawThreat", () => {
 
   let testState: PictureCanvasState = {
     answer: { pic: "3 grp ladder", groups: [] },
-    reDraw: jest.fn(),
+    reDraw: vi.fn(),
   }
 
   BlueAir.set(new AircraftGroup({ sx: 600, sy: 200, hdg: 270, nContacts: 4 }))
 
   beforeEach(() => {
-    jest.restoreAllMocks()
+    vi.restoreAllMocks()
 
     PaintBrush.clearCanvas()
 
@@ -34,7 +35,7 @@ describe("DrawThreat", () => {
 
     testState = {
       answer: { pic: "3 grp ladder", groups: [] },
-      reDraw: jest.fn(),
+      reDraw: vi.fn(),
     }
 
     dThreat.initialize(testProps, testState)

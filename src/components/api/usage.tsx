@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from "react"
 
+// NOTE -- check the fetch / response and formatting for the result(s)
 export function APIUsage() {
   const [data, setData] = useState()
 
   useEffect(() => {
     async function fetchData() {
       const d = await fetch(
-        process.env.PUBLIC_URL + "/database/api/stats.php",
+        "http://www.parrotsour.com/database/api/stats.php",
         {
           method: "GET",
         }
       )
 
-      console.log(d.json())
+      // console.log(d)
+
+      // console.log(d.json())
       //@ts-expect-error typed
       setData(d)
     }

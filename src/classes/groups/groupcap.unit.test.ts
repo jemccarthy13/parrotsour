@@ -1,3 +1,4 @@
+import { expect, it, describe, afterEach } from "vitest"
 import { PaintBrush } from "../../canvas/draw/paintbrush"
 import TestCanvas from "../../testutils/testcanvas"
 import { IDMatrix } from "../aircraft/id"

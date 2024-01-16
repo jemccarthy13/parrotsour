@@ -1,17 +1,18 @@
 import React from "react"
 import { render, waitFor } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
+import { userEvent } from "@testing-library/user-event"
 import { act } from "react-dom/test-utils"
+import { vi, describe, it, expect } from "vitest"
 import { PicOptionsBar, POBSelProps } from "./picoptions"
 
 const fakeProps: POBSelProps = {
   picType: "azimuth",
-  handleChangePicType: jest.fn(),
-  handleToggleHardMode: jest.fn(),
+  handleChangePicType: vi.fn(),
+  handleToggleHardMode: vi.fn(),
   isHardModeChecked: false,
-  handleToggleMeasurements: jest.fn(),
+  handleToggleMeasurements: vi.fn(),
   isWantMeasureChecked: false,
-  handleNewPic: jest.fn(),
+  handleNewPic: vi.fn(),
 }
 
 describe("PicOptionsBar", () => {
@@ -20,17 +21,19 @@ describe("PicOptionsBar", () => {
   it("calls_selection_change", async () => {
     const wrapper = render(<PicOptionsBar {...fakeProps} />)
 
-    const picSelector = wrapper.getByRole(/button/, { name: "AZIMUTH" })
+    const picSelector = wrapper.getByRole("combobox")
 
     act(() => {
       userEvent.click(picSelector)
     })
 
     await waitFor(() => {
-      expect(wrapper.getByRole(/option/, { name: "RANGE" })).toBeDefined()
+      expect(wrapper.getByRole("option", { name: "RANGE" })).toBeDefined()
     })
 
-    userEvent.click(wrapper.getByRole(/option/, { name: "RANGE" }))
+    act(() => {
+      userEvent.click(wrapper.getByRole("option", { name: "RANGE" }))
+    })
 
     await waitFor(() => {
       expect(fakeProps.handleChangePicType).toHaveBeenCalled()
@@ -40,7 +43,7 @@ describe("PicOptionsBar", () => {
   it("calls_showmeasure_change", async () => {
     const wrapper = render(<PicOptionsBar {...fakeProps} />)
 
-    const measure = wrapper.getByRole(/checkbox/, {
+    const measure = wrapper.getByRole("checkbox", {
       name: "I want to measure",
     }) as HTMLInputElement
 
@@ -54,7 +57,7 @@ describe("PicOptionsBar", () => {
   it("calls_hardmode_change", async () => {
     const wrapper = render(<PicOptionsBar {...fakeProps} />)
 
-    const hard = wrapper.getByRole(/checkbox/, {
+    const hard = wrapper.getByRole("checkbox", {
       name: "Hard Mode",
     }) as HTMLInputElement
 
@@ -68,7 +71,7 @@ describe("PicOptionsBar", () => {
   it("calls_newpic_change", async () => {
     const wrapper = render(<PicOptionsBar {...fakeProps} />)
 
-    const newPicBtn = wrapper.getByRole(/button/, { name: "New Pic" })
+    const newPicBtn = wrapper.getByRole("button", { name: "New Pic" })
 
     userEvent.click(newPicBtn)
 

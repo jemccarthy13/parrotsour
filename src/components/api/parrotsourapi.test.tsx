@@ -1,17 +1,18 @@
 import React from "react"
 import { fireEvent, render, waitFor } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
+import { userEvent } from "@testing-library/user-event"
 import { act } from "react-dom/test-utils"
+import { vi, describe, it, expect } from "vitest"
 import { snackActions } from "../alert/psalert"
 import { ParrotSourAPI } from "./parrotsourapi"
 import * as utils from "./utils"
 
-jest.mock("../alert/psalert", () => ({
+vi.mock("../alert/psalert", () => ({
   snackActions: {
-    warning: jest.fn(),
-    error: jest.fn(),
-    toast: jest.fn(),
-    info: jest.fn(),
+    warning: vi.fn(),
+    error: vi.fn(),
+    toast: vi.fn(),
+    info: vi.fn(),
   },
 }))
 
@@ -19,7 +20,7 @@ describe("psapi", () => {
   it("handles_change_numpics", async () => {
     const apiPage = render(<ParrotSourAPI />)
 
-    const numPics = apiPage.getByRole(/spinbutton/)
+    const numPics = apiPage.getByRole("spinbutton")
 
     fireEvent.change(numPics, { target: { value: 6 } })
     await waitFor(() => {
@@ -30,7 +31,7 @@ describe("psapi", () => {
   it("handles_change_include_group_info", async () => {
     const apiPage = render(<ParrotSourAPI />)
 
-    const includeGrps = apiPage.getByRole(/checkbox/)
+    const includeGrps = apiPage.getByRole("checkbox")
 
     act(() => {
       userEvent.click(includeGrps)
@@ -44,7 +45,7 @@ describe("psapi", () => {
   it("handles_change_code", async () => {
     const apiPage = render(<ParrotSourAPI />)
 
-    const codeInpt = apiPage.getByRole(/textbox/)
+    const codeInpt = apiPage.getByRole("textbox")
 
     act(() => {
       fireEvent.change(codeInpt, { target: { value: "accesscode" } })
@@ -56,15 +57,15 @@ describe("psapi", () => {
   })
 
   it("download_checks_accesscode", async () => {
-    const snackSpy = jest.spyOn(snackActions, "warning")
+    const snackSpy = vi.spyOn(snackActions, "warning")
 
     const apiPage = render(<ParrotSourAPI />)
 
-    const submitBtn = apiPage.getByRole(/button/, { name: "Download" })
+    const submitBtn = apiPage.getByRole("button", { name: "Download" })
 
-    jest
-      .spyOn(utils, "validAccessCode")
-      .mockImplementation(() => Promise.resolve(false))
+    vi.spyOn(utils, "validAccessCode").mockImplementation(() =>
+      Promise.resolve(false)
+    )
 
     act(() => {
       userEvent.click(submitBtn)

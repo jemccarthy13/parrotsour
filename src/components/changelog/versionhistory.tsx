@@ -32,6 +32,17 @@ export default function VersionHistory(): JSX.Element {
   // the order in this list === display order
   const versionHistory: VersionList = [
     {
+      version: "4.2.2",
+      date: "15 Jan 2024",
+      features: [],
+      fixes: [
+        "Fixed issue with bullseye drawing during animation. It should now show properly",
+      ],
+      improvements: [
+        "Updated several security fixes, patched some vulnerabilities, squashed some bugs",
+      ],
+    },
+    {
       version: "4.2.1",
       date: "22 May 2023",
       features: [],

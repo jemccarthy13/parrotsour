@@ -12,17 +12,17 @@ import { StyledAccordion } from "./styles"
 export default function BugList() {
   const bugs = [
     {
-      version: "4.1.0",
+      version: "4.2.2",
       description:
         "Sometimes in hard mode, picture 'width' will be <5 nm (sometimes '0')",
     },
     {
-      version: "4.1.0",
+      version: "4.2.2",
       description:
         "Sometimes packages and leading edge draw really weird pictures",
     },
     {
-      version: "4.1.0",
+      version: "4.2.2",
       description:
         "Sometimes random group draws with a large number of contacts?",
     },

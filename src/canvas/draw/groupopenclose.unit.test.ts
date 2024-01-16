@@ -1,3 +1,4 @@
+import { describe, it, expect, beforeEach } from "vitest"
 import { SensorType } from "../../classes/aircraft/datatrail/sensortype"
 import { AircraftGroup } from "../../classes/groups/group"
 import TestCanvas from "../../testutils/testcanvas"

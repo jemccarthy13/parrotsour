@@ -1,11 +1,11 @@
+import { it, describe, expect, beforeEach } from "vitest"
+import { PaintBrush } from "../../canvas/draw/paintbrush"
+import TestCanvas from "../../testutils/testcanvas"
 import { Point } from "../point"
+import Tasking from "../taskings/tasking"
 import { ACType, Aircraft } from "./aircraft"
 import { SensorType } from "./datatrail/sensortype"
 import { IDMatrix } from "./id"
-import Tasking from "../taskings/tasking"
-import { PaintBrush } from "../../canvas/draw/paintbrush"
-
-import TestCanvas from "../../testutils/testcanvas"
 
 /**
  * Integration tests for Aircraft.
@@ -27,6 +27,7 @@ describe("Aircraft", () => {
   describe("constructors", () => {
     it("constructs_FTR_correctly", () => {
       const acft = new Aircraft()
+
       expect(acft.getHeading()).toEqual(90)
       expect(acft.getAltitude()).toBeLessThanOrEqual(45)
       expect(acft.getAltitude()).toBeGreaterThanOrEqual(15)
@@ -34,6 +35,7 @@ describe("Aircraft", () => {
       expect(acft.getNextRoutingPoint()).toEqual(undefined)
       expect(acft.getType()).toEqual(ACType.FTR)
       const startPos = acft.getStartPos()
+
       expect(startPos.x).toBeLessThanOrEqual(100)
       expect(startPos.y).toBeLessThanOrEqual(100)
       expect(startPos.x).toBeGreaterThanOrEqual(1)
@@ -42,6 +44,7 @@ describe("Aircraft", () => {
 
     it("constructs_RPA_correctly", () => {
       const acft = new Aircraft({ type: ACType.RPA })
+
       expect(acft.getAltitude()).toBeLessThanOrEqual(18)
       expect(acft.getAltitude()).toBeGreaterThanOrEqual(0o5)
     })
@@ -51,14 +54,17 @@ describe("Aircraft", () => {
     it("computes_for_arrows", () => {
       const bluePos = new Point(50, 50)
       const acft = new Aircraft({ sx: bluePos.x, sy: bluePos.y })
+
       expect(acft.getCenterOfMass()).toEqual({ x: 74, y: 50 })
 
       acft.setHeading(180)
       expect(acft.getCenterOfMass()).toEqual({ x: 49, y: 74 })
     })
+
     it("computes_for_rawdata", () => {
       const acft = new Aircraft({ sx: 50, sy: 50, hdg: 90 })
       const centMass = acft.getCenterOfMass(SensorType.RAW)
+
       expect(centMass.x).toBeGreaterThanOrEqual(82)
       expect(centMass.x).toBeLessThanOrEqual(102)
       expect(centMass.y).toBeGreaterThanOrEqual(47)
@@ -74,9 +80,11 @@ describe("Aircraft", () => {
         sy: bluePos.y,
         hdg: 180,
       })
+
       acft.draw(SensorType.ARROW)
       expect(TestCanvas.getCanvas()).toMatchSnapshot()
     })
+
     it("suspect", () => {
       const bluePos = new Point(5, 5)
       const acft = new Aircraft({
@@ -84,10 +92,12 @@ describe("Aircraft", () => {
         sy: bluePos.y,
         hdg: 180,
       })
+
       acft.setIDMatrix(IDMatrix.SUSPECT)
       acft.draw(SensorType.ARROW)
       expect(TestCanvas.getCanvas()).toMatchSnapshot()
     })
+
     it("neutral", () => {
       const bluePos = new Point(5, 5)
       const acft = new Aircraft({
@@ -95,10 +105,12 @@ describe("Aircraft", () => {
         sy: bluePos.y,
         hdg: 180,
       })
+
       acft.setIDMatrix(IDMatrix.NEUTRAL)
       acft.draw(SensorType.ARROW)
       expect(TestCanvas.getCanvas()).toMatchSnapshot()
     })
+
     it("assume_friend", () => {
       const bluePos = new Point(5, 5)
       const acft = new Aircraft({
@@ -106,6 +118,7 @@ describe("Aircraft", () => {
         sy: bluePos.y,
         hdg: 180,
       })
+
       acft.setIDMatrix(IDMatrix.ASSUME_FRIEND)
       acft.draw(SensorType.ARROW)
       expect(TestCanvas.getCanvas()).toMatchSnapshot()
@@ -121,6 +134,7 @@ describe("Aircraft", () => {
         hdg: 180,
         alt: 30,
       })
+
       acft.updateIntent({
         desiredAlt: 10,
       })
@@ -146,6 +160,7 @@ describe("Aircraft", () => {
         locationStr: "88LC",
         description: "BOMBING STUFF",
       })
+
       acft.setTasking(tasking)
       expect(acft.isTasked()).toEqual(true)
       expect(acft.getTasking()).toEqual(tasking)
@@ -159,6 +174,7 @@ describe("Aircraft", () => {
   describe("move_turns", () => {
     it("no_turn_when_no_target", () => {
       const acft = new Aircraft()
+
       acft.turnToTarget()
       expect(acft.getHeading()).toEqual(90)
     })
@@ -172,6 +188,7 @@ describe("Aircraft", () => {
         sy: 26,
         hdg: 180,
       })
+
       acft.addRoutingPoint(new Point(50, 50))
       acft.turnToTarget()
       expect(acft.getHeading()).toEqual(180 - 90 / 15)
@@ -185,6 +202,7 @@ describe("Aircraft", () => {
         sy: 38,
         hdg: 180,
       })
+
       acft.turnToTarget() // expect nothing to change
       expect(acft.getHeading()).toEqual(180)
       expect(acft.getStartPos()).toEqual(new Point(50, 38))
@@ -197,6 +215,7 @@ describe("Aircraft", () => {
         sy: dest.y,
         hdg: 180,
       })
+
       acft.updateIntent({ desiredHeading: 175 })
       acft.turnToTarget() // < 7 turn delta is snap to desired (to avoid data trail sin wave)
       expect(acft.getHeading()).toEqual(175)
@@ -210,6 +229,7 @@ describe("Aircraft", () => {
         sy: 38,
         hdg: 180,
       })
+
       acft.move() // move once
       expect(acft.getHeading()).toEqual(180)
       expect(acft.getStartPos()).toEqual(new Point(50, 45))
@@ -222,6 +242,7 @@ describe("Aircraft", () => {
         sy: 38,
         hdg: 180,
       })
+
       acft.updateIntent({ desiredHeading: 135 })
       acft.move() // move once
       expect(acft.getHeading()).toEqual(Math.floor(180 - (180 - 135) / 7))
@@ -236,6 +257,7 @@ describe("Aircraft", () => {
         sy: 30,
         hdg: 90,
       })
+
       acft.addRoutingPoint(new Point(34, 30))
       acft.addRoutingPoint(new Point(56, 30))
       expect(acft.isCapping()).toEqual(false)
@@ -249,12 +271,14 @@ describe("Aircraft", () => {
       expect(acft.atFinalDestination()).toEqual(true)
       expect(acft.isCapping()).toEqual(true)
     })
+
     it("chained_routing", () => {
       const acft = new Aircraft({
         sx: 10,
         sy: 30,
         hdg: 90,
       })
+
       acft.addRoutingPoint(new Point(100, 100))
       acft.addRoutingPoint(new Point(200, 200))
       acft.doNextRouting()

@@ -55,7 +55,6 @@ export default class PictureCanvas extends ParrotSourCanvas {
 
       Bullseye.generate()
 
-      console.log(Bullseye.get())
       PaintBrush.drawBullseye()
 
       animateImage = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height)
@@ -153,6 +152,8 @@ export default class PictureCanvas extends ParrotSourCanvas {
 
     BlueAir.set(blueAir)
 
+    // console warning: Multiple readback operations using getImageData are faster with the
+    // willReadFrequently attribute set to true
     const blueOnly = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height)
 
     const answer: PictureAnswer = this.drawPicture()

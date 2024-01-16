@@ -20,7 +20,7 @@ export interface PictureInfo {
 
 //
 // Issue #9 -- Comment this file so people know what's happening here.
-//  -- JEST -- "how to test non-exported functions"
+// "how to test non-exported functions"
 // so I can take the export off of all the helper functions
 // necessary to export for now for testing/coverage
 //

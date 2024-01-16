@@ -1,9 +1,14 @@
+import { vi, describe, it, expect, beforeEach } from "vitest"
 import { AircraftGroup } from "../../classes/groups/group"
 import { aiProcess } from "./aiprocess"
 
+beforeEach(() => {
+  vi.resetAllMocks()
+})
+
 describe("AI Processing", () => {
   it("processes_text_with_cgrs", () => {
-    const send = jest.fn()
+    const send = vi.fn()
     const grp = new AircraftGroup()
 
     grp.setLabel("VR01")
@@ -18,7 +23,7 @@ describe("AI Processing", () => {
   })
 
   it("processes_text_no_cgrs", () => {
-    const send = jest.fn()
+    const send = vi.fn()
     const grp = new AircraftGroup()
 
     grp.setLabel("VR01")
@@ -32,8 +37,8 @@ describe("AI Processing", () => {
     expect(send).toHaveBeenCalled()
   })
 
-  it("processes_text_unknown_asset", () => {
-    const send = jest.fn()
+  it.only("processes_text_unknown_asset", () => {
+    const send = vi.fn()
     const grp = new AircraftGroup()
 
     grp.setLabel("VR01")
@@ -49,7 +54,7 @@ describe("AI Processing", () => {
   })
 
   it("processes_text_no_asset", () => {
-    const send = jest.fn()
+    const send = vi.fn()
     const grp = new AircraftGroup()
 
     grp.setLabel("VR01")

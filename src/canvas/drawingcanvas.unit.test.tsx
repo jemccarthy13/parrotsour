@@ -1,7 +1,7 @@
 import React from "react"
 import { fireEvent, render } from "@testing-library/react"
+import { vi } from "vitest"
 import { SensorType } from "../classes/aircraft/datatrail/sensortype"
-import { Point } from "../classes/point"
 import { BlueInThe, DrawCanvasProps } from "./canvastypes"
 import DrawingCanvas, { CanvasMouseEvent } from "./drawingcanvas"
 
@@ -10,7 +10,7 @@ import DrawingCanvas, { CanvasMouseEvent } from "./drawingcanvas"
  * @param context the Context to draw in
  */
 const drawMock = async (): Promise<void> => {
-  return new Promise(jest.fn())
+  return new Promise(vi.fn())
 }
 
 const testProps: DrawCanvasProps = {
@@ -21,8 +21,8 @@ const testProps: DrawCanvasProps = {
   dataStyle: SensorType.ARROW,
   newPic: false,
   animate: false,
-  resetCallback: jest.fn(),
-  animateCallback: jest.fn(),
+  resetCallback: vi.fn(),
+  animateCallback: vi.fn(),
   answer: { pic: "2 GRPS AZ", groups: [] },
   showMeasurements: true,
   isHardMode: false,

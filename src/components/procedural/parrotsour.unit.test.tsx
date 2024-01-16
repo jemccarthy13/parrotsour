@@ -1,11 +1,12 @@
 import React from "react"
 import { render } from "@testing-library/react"
+import { vi } from "vitest"
 import { ParrotSourProcedural } from "./parrotsour"
 
-jest.mock("react-speech-recognition", () => ({
+vi.mock("react-speech-recognition", () => ({
   useSpeechRecognition: () => ({
     transcript: "",
-    setTranscript: jest.fn(),
+    setTranscript: vi.fn(),
   }),
 }))
 
