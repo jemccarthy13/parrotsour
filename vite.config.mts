@@ -19,7 +19,15 @@ export default defineConfig({
     },
     coverage: {
       provider: "istanbul", // or 'v8'
-      exclude: ["coverage/**", "dist/**", "build/**", "node_modules/**"],
+      exclude: [
+        "coverage/**",
+        "dist/**",
+        "build/**",
+        "node_modules/**",
+        "components/procedural/ai.js",
+        "components/procedural/aiprocess.js",
+        "ai/**",
+      ],
     },
   },
 })

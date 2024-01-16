@@ -72,9 +72,9 @@
     "lint": "eslint src/**/*.{ts,tsx}",
     "lint:fixdr": "eslint src/**/*.{ts,tsx} --fix-dry-run",
     "lint:fix": "eslint src/**/*.{ts,tsx} --fix",
-    "test": "vitest --environment jsdom --maxWorkers=75 --coverage",
+    "test": "vitest run --environment jsdom --maxWorkers=75",
     "test:coverage": "npm run test -- --coverage",
-    "test:watch": "react-scripts test --watchAll --maxWorkers=75%",
+    "test:watch": "vitest watch --environment jsdom --maxWorkers=75 --coverage",
     "ci-coverage": "npm run ci-test -- --coverage",
     "ci-test": "npm run test -- --silent",
     "prepare": "husky install"
