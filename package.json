@@ -67,7 +67,7 @@
     "pub": "npm run compile && npm publish",
     "clean": "rimraf dist && rimraf build && rimraf coverage",
     "clean-ss": "node cleansnapshots.mjs",
-    "clean:build": "npm run clean && npm install && npm run build",
+    "clean:build": "npm run clean && npm install --force && npm run build",
     "eject": "react-scripts eject",
     "lint": "eslint src/**/*.{ts,tsx}",
     "lint:fixdr": "eslint src/**/*.{ts,tsx} --fix-dry-run",
