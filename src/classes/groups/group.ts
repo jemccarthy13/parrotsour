@@ -279,9 +279,7 @@ export class AircraftGroup extends Array<Aircraft> {
   }
 
   /**
-   * @returns Cardinal track direction or undefined. If there is a picture
-   * track direction specified (i.e. all groups track West) this function
-   * returns undefined. Otherwise, cardinal direction from heading.
+   * @returns Cardinal track direction from heading.
    */
   getTrackDir(): string | undefined {
     let trackDir = undefined

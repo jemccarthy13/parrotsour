@@ -1,8 +1,8 @@
+import { describe, it, expect } from "vitest"
+import { getAsset } from "../../ai/getAsset"
 import { AircraftGroup } from "../../classes/groups/group"
 import { Point } from "../../classes/point"
 import { PIXELS_TO_NM } from "../../utils/math"
-import { getAsset } from "../../ai/getAsset"
-
 import { Base26, convertToCGRS, convertToXY, getColIndex } from "./cgrshelpers"
 
 describe("ProcHelpers", () => {
@@ -15,6 +15,7 @@ describe("ProcHelpers", () => {
       const acftGrp2 = new AircraftGroup({
         nContacts: 1,
       })
+
       acftGrp.setLabel("VR01")
 
       expect(getAsset([acftGrp, acftGrp2], "VR01")).toEqual(acftGrp)
@@ -68,10 +69,12 @@ describe("ProcHelpers", () => {
     it("convertsXY_to_cgrs", () => {
       const kp1 = new Point(5 * PIXELS_TO_NM, 5 * PIXELS_TO_NM)
       const cgrs1 = convertToCGRS(kp1.x, kp1.y)
+
       expect(cgrs1).toEqual("58CV1+")
 
       const kp5 = new Point(15 * PIXELS_TO_NM, 15 * PIXELS_TO_NM)
       const cgrs5 = convertToCGRS(kp5.x, kp5.y)
+
       expect(cgrs5).toEqual("58CV5+")
 
       const lastRow = new Point(
@@ -79,6 +82,7 @@ describe("ProcHelpers", () => {
         3 * 30 * PIXELS_TO_NM + 25 * PIXELS_TO_NM
       )
       const lastCGRS = convertToCGRS(lastRow.x, lastRow.y)
+
       expect(lastCGRS).toEqual("61DB8+")
 
       const wayOff = new Point(
@@ -86,6 +90,7 @@ describe("ProcHelpers", () => {
         20 * 30 * PIXELS_TO_NM + 25 * PIXELS_TO_NM
       )
       const wayOffCGRS = convertToCGRS(wayOff.x, wayOff.y)
+
       expect(wayOffCGRS).toEqual("78RP8+")
     })
   })

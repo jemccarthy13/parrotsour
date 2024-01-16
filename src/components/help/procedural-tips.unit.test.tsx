@@ -1,5 +1,6 @@
 import React from "react"
 import { render } from "@testing-library/react"
+import { describe, it, expect } from "vitest"
 import { ProceduralQT } from "./procedural-tips"
 
 /**
@@ -15,6 +16,7 @@ import { ProceduralQT } from "./procedural-tips"
 describe("ProceduralQT_Dialog", () => {
   it("renders", () => {
     const helpDialog = render(<ProceduralQT />)
+
     expect(helpDialog.getByText(/procedural deconfliction/i)).toBeDefined()
   })
 })

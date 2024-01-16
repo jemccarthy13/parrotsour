@@ -1,3 +1,4 @@
+import { vi, describe, it, expect } from "vitest"
 import * as PSMath from "../../../utils/math"
 import { PictureFactory } from "./picturefactory"
 import DrawSingleGroup from "./singlegroup"

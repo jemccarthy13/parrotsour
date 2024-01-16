@@ -1,4 +1,4 @@
-import { vi } from "vitest"
+import { vi, describe, it, expect, afterEach, beforeEach } from "vitest"
 import { BlueAir } from "../../../classes/aircraft/blueair"
 import { SensorType } from "../../../classes/aircraft/datatrail/sensortype"
 import { Bullseye } from "../../../classes/bullseye/bullseye"

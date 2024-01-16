@@ -1,7 +1,15 @@
 import React from "react"
 import { render } from "@testing-library/react"
-import { describe, it, expect } from "vitest"
+import { vi, describe, it, expect } from "vitest"
 import { VersionInfo } from "./versioninfo"
+
+vi.mock("./icon/parrotsour-logo-color.svg", () => {
+  return {
+    ReactComponent: () => {
+      return <>test_svg</>
+    },
+  }
+})
 
 describe("VersionInfo", () => {
   it("has_version", () => {

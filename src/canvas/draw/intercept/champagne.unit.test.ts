@@ -1,4 +1,4 @@
-import { vi } from "vitest"
+import { vi, it, describe, expect, beforeEach, beforeAll } from "vitest"
 import { BlueAir } from "../../../classes/aircraft/blueair"
 import { SensorType } from "../../../classes/aircraft/datatrail/sensortype"
 import { Bullseye } from "../../../classes/bullseye/bullseye"
@@ -43,14 +43,11 @@ describe("DrawChamp", () => {
     testProps.orientation.orient = BlueInThe.EAST
     champ = new DrawChampange()
     champ.initialize(testProps, testState)
+    PaintBrush.clearCanvas()
   })
 
   beforeAll(() => {
     testProps.orientation.orient = BlueInThe.EAST
-  })
-
-  beforeEach(() => {
-    PaintBrush.clearCanvas()
   })
 
   it("hot_champ", () => {

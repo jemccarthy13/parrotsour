@@ -1,3 +1,4 @@
+import { vi, beforeAll, afterEach, it, expect, describe } from "vitest"
 import { SensorType } from "../../../classes/aircraft/datatrail/sensortype"
 import { AircraftGroup } from "../../../classes/groups/group"
 import { Point } from "../../../classes/point"
@@ -185,7 +186,7 @@ describe("_clampPictureInContext", () => {
   })
 
   it("clamp_warns_no_point_provided", () => {
-    const warnSpy = vi.spyOn(global.console, "warn").mockImplementation()
+    const warnSpy = vi.spyOn(global.console, "warn").mockImplementation(vi.fn())
     const result = _clampPictureInContext({}, BlueInThe.EAST)
 
     expect(warnSpy).toBeCalledTimes(1)

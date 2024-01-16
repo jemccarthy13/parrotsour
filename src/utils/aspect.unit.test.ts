@@ -1,3 +1,4 @@
+import { describe, it, expect } from "vitest"
 import { SensorType } from "../classes/aircraft/datatrail/sensortype"
 import { IDMatrix } from "../classes/aircraft/id"
 import { AircraftGroup } from "../classes/groups/group"

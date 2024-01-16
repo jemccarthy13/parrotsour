@@ -1,4 +1,4 @@
-import { vi } from "vitest"
+import { vi, describe, expect, beforeEach, afterEach, it } from "vitest"
 import { BlueAir } from "../../../classes/aircraft/blueair"
 import { SensorType } from "../../../classes/aircraft/datatrail/sensortype"
 import { Bullseye } from "../../../classes/bullseye/bullseye"
@@ -21,7 +21,7 @@ let p: Partial<GroupParams>
 let ladder: DrawLadder
 
 vi.mock("./cap", () => {
-  //nothing
+  return { t: "" }
 })
 
 /**

@@ -1,5 +1,6 @@
 import React from "react"
 import { render } from "@testing-library/react"
+import { describe, it, expect } from "vitest"
 import { AlsaHelp } from "./alsa-tips"
 
 /**
@@ -15,6 +16,7 @@ import { AlsaHelp } from "./alsa-tips"
 describe("ALSAHelp_Dialog", () => {
   it("renders", () => {
     const helpDialog = render(<AlsaHelp />)
+
     expect(helpDialog.getAllByText(/track direction/i).length).toBeGreaterThan(
       0
     )

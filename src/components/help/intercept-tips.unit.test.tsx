@@ -1,5 +1,6 @@
 import React from "react"
 import { render } from "@testing-library/react"
+import { describe, it, expect } from "vitest"
 import { InterceptQT } from "./intercept-tips"
 
 /**
@@ -15,6 +16,7 @@ import { InterceptQT } from "./intercept-tips"
 describe("InterceptQT_Dialog", () => {
   it("renders", () => {
     const helpDialog = render(<InterceptQT />)
+
     expect(helpDialog.getByText(/this tool/i)).toBeDefined()
     expect(helpDialog.getByText(/deficiencies/i)).toBeDefined()
   })

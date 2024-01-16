@@ -1,6 +1,6 @@
 import React from "react"
 import { fireEvent, render } from "@testing-library/react"
-import { vi } from "vitest"
+import { vi, it, describe, expect } from "vitest"
 import { SensorType } from "../classes/aircraft/datatrail/sensortype"
 import { BlueInThe, DrawCanvasProps } from "./canvastypes"
 import DrawingCanvas, { CanvasMouseEvent } from "./drawingcanvas"

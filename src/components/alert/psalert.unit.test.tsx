@@ -6,8 +6,6 @@ import { vi, it, expect, describe, beforeAll } from "vitest"
 import GlobalAlertProvider from "./globalalertprovider"
 import { snackActions } from "./psalert"
 
-// vi.setTimeout(10000)
-
 beforeAll(() => {
   console.warn(
     "1/14/2023 - Surpressing console 'Update to ... not wrapped in act.' error msg"

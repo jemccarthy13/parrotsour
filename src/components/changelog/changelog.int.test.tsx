@@ -1,7 +1,7 @@
 import React from "react"
 import { ThemeProvider } from "@mui/material"
 import { render } from "@testing-library/react"
-import { vi } from "vitest"
+import { vi, describe, it, expect, beforeAll } from "vitest"
 import { theme } from "../../theme"
 import ChangeLog from "./changelog"
 
@@ -10,7 +10,7 @@ import ChangeLog from "./changelog"
  */
 describe("ChangeLog", () => {
   beforeAll(() => {
-    window.scrollTo = vi.fn()
+    vi.spyOn(window, "scrollTo").mockImplementation(vi.fn())
   })
 
   it("renders_with_children", () => {

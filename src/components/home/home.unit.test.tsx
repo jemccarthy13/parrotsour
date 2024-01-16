@@ -1,6 +1,7 @@
 import React from "react"
 import { render, waitFor } from "@testing-library/react"
 import { createHashHistory } from "history"
+import { describe, it, expect } from "vitest"
 import { Home } from "./home"
 
 describe("Home", () => {

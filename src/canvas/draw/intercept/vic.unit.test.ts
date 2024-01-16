@@ -1,4 +1,4 @@
-import { vi } from "vitest"
+import { vi, it, expect, describe, afterEach, beforeEach } from "vitest"
 import { BlueAir } from "../../../classes/aircraft/blueair"
 import { SensorType } from "../../../classes/aircraft/datatrail/sensortype"
 import { Bullseye } from "../../../classes/bullseye/bullseye"
@@ -21,7 +21,7 @@ let p: Partial<GroupParams>
 let vic: DrawVic
 
 vi.mock("./cap", () => {
-  //nothing
+  return { t: "" }
 })
 
 /**
@@ -159,21 +159,26 @@ describe("DrawVic", () => {
     vic.drawInfo()
 
     expect(vic.getAnswer()).toEqual(
-      "3 GROUP VIC 12 DEEP, 11 WIDE, TRACK NORTH." +
+      "3 GROUP VIC 12 DEEP, 11 WIDE, TRACK NORTH. " +
         "LEAD GROUP BULLSEYE 277/47, 20k HOSTILE HEAVY 4 CONTACTS " +
         "EAST TRAIL GROUP 13k HOSTILE HEAVY 4 CONTACTS " +
         "WEST TRAIL GROUP 15k HOSTILE HEAVY 4 CONTACTS"
     )
 
+    lg.setLabel("LEAD")
     stg.setLabel("EAST")
     ntg.setLabel("WEST")
     vic.groups = [lg, stg, ntg]
 
+    lg.setUseTrackDir(true)
+    stg.setUseTrackDir(true)
+    ntg.setUseTrackDir(true)
+
     expect(vic.getAnswer()).toEqual(
-      "3 GROUP VIC 12 DEEP, 11 WIDE, " +
+      "3 GROUP VIC 12 DEEP, 11 WIDE, TRACK NORTH. " +
         "LEAD GROUP BULLSEYE 277/47, 20k HOSTILE HEAVY 4 CONTACTS " +
-        "EAST TRAIL GROUP 15k HOSTILE HEAVY 4 CONTACTS " +
-        "WEST TRAIL GROUP 13k HOSTILE HEAVY 4 CONTACTS"
+        "WEST TRAIL GROUP 13k HOSTILE HEAVY 4 CONTACTS " +
+        "EAST TRAIL GROUP 15k HOSTILE HEAVY 4 CONTACTS"
     )
   })
 

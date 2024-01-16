@@ -27,6 +27,7 @@ describe("PictureCanvas", () => {
   afterEach(() => {
     animatorAnimate.mockReset()
     animatorPause.mockReset()
+    vi.resetAllMocks()
   })
 
   const testProps: PictureCanvasProps = {

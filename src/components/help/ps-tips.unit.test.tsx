@@ -1,5 +1,6 @@
 import React from "react"
 import { render } from "@testing-library/react"
+import { describe, it, expect } from "vitest"
 import { PsQT } from "./ps-tips"
 
 /**
@@ -15,6 +16,7 @@ import { PsQT } from "./ps-tips"
 describe("PsQT_Dialog", () => {
   it("renders", () => {
     const helpDialog = render(<PsQT />)
+
     expect(helpDialog.getByText(/intercept:/i)).toBeDefined()
     expect(helpDialog.getByText(/procedural:/i)).toBeDefined()
   })

@@ -1,4 +1,4 @@
-import { vi } from "vitest"
+import { describe, afterEach, it, expect, beforeEach, vi } from "vitest"
 import { BlueAir } from "../../../classes/aircraft/blueair"
 import { Bullseye } from "../../../classes/bullseye/bullseye"
 import { AircraftGroup } from "../../../classes/groups/group"
