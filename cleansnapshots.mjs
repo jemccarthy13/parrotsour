@@ -16,7 +16,7 @@ function searchFile(dir, fileName) {
     const filePath = path.join(dir, file)
 
     if (file.includes(fileName)) {
-      console.log(filePath)
+      clearDirectory(filePath)
     }
 
     // get the file stats

@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`DrawThreat drawinfo_threat 1`] = `
-<canvas
-  data-snapshot-image="c01a66211429188462aac0e620f38a31f09509077aa7aea6fb5973ae7e1d299bc8a1c2d344776dcdd3bdc02e10df2ae9125c9fb80a6ea9fc1c847d53f8e6bbaf"
-  height="500"
-  width="800"
-/>
-`;
