@@ -15,6 +15,7 @@ import {
   TextField,
 } from "../../utils/muiadapter"
 import { snackActions } from "../alert/psalert"
+import { IssueType, getFormData } from "./formutils"
 import IssueSelector from "./selector"
 import { FormFieldContainer } from "./styles"
 
@@ -26,7 +27,7 @@ export default function IssueReport({
   answer = { groups: [], pic: "" },
 }: Readonly<IRProps>): ReactElement {
   const [showIssueForm, setShowIssueForm] = useState(false)
-  const [selection, setSelection] = useState("picprob")
+  const [selection, setSelection] = useState<IssueType>(IssueType.PICTURE)
   const [submitEnabled, setSubmitEnabled] = useState(true)
   const [email, setEmail] = useState("")
   const [text, setText] = useState("")
@@ -39,7 +40,7 @@ export default function IssueReport({
 
   const onIssueSelChanged = useCallback(
     (evt: React.ChangeEvent<HTMLInputElement>) => {
-      setSelection(evt.currentTarget.value)
+      setSelection(evt.currentTarget.value as IssueType)
     },
     []
   )
@@ -67,36 +68,13 @@ export default function IssueReport({
   )
 
   const handleSubmit = useCallback(
-    async (selection: string, email = "unknown", text = "default-no-text") => {
-      let goodForm = false
-
-      if (formRef.current) {
-        goodForm = formRef.current.reportValidity()
-      }
-
+    async (selection: IssueType, email: string, text: string) => {
       setSubmitEnabled(false)
+
+      const goodForm = formRef.current?.reportValidity() ?? false
+
       if (goodForm) {
-        const canvas: HTMLCanvasElement = document.getElementById(
-          "pscanvas"
-        ) as HTMLCanvasElement
-
-        let realEmail = email
-
-        if (email && email.indexOf("@") === -1) realEmail += "@gmail.com"
-
-        const realText = text
-
-        const formData = new FormData()
-
-        formData.append("email", realEmail)
-        formData.append(
-          "comments",
-          realText + " \n\n" + JSON.stringify(answer, null, 2)
-        )
-        formData.append("problemtype", selection)
-
-        if (selection === "picprob")
-          formData.append("image", canvas.toDataURL("image/png"))
+        const formData = getFormData(email, text, answer, selection)
 
         try {
           const response = await fetch(
@@ -132,7 +110,7 @@ export default function IssueReport({
   )
 
   return (
-    <div data-testid="iss-rpt-form" style={{ width: "100%" }}>
+    <div id="iss-rpt-form" data-testid="iss-rpt-form" style={{ width: "100%" }}>
       <Button
         data-testid="iss-rpt-btn"
         sx={{ marginLeft: "16px" }}

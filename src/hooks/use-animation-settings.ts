@@ -24,6 +24,10 @@ export function useAnimationSettings(answer: PictureAnswer): {
   const { cookieValue: speedSliderValue, setCookie: setSpeedSliderValue } =
     useCookieNumber(SliderCookie)
 
+  if (isNaN(speedSliderValue)) {
+    setSpeedSliderValue(1)
+  }
+
   /**
    * Called when the PSControls slider value is changed
    * @param value - new speed of the slider

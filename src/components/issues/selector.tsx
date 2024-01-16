@@ -1,15 +1,16 @@
 import React, { ReactElement } from "react"
 import { FormControlLabel, Radio, RadioGroup } from "../../utils/muiadapter"
+import { IssueType } from "./formutils"
 import { IssueHelpText } from "./styles"
 
 type IssueSelectorProps = {
   onChange: React.ChangeEventHandler<HTMLInputElement>
-  value?: string
+  value: IssueType
 }
 
 const IssueSelector = ({
   onChange,
-  value = "picprob",
+  value,
 }: IssueSelectorProps): ReactElement => {
   return (
     <div>
@@ -32,7 +33,7 @@ const IssueSelector = ({
         onChange={onChange}
       >
         <FormControlLabel
-          value="picprob"
+          value={IssueType.PICTURE}
           control={<Radio />}
           label={
             <>
@@ -44,7 +45,7 @@ const IssueSelector = ({
           }
         />
         <FormControlLabel
-          value="feature"
+          value={IssueType.FEATURE}
           control={<Radio />}
           label={
             <>
@@ -53,7 +54,11 @@ const IssueSelector = ({
             </>
           }
         />
-        <FormControlLabel value="othprob" control={<Radio />} label="Other" />
+        <FormControlLabel
+          value={IssueType.OTHER}
+          control={<Radio />}
+          label="Other"
+        />
       </RadioGroup>
     </div>
   )

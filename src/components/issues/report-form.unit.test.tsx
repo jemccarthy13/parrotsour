@@ -7,11 +7,12 @@ import {
   waitFor,
 } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
-// NOTE -- replace any references to jest?
-import fetchMock from "jest-fetch-mock"
 import { vi, beforeAll, describe, it, expect } from "vitest"
+import createFetchMock from "vitest-fetch-mock"
 import { snackActions } from "../alert/psalert"
 import IssueReport from "./report-form"
+
+const fetchMock = createFetchMock(vi)
 
 fetchMock.enableMocks()
 
@@ -29,13 +30,12 @@ beforeAll(() => {
     "1/15/2023- Surpressing MUI console.error for failure to wrap transition in act."
   )
   vi.spyOn(console, "error").mockImplementation(vi.fn())
+  vi.resetAllMocks()
 })
 
 describe("IssueReport_Component", () => {
   const answer = { pic: "2 GROUPS AZIMUTH 12", groups: [] }
 
-  // const featureSelector = /feature/i
-  // const picSelector = /this picture/i
   const othSelector = /Other/i
   const issDescrLabel = "Issue Description*"
   const emailLabel = "Email*"
@@ -44,8 +44,54 @@ describe("IssueReport_Component", () => {
     await userEvent.click(wrapper.getByTestId(/iss-rpt-btn/i))
   }
 
+  async function fillForm(wrapper: RenderResult, email: string, text: string) {
+    await waitFor(() => {
+      expect(wrapper.getByText(/Cancel/)).not.toEqual(null)
+    })
+
+    act(() => {
+      userEvent.click(wrapper.getByLabelText(othSelector))
+    })
+
+    await waitFor(() => {
+      expect(
+        (wrapper.getByLabelText(othSelector) as HTMLInputElement).checked
+      ).toEqual(true)
+    })
+
+    const emailBox = wrapper.getByRole("textbox", { name: emailLabel })
+
+    fireEvent.change(emailBox, { target: { value: email } })
+
+    const issTxt = wrapper.getByRole("textbox", { name: issDescrLabel })
+
+    fireEvent.change(issTxt, { target: { value: text } })
+
+    await waitFor(() => {
+      expect(
+        (
+          wrapper.getByRole("textbox", {
+            name: issDescrLabel,
+          }) as HTMLInputElement
+        ).value
+      ).toEqual(text)
+    })
+  }
+
+  function submit(wrapper: RenderResult) {
+    const submitBtn = wrapper.getByRole("button", { name: "Submit" })
+
+    userEvent.click(submitBtn)
+  }
+
   it("renders_correctly", () => {
     const wrapper = render(<IssueReport answer={answer} />)
+
+    expect(wrapper).toBeDefined()
+  })
+
+  it("renders_correctly_no_answer", () => {
+    const wrapper = render(<IssueReport />)
 
     expect(wrapper).toBeDefined()
   })
@@ -55,8 +101,9 @@ describe("IssueReport_Component", () => {
 
     await openDialog(wrapper)
     // open and content present
-    expect("").toEqual("Fragile test... re-examine")
-    expect(wrapper).toMatchSnapshot()
+    const dialog = wrapper.getByRole("dialog")
+
+    expect(dialog).not.toBe(undefined)
   })
 
   it("closes_dialog_on_cancel_click", async () => {
@@ -71,7 +118,10 @@ describe("IssueReport_Component", () => {
     })
 
     userEvent.click(wrapper.getByText(/Cancel/))
-    expect(wrapper).toMatchSnapshot()
+
+    await waitFor(() => {
+      expect(wrapper.queryByText(/Cancel/)).toEqual(null)
+    })
   })
 
   it("closes_on_clickaway", async () => {
@@ -170,46 +220,6 @@ describe("IssueReport_Component", () => {
     })
   })
 
-  async function fillForm(wrapper: RenderResult, email: string, text: string) {
-    await waitFor(() => {
-      expect(wrapper.getByText(/Cancel/)).not.toEqual(null)
-    })
-
-    act(() => {
-      userEvent.click(wrapper.getByLabelText(othSelector))
-    })
-
-    await waitFor(() => {
-      expect(
-        (wrapper.getByLabelText(othSelector) as HTMLInputElement).checked
-      ).toEqual(true)
-    })
-
-    const emailBox = wrapper.getByRole("textbox", { name: emailLabel })
-
-    fireEvent.change(emailBox, { target: { value: email } })
-
-    const issTxt = wrapper.getByRole("textbox", { name: issDescrLabel })
-
-    fireEvent.change(issTxt, { target: { value: text } })
-
-    await waitFor(() => {
-      expect(
-        (
-          wrapper.getByRole("textbox", {
-            name: issDescrLabel,
-          }) as HTMLInputElement
-        ).value
-      ).toEqual(text)
-    })
-  }
-
-  function submit(wrapper: RenderResult) {
-    const submitBtn = wrapper.getByRole("button", { name: "Submit" })
-
-    userEvent.click(submitBtn)
-  }
-
   it("handles_submit_no_network", async () => {
     const wrapper = render(<IssueReport answer={answer} />)
 
@@ -251,6 +261,7 @@ describe("IssueReport_Component", () => {
       expect(snackSpy).toHaveBeenCalled()
     })
     expect(fetchMock).toHaveBeenCalled()
+    fetchMock.resetMocks()
   })
 
   it("handles_submit_failed_fetch", async () => {
@@ -276,6 +287,7 @@ describe("IssueReport_Component", () => {
       expect(snackSpy).toHaveBeenCalled()
     })
     expect(fetchMock).toHaveBeenCalled()
+    fetchMock.resetMocks()
   })
 
   it("handles_submit_invalid_email", async () => {
@@ -301,5 +313,75 @@ describe("IssueReport_Component", () => {
       expect(snackSpy).toHaveBeenCalled()
     })
     expect(fetchMock).toHaveBeenCalled()
+    fetchMock.resetMocks()
+  })
+
+  it("handles_empty_str_email_desc", async () => {
+    const wrapper = render(<IssueReport answer={answer} />)
+
+    fetchMock.enableMocks()
+    fetchMock.mockOnce(JSON.stringify({ ok: false }), {
+      status: 500,
+      statusText: undefined,
+    })
+
+    act(() => {
+      openDialog(wrapper)
+    })
+
+    await fillForm(wrapper, "", "")
+
+    submit(wrapper)
+
+    expect(fetchMock).not.toHaveBeenCalled()
+    fetchMock.resetMocks()
+  })
+
+  it("handles_default_desc_string_when_email_provided", async () => {
+    const wrapper = render(<IssueReport answer={answer} />)
+
+    fetchMock.enableMocks()
+    fetchMock.mockOnce(JSON.stringify({ ok: false }), {
+      status: 500,
+      statusText: undefined,
+    })
+
+    act(() => {
+      openDialog(wrapper)
+    })
+
+    await fillForm(wrapper, "abc", "")
+
+    submit(wrapper)
+
+    expect(fetchMock).not.toHaveBeenCalled()
+    fetchMock.resetMocks()
+  })
+
+  it.skip("skips_issue_submit_when_form_invalid", async () => {
+    const validitySpy = vi.fn().mockImplementation(() => false)
+
+    const wrapper = render(<IssueReport answer={answer} />)
+
+    const rptForm = document.getElementById("iss-rpt-form") as HTMLFormElement
+
+    rptForm.reportValidity = validitySpy
+
+    fetchMock.enableMocks()
+    fetchMock.mockOnce(JSON.stringify({ ok: false }), {
+      status: 500,
+      statusText: undefined,
+    })
+
+    act(() => {
+      openDialog(wrapper)
+    })
+
+    await fillForm(wrapper, "abc", "")
+
+    submit(wrapper)
+
+    expect(fetchMock).not.toHaveBeenCalled()
+    fetchMock.resetMocks()
   })
 })

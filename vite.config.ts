@@ -1,8 +1,13 @@
 /// <reference types="vitest" />
 
 import { defineConfig } from "vite"
+import svgr from "vite-plugin-svgr"
 
 export default defineConfig({
+  plugins: [
+    // ...other plugins
+    svgr(),
+  ],
   test: {
     globals: true,
     environment: "jsdom",
@@ -14,6 +19,10 @@ export default defineConfig({
       jsdom: {
         resources: "usable",
       },
+    },
+    coverage: {
+      provider: "istanbul", // or 'v8'
+      exclude: ["coverage/**", "dist/**", "build/**", "node_modules/**"],
     },
   },
 })

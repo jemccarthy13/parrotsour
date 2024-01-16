@@ -48,7 +48,7 @@ beforeEach(() => {
  */
 describe("DrawAzimuth", () => {
   it("hot_azimuth", () => {
-    const ng = new AircraftGroup(p)
+    const ng = new AircraftGroup({ ...p })
     const sg = new AircraftGroup({ ...p, sy: 250, alts: [15, 15, 15, 15] })
 
     azimuth.groups = [ng, sg]
@@ -64,7 +64,7 @@ describe("DrawAzimuth", () => {
   })
 
   it("different_track_dirs_echelon", () => {
-    const ng = new AircraftGroup(p)
+    const ng = new AircraftGroup({ ...p })
     const sg = new AircraftGroup({
       ...p,
       sy: 250,
@@ -73,7 +73,12 @@ describe("DrawAzimuth", () => {
     })
 
     azimuth.groups = [ng, sg]
+    // console.log(
+    //   ng.getCenterOfMass(SensorType.ARROW),
+    //   sg.getCenterOfMass(SensorType.ARROW)
+    // )
     azimuth.drawInfo()
+
     expect(azimuth.getAnswer()).toEqual(
       "TWO GROUPS AZIMUTH 15 OPENING ECHELON SOUTHWEST, " +
         "NORTH GROUP BULLSEYE 319/29, 20k TRACK EAST HOSTILE HEAVY 4 CONTACTS " +
@@ -82,7 +87,7 @@ describe("DrawAzimuth", () => {
   })
 
   it("different_track_dirs_echelon_narrow", () => {
-    const ng = new AircraftGroup(p)
+    const ng = new AircraftGroup({ ...p })
     const sg = new AircraftGroup({
       ...p,
       sy: 211,
@@ -100,7 +105,7 @@ describe("DrawAzimuth", () => {
   })
 
   it("different_track_dirs", () => {
-    const ng = new AircraftGroup(p)
+    const ng = new AircraftGroup({ ...p })
     const sg = new AircraftGroup({
       ...p,
       sx: 250,
@@ -138,8 +143,8 @@ describe("DrawAzimuth", () => {
     azimuth.drawInfo()
     expect(azimuth.getAnswer()).toEqual(
       "TWO GROUPS AZIMUTH 12 TRACK NORTH. " +
-        "WEST GROUP BULLSEYE 320/73, 20k HOSTILE HEAVY 4 CONTACTS " +
-        "EAST GROUP BULLSEYE 313/81, 15k HOSTILE HEAVY 4 CONTACTS"
+        "WEST GROUP BULLSEYE 325/38, 20k HOSTILE HEAVY 4 CONTACTS " +
+        "EAST GROUP BULLSEYE 312/46, 15k HOSTILE HEAVY 4 CONTACTS"
     )
   })
 
@@ -171,8 +176,8 @@ describe("DrawAzimuth", () => {
     azimuth.drawInfo()
     expect(azimuth.getAnswer()).toEqual(
       "TWO GROUPS AZIMUTH 12 TRACK NORTH. " +
-        "EAST GROUP BULLSEYE 331/70, 15k HOSTILE HEAVY 4 CONTACTS " +
-        "WEST GROUP BULLSEYE 322/77, 20k HOSTILE HEAVY 4 CONTACTS"
+        "EAST GROUP BULLSEYE 345/37, 15k HOSTILE HEAVY 4 CONTACTS " +
+        "WEST GROUP BULLSEYE 329/42, 20k HOSTILE HEAVY 4 CONTACTS"
     )
   })
 

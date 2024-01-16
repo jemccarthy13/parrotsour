@@ -1,7 +1,8 @@
 import React from "react"
-import { act, fireEvent, render } from "@testing-library/react"
+import { act, render, waitFor } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
-import { vi } from "vitest"
+import { vi, describe, expect, it, afterEach } from "vitest"
+import { IssueType } from "./formutils"
 import IssueSelector from "./selector"
 
 const mockChangeFn = vi.fn(() => {
@@ -13,12 +14,13 @@ describe("IssueSelector_Component", () => {
     mockChangeFn.mockClear()
   })
 
-  const featureSelector = /feature/i
   const picSelector = /this picture/i
   const othSelector = /Other/i
 
   it("renders_picprob_default_checked", () => {
-    const selWrapper = render(<IssueSelector onChange={mockChangeFn} />)
+    const selWrapper = render(
+      <IssueSelector onChange={mockChangeFn} value={IssueType.PICTURE} />
+    )
 
     expect(
       (selWrapper.getByLabelText(picSelector) as HTMLInputElement).checked
@@ -26,27 +28,23 @@ describe("IssueSelector_Component", () => {
     expect(selWrapper).toMatchSnapshot()
   })
 
-  it.skip("alerts_parent_only_when_sel_changes", async () => {
+  it("alerts_parent_only_when_sel_changes", async () => {
     userEvent.setup()
 
-    const selWrapper = render(<IssueSelector onChange={mockChangeFn} />)
+    const selWrapper = render(
+      <IssueSelector onChange={mockChangeFn} value={IssueType.FEATURE} />
+    )
 
     act(() => {
-      selWrapper.getByLabelText(othSelector).focus()
+      selWrapper.getByText(othSelector).focus()
     })
 
     act(() => {
-      userEvent.click(selWrapper.getByLabelText(othSelector))
+      userEvent.click(selWrapper.getByText(othSelector))
     })
 
-    expect(mockChangeFn).toHaveBeenCalledTimes(1)
-    expect(mockChangeFn).toHaveBeenCalledWith("othprob")
-
-    act(() => {
-      fireEvent.click(selWrapper.getByLabelText(featureSelector))
+    await waitFor(() => {
+      expect(mockChangeFn).toHaveBeenCalledTimes(1)
     })
-
-    expect(mockChangeFn).toHaveBeenCalledTimes(2)
-    expect(mockChangeFn).toHaveBeenCalledWith("feature")
   })
 })
