@@ -1,0 +1,22 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Braaseye > draws_correctly_braaFirst 1`] = `
+<canvas
+  height="50"
+  width="100"
+/>
+`;
+
+exports[`Braaseye > draws_correctly_noOffset 1`] = `
+<canvas
+  height="50"
+  width="100"
+/>
+`;
+
+exports[`Braaseye > draws_correctly_withOffset 1`] = `
+<canvas
+  height="50"
+  width="100"
+/>
+`;

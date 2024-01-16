@@ -1,0 +1,302 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`FormatUtils > getGroupOpenClose_BlueInTheSOUTH > openclose 1`] = `
+<canvas
+  height="200"
+  width="200"
+/>
+`;
+
+exports[`FormatUtils > getGroupOpenClose_BlueInTheSOUTH > openclose_90_offset 1`] = `
+<canvas
+  height="200"
+  width="200"
+/>
+`;
+
+exports[`FormatUtils > getGroupOpenClose_BlueInTheSOUTH > openclose_drastic_closing 1`] = `
+<canvas
+  height="200"
+  width="200"
+/>
+`;
+
+exports[`FormatUtils > getGroupOpenClose_BlueInTheSOUTH > openclose_heading_opposite_closing 1`] = `
+<canvas
+  height="200"
+  width="200"
+/>
+`;
+
+exports[`FormatUtils > getGroupOpenClose_BlueInTheSOUTH > openclose_heading_too_close_together_closing 1`] = `
+<canvas
+  height="200"
+  width="200"
+/>
+`;
+
+exports[`FormatUtils > getGroupOpenClose_BlueInTheSOUTH > openclose_heading_too_close_together_opening 1`] = `
+<canvas
+  height="200"
+  width="200"
+/>
+`;
+
+exports[`FormatUtils > getGroupOpenClose_BlueInTheSOUTH > openclose_heading_west_closing 1`] = `
+<canvas
+  height="200"
+  width="200"
+/>
+`;
+
+exports[`FormatUtils > getGroupOpenClose_BlueInTheSOUTH > openclose_multicontact-closing-west 1`] = `
+<canvas
+  height="200"
+  width="200"
+/>
+`;
+
+exports[`FormatUtils > getGroupOpenClose_BlueInTheSOUTH > openclose_narrow_closing 1`] = `
+<canvas
+  height="200"
+  width="200"
+/>
+`;
+
+exports[`FormatUtils > getGroupOpenClose_BlueInTheSOUTH > openclose_normal_opening 1`] = `
+<canvas
+  height="200"
+  width="200"
+/>
+`;
+
+exports[`FormatUtils > getGroupOpenClose_BlueInTheSOUTH > openclose_onlyone_closing 1`] = `
+<canvas
+  height="200"
+  width="200"
+/>
+`;
+
+exports[`FormatUtils > getGroupOpenClose_BlueInTheSOUTH > openclose_onlyone_ng_opening 1`] = `
+<canvas
+  height="200"
+  width="200"
+/>
+`;
+
+exports[`FormatUtils > getGroupOpenClose_BlueInTheSOUTH > openclose_onlyone_sg_closing 1`] = `
+<canvas
+  height="200"
+  width="200"
+/>
+`;
+
+exports[`FormatUtils > getGroupOpenClose_BlueInTheSOUTH > openclose_opp_leadtrail 1`] = `
+<canvas
+  height="200"
+  width="200"
+/>
+`;
+
+exports[`FormatUtils > getGroupOpenClose_BlueInTheSOUTH > openclose_parallel 1`] = `
+<canvas
+  height="200"
+  width="200"
+/>
+`;
+
+exports[`FormatUtils > getGroupOpenClose_BlueInTheSOUTH > openclose_parallel_west 1`] = `
+<canvas
+  height="200"
+  width="200"
+/>
+`;
+
+exports[`FormatUtils > getGroupOpenClose_BlueInTheSOUTH > openclose_samedir 1`] = `
+<canvas
+  height="200"
+  width="200"
+/>
+`;
+
+exports[`FormatUtils > getGroupOpenClose_BlueInTheSOUTH > openclose_verynarrow_closing 1`] = `
+<canvas
+  height="200"
+  width="200"
+/>
+`;
+
+exports[`FormatUtils > getGroupOpenClose_BlueInTheSOUTH > openclose_verywide_opening 1`] = `
+<canvas
+  height="200"
+  width="200"
+/>
+`;
+
+exports[`FormatUtils > getGroupOpenClose_BlueInTheSOUTH > openclose_west_closing 1`] = `
+<canvas
+  height="200"
+  width="200"
+/>
+`;
+
+exports[`FormatUtils > getGroupOpenClose_BlueInTheSOUTH > openclose_west_opening 1`] = `
+<canvas
+  height="200"
+  width="200"
+/>
+`;
+
+exports[`FormatUtils > getGroupOpenClose_BlueInTheSOUTH > openclose_westerly_closing 1`] = `
+<canvas
+  height="200"
+  width="200"
+/>
+`;
+
+exports[`FormatUtils > groupOpenClose_BlueInTheEast > openclose 1`] = `
+<canvas
+  height="200"
+  width="200"
+/>
+`;
+
+exports[`FormatUtils > groupOpenClose_BlueInTheEast > openclose_90_offset 1`] = `
+<canvas
+  height="200"
+  width="200"
+/>
+`;
+
+exports[`FormatUtils > groupOpenClose_BlueInTheEast > openclose_drastic_closing 1`] = `
+<canvas
+  height="200"
+  width="200"
+/>
+`;
+
+exports[`FormatUtils > groupOpenClose_BlueInTheEast > openclose_heading_opposite_closing 1`] = `
+<canvas
+  height="200"
+  width="200"
+/>
+`;
+
+exports[`FormatUtils > groupOpenClose_BlueInTheEast > openclose_heading_too_close_together_closing 1`] = `
+<canvas
+  height="200"
+  width="200"
+/>
+`;
+
+exports[`FormatUtils > groupOpenClose_BlueInTheEast > openclose_heading_too_close_together_opening 1`] = `
+<canvas
+  height="200"
+  width="200"
+/>
+`;
+
+exports[`FormatUtils > groupOpenClose_BlueInTheEast > openclose_heading_west_closing 1`] = `
+<canvas
+  height="200"
+  width="200"
+/>
+`;
+
+exports[`FormatUtils > groupOpenClose_BlueInTheEast > openclose_multicontact-closing-west 1`] = `
+<canvas
+  height="200"
+  width="200"
+/>
+`;
+
+exports[`FormatUtils > groupOpenClose_BlueInTheEast > openclose_narrow_closing 1`] = `
+<canvas
+  height="200"
+  width="200"
+/>
+`;
+
+exports[`FormatUtils > groupOpenClose_BlueInTheEast > openclose_normal_opening 1`] = `
+<canvas
+  height="200"
+  width="200"
+/>
+`;
+
+exports[`FormatUtils > groupOpenClose_BlueInTheEast > openclose_onlyone_closing 1`] = `
+<canvas
+  height="200"
+  width="200"
+/>
+`;
+
+exports[`FormatUtils > groupOpenClose_BlueInTheEast > openclose_onlyone_ng_opening 1`] = `
+<canvas
+  height="200"
+  width="200"
+/>
+`;
+
+exports[`FormatUtils > groupOpenClose_BlueInTheEast > openclose_onlyone_opening 1`] = `
+<canvas
+  height="200"
+  width="200"
+/>
+`;
+
+exports[`FormatUtils > groupOpenClose_BlueInTheEast > openclose_onlyone_sg_closing 1`] = `
+<canvas
+  height="200"
+  width="200"
+/>
+`;
+
+exports[`FormatUtils > groupOpenClose_BlueInTheEast > openclose_parallel 1`] = `
+<canvas
+  height="200"
+  width="200"
+/>
+`;
+
+exports[`FormatUtils > groupOpenClose_BlueInTheEast > openclose_parallel_west 1`] = `
+<canvas
+  height="200"
+  width="200"
+/>
+`;
+
+exports[`FormatUtils > groupOpenClose_BlueInTheEast > openclose_verynarrow_closing 1`] = `
+<canvas
+  height="200"
+  width="200"
+/>
+`;
+
+exports[`FormatUtils > groupOpenClose_BlueInTheEast > openclose_verywide_opening 1`] = `
+<canvas
+  height="200"
+  width="200"
+/>
+`;
+
+exports[`FormatUtils > groupOpenClose_BlueInTheEast > openclose_west_closing 1`] = `
+<canvas
+  height="200"
+  width="200"
+/>
+`;
+
+exports[`FormatUtils > groupOpenClose_BlueInTheEast > openclose_west_opening 1`] = `
+<canvas
+  height="200"
+  width="200"
+/>
+`;
+
+exports[`FormatUtils > groupOpenClose_BlueInTheEast > openclose_westerly_closing 1`] = `
+<canvas
+  height="200"
+  width="200"
+/>
+`;

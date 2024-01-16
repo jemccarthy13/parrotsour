@@ -1,0 +1,63 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AircraftGroup > draw_group > draws_all_groups 1`] = `
+[
+  {
+    "props": {},
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ],
+    "type": "beginPath",
+  },
+  {
+    "props": {
+      "x": 83.02943725152285,
+      "y": 116.97056274847715,
+    },
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ],
+    "type": "moveTo",
+  },
+  {
+    "props": {
+      "x": 97.1715728752538,
+      "y": 131.11269837220811,
+    },
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ],
+    "type": "lineTo",
+  },
+  {
+    "props": {
+      "x": 89.44416626494126,
+      "y": 129.04214601138796,
+    },
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ],
+    "type": "lineTo",
+  },
+]
+`;

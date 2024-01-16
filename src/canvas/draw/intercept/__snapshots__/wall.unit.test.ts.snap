@@ -1,0 +1,15 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`DrawWall > draws 1`] = `
+<canvas
+  height="500"
+  width="800"
+/>
+`;
+
+exports[`DrawWall > draws_info 1`] = `
+<canvas
+  height="500"
+  width="800"
+/>
+`;

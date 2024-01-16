@@ -1,0 +1,22 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`DrawEA > draws_request_0 1`] = `
+<canvas
+  height="500"
+  width="800"
+/>
+`;
+
+exports[`DrawEA > draws_request_1 1`] = `
+<canvas
+  height="500"
+  width="800"
+/>
+`;
+
+exports[`DrawEA > draws_request_2 1`] = `
+<canvas
+  height="500"
+  width="800"
+/>
+`;

@@ -1,0 +1,5 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`draw_group_cap > draws_capping_group 1`] = `<canvas />`;
+
+exports[`draw_group_cap > draws_singleship_cap 1`] = `<canvas />`;

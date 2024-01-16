@@ -1,0 +1,29 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Aircraft > draws_id_matrix > assume_friend 1`] = `
+<canvas
+  height="30"
+  width="10"
+/>
+`;
+
+exports[`Aircraft > draws_id_matrix > hostile 1`] = `
+<canvas
+  height="30"
+  width="10"
+/>
+`;
+
+exports[`Aircraft > draws_id_matrix > neutral 1`] = `
+<canvas
+  height="30"
+  width="10"
+/>
+`;
+
+exports[`Aircraft > draws_id_matrix > suspect 1`] = `
+<canvas
+  height="30"
+  width="10"
+/>
+`;
