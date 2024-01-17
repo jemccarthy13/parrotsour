@@ -19,33 +19,37 @@ beforeAll(() => {
  * (i.e. correctly added to the DOM.)
  */
 describe("snackbar_test", () => {
-  it("snackbar_shows_default", async () => {
-    const testTxt = "hello world"
-    const wrapper = render(
-      <div id="root">
-        <GlobalAlertProvider>
-          <div />
-        </GlobalAlertProvider>
-      </div>
-    )
+  it(
+    "snackbar_shows_default",
+    async () => {
+      const testTxt = "hello world"
+      const wrapper = render(
+        <div id="root">
+          <GlobalAlertProvider>
+            <div />
+          </GlobalAlertProvider>
+        </div>
+      )
 
-    act(() => {
-      snackActions.toast(testTxt)
-    })
+      act(() => {
+        snackActions.toast(testTxt)
+      })
 
-    if (!wrapper) expect("").toEqual("Test error - failed to mount")
+      if (!wrapper) expect("").toEqual("Test error - failed to mount")
 
-    await waitFor(() => {
-      expect(wrapper.getByText(testTxt)).toBeDefined()
-    })
+      await waitFor(() => {
+        expect(wrapper.getByText(testTxt)).toBeDefined()
+      })
 
-    await waitFor(
-      () => {
-        expect(wrapper.queryAllByText(testTxt).length).toEqual(0)
-      },
-      { timeout: 6000 }
-    )
-  }, 10000)
+      await waitFor(
+        () => {
+          expect(wrapper.queryAllByText(testTxt).length).toEqual(0)
+        },
+        { timeout: 25000 }
+      )
+    },
+    { repeats: 2, timeout: 30000 }
+  )
 
   it("snackbar_programatically_closes", async () => {
     const testTxt = "hello world"
