@@ -40,9 +40,13 @@ describe("AircraftGroup", () => {
     })
 
     describe("location", () => {
-      const grp = new AircraftGroup({ nContacts: 1, sx: 500, sy: 500 })
+      it("calculates_center_mass", () => {
+        const grp = new AircraftGroup({ nContacts: 1, sx: 500, sy: 500 })
 
-      expect(grp.getCenterOfMass(SensorType.ARROW)).toEqual(new Point(524, 500))
+        expect(grp.getCenterOfMass(SensorType.ARROW)).toEqual(
+          new Point(524, 500)
+        )
+      })
     })
 
     describe("altitude", () => {
