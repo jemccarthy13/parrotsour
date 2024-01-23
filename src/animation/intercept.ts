@@ -36,9 +36,11 @@ export class PicAnimationHandler extends AnimationHandler {
   }
 
   /**
-   * Drive red air -- maneuver hot to blue air, then check for
-   * out of bounds. Then, check for predetermined maneuvers and
-   * perform turns as required.
+   * Drive red air:
+   * - Stops animation if red is too close to blue
+   * - Check and perform predetermined maneuvers
+   * - Check if red is too close to canvas boundaries and correct
+   * as required
    *
    * @param grp Group to check intent for
    * @param state Current state of canvas
@@ -59,26 +61,16 @@ export class PicAnimationHandler extends AnimationHandler {
       this.pauseFight(resetCallback)
     }
 
-    // check to see if the group should maneuver
-    const manCheck = (): boolean => {
-      const br = startPos.getBR(bluePos)
-
-      if (br.range < 70) {
-        return true
-      }
-
-      return false
-    }
-
     // if the group is flagged to do maneuvers, check to see if its maneuver time
     if (grp.doesManeuvers()) {
-      const manTrigger = manCheck()
+      // check to see if the group should maneuver
+      const shouldManeuver = startPos.getBR(bluePos).range < 70
 
       // if the maneuver was triggered, unset the routing and set a random desired heading
-      if (manTrigger) {
+      if (shouldManeuver) {
         grp.updateIntent({
           desiredLoc: [],
-          desiredHeading: randomNumber(45, 330),
+          desiredHeading: randomNumber(45, 330, [grp.getHeading()]),
         })
         grp.setManeuvers(0) // Issue #2
       }

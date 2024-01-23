@@ -61,3 +61,20 @@ exports[`AircraftGroup > draw_group > draws_all_groups 1`] = `
   },
 ]
 `;
+
+exports[`AircraftGroup > draw_group > draws_capping_groups 1`] = `
+[
+  {
+    "props": {},
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ],
+    "type": "beginPath",
+  },
+]
+`;

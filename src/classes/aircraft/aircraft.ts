@@ -306,6 +306,14 @@ export class Aircraft {
   }
 
   /**
+   *
+   * @param newIntent Update this aircraft's intent based on Params
+   */
+  getIntent(): AircraftIntent {
+    return this.intent
+  }
+
+  /**
    * @returns true iff there are no desired locations left in the intended route
    */
   atFinalDestination(): boolean {

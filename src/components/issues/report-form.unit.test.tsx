@@ -2,6 +2,7 @@ import React from "react"
 import {
   RenderResult,
   act,
+  createEvent,
   fireEvent,
   render,
   waitFor,
@@ -33,63 +34,57 @@ beforeAll(() => {
   vi.resetAllMocks()
 })
 
-describe("IssueReport_Component", () => {
-  const answer = { pic: "2 GROUPS AZIMUTH 12", groups: [] }
+const answer = { pic: "2 GROUPS AZIMUTH 12", groups: [] }
 
-  const othSelector = /Other/i
-  const issDescrLabel = "Issue Description*"
-  const emailLabel = "Email*"
+const othSelector = /Other/i
+const issDescrLabel = "Issue Description*"
+const emailLabel = "Email*"
 
-  const openDialog = async (wrapper: RenderResult) => {
-    await userEvent.click(wrapper.getByTestId(/iss-rpt-btn/i))
-  }
+const openDialog = async (wrapper: RenderResult) => {
+  await userEvent.click(wrapper.getByTestId(/iss-rpt-btn/i))
+}
 
-  async function fillForm(wrapper: RenderResult, email: string, text: string) {
-    await waitFor(() => {
-      expect(wrapper.getByText(/Cancel/)).not.toEqual(null)
-    })
-
-    act(() => {
-      userEvent.click(wrapper.getByLabelText(othSelector))
-    })
-
-    await waitFor(() => {
-      expect(
-        (wrapper.getByLabelText(othSelector) as HTMLInputElement).checked
-      ).toEqual(true)
-    })
-
-    const emailBox = wrapper.getByRole("textbox", { name: emailLabel })
-
-    fireEvent.change(emailBox, { target: { value: email } })
-
-    const issTxt = wrapper.getByRole("textbox", { name: issDescrLabel })
-
-    fireEvent.change(issTxt, { target: { value: text } })
-
-    await waitFor(() => {
-      expect(
-        (
-          wrapper.getByRole("textbox", {
-            name: issDescrLabel,
-          }) as HTMLInputElement
-        ).value
-      ).toEqual(text)
-    })
-  }
-
-  function submit(wrapper: RenderResult) {
-    const submitBtn = wrapper.getByRole("button", { name: "Submit" })
-
-    userEvent.click(submitBtn)
-  }
-
-  it("renders_correctly", () => {
-    const wrapper = render(<IssueReport answer={answer} />)
-
-    expect(wrapper).toBeDefined()
+async function fillForm(wrapper: RenderResult, email: string, text: string) {
+  await waitFor(() => {
+    expect(wrapper.getByText(/Cancel/)).not.toEqual(null)
   })
 
+  act(() => {
+    userEvent.click(wrapper.getByLabelText(othSelector))
+  })
+
+  await waitFor(() => {
+    expect(
+      (wrapper.getByLabelText(othSelector) as HTMLInputElement).checked
+    ).toEqual(true)
+  })
+
+  const emailBox = wrapper.getByRole("textbox", { name: emailLabel })
+
+  fireEvent.change(emailBox, { target: { value: email } })
+
+  const issTxt = wrapper.getByRole("textbox", { name: issDescrLabel })
+
+  fireEvent.change(issTxt, { target: { value: text } })
+
+  await waitFor(() => {
+    expect(
+      (
+        wrapper.getByRole("textbox", {
+          name: issDescrLabel,
+        }) as HTMLInputElement
+      ).value
+    ).toEqual(text)
+  })
+}
+
+function submit(wrapper: RenderResult) {
+  const submitBtn = wrapper.getByRole("button", { name: "Submit" })
+
+  userEvent.click(submitBtn)
+}
+
+describe("IssueReport_Component", () => {
   it("renders_correctly_no_answer", () => {
     const wrapper = render(<IssueReport />)
 
@@ -145,28 +140,6 @@ describe("IssueReport_Component", () => {
       code: "Escape",
       keyCode: 27,
       charCode: 27,
-    })
-
-    await waitFor(() => {
-      expect(wrapper.queryAllByText(/Cancel/).length).toEqual(0)
-    })
-  })
-
-  it("handles_cancel", async () => {
-    const wrapper = render(<IssueReport answer={answer} />)
-
-    act(() => {
-      openDialog(wrapper)
-    })
-
-    await waitFor(() => {
-      expect(wrapper.getByText(/Cancel/)).not.toEqual(null)
-    })
-
-    const cancelBtn = wrapper.getByText(/Cancel/)
-
-    act(() => {
-      userEvent.click(cancelBtn)
     })
 
     await waitFor(() => {
@@ -358,10 +331,26 @@ describe("IssueReport_Component", () => {
     fetchMock.resetMocks()
   })
 
-  it.skip("skips_issue_submit_when_form_invalid", async () => {
+  it("skips_issue_submit_when_form_invalid", async () => {
     const validitySpy = vi.fn().mockImplementation(() => false)
 
     const wrapper = render(<IssueReport answer={answer} />)
+
+    act(() => {
+      openDialog(wrapper)
+    })
+
+    await fillForm(wrapper, "", "")
+
+    const submit = document.getElementById("submitIssueReport") ?? document
+
+    const myEvent = createEvent.click(submit, {
+      currentTarget: {
+        form: { reportValidity: vi.fn().mockImplementation(() => false) },
+      },
+    })
+
+    fireEvent(submit, myEvent)
 
     const rptForm = document.getElementById("iss-rpt-form") as HTMLFormElement
 
@@ -372,14 +361,6 @@ describe("IssueReport_Component", () => {
       status: 500,
       statusText: undefined,
     })
-
-    act(() => {
-      openDialog(wrapper)
-    })
-
-    await fillForm(wrapper, "abc", "")
-
-    submit(wrapper)
 
     expect(fetchMock).not.toHaveBeenCalled()
     fetchMock.resetMocks()

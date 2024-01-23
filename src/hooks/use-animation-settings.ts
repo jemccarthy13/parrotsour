@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { PictureAnswer } from "../canvas/canvastypes"
 import { SliderCookie } from "../utils/cookie-constants"
 import { useCookieNumber } from "./use-cookie"
@@ -10,7 +10,6 @@ export type AnimationSettings = {
 
 export type AnimationHandlers = {
   onSliderChange: (num: number) => void
-  //   setAnimate: React.Dispatch<React.SetStateAction<boolean>>
   startAnimate: () => void
   pauseAnimate: () => void
 }
@@ -24,9 +23,11 @@ export function useAnimationSettings(answer: PictureAnswer): {
   const { cookieValue: speedSliderValue, setCookie: setSpeedSliderValue } =
     useCookieNumber(SliderCookie)
 
-  if (isNaN(speedSliderValue)) {
-    setSpeedSliderValue(1)
-  }
+  useEffect(() => {
+    if (isNaN(speedSliderValue)) {
+      setSpeedSliderValue(1)
+    }
+  }, [speedSliderValue])
 
   /**
    * Called when the PSControls slider value is changed
@@ -58,7 +59,6 @@ export function useAnimationSettings(answer: PictureAnswer): {
     },
     handlers: {
       onSliderChange,
-      //   setAnimate,
       startAnimate,
       pauseAnimate,
     },

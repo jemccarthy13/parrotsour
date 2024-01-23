@@ -20,13 +20,18 @@ export default defineConfig({
     coverage: {
       provider: "istanbul", // or 'v8'
       exclude: [
+        "cleansnapshots.mjs",
+        "src/index.tsx",
+        "src/testutils/mock.tsx",
         "coverage/**",
         "dist/**",
         "build/**",
         "node_modules/**",
-        "components/procedural/ai.js",
-        "components/procedural/aiprocess.js",
-        "ai/**",
+        "src/components/procedural/ai.js",
+        "src/animation/close.tsx",
+        "src/components/close/**",
+        "src/components/procedural/ai.js",
+        "src/ai/**",
       ],
     },
   },

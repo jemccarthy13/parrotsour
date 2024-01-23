@@ -73,10 +73,7 @@ describe("DrawAzimuth", () => {
     })
 
     azimuth.groups = [ng, sg]
-    // console.log(
-    //   ng.getCenterOfMass(SensorType.ARROW),
-    //   sg.getCenterOfMass(SensorType.ARROW)
-    // )
+
     azimuth.drawInfo()
 
     expect(azimuth.getAnswer()).toEqual(

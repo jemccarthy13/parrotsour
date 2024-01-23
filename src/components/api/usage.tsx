@@ -13,9 +13,6 @@ export function APIUsage() {
         }
       )
 
-      // console.log(d)
-
-      // console.log(d.json())
       //@ts-expect-error typed
       setData(d)
     }
