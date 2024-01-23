@@ -1,10 +1,10 @@
 /* eslint-disable react/no-multi-comp */
 import React, { useEffect } from "react"
 import { render, waitFor } from "@testing-library/react"
+import { userEvent } from "@testing-library/user-event"
 import { describe, it, expect } from "vitest"
 import { AircraftGroup } from "../classes/groups/group"
 import { useAnimationSettings } from "./use-animation-settings"
-import userEvent from "@testing-library/user-event"
 
 describe("use-animation-settings-hook", () => {
   it("stores_settings", async () => {

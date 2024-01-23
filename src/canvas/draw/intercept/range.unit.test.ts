@@ -6,7 +6,11 @@ import { AircraftGroup, GroupParams } from "../../../classes/groups/group"
 import { Point } from "../../../classes/point"
 import TestCanvas from "../../../testutils/testcanvas"
 import * as PSMath from "../../../utils/math"
-import { BlueInThe, PictureCanvasState } from "../../canvastypes"
+import {
+  BlueInThe,
+  PictureCanvasProps,
+  PictureCanvasState,
+} from "../../canvastypes"
 import { PaintBrush } from "../paintbrush"
 import { testProps } from "./mockutils.unit.test"
 import DrawRange from "./range"
@@ -44,7 +48,7 @@ beforeEach(() => {
 })
 
 describe("DrawRange", () => {
-  it("hot_range", () => {
+  it("hot_ns_range", () => {
     const ng = new AircraftGroup({ ...p })
     const sg = new AircraftGroup({ ...p, sx: 250, alts: [15, 15, 15, 15] })
 
@@ -56,6 +60,76 @@ describe("DrawRange", () => {
     expect(range.getAnswer()).toEqual(
       "TWO GROUPS RANGE 12, " +
         "LEAD GROUP BULLSEYE 344/22, 15k HOSTILE HEAVY 4 CONTACTS " +
+        "TRAIL GROUP 20k HOSTILE HEAVY 4 CONTACTS"
+    )
+  })
+
+  it("ew_range", () => {
+    const updatedProps = { ...testProps }
+
+    updatedProps.orientation.orient = BlueInThe.NORTH
+    range.initialize(updatedProps, testState)
+    const ng = new AircraftGroup({ ...p })
+    const sg = new AircraftGroup({ ...p, sy: 250, alts: [15, 15, 15, 15] })
+
+    range.groups = [ng, sg]
+    range.drawInfo()
+
+    expect(sg.getAltitudes()).toEqual([15, 15, 15, 15])
+
+    expect(range.getAnswer()).toEqual(
+      "TWO GROUPS RANGE 12, " +
+        "LEAD GROUP BULLSEYE 319/29, 20k HOSTILE HEAVY 4 CONTACTS " +
+        "TRAIL GROUP 15k HOSTILE HEAVY 4 CONTACTS"
+    )
+  })
+
+  it("echelon_range", () => {
+    const updatedProps = { ...testProps }
+
+    updatedProps.orientation.orient = BlueInThe.NORTH
+    range.initialize(updatedProps, testState)
+    const ng = new AircraftGroup({ ...p })
+    const sg = new AircraftGroup({
+      ...p,
+      sx: 225,
+      sy: 250,
+      alts: [15, 15, 15, 15],
+    })
+
+    range.groups = [ng, sg]
+    range.drawInfo()
+
+    expect(sg.getAltitudes()).toEqual([15, 15, 15, 15])
+
+    expect(range.getAnswer()).toEqual(
+      "TWO GROUPS RANGE 12, ECHELON SOUTHEAST, TRACK EAST. " +
+        "LEAD GROUP BULLSEYE 307/15, 15k HOSTILE HEAVY 4 CONTACTS " +
+        "TRAIL GROUP 20k HOSTILE HEAVY 4 CONTACTS"
+    )
+  })
+
+  it("echelon_range", () => {
+    const updatedProps = { ...testProps }
+
+    updatedProps.orientation.orient = BlueInThe.EAST
+    range.initialize(updatedProps, testState)
+    const ng = new AircraftGroup({ ...p })
+    const sg = new AircraftGroup({
+      ...p,
+      sx: 225,
+      sy: 250,
+      alts: [15, 15, 15, 15],
+    })
+
+    range.groups = [ng, sg]
+    range.drawInfo()
+
+    expect(sg.getAltitudes()).toEqual([15, 15, 15, 15])
+
+    expect(range.getAnswer()).toEqual(
+      "TWO GROUPS RANGE 6, ECHELON NORTHWEST, TRACK EAST. " +
+        "LEAD GROUP BULLSEYE 307/15, 15k HOSTILE HEAVY 4 CONTACTS " +
         "TRAIL GROUP 20k HOSTILE HEAVY 4 CONTACTS"
     )
   })
@@ -82,6 +156,7 @@ describe("DrawRange", () => {
     const updatedProps = { ...testProps }
 
     updatedProps.orientation.orient = BlueInThe.NORTH
+    range.initialize(updatedProps, testState)
     const startPos = new Point(100, 100)
 
     range.dimensions.deep = 40
@@ -89,5 +164,36 @@ describe("DrawRange", () => {
 
     expect(groups[0].getStartPos()).toEqual(new Point(100, 100))
     expect(groups[1].getStartPos()).toEqual(new Point(100, 140))
+  })
+
+  it("creates_groups_ns_hardMode", () => {
+    vi.spyOn(PSMath, "randomHeading").mockImplementation(() => -100)
+
+    const updatedProps: PictureCanvasProps = { ...testProps, isHardMode: true }
+
+    updatedProps.orientation.orient = BlueInThe.NORTH
+    range.initialize(updatedProps, testState)
+    const startPos = new Point(100, 100)
+
+    range.dimensions.deep = 40
+    const groups = range.createGroups(startPos, [1, 1])
+
+    expect(groups[0].getStartPos()).toEqual(new Point(100, 100))
+    expect(groups[1].getStartPos()).toEqual(new Point(100, 140))
+    expect(groups[1].getHeading()).toEqual(-100)
+  })
+
+  it("creates_groups_ew", () => {
+    const updatedProps = { ...testProps }
+
+    updatedProps.orientation.orient = BlueInThe.EAST
+    range.initialize(updatedProps, testState)
+    const startPos = new Point(100, 100)
+
+    range.dimensions.deep = 40
+    const groups = range.createGroups(startPos, [1, 1])
+
+    expect(groups[0].getStartPos()).toEqual(new Point(100, 100))
+    expect(groups[1].getStartPos()).toEqual(new Point(140, 100))
   })
 })

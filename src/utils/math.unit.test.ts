@@ -19,6 +19,73 @@ describe("psmath", () => {
     expect(x2).toBeLessThanOrEqual(0.01)
   })
 
+  it("randomNumber_excludes", () => {
+    let x = mathutils.randomNumber(1, 2, [1])
+
+    expect(x).toEqual(2)
+
+    x = mathutils.randomNumber(1, 2, [1])
+
+    expect(x).toEqual(2)
+    x = mathutils.randomNumber(1, 2, [1])
+
+    expect(x).toEqual(2)
+    x = mathutils.randomNumber(1, 2, [1])
+
+    expect(x).toEqual(2)
+    x = mathutils.randomNumber(1, 2, [1])
+
+    expect(x).toEqual(2)
+    x = mathutils.randomNumber(1, 2, [1])
+
+    expect(x).toEqual(2)
+    x = mathutils.randomNumber(1, 2, [1])
+
+    expect(x).toEqual(2)
+    x = mathutils.randomNumber(1, 2, [1])
+
+    expect(x).toEqual(2)
+    x = mathutils.randomNumber(1, 2, [1])
+
+    expect(x).toEqual(2)
+    x = mathutils.randomNumber(1, 2, [1])
+
+    expect(x).toEqual(2)
+    x = mathutils.randomNumber(1, 2, [1])
+
+    expect(x).toEqual(2)
+    x = mathutils.randomNumber(1, 2, [1])
+
+    expect(x).toEqual(2)
+    x = mathutils.randomNumber(1, 2, [1])
+
+    expect(x).toEqual(2)
+    x = mathutils.randomNumber(1, 2, [1])
+
+    expect(x).toEqual(2)
+    x = mathutils.randomNumber(1, 2, [1])
+
+    expect(x).toEqual(2)
+    x = mathutils.randomNumber(1, 2, [1])
+
+    expect(x).toEqual(2)
+    x = mathutils.randomNumber(1, 2, [1])
+
+    expect(x).toEqual(2)
+    x = mathutils.randomNumber(1, 2, [1])
+
+    expect(x).toEqual(2)
+    x = mathutils.randomNumber(1, 2, [1])
+
+    expect(x).toEqual(2)
+    x = mathutils.randomNumber(1, 2, [1])
+
+    expect(x).toEqual(2)
+    x = mathutils.randomNumber(1, 2, [1])
+
+    expect(x).toEqual(2)
+  })
+
   it("randomHeading_ALSA", () => {
     for (let x = 0; x < 2000; x++) {
       const hdg = mathutils.randomHeading(FORMAT.ALSA, 270)

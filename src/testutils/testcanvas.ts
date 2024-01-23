@@ -4,9 +4,7 @@ export function getCtxPath(canvas: HTMLCanvasElement) {
   const ctx = canvas.getContext("2d")
 
   // @ts-expect-error getPath does not exist, but it does
-  if (ctx) return ctx.__getPath()
-
-  return []
+  return ctx?.__getPath() ?? []
 }
 
 export default class TestCanvas {

@@ -11,6 +11,9 @@ export enum BlueInThe {
 }
 
 export class FightAxis {
+  /**
+   * @returns true iff blue in North or South
+   */
   public static isNS(orientation: BlueInThe): boolean {
     return orientation === BlueInThe.NORTH || orientation === BlueInThe.SOUTH
   }

@@ -71,7 +71,7 @@ export function randomNumber(
 ): number {
   const num = rawRandomNumber(min, max)
 
-  if (exclude?.includes(num)) return rawRandomNumber(min, max)
+  if (exclude?.includes(num)) return randomNumber(min, max, exclude)
 
   return num
 }

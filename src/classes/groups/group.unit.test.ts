@@ -5,6 +5,8 @@ import { ACType, Aircraft } from "../aircraft/aircraft"
 import { SensorType } from "../aircraft/datatrail/sensortype"
 import { IDMatrix } from "../aircraft/id"
 import * as AltStackHelper from "../altstack"
+import { Braaseye } from "../braaseye"
+import { Bullseye } from "../bullseye/bullseye"
 import { Point } from "../point"
 import { FORMAT } from "../supportedformats"
 import Tasking from "../taskings/tasking"
@@ -226,6 +228,28 @@ describe("AircraftGroup", () => {
       const grp = new AircraftGroup({ type: ACType.RPA })
 
       expect(grp.getType()).toEqual(ACType.RPA)
+    })
+  })
+
+  describe("formatting", () => {
+    it("formats_at/over_bull", () => {
+      const startPt = new Point(200, 200)
+
+      Bullseye.generate(startPt)
+
+      const grp = new AircraftGroup({
+        sx: startPt.x,
+        sy: startPt.y,
+        hdg: 90,
+        nContacts: 2,
+        alts: [100, 200],
+      })
+
+      grp.setBraaseye(new Braaseye(startPt, startPt))
+      grp.setUseBull(true)
+
+      expect(grp.format(FORMAT.ALSA)).toMatch(/.*AT BULL.*/)
+      expect(grp.format(FORMAT.IPE)).toMatch(/.*OVER BULL.*/)
     })
   })
 })

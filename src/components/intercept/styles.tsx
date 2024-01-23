@@ -7,5 +7,5 @@ export const AnswerContainer = styled("div")`
   border-radius: 0px 20px 20px 20px;
   color: black;
   padding: 20px;
-  whitespace: pre-wrap;
+  white-space: pre-wrap;
 `

@@ -37,9 +37,13 @@ export default function VersionHistory(): JSX.Element {
       features: [],
       fixes: [
         "Fixed issue with bullseye drawing during animation. It should now show properly",
+        "Fixed long-term issue with picture of the day generation.",
+        "Fixed some stability issues and minor formatting (whitespace) errors.",
       ],
       improvements: [
         "Updated several security fixes, patched some vulnerabilities, squashed some bugs",
+        "Added at/over bullseye formatting if group is at/over bullseye (depends on format chosen)",
+        "Reduced the complexity of some calculations; speeds up performance in some areas",
       ],
     },
     {
