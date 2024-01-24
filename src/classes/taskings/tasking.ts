@@ -11,33 +11,33 @@ export type TaskingParams = {
 export default class Tasking {
   private taskData: TaskingParams
   constructor(info?: TaskingParams) {
-    this.taskData = info || {}
+    this.taskData = info ?? {}
   }
 
   public toString(): string {
     return (
       "// TASKING " +
-      this.taskData.id +
+      this.getID() +
       " // " +
-      this.taskData.locationStr +
+      this.getLocationStr() +
       " // " +
-      this.taskData.description
+      this.getDescription()
     )
   }
 
-  public getID(): string | undefined {
-    return this.taskData.id
+  public getID(): string {
+    return this.taskData.id ?? "NONE"
   }
 
   public getLocationXY(): Point | undefined {
     return this.taskData.locationXY
   }
 
-  public getLocationStr(): string | undefined {
-    return this.taskData.locationStr
+  public getLocationStr(): string {
+    return this.taskData.locationStr ?? "NONE"
   }
 
-  public getDescription(): string | undefined {
-    return this.taskData.description
+  public getDescription(): string {
+    return this.taskData.description ?? "NONE"
   }
 }

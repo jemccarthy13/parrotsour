@@ -98,7 +98,6 @@ export default function IssueReport({
       evt.preventDefault()
       const goodForm = evt.currentTarget.form?.reportValidity()
 
-      console.log("checking valid: ", goodForm)
       setSubmitEnabled(false)
       if (goodForm) {
         handleSubmit(selection, email, text)
