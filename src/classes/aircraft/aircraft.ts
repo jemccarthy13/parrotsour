@@ -55,8 +55,6 @@ export class Aircraft {
   private tasking: Tasking | undefined
   private capping = false
 
-  private ctx: CanvasRenderingContext2D | undefined
-
   constructor(p?: Partial<AircraftParams>) {
     if (!p) p = {}
 
