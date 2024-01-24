@@ -33,7 +33,7 @@ export default function VersionHistory(): JSX.Element {
   const versionHistory: VersionList = [
     {
       version: "4.2.2",
-      date: "15 Jan 2024",
+      date: "25 Jan 2024",
       features: [],
       fixes: [
         "Fixed issue with bullseye drawing during animation. It should now show properly",
@@ -41,6 +41,7 @@ export default function VersionHistory(): JSX.Element {
         "Fixed some stability issues and minor formatting (whitespace) errors.",
       ],
       improvements: [
+        "Added calculations for weighted wall, which was noticeably absent until now",
         "Updated several security fixes, patched some vulnerabilities, squashed some bugs",
         "Added at/over bullseye formatting if group is at/over bullseye (depends on format chosen)",
         "Reduced the complexity of some calculations; speeds up performance in some areas",

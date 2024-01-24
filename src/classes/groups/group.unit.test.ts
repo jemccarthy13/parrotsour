@@ -138,7 +138,7 @@ describe("AircraftGroup", () => {
     it("access_maneuvers", () => {
       const grp = new AircraftGroup({ nContacts: 4 })
 
-      expect(grp.setManeuvers(0))
+      grp.setManeuvers(0)
       expect(grp.doesManeuvers()).toEqual(false)
     })
 

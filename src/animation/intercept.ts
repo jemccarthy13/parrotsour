@@ -67,16 +67,21 @@ export class PicAnimationHandler extends AnimationHandler {
       const shouldManeuver = startPos.getBR(bluePos).range < 70
 
       // if the maneuver was triggered, unset the routing and set a random desired heading
+
+      // Issue #2 -- MANEUVER --
+      //
+      // If this group should maneuver (grp.doesManeuvers, mvr count > 0) and within maneuver range:
+      // generate X (where x is number of maneuvers) of random points to put into desiredLoc for intent
+      // do not set a desired heading unless near edge of canvas
+      //
+      //
       if (shouldManeuver) {
         grp.updateIntent({
           desiredLoc: [],
           desiredHeading: randomNumber(45, 330, [grp.getHeading()]),
         })
-        grp.setManeuvers(0) // Issue #2
+        grp.didManeuver()
       }
-
-      // Issue #2 -- MANEUVER -- when maneuver count is >1, set two routing points
-      // (i.e. flank for xx nm then turn back hot)
     }
 
     // draw altitudes during the animation

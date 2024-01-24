@@ -147,7 +147,7 @@ export class AircraftGroup extends Array<Aircraft> {
     // format bullseye if anchor priority
     const braaseye = this.getBraaseye()
 
-    if (this.useBull || false) {
+    if (this.useBull) {
       if (format === FORMAT.ALSA && braaseye.bull.range <= 5) {
         answer += "AT BULLSEYE"
       } else if (format === FORMAT.IPE && braaseye.bull.range <= 3) {
@@ -165,7 +165,7 @@ export class AircraftGroup extends Array<Aircraft> {
     const trackDir = this.getTrackDir()
 
     answer += " "
-    answer += trackDir !== undefined ? trackDir : ""
+    answer += trackDir ?? ""
 
     // apply ID
     answer += " HOSTILE "
@@ -306,12 +306,20 @@ export class AircraftGroup extends Array<Aircraft> {
     this.useTrackDir = newVal
   }
 
-  /**
-   * Update maneuver count
-   * @param newNumManeuvers New number of maneuvers remaining
-   */
   setManeuvers(newNumManeuvers: number): void {
     this.maneuvers = newNumManeuvers
+  }
+
+  /**
+   * Update maneuver count - did a maneuver
+   * @param newNumManeuvers New number of maneuvers remaining
+   */
+  didManeuver(): void {
+    this.maneuvers -= 1
+
+    if (this.maneuvers < 0) {
+      this.maneuvers = 0
+    }
   }
 
   /**
