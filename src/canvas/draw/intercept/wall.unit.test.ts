@@ -5,7 +5,7 @@ import { AircraftGroup, GroupParams } from "../../../classes/groups/group"
 import { Point } from "../../../classes/point"
 import TestCanvas from "../../../testutils/testcanvas"
 import * as PSMath from "../../../utils/math"
-import { BlueInThe, PictureCanvasState } from "../../canvastypes"
+import { BlueInThe, FightAxis, PictureCanvasState } from "../../canvastypes"
 import { PaintBrush } from "../paintbrush"
 import { testProps } from "./mockutils.unit.test"
 import DrawWall from "./wall"
@@ -213,7 +213,47 @@ describe("DrawWall", () => {
     expect(wall.groups[0].doesManeuvers()).toEqual(true)
     expect(wall.groups[1].doesManeuvers()).toEqual(false)
     expect(wall.groups[2].doesManeuvers()).toEqual(false)
+  })
 
-    expect(wall.formatWeighted()).toEqual("")
+  it("weighted_wall_not_NS", () => {
+    const group1 = new AircraftGroup(p)
+    const group2 = new AircraftGroup({ ...p, sy: 150, alts: [13, 13, 13, 13] })
+    const group3 = new AircraftGroup({
+      ...p,
+      sy: 175,
+      alts: [15, 15, 15],
+      nContacts: 3,
+    })
+
+    vi.spyOn(FightAxis, "isNS").mockImplementation(() => false)
+
+    wall.groups = [group1, group2, group3]
+
+    wall.drawInfo()
+    group1.setLabel("NORTH GROUP")
+    group3.setLabel("SOUTH GROUP")
+
+    expect(wall.formatWeighted()).toEqual("WEIGHTED SOUTH.")
+  })
+
+  it("weighted_wall_NS", () => {
+    const group1 = new AircraftGroup(p)
+    const group2 = new AircraftGroup({ ...p, sx: 210, alts: [13, 13, 13, 13] })
+    const group3 = new AircraftGroup({
+      ...p,
+      sx: 275,
+      alts: [15, 15, 15],
+      nContacts: 3,
+    })
+
+    vi.spyOn(FightAxis, "isNS").mockImplementation(() => true)
+
+    wall.groups = [group1, group2, group3]
+
+    wall.drawInfo()
+    group1.setLabel("EAST GROUP")
+    group3.setLabel("WEST GROUP")
+
+    expect(wall.formatWeighted()).toEqual("WEIGHTED EAST.")
   })
 })
