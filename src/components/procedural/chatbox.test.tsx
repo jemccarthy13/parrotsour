@@ -1,5 +1,11 @@
 import React from "react"
-import { render } from "@testing-library/react"
+import {
+  RenderResult,
+  fireEvent,
+  render,
+  waitFor,
+} from "@testing-library/react"
+import { userEvent } from "@testing-library/user-event"
 import { vi, describe, it, expect } from "vitest"
 import { AircraftGroup } from "../../classes/groups/group"
 import { ChatBox, CBProps } from "./chatbox"
@@ -33,46 +39,101 @@ describe("ChatBox", () => {
     },
   }
 
-  it("chatbox", () => {
+  const writeMessage = async (cbox: RenderResult, msg: string) => {
+    const input = cbox.getByTestId("chatInput")
+
+    fireEvent.change(input, { target: { value: msg } })
+    await waitFor(() => {
+      expect((cbox.getByTestId("chatInput") as HTMLInputElement).value).toEqual(
+        msg
+      )
+    })
+  }
+
+  function submit(wrapper: RenderResult) {
+    const submitBtn = wrapper.getByTestId("submitBtn")
+
+    userEvent.click(submitBtn)
+  }
+
+  it("handles_message", async () => {
     const cbox = render(<ChatBox {...props} />)
 
     expect(cbox).toBeDefined()
+    writeMessage(cbox, "hello world")
+    submit(cbox)
+
+    await waitFor(() => {
+      expect(
+        cbox.getByTestId("chatroom").textContent?.includes("hello world")
+      ).toEqual(true)
+    })
   })
 
-  it.skip("handles_message", () => {
-    // chatbox.handleMessage("hi")
-    expect(mockProcess).toHaveBeenCalledTimes(1)
+  it("handles_nickchange", async () => {
+    const cbox = render(<ChatBox {...props} />)
+
+    expect(cbox).toBeDefined()
+    writeMessage(cbox, "/nick mycallsign")
+    submit(cbox)
+
+    await waitFor(() => {
+      expect(
+        cbox
+          .getByTestId("chatroom")
+          .textContent?.includes("changed nick to mycallsign")
+      ).toEqual(true)
+    })
   })
 
-  it.skip("handles_nickchange", async () => {
-    // await chatbox.sendChatMessage("/nick mycallsign")
-    // expect(chatbox.state.sender).toEqual("mycallsign")
+  it("handles_rundown", async () => {
+    const cbox = render(<ChatBox {...props} />)
+
+    expect(cbox).toBeDefined()
+    writeMessage(cbox, "/handover")
+    submit(cbox)
+
+    await waitFor(() => {
+      expect(
+        cbox.getByTestId("chatroom").textContent?.includes("BMA Rundown")
+      ).toEqual(true)
+    })
   })
 
-  it.skip("handles_rundown", async () => {
-    // await chatbox.sendChatMessage("/handover")
-    // expect(chatbox.state.text.indexOf("BMA Rundown")).toBeGreaterThanOrEqual(0)
-    // expect(chatbox.state.text.indexOf("MYLABEL")).toBeGreaterThanOrEqual(0)
+  it("handles_help", async () => {
+    const cbox = render(<ChatBox {...props} />)
+
+    expect(cbox).toBeDefined()
+    writeMessage(cbox, "/help")
+    submit(cbox)
+
+    await waitFor(() => {
+      expect(
+        cbox.getByTestId("chatroom").textContent?.includes("HELP")
+      ).toEqual(true)
+
+      expect(
+        cbox.getByTestId("chatroom").textContent?.includes("END HELP")
+      ).toEqual(true)
+
+      expect(
+        cbox.getByTestId("chatroom").textContent?.includes("------------")
+      ).toEqual(true)
+    })
   })
 
-  it.skip("handles_regular_message", async () => {
-    // await chatbox.sendChatMessage("hi")
-    // expect(mockProcess).toHaveBeenCalledTimes(1)
-    // expect(chatbox.state.text.indexOf("hi")).toBeGreaterThanOrEqual(0)
-  })
+  it("handles_unknown_cmd", async () => {
+    const cbox = render(<ChatBox {...props} />)
 
-  it.skip("handles_help", async () => {
-    // await chatbox.sendChatMessage("/help")
-    // expect(mockProcess).toHaveBeenCalledTimes(0)
-    // expect(chatbox.state.text.indexOf("------------")).toBeGreaterThanOrEqual(0)
-  })
+    expect(cbox).toBeDefined()
+    writeMessage(cbox, "/gibberish")
+    submit(cbox)
 
-  it.skip("handles_unknown_cmd", async () => {
-    // await chatbox.sendChatMessage("/unknown")
-    // expect(mockProcess).toHaveBeenCalledTimes(0)
-    // expect(
-    //   chatbox.state.text.indexOf("Unknown command")
-    // ).toBeGreaterThanOrEqual(0)
+    await waitFor(() => {
+      expect(
+        cbox.getByTestId("chatroom").textContent?.includes("Unknown command")
+      ).toEqual(true)
+    })
   })
 
   it.skip("handles_voice_message", () => {
@@ -82,8 +143,37 @@ describe("ChatBox", () => {
     // expect(mockUtter).toHaveBeenCalledTimes(1)
   })
 
-  it.skip("handles_clearbox", () => {
-    // chatbox._clearTextBox()
-    // console.warn("cannot test -- need mount / ref to be !null")
+  it("handles_enter_press", async () => {
+    const cbox = render(<ChatBox {...props} />)
+
+    expect(cbox).toBeDefined()
+    writeMessage(cbox, "gibberish")
+
+    const inputArea = cbox.getByTestId("chatInput")
+
+    fireEvent.keyDown(inputArea, { key: "Enter", code: "Enter", charCode: 13 })
+
+    await waitFor(() => {
+      expect(
+        cbox.getByTestId("chatroom").textContent?.includes("gibberish")
+      ).toEqual(true)
+    })
+  })
+
+  it("no_op_other_keypress", async () => {
+    const cbox = render(<ChatBox {...props} />)
+
+    expect(cbox).toBeDefined()
+    writeMessage(cbox, "gibberish")
+
+    const inputArea = cbox.getByTestId("chatInput")
+
+    fireEvent.keyDown(inputArea, { key: "a", code: "a", charCode: 65 })
+
+    await waitFor(() => {
+      expect(
+        cbox.getByTestId("chatroom").textContent?.includes("gibberish")
+      ).not.toEqual(true)
+    })
   })
 })

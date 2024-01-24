@@ -5,10 +5,13 @@ import { ACType, Aircraft } from "../aircraft/aircraft"
 import { SensorType } from "../aircraft/datatrail/sensortype"
 import { IDMatrix } from "../aircraft/id"
 import * as AltStackHelper from "../altstack"
+import { Braaseye } from "../braaseye"
+import { Bullseye } from "../bullseye/bullseye"
 import { Point } from "../point"
 import { FORMAT } from "../supportedformats"
 import Tasking from "../taskings/tasking"
 import { AircraftGroup } from "./group"
+import * as groupCap from "./groupcap"
 
 describe("AircraftGroup", () => {
   TestCanvas.useContext(200, 200)
@@ -45,6 +48,16 @@ describe("AircraftGroup", () => {
 
         expect(grp.getCenterOfMass(SensorType.ARROW)).toEqual(
           new Point(524, 500)
+        )
+      })
+
+      it("calculates_center_mass_capping", () => {
+        const grp = new AircraftGroup({ nContacts: 1, sx: 500, sy: 500 })
+
+        grp.setCapping(true)
+
+        expect(grp.getCenterOfMass(SensorType.ARROW)).toEqual(
+          new Point(500, 500)
         )
       })
     })
@@ -155,6 +168,24 @@ describe("AircraftGroup", () => {
       expect(myMock).toHaveBeenCalledTimes(4)
       expect(TestCanvas.getSnapshot()).toMatchSnapshot()
     })
+
+    it("draws_capping_groups", () => {
+      const grp = new AircraftGroup({
+        sx: 100,
+        sy: 100,
+        nContacts: 4,
+        hdg: 135,
+        id: IDMatrix.FRIEND,
+      })
+
+      grp.setCapping(true)
+
+      const mockDrawCap = vi.spyOn(groupCap, "drawGroupCap")
+
+      grp.draw(SensorType.ARROW)
+      expect(mockDrawCap).toHaveBeenCalledTimes(1)
+      expect(TestCanvas.getSnapshot()).toMatchSnapshot()
+    })
   })
 
   describe("passthrough_functions", () => {
@@ -197,6 +228,28 @@ describe("AircraftGroup", () => {
       const grp = new AircraftGroup({ type: ACType.RPA })
 
       expect(grp.getType()).toEqual(ACType.RPA)
+    })
+  })
+
+  describe("formatting", () => {
+    it("formats_at/over_bull", () => {
+      const startPt = new Point(200, 200)
+
+      Bullseye.generate(startPt)
+
+      const grp = new AircraftGroup({
+        sx: startPt.x,
+        sy: startPt.y,
+        hdg: 90,
+        nContacts: 2,
+        alts: [100, 200],
+      })
+
+      grp.setBraaseye(new Braaseye(startPt, startPt))
+      grp.setUseBull(true)
+
+      expect(grp.format(FORMAT.ALSA)).toMatch(/.*AT BULL.*/)
+      expect(grp.format(FORMAT.IPE)).toMatch(/.*OVER BULL.*/)
     })
   })
 })

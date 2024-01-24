@@ -18,13 +18,7 @@ export interface PictureInfo {
   start: Point
 }
 
-//
-// Issue #9 -- Comment this file so people know what's happening here.
-// "how to test non-exported functions"
-// so I can take the export off of all the helper functions
-// necessary to export for now for testing/coverage
-//
-export const _howFarOut = (x: number, min: number, max: number): number => {
+const _howFarOut = (x: number, min: number, max: number): number => {
   if (x < min) {
     return min - x
   } else if (x > max) {
@@ -53,8 +47,8 @@ export const _clampPictureInContext = (
 
   const isNS = FightAxis.isNS(orientation)
 
-  const width = pInfo.wide || 7 * PIXELS_TO_NM
-  const depth = pInfo.deep || 7 * PIXELS_TO_NM
+  const width = pInfo.wide ?? 7 * PIXELS_TO_NM
+  const depth = pInfo.deep ?? 7 * PIXELS_TO_NM
 
   const minValWithBuffer = 1 + 7 * PIXELS_TO_NM
   const maxXWithBuffer = ctx.canvas.width - 1 - (isNS ? width : depth)
@@ -65,6 +59,16 @@ export const _clampPictureInContext = (
   pInfo.start.y += _howFarOut(pInfo.start.y, minValWithBuffer, maxYWithBuffer)
 
   return pInfo.start
+}
+
+/**
+ *  NOTE - this is only here to export for testing purposes. These functions
+ * are not intended to be accessible outside of the testing environment as they
+ * are simply utility functions used to clamp pictures into a canvas.
+ */
+export const exportedForTesting = {
+  _howFarOut,
+  _clampPictureInContext,
 }
 
 export const getRestrictedStartPos = (
@@ -116,8 +120,8 @@ export const getRestrictedStartPos = (
     randomNumber(ctx.canvas.width * mults.lowX, ctx.canvas.width * mults.hiX)
 
   pInfo = {
-    deep: pInfo?.deep || 7 * PIXELS_TO_NM,
-    wide: pInfo?.wide || 7 * PIXELS_TO_NM,
+    deep: pInfo?.deep ?? 7 * PIXELS_TO_NM,
+    wide: pInfo?.wide ?? 7 * PIXELS_TO_NM,
     start: new Point(startX, startY),
   }
 

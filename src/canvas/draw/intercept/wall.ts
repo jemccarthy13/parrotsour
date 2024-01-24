@@ -178,16 +178,54 @@ export default class DrawWall extends DrawPic {
   }
 
   formatWeighted(): string {
-    // Issue #1 -- formatWeighted wall
-    // let retVal = ""
-    // const split =
-    //   (this.dimensions.wide * PIXELS_TO_NM) / (this.groups.length - 1)
-    // this.seps.forEach((sep) => {
-    //   if (sep >= split) {
-    //     retVal = "WEIGHTED [dir]"
-    //   }
-    // })
-    return ""
+    let retVal = ""
+
+    const sepRngs: number[] = []
+
+    for (let y = 0; y < this.groups.length - 1; y++) {
+      const group1COM = this.groups[y].getCenterOfMass(this.props.dataStyle)
+      const group2COM = this.groups[y + 1].getCenterOfMass(this.props.dataStyle)
+
+      let sepRng
+
+      if (FightAxis.isNS(this.props.orientation.orient)) {
+        sepRng = new Braaseye(
+          new Point(group1COM.x, group1COM.y),
+          new Point(group2COM.x, group1COM.y)
+        )
+      } else {
+        sepRng = new Braaseye(
+          new Point(group1COM.x, group1COM.y),
+          new Point(group1COM.x, group2COM.y)
+        )
+      }
+
+      sepRngs.push(sepRng.braa.range)
+    }
+
+    const split = this.dimensions.wide / 3
+
+    const midsep: number = sepRngs.length / 2
+
+    console.log(this.groups)
+    console.log("split", split)
+    console.log("midsep", midsep)
+    for (let x = 0; x < sepRngs.length; x++) {
+      console.log("sep", sepRngs[x])
+      console.log("x", x)
+      if (sepRngs[x] <= split) {
+        let dir =
+          x < midsep
+            ? this.groups[0].getLabel()
+            : this.groups[this.groups.length - 1].getLabel()
+
+        dir = dir.replace("GROUP", "").trim()
+
+        retVal = `WEIGHTED ${dir}.`
+      }
+    }
+
+    return retVal
   }
 
   getAnswer(): string {
@@ -197,19 +235,18 @@ export default class DrawWall extends DrawPic {
     let answer = this.formatPicTitle() + " "
 
     answer += this.formatDimensions() + " "
-    answer += this.formatWeighted() + " "
 
     answer +=
       getOpenCloseAzimuth(this.groups[0], this.groups[this.groups.length - 1]) +
       ", "
 
+    answer += this.formatWeighted() + " "
+
     answer += this.picTrackDir() + " "
 
-    for (let idx = 0; idx < this.groups.length; idx++) {
-      const group = this.groups[idx]
-
-      answer += group.format(this.props.format) + " "
-    }
+    this.groups.forEach((grp: AircraftGroup) => {
+      answer += grp.format(this.props.format) + " "
+    })
 
     return answer.replace(/\s+/g, " ").trim()
   }

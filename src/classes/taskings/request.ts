@@ -1,18 +1,22 @@
-/* istanbul ignore file */
+import { formatAlt } from "../../canvas/draw/formatutils"
 
 /**
  * Issue #12 - taskings / requests
  */
-export class Airspace {
-  // temporary. -- flush out how airspaces work
-}
-
-//temporary
-// -- figure out how AS requests should behave
 export class AirspaceRequest {
-  location: string | undefined
-  alt: number | undefined = 0
+  // temporary. -- flush out how airspaces work
+  requestedGrid: string = "88AG"
+  requestedAlt: number = 0
 
-  goodLoc = false
-  goodAlt = false
+  toString = () => {
+    return this.getGrid() + " FL " + this.getFormattedAlt()
+  }
+
+  getFormattedAlt = () => {
+    return formatAlt(this.requestedAlt)
+  }
+
+  getGrid = () => {
+    return this.requestedGrid
+  }
 }

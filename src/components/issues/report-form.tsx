@@ -69,34 +69,26 @@ export default function IssueReport({
 
   const handleSubmit = useCallback(
     async (selection: IssueType, email: string, text: string) => {
-      setSubmitEnabled(false)
+      const formData = getFormData(email, text, answer, selection)
 
-      const goodForm = formRef.current?.reportValidity() ?? false
-
-      if (goodForm) {
-        const formData = getFormData(email, text, answer, selection)
-
-        try {
-          const response = await fetch(
-            process.env.PUBLIC_URL + "/database/emailissue.php",
-            {
-              method: "POST",
-              body: formData,
-            }
-          )
-
-          if (response.ok) {
-            snackActions.success("Submitted!")
-            handleToggleIssueForm()
-          } else {
-            snackActions.error("Issue report failed.\nTry again later.")
+      try {
+        const response = await fetch(
+          process.env.PUBLIC_URL + "/database/emailissue.php",
+          {
+            method: "POST",
+            body: formData,
           }
-        } catch (e) {
+        )
+
+        if (response.ok) {
+          snackActions.success("Submitted!")
+          handleToggleIssueForm()
+        } else {
           snackActions.error("Issue report failed.\nTry again later.")
         }
+      } catch (e) {
+        snackActions.error("Issue report failed.\nTry again later.")
       }
-
-      setSubmitEnabled(true)
     },
     []
   )
@@ -104,7 +96,13 @@ export default function IssueReport({
   const handleBtnSubmit = useCallback(
     (evt: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
       evt.preventDefault()
-      handleSubmit(selection, email, text)
+      const goodForm = evt.currentTarget.form?.reportValidity()
+
+      setSubmitEnabled(false)
+      if (goodForm) {
+        handleSubmit(selection, email, text)
+      }
+      setSubmitEnabled(true)
     },
     [selection, email, text]
   )

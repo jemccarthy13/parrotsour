@@ -54,13 +54,26 @@ export function headingToRadians(heading: number): {
   }
 }
 
+// NOTE -- only exported for testing
+export function rawRandomNumber(min: number, max: number) {
+  return Math.floor(Math.random() * (max - min + 1) + min)
+}
+
 /**
  * Returns a random number from min to max (inclusive both)
  * @param min minimum value
  * @param max maximum value
  */
-export function randomNumber(min: number, max: number): number {
-  return Math.floor(Math.random() * (max - min + 1) + min)
+export function randomNumber(
+  min: number,
+  max: number,
+  exclude?: number[]
+): number {
+  const num = rawRandomNumber(min, max)
+
+  if (exclude?.includes(num)) return randomNumber(min, max, exclude)
+
+  return num
 }
 
 /**

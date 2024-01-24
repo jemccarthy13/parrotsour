@@ -1,10 +1,4 @@
-import React, {
-  KeyboardEvent,
-  useState,
-  useRef,
-  useEffect,
-  useCallback,
-} from "react"
+import React, { KeyboardEvent, useState, useRef, useCallback } from "react"
 import { SpeechTextControls } from "../../ai/speechtext"
 import { PictureAnswer } from "../../canvas/canvastypes"
 import { formatAlt } from "../../canvas/draw/formatutils"
@@ -24,23 +18,15 @@ export const ChatBox = (props: CBProps) => {
       "*** /help to display help information\r\n" +
       "*** /handover to simulate a handover message\r\n"
   )
+  const [inputText, setInputText] = useState("")
   const [sender, setSender] = useState("UR_CALLSIGN")
 
   const chatRoomRef = useRef<HTMLTextAreaElement>(null)
-  const inputRef = useRef<HTMLTextAreaElement>(null)
 
   const { answer } = props
 
-  useEffect(() => {
-    const msgBox: HTMLTextAreaElement | null = chatRoomRef.current
-
-    if (msgBox !== null) msgBox.scrollTop = msgBox.scrollHeight
-  }, [chatRoomRef.current])
-
   const clearTextBox = (): void => {
-    const current: HTMLTextAreaElement | null = inputRef.current
-
-    if (current !== null) current.value = ""
+    setInputText("")
   }
 
   const sendMessage = (
@@ -87,7 +73,8 @@ export const ChatBox = (props: CBProps) => {
         sendSystemMsg("End rundown")
       } else if (msg.startsWith("/help")) {
         sendSystemMsg(
-          "*** Use /nick to set your callsign. ***\r\n" +
+          "------------------ HELP -----------------\r\n" +
+            "*** Use /nick to set your callsign. ***\r\n" +
             "*** This chatroom simulates an airspace control room.\r\n" +
             "*** Here you can give transit instructions to assets.\n" +
             "*** Commands can be entered in plain english. \n" +
@@ -98,7 +85,7 @@ export const ChatBox = (props: CBProps) => {
             "*** RPA01 proceed 89AG FL 240\n" +
             "*** RPA01 proceed dir 89AG at FL 240\n" +
             "*** RPA01 app 89AG FL 240\n" +
-            "----------------------------------------\r\n"
+            "--------------- END HELP ----------------\r\n"
         )
       } else {
         sendSystemMsg("*** Unknown command")
@@ -121,15 +108,18 @@ export const ChatBox = (props: CBProps) => {
       const text = event.currentTarget.value.toString()
 
       sendChatMessage(text)
+
+      //@ts-expect-error value exists
+      event.target.value = ""
     }
   }
 
-  const handleSendBtnClick = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ): void => {
-    const text = event.currentTarget.value.toString()
+  const handleInputOnChange = (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setInputText(evt.target.value)
+  }
 
-    sendChatMessage(text)
+  const handleSendBtnClick = (): void => {
+    sendChatMessage(inputText)
   }
 
   const handleMessage = useCallback((text: string): void => {
@@ -148,20 +138,21 @@ export const ChatBox = (props: CBProps) => {
     >
       <textarea
         ref={chatRoomRef}
-        id="chatroom"
+        data-testid="chatroom"
         style={{ width: "100%", height: "50%" }}
         readOnly
         value={text}
       />
       <div style={{ display: "inline-flex", width: "100%" }}>
         <textarea
-          ref={inputRef}
-          id="chatInput"
+          data-testid="chatInput"
           style={{ width: "80%", height: "10%" }}
-          onKeyPress={handleInputKeypress}
+          onChange={handleInputOnChange}
+          onKeyDown={handleInputKeypress}
         />
         <button
           type="button"
+          data-testid="submitBtn"
           style={{ marginLeft: "5px", width: "20%" }}
           onClick={handleSendBtnClick}
         >

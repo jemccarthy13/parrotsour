@@ -55,8 +55,6 @@ export class Aircraft {
   private tasking: Tasking | undefined
   private capping = false
 
-  private ctx: CanvasRenderingContext2D | undefined
-
   constructor(p?: Partial<AircraftParams>) {
     if (!p) p = {}
 
@@ -303,6 +301,14 @@ export class Aircraft {
    */
   updateIntent(newIntent: Partial<IntentParams>): void {
     this.intent.updateIntent(newIntent)
+  }
+
+  /**
+   *
+   * @param newIntent Update this aircraft's intent based on Params
+   */
+  getIntent(): AircraftIntent {
+    return this.intent
   }
 
   /**

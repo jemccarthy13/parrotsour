@@ -28,11 +28,13 @@ export default class DrawPOD extends DrawPic {
   createGroups = (): AircraftGroup[] => {
     const groups = []
 
-    for (let x = 0; x <= this.getNumGroups(); x++) {
+    for (let x = 0; x < this.numGroupsToCreate; x++) {
       groups.push(GroupFactory.randomGroup(this.props, this.state))
     }
 
-    return groups
+    this.groups = groups
+
+    return this.groups
   }
 
   drawInfo(): void {
@@ -82,11 +84,20 @@ export default class DrawPOD extends DrawPic {
 
     const closestGroups = this.groups.sort(sortFun).slice(0, 3)
 
-    let response = this.groups.length + " GROUPS, "
+    let response = ""
+
+    if (this.groups.length === 1) {
+      response += "SINGLE GROUP "
+    } else {
+      response += this.groups.length + " GROUPS, "
+    }
 
     for (let z = 0; z < closestGroups.length; z++) {
       this.groups[z].setUseBull(true)
       response += this.groups[z].format(this.props.format)
+      if (z != closestGroups.length - 1) {
+        response += ", "
+      }
     }
     response += "\r\n\r\nNote: This is core; there may be a better answer, "
     response += "but POD is intended to get you thinking about "

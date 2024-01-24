@@ -148,6 +148,11 @@ export class AircraftGroup extends Array<Aircraft> {
     const braaseye = this.getBraaseye()
 
     if (this.useBull || false) {
+      if (format === FORMAT.ALSA && braaseye.bull.range <= 5) {
+        answer += "AT BULLSEYE"
+      } else if (format === FORMAT.IPE && braaseye.bull.range <= 3) {
+        answer += "OVER BULLSEYE"
+      }
       answer += "BULLSEYE " + braaseye.bull.toString() + ", "
     }
 
