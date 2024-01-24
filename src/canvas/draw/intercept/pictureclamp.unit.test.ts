@@ -6,11 +6,9 @@ import TestCanvas from "../../../testutils/testcanvas"
 import { PIXELS_TO_NM } from "../../../utils/math"
 import { BlueInThe } from "../../canvastypes"
 import { PaintBrush } from "../paintbrush"
-import {
-  _howFarOut,
-  getRestrictedStartPos,
-  _clampPictureInContext,
-} from "./pictureclamp"
+import { exportedForTesting, getRestrictedStartPos } from "./pictureclamp"
+
+const { _howFarOut, _clampPictureInContext } = exportedForTesting
 
 const TEN_NM = PIXELS_TO_NM * 10
 
