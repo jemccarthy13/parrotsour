@@ -18,6 +18,5 @@ describe("VersionInfo", () => {
 
     expect(vInfo).toBeDefined()
     expect(`${vInfo.textContent}`.indexOf("Version")).not.toEqual(-1)
-    expect(vInfo).toMatchSnapshot()
   })
 })

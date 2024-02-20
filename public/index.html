@@ -95,14 +95,61 @@
     -->
     <title>ParrotSour</title>
   </head>
-  <script type="text/javascript">
-    aclib.runAutoTag({
-      zoneId: "kqxhbobapf",
+  <!-- <script type="text/javascript">
+    aclib.runInPagePush({
+      zoneId: "8114142",
+      refreshRate: 20,
+      maxAds: 3,
     })
-  </script>
+  </script> -->
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
+    <div>
+      <div id="root"></div>
+      <!-- Long bannner bottom -->
+      <div>
+        <div style="margin: auto">This is an ad.</div>
+        <script type="text/javascript">
+          aclib.runBanner({
+            zoneId: "8114146",
+          })
+        </script>
+      </div>
+      <!-- Tall bannner top right -->
+      <div
+        style="
+          position: absolute;
+          top: 0px;
+          right: 20px;
+          width: 120px;
+          border: 5px solid grey;
+        "
+      >
+        This is an ad.
+        <script type="text/javascript">
+          aclib.runBanner({
+            zoneId: "8114150",
+          })
+        </script>
+      </div>
+      <!-- Tall bannner mid right -->
+      <div
+        style="
+          position: absolute;
+          top: 600px;
+          right: 20px;
+          width: 120px;
+          border: 5px solid grey;
+        "
+      >
+        This is an ad.
+        <script type="text/javascript">
+          aclib.runBanner({
+            zoneId: "8114726",
+          })
+        </script>
+      </div>
+    </div>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
