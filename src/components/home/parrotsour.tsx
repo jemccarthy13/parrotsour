@@ -4,10 +4,10 @@ import { theme } from "../../theme"
 import { ParrotSourChooser } from "./chooser"
 
 const ParrotSourIntercept = lazy(() => import("../intercept/parrotsour"))
-const ParrotSourTest = lazy(() => import("../test/parrotsour"))
-const ParrotSourProcedural = lazy(() => import("../procedural/parrotsour"))
 const ParrotSourAPI = lazy(() => import("../api/parrotsourapi"))
+const ParrotSourProcedural = lazy(() => import("../procedural/parrotsour"))
 const ParrotSourClose = lazy(() => import("../close/parrotsour"))
+const ParrotSourTest = lazy(() => import("../test/parrotsour"))
 
 type PSProps = {
   type: string
