@@ -20,6 +20,7 @@ describe("draw_group_cap", () => {
       sx: 50,
       sy: 50,
     })
+
     grp.setCapping(true)
     drawGroupCap(grp)
     expect(TestCanvas.getCanvas()).toMatchSnapshot()
@@ -33,6 +34,7 @@ describe("draw_group_cap", () => {
       sx: 50,
       sy: 50,
     })
+
     grp.setCapping(true)
     drawGroupCap(grp)
     expect(TestCanvas.getCanvas()).toMatchSnapshot()

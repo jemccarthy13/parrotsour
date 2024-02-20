@@ -4,6 +4,7 @@ import { theme } from "../../theme"
 import { ParrotSourChooser } from "./chooser"
 
 const ParrotSourIntercept = lazy(() => import("../intercept/parrotsour"))
+const ParrotSourTest = lazy(() => import("../test/parrotsour"))
 const ParrotSourProcedural = lazy(() => import("../procedural/parrotsour"))
 const ParrotSourAPI = lazy(() => import("../api/parrotsourapi"))
 const ParrotSourClose = lazy(() => import("../close/parrotsour"))
@@ -36,6 +37,8 @@ export const ParrotSour = ({
     comp = <ParrotSourIntercept />
   } else if (type === "procedural") {
     comp = <ParrotSourProcedural />
+  } else if (type === "test") {
+    comp = <ParrotSourTest />
   } else if (type === "close") {
     comp = <ParrotSourClose />
   } else if (type === "api") {
