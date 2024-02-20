@@ -207,12 +207,7 @@ export default class DrawWall extends DrawPic {
 
     const midsep: number = sepRngs.length / 2
 
-    console.log(this.groups)
-    console.log("split", split)
-    console.log("midsep", midsep)
     for (let x = 0; x < sepRngs.length; x++) {
-      console.log("sep", sepRngs[x])
-      console.log("x", x)
       if (sepRngs[x] <= split) {
         let dir =
           x < midsep
