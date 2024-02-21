@@ -57,7 +57,7 @@ describe("ProceduralCanvas", () => {
     desiredNumContacts: 0,
   }
 
-  it.only("full_renders_mouse_and_pic_canvas", async () => {
+  it("full_renders_mouse_and_pic_canvas", async () => {
     const wrapper = render(<ProceduralCanvas {...testProps} />)
 
     await waitFor(() => {

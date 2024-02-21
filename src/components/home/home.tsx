@@ -7,7 +7,6 @@ import { Maintenance } from "./maintenance"
 import { HomePanel } from "./styles"
 
 const ParrotSour = lazy(() => import("./parrotsour"))
-const Login = lazy(() => import("./login"))
 
 /**
  * This is the main entry point into the front-facing application.
@@ -72,9 +71,6 @@ export const Home = () => {
               path="/parrotsour.html"
               element={<Navigate to="/chooser" />}
             />
-            {process.env.NODE_ENV === "development" && (
-              <Route path="/login" element={<Login />} />
-            )}
           </Routes>
         </Suspense>
       </HashRouter>
