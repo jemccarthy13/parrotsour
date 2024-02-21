@@ -1,10 +1,5 @@
 import React, { CSSProperties } from "react"
-import {
-  snackActions,
-  SnackbarUtilsConfigurator,
-  SnackbarKey,
-  SnackbarProvider,
-} from "./psalert"
+import { snackActions, SnackbarKey, SnackbarProvider } from "./psalert"
 
 const transparentBtnStyle: CSSProperties = {
   height: "100%",
@@ -39,7 +34,6 @@ export default class GlobalAlertProvider extends SnackbarProvider {
 
     return (
       <SnackbarProvider {...other} action={this.dismissAction}>
-        <SnackbarUtilsConfigurator />
         {children}
       </SnackbarProvider>
     )
