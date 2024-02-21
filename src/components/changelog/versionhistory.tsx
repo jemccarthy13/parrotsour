@@ -33,7 +33,7 @@ export default function VersionHistory(): JSX.Element {
   const versionHistory: VersionList = [
     {
       version: "4.2.2",
-      date: "25 Jan 2024",
+      date: "21 Feb 2024",
       features: [],
       fixes: [
         "Fixed issue with bullseye drawing during animation. It should now show properly",
