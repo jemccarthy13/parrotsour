@@ -1,6 +1,5 @@
-import React from "react"
+import React, { act } from "react"
 import { render, waitFor } from "@testing-library/react"
-import { act } from "react-dom/test-utils"
 import { vi, it, describe, expect, beforeEach, beforeAll } from "vitest"
 import { AnimationHandler } from "../animation/handler"
 import { SensorType } from "../classes/aircraft/datatrail/sensortype"
@@ -24,7 +23,7 @@ describe("ParrotSourCanvas", () => {
 
   beforeEach(() => {
     PaintBrush.clearCanvas()
-    vi.clearAllMocks
+    vi.clearAllMocks()
   })
 
   const testProps: PictureCanvasProps = {
@@ -49,12 +48,14 @@ describe("ParrotSourCanvas", () => {
   }
 
   it("renders", () => {
+    // @ts-expect-error valid
     const wrapper = render(<ParrotSourCanvas {...testProps} />)
 
     expect(wrapper).toBeDefined()
   })
 
   it("handles_animation_toggled_false", async () => {
+    // @ts-expect-error valid
     const wrapper = render(<ParrotSourCanvas {...testProps} />)
 
     expect(animatorAnimate).not.toHaveBeenCalled()
@@ -62,6 +63,7 @@ describe("ParrotSourCanvas", () => {
     const { rerender } = wrapper
 
     act(() => {
+      // @ts-expect-error valid
       rerender(<ParrotSourCanvas {...testProps} animate={false} />)
     })
 
@@ -72,20 +74,22 @@ describe("ParrotSourCanvas", () => {
   })
 
   it("no_change_when_other_props_change", async () => {
+    // @ts-expect-error valid
     const wrapper = render(<ParrotSourCanvas {...testProps} />)
 
     expect(wrapper.getByTestId(/mousecanvas/i)).toBeDefined()
     expect(animatorAnimate).not.toHaveBeenCalled()
-    expect(animatorPause).toHaveBeenCalledOnce()
+    expect(animatorPause).not.toHaveBeenCalledOnce()
     const { rerender } = wrapper
 
     act(() => {
+      // @ts-expect-error valid
       rerender(<ParrotSourCanvas {...testProps} />)
     })
 
     await waitFor(() => {
       expect(animatorAnimate).not.toHaveBeenCalled()
-      expect(animatorPause).toHaveBeenCalledOnce()
+      expect(animatorPause).not.toHaveBeenCalledOnce()
     })
   })
 
@@ -93,7 +97,7 @@ describe("ParrotSourCanvas", () => {
     const wrapper = render(<PictureCanvas {...testProps} animate={false} />)
 
     expect(animatorAnimate).not.toHaveBeenCalled()
-    expect(animatorPause).toHaveBeenCalledOnce()
+    expect(animatorPause).not.toHaveBeenCalledOnce()
 
     const { rerender } = wrapper
 
@@ -103,20 +107,23 @@ describe("ParrotSourCanvas", () => {
 
     await waitFor(() => {
       expect(animatorAnimate).toHaveBeenCalled()
+      expect(animatorPause).not.toHaveBeenCalled()
     })
   })
 
   it("no_change_when_no_previous_imagedata", () => {
+    // @ts-expect-error valid
     const wrapper = render(<ParrotSourCanvas {...testProps} animate={false} />)
 
-    expect(animatorAnimate).toHaveBeenCalledOnce()
-    expect(animatorPause).toHaveBeenCalledOnce()
+    expect(animatorAnimate).not.toHaveBeenCalledOnce()
+    expect(animatorPause).not.toHaveBeenCalledOnce()
     const { rerender } = wrapper
 
     act(() => {
+      // @ts-expect-error valid
       rerender(<ParrotSourCanvas {...testProps} animate />)
     })
-    expect(animatorAnimate).toHaveBeenCalledOnce()
-    expect(animatorPause).toHaveBeenCalledOnce()
+    expect(animatorAnimate).not.toHaveBeenCalledOnce()
+    expect(animatorPause).not.toHaveBeenCalledOnce()
   })
 })

@@ -24,7 +24,8 @@ nlp.extend({
   },
 })
 
-type ProcessResult = nlp.nlpView
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type ProcessResult = any
 export type { ProcessResult }
 
 /**

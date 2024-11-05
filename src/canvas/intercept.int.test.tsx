@@ -1,6 +1,5 @@
-import React from "react"
+import React, { act } from "react"
 import { render, waitFor } from "@testing-library/react"
-import { act } from "react-dom/test-utils"
 import { vi, describe, it, expect, beforeAll, afterEach } from "vitest"
 import { PicAnimationHandler } from "../animation/intercept"
 import { SensorType } from "../classes/aircraft/datatrail/sensortype"

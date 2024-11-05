@@ -1,3 +1,4 @@
+import { describe, it, expect } from "vitest"
 import { Point } from "../../point"
 import { RadarDataTrail } from "./radardatatrail"
 

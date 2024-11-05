@@ -1,7 +1,6 @@
-import React from "react"
+import React, { act } from "react"
 import { render, waitFor } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
-import { act } from "react-dom/test-utils"
 import { vi, it, expect, describe, beforeAll } from "vitest"
 import GlobalAlertProvider from "./globalalertprovider"
 import { snackActions } from "./psalert"

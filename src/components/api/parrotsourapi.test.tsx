@@ -1,7 +1,6 @@
-import React from "react"
+import React, { act } from "react"
 import { fireEvent, render, waitFor } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
-import { act } from "react-dom/test-utils"
 import { vi, describe, it, expect } from "vitest"
 import { snackActions } from "../alert/psalert"
 import { ParrotSourAPI } from "./parrotsourapi"

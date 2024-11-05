@@ -32,6 +32,16 @@ export default function VersionHistory(): JSX.Element {
   // the order in this list === display order
   const versionHistory: VersionList = [
     {
+      version: "4.2.3",
+      date: "21 Feb 2024",
+      features: [],
+      fixes: [
+        "Updated dependencies / open source tools",
+        "Remove 'AND' from stacks according to ALSA October 2024 update",
+      ],
+      improvements: [],
+    },
+    {
       version: "4.2.2",
       date: "21 Feb 2024",
       features: [],

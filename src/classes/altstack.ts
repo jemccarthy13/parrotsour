@@ -13,13 +13,14 @@ export interface AltStack {
  * Otherwise, will return highest altitude for each "bucket" and # contacts hi/med/low
  *
  * @param altitudes - group's altitudes for each contact
- * @param format - comm format
+ * @param _format - comm format
  */
-export function getAltStack(altitudes: number[], format: FORMAT): AltStack {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function getAltStack(altitudes: number[], _format: FORMAT): AltStack {
   // convert altitudes to 3-digit flight level and sort low->high
   const formattedAlts: string[] = altitudes
     .map((a: number) => ("0" + a).slice(-2) + "0")
-    .sort()
+    .sort((a, b) => a.localeCompare(b))
     .reverse()
 
   let stackIndexes: number[] = []
@@ -61,11 +62,12 @@ export function getAltStack(altitudes: number[], format: FORMAT): AltStack {
     // otherwise, print stacks
   } else {
     answer = "STACK "
-    for (let y = 0; y < stacks.length; y++) {
+    for (const element of stacks) {
       // check to add "AND" for alsa, when on last stack alt
-      const AND = y === stacks.length - 1 && format !== FORMAT.IPE ? "AND " : ""
+      // const AND = y === stacks.length - 1 && format !== FORMAT.IPE ? "AND " : ""
+      const AND = ""
 
-      answer += AND + stacks[y][0].replace(/0$/, "k") + " "
+      answer += AND + element[0].replace(/0$/, "k") + " "
     }
 
     // format # hi/med/low when there are at least 3 contacts

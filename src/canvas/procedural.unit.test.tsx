@@ -1,6 +1,5 @@
-import React from "react"
+import React, { act } from "react"
 import { render, waitFor } from "@testing-library/react"
-import { act } from "react-dom/test-utils"
 import { vi, describe, it, expect, beforeAll, afterEach } from "vitest"
 import { ProceduralAnimationHandler } from "../animation/procedural"
 import { BlueAir } from "../classes/aircraft/blueair"
