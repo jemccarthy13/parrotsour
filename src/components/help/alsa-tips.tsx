@@ -9,10 +9,10 @@ export const AlsaHelp = (): ReactElement => {
     <DialogContent>
       <DialogContentText>
         <br />
-        ACC is a new (Fall 2021) comm format from the ALSA joint publications.
-        The intent behind the standard is to provide a common standard between
-        Navy and Air Force previous standards. This guide is intended to help
-        3-1/3-3 controllers rapidly transition to ACC with difference training,
+        ACC is a comm format from the ALSSA joint publications. The intent
+        behind the standard is to provide a common standard between Navy and Air
+        Force previous standards. This guide is intended to help 3-1/3-3
+        controllers rapidly transition to ACC with difference training,
         specifically in how pictures are formatted.
         <br />
         <br />

@@ -203,12 +203,12 @@ export default class DrawWall extends DrawPic {
       sepRngs.push(sepRng.braa.range)
     }
 
-    const split = this.dimensions.wide / 3
+    const split = this.dimensions.wide / this.getNumGroups()
 
     const midsep: number = sepRngs.length / 2
 
     for (let x = 0; x < sepRngs.length; x++) {
-      if (sepRngs[x] <= split) {
+      if (sepRngs[x] < split) {
         let dir =
           x < midsep
             ? this.groups[0].getLabel()

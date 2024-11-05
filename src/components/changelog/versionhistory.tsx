@@ -32,12 +32,19 @@ export default function VersionHistory(): JSX.Element {
   // the order in this list === display order
   const versionHistory: VersionList = [
     {
-      version: "4.2.3",
+      version: "4.3.0",
       date: "21 Feb 2024",
-      features: [],
+      features: [
+        "Update LEADING EDGE to format 'SECOND WAVE' (Oct 2024 ALSSA)",
+        "First attempt at ParrotSour WAVE comm",
+      ],
       fixes: [
+        "Remove 'AND' from stacks according to ALSSA October 2024 update",
+        "Fix to WEIGHTED WALL calculations; previously WALLs might be WEIGHTED when not actually meeting criteria",
+        "Change to ALSSA from ALSA where applicable",
+        "Update tip/help text to stop mentioning ALSA as a new standard",
+        "Update help text to describe PS as a training tool, rather than a 3-3 difference training tool",
         "Updated dependencies / open source tools",
-        "Remove 'AND' from stacks according to ALSA October 2024 update",
       ],
       improvements: [],
     },

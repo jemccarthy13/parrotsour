@@ -12,8 +12,8 @@ export const InterceptQT = (): ReactElement => {
       <DialogContentText>
         This tool is designed to help address controlling deficiencies, such as
         picture building and measuring mechanics, maneuver comm, and threat
-        comm. The ALSA ACC comm format is intended as a training supplement to
-        help transition from 3-3 IPE to ALSA.
+        comm. The ALSSA ACC comm format is primarily a training supplement to
+        help controllers practice ALSSA ACC.
       </DialogContentText>
       <DialogContentText>
         <b>Pictures:</b>

@@ -21,6 +21,7 @@ export default class DrawLeadEdge extends DrawPic {
   }
 
   chooseNumGroups(nCts: number): void {
+    console.log(nCts)
     const nCt = Math.floor(nCts / 2)
     const sCt = nCts - nCt
 
@@ -163,12 +164,12 @@ export default class DrawLeadEdge extends DrawPic {
 
     this.rngBack = rngBack
 
-    let answer = "FOLLOW ON "
+    let answer = ""
 
     if (this.props.format === FORMAT.IPE) {
       answer += "GROUPS " + rngBack + " MILES"
     } else {
-      answer += rngBack
+      answer += rngBack + " " + this.followOn.formatPicTitle()
     }
 
     return answer
@@ -187,7 +188,7 @@ export default class DrawLeadEdge extends DrawPic {
 
     answer = this.formatPicTitle() + " "
     answer += this.leadEdge.getAnswer()
-    answer += " FOLLOW ON "
+    answer += " 2ND WAVE "
     answer += this.formatDimensions()
 
     if (this.rngBack > 40) {

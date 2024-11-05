@@ -21,7 +21,7 @@ export const VersionNotification = () => {
   const action = useCallback((key: SnackbarKey) => {
     return (
       <DismissAction
-        key={key}
+        snackKey={key}
         confirmCallback={confirm}
         cancelCallback={cancel}
         confirmText={`${version}`}

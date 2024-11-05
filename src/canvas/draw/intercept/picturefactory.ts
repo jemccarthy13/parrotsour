@@ -12,9 +12,10 @@ import DrawSingleGroup from "./singlegroup"
 import DrawThreat from "./threat"
 import DrawVic from "./vic"
 import DrawWall from "./wall"
+import DrawWaves from "./waves"
 
 export class PictureFactory {
-  private static DrawMap = new Map<string, () => DrawPic>([
+  private static readonly DrawMap = new Map<string, () => DrawPic>([
     ["azimuth", new DrawAzimuth().create],
     ["range", new DrawRange().create],
     ["ladder", new DrawLadder().create],
@@ -27,6 +28,7 @@ export class PictureFactory {
     ["leading edge", new DrawLeadEdge().create],
     ["package", new DrawPackage().create],
     ["singlegroup", new DrawSingleGroup().create],
+    ["waves", new DrawWaves().create],
   ])
 
   /**
@@ -35,7 +37,7 @@ export class PictureFactory {
    * limit the types of pictures to the standard (with caveat: wall is
    * not allowed in lead edge/pkg due to separation requirement)
    */
-  private static _getRandomPicType = (complexity: number): string => {
+  private static readonly _getRandomPicType = (complexity: number): string => {
     const type1 = ["singlegroup"]
     const type2 = type1.concat(["range", "azimuth"])
     const type3 = type2.concat(["vic", "champagne", "wall", "ladder"])
@@ -57,7 +59,7 @@ export class PictureFactory {
     desiredNumContacts?: number,
     forced?: boolean
   ): DrawPic {
-    desiredNumContacts = desiredNumContacts ? desiredNumContacts : 0
+    desiredNumContacts = desiredNumContacts ?? 0
 
     let complexity = desiredNumContacts
 
@@ -68,7 +70,7 @@ export class PictureFactory {
         desiredNumContacts === 0 ? 3 : Math.min(desiredNumContacts, 3)
     if (picType === "cap") complexity = 2
 
-    let type = picType || "azimuth"
+    let type = picType ?? "azimuth"
 
     if (picType === "random" || picType === "cap") {
       type = this._getRandomPicType(complexity)

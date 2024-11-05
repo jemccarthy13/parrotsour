@@ -58,7 +58,7 @@ export const StandardSelector = (props: StandardSelectorProps) => {
             control={<Radio />}
             label={
               <>
-                ALSA ACC
+                ALSSA ACC
                 <HelpButton
                   data-testid="alsaQTBtn"
                   onClick={handleToggleAlsaQT}
@@ -77,7 +77,7 @@ export const StandardSelector = (props: StandardSelectorProps) => {
           <Typography
             sx={{ fontSize: "22px", marginBottom: "24px", marginTop: "8px" }}
           >
-            ALSA
+            ALSSA
           </Typography>
           <IconButton
             onClick={handleToggleAlsaQT}

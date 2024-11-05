@@ -93,7 +93,7 @@ export default class DrawSingleGroup extends DrawPic {
     return ""
   }
   formatPicTitle(): string {
-    return ""
+    return "SINGLE GROUP"
   }
   applyLabels(): void {
     throw new Error("applyLabels to single group has no effect")

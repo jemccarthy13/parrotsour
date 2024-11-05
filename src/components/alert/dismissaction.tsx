@@ -3,14 +3,14 @@ import { Button } from "../../utils/muiadapter"
 import { SnackbarKey, snackActions } from "./psalert"
 
 type DismissActionProps = {
-  key: SnackbarKey
+  snackKey: SnackbarKey
   confirmText?: string
   dismissText?: string
   confirmCallback: () => void
   cancelCallback: () => void
 }
 export function DismissAction({
-  key,
+  snackKey,
   confirmText = "Confirm",
   dismissText = "Dismiss",
   confirmCallback,
@@ -18,12 +18,12 @@ export function DismissAction({
 }: Readonly<DismissActionProps>) {
   const handleConfirmClick = useCallback(() => {
     confirmCallback()
-    snackActions.closeSnackbar(key)
+    snackActions.closeSnackbar(snackKey)
   }, [])
 
   const handleDismissClick = useCallback(() => {
     cancelCallback()
-    snackActions.closeSnackbar(key)
+    snackActions.closeSnackbar(snackKey)
   }, [])
 
   return (

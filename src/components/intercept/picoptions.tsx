@@ -57,6 +57,7 @@ export const PicOptionsBar = (props: POBSelProps) => {
         <MenuItem value="vic">VIC</MenuItem>
         <MenuItem value="cap">CAP</MenuItem>
         <MenuItem value="leading edge">LEADING EDGE</MenuItem>
+        <MenuItem value="waves">WAVES</MenuItem>
         <MenuItem value="package">PACKAGES</MenuItem>
         <MenuItem value="threat">THREAT</MenuItem>
         <MenuItem value="ea">EA / BOGEY DOPE</MenuItem>
