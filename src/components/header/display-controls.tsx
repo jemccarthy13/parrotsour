@@ -32,8 +32,8 @@ export type DisplayProps = {
 export const DisplayControls = (props: DisplayProps) => {
   const { settings: displaySettings, toggles: displayToggles } = props
 
-  const [isShowBraaFirstHelp, setShowBraaFirstHelp] = useState(false)
-  const [isShowDatastyleHelp, setShowDatastyleHelp] = useState(false)
+  const [isShowBraaFirstHelp, setIsShowBraaFirstHelp] = useState(false)
+  const [isShowDatastyleHelp, setIsShowDatastyleHelp] = useState(false)
 
   const isOrientNS = displaySettings.canvasConfig.orient === BlueInThe.NORTH
 
@@ -41,14 +41,14 @@ export const DisplayControls = (props: DisplayProps) => {
    * Toggle display of braa first help text
    */
   const handleToggleBraaFirstHelp = useCallback(() => {
-    setShowBraaFirstHelp((prev) => !prev)
+    setIsShowBraaFirstHelp((prev) => !prev)
   }, [])
 
   /**
    * Toggle display of datastyle help text
    */
   const handleToggleDatastyleHelp = useCallback(() => {
-    setShowDatastyleHelp((prev) => !prev)
+    setIsShowDatastyleHelp((prev) => !prev)
   }, [])
 
   return (
